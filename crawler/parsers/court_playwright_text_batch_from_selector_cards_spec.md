@@ -30,22 +30,28 @@ It also performs a post-normalization cleanup pass to remove leftover one-line p
 
 ## Metadata parsing rules from normalized body text
 
-After normalized body text is produced, regex-based parsing extracts:
+After normalized body text is produced, metadata is parsed as a best-effort enrichment layer rather than as a hard dependency for extraction success.
 
-- `detail_case_number` from patterns such as:
-  - `第79/2025號案`
-  - `卷宗編號: 122/2025`
-  - `案號: 123/2025`
-- `detail_decision_date` from patterns such as:
-  - `日期: 2025年12月12日`
-  - `日期：2026年3月26日`
-  - date fallback formats (`DD/MM/YYYY`, `YYYY年M月D日`)
-- `detail_title_or_issue` from:
-  - `關鍵詞:` / `關鍵字:` lines
-  - `重要法律問題:` lines
-  - optional short top headline fallback before major section tokens
+The parser prioritizes stable full-text capture first, then derives detail metadata from the normalized text using light pattern matching and top-of-document heuristics:
 
-If title/issue is not clearly separable, value remains `null`.
+- `detail_case_number`
+  - inferred from common case-number expressions near the top of the document, such as:
+    - `第79/2025號案`
+    - `卷宗編號：122/2025`
+    - `案件編號: 第253/2026號`
+    - `案號: 123/2025`
+- `detail_decision_date`
+  - inferred from common date expressions near the top of the document, such as:
+    - `日期：2026年3月26日`
+    - `裁判日期：2026年3月19日`
+    - fallback date formats like `DD/MM/YYYY` and `YYYY年M月D日`
+- `detail_title_or_issue`
+  - inferred from early non-empty lines in the normalized text using weak heuristics
+  - when available, colon-style descriptive lines may be used
+  - the parser does not require a fixed label vocabulary such as `關鍵詞`, `關鍵字`, `主題`, or `重要法律問題`
+  - if no stable issue/title line can be inferred, the value remains `null`
+
+Important rule: metadata parsing must not determine whether the detail page extraction itself succeeds. The primary success criterion is whether a usable `full_text` has been extracted.
 
 ## Source metadata vs detail metadata reconciliation
 
@@ -67,7 +73,9 @@ Detail-layer fields are extracted separately:
 - `language`
 - `full_text`
 
-Rule: detail-page metadata is authoritative when successfully parsed; source-list metadata remains as a non-authoritative reference.
+Rule: detail-page metadata is authoritative when successfully parsed; source-list metadata remains as a non-authoritative reference for debugging and comparison.
+
+Because Macau Courts sentence/TXT pages are semi-structured rather than strictly template-driven, detail metadata is treated as best-effort enrichment. Missing `detail_case_number`, `detail_decision_date`, or `detail_title_or_issue` does not by itself invalidate an otherwise successful text extraction result.
 
 ## Quality checks
 
@@ -80,7 +88,7 @@ Batch run output includes:
 - average `full_text` length
 - whether extraction appears successful
 
-Per-record quality gate requires non-empty `full_text` with minimum length/token thresholds and print-chrome exclusion.
+Per-record quality gate requires non-empty `full_text` with minimum length/token thresholds and print-chrome exclusion. Metadata parsing is not part of the hard success gate; detail pages with valid `full_text` may still retain `null` metadata fields when no stable metadata can be inferred.
 
 ## Recommended next step
 
