@@ -1,0 +1,2 @@
+# Court requests replay result-list parser report (Day 8)
+error: missing dependency bs4 (BeautifulSoup).
