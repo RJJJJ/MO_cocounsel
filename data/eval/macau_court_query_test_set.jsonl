@@ -1,0 +1,13 @@
+{"query_id": "Q001", "query": "假釋", "query_type": "legal_concept_zh", "expected_case_numbers": ["100/2026", "119/2026", "120/2026"], "notes": "中文法律概念詞：假釋。", "expected_language": "zh"}
+{"query_id": "Q002", "query": "量刑過重", "query_type": "legal_concept_zh", "expected_case_numbers": ["103/2026", "107/2026", "1073/2025"], "notes": "中文法律概念詞：量刑過重。", "expected_language": "zh"}
+{"query_id": "Q003", "query": "誹謗", "query_type": "legal_concept_zh", "expected_case_numbers": ["126/2026", "310/2025", "728/2025"], "notes": "中文法律概念詞：誹謗。", "expected_language": "zh"}
+{"query_id": "Q004", "query": "違令", "query_type": "legal_concept_zh", "expected_case_numbers": ["107/2026", "1073/2025", "157/2026"], "notes": "中文法律概念詞：違令。", "expected_language": "zh"}
+{"query_id": "Q005", "query": "合同之不能履行", "query_type": "issue_fact_zh", "expected_case_numbers": ["578/2025"], "notes": "中文爭點詞：合同與不能履行。", "expected_language": "zh"}
+{"query_id": "Q006", "query": "損害賠償", "query_type": "issue_fact_zh", "expected_case_numbers": ["103/2026", "1073/2025", "120/2026"], "notes": "中文爭點詞：損害賠償。", "expected_language": "zh"}
+{"query_id": "Q007", "query": "加重詐騙", "query_type": "issue_fact_zh", "expected_case_numbers": ["36/2026", "757/2025"], "notes": "中文爭點詞：加重詐騙。", "expected_language": "zh"}
+{"query_id": "Q008", "query": "79/2025", "query_type": "case_number_lookup", "expected_case_numbers": [], "notes": "案件編號查詢（樣本可能不存在，用於觀察無命中行為）。"}
+{"query_id": "Q009", "query": "253/2026", "query_type": "case_number_lookup", "expected_case_numbers": ["253/2026"], "notes": "案件編號查詢（應可直接命中）。"}
+{"query_id": "Q010", "query": "processo n o 578/2025 recurso em matéria cível", "query_type": "portuguese_or_mixed", "expected_case_numbers": ["578/2025"], "notes": "葡文查詢樣本（程序號 + recurso）。", "expected_language": "pt"}
+{"query_id": "Q011", "query": "假釋 liberdade condicional", "query_type": "portuguese_or_mixed", "expected_case_numbers": ["1035/2025", "543/2025"], "notes": "中葡混合查詢樣本，用於測試跨語詞匹配。", "expected_language": "pt"}
+{"query_id": "Q012", "query": "上訴", "query_type": "ambiguous_or_noisy", "expected_case_numbers": [], "notes": "高頻模糊詞，預期結果分散。"}
+{"query_id": "Q013", "query": "公司", "query_type": "ambiguous_or_noisy", "expected_case_numbers": [], "notes": "可疑/模糊查詢，用於觀察 BM25 baseline 限制。"}
