@@ -8,29 +8,15 @@ The inventory below captures target sources for Day 2 ingestion validation.
 - **base_url:** https://www.court.gov.mo/zh/subpage/researchjudgments
 - **source_type:** Judicial portal / judgment search
 - **official_or_unofficial:** Official
-- **expected_content:** Public judgments, case identifiers, decision dates, court-level metadata, linked judgment files (PDF/HTML where available)
-- **access_pattern:** Search/list results pages with detail views; pagination and filtering expected
+- **expected_content:** Public judgments, case identifiers, decision dates, court-level metadata, subject tags, search result metadata, and linked judgment files (PDF/HTML where available)
+- **access_pattern:** Search/list results pages with filters and detail views; pagination and court/category filtering expected
 - **parsing_difficulty:** Medium-High
 - **need_playwright:** Yes (likely)
 - **need_ocr_fallback:** Yes (for scanned PDFs)
-- **legal_or_operational_risks:** Potential anti-bot controls, dynamic UI changes, partial metadata consistency across result pages
+- **legal_or_operational_risks:** Potential anti-bot controls, dynamic UI changes, partial metadata consistency across result pages, and result/detail structure drift over time
 - **day2_priority:** P0
 
-## 2) Macau Courts – Latest Judgments
-
-- **source_name:** Macau Courts – Latest Judgments
-- **base_url:** https://www.court.gov.mo
-- **source_type:** Judicial portal / latest releases
-- **official_or_unofficial:** Official
-- **expected_content:** Recently published judgments and update-oriented listing pages
-- **access_pattern:** Bulletin/list-style navigation from court portal sections; likely shallow-to-detail traversal
-- **parsing_difficulty:** Medium
-- **need_playwright:** Yes (likely)
-- **need_ocr_fallback:** Yes (when linked files are scanned)
-- **legal_or_operational_risks:** Section path changes, inconsistent labeling of “latest” views, potential duplication with search endpoint
-- **day2_priority:** P1
-
-## 3) Macau Official Gazette / Boletim Oficial
+## 2) Macau Official Gazette / Boletim Oficial
 
 - **source_name:** Macau Official Gazette / Boletim Oficial
 - **base_url:** https://bo.io.gov.mo
@@ -46,6 +32,8 @@ The inventory below captures target sources for Day 2 ingestion validation.
 
 ## Notes
 
+- For case-law retrieval, Day 2 uses **only** the Macau Courts Judgment Search page as the initial judicial source.
+- “Latest Judgments” is **not** treated as a separate ingestion source in the MVP unless later testing shows a material coverage gap.
 - Day 2 should confirm whether Playwright is strictly required for each source by running minimal fetch probes.
 - OCR fallback should be opt-in by source and by file-level detection, not globally enabled.
 - Only public, legally accessible materials should be ingested.
