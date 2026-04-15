@@ -1,12 +1,12 @@
-"""Day 14: deterministic URL-based pagination over judgment result pages.
+"""Day 14: stateful pagination over judgment result pages.
 
 Scope:
-- open paginated result URLs directly via known query parameters
-- extract cards from each page via Playwright-rendered DOM
+- submit a real search from the search UI (court=tsi by default)
+- start pagination only from a submitted result-page state
+- parse page 1..N cards from state-compatible URLs
 - aggregate + deduplicate cards across pages
 
 Non-goals:
-- no UI pagination-button discovery as primary path
 - no detail-page extraction
 - no batch fulltext extraction
 - no DB integration
@@ -20,8 +20,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode, urljoin
-
+from urllib.parse import parse_qsl, urlencode, urljoin, urlparse, urlunparse
 
 BASE_URL = "https://www.court.gov.mo"
 RESULT_PATH = "/zh/subpage/researchjudgments"
@@ -65,6 +64,8 @@ class PageAttempt:
     success: bool
     card_blocks: int
     parsed_cards: int
+    valid_result_page: bool
+    invalid_reason: str | None = None
     error: str | None = None
 
 
@@ -82,11 +83,16 @@ def extract_field_by_label(text: str, keys: tuple[str, ...]) -> str | None:
     return None
 
 
-def build_result_url(court_code: str, page_number: int) -> str:
-    query = {"court": court_code}
-    if page_number > 1:
+def set_page_param_from_result_url(result_url: str, page_number: int) -> str:
+    parsed = urlparse(result_url)
+    query = dict(parse_qsl(parsed.query, keep_blank_values=True))
+    if "court" not in query:
+        query["court"] = "tsi"
+    if page_number <= 1:
+        query.pop("page", None)
+    else:
         query["page"] = str(page_number)
-    return f"{BASE_URL}{RESULT_PATH}?{urlencode(query)}"
+    return urlunparse((parsed.scheme, parsed.netloc, parsed.path, parsed.params, urlencode(query), parsed.fragment))
 
 
 def wait_for_results_stable(page: "Page") -> None:
@@ -256,6 +262,49 @@ def parse_card(card: dict[str, Any], court_label: str, page_number: int) -> dict
     }
 
 
+def evaluate_page_validity(cards: list[dict[str, Any]]) -> tuple[bool, str | None]:
+    if not cards:
+        return False, "no_candidate_cards"
+
+    repeated_cards = sum(1 for c in cards if int(c.get("repeated_count") or 0) >= 3)
+    meaningful_case_count = sum(1 for c in cards if CASE_RE.search(normalize_space(c.get("raw_card_text"))))
+    linked_count = 0
+    for c in cards:
+        pdf_url, text_url_or_action = parse_links(c.get("links", []))
+        if normalize_space(pdf_url) or normalize_space(text_url_or_action):
+            linked_count += 1
+
+    if repeated_cards < 2:
+        return False, "not_enough_repeated_case_cards"
+    if meaningful_case_count < 2:
+        return False, "missing_meaningful_case_numbers"
+    if linked_count < 2:
+        return False, "missing_pdf_or_text_links"
+
+    return True, None
+
+
+def page_looks_like_search_form(page: "Page") -> bool:
+    script = r"""
+    () => {
+      const norm = (s) => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      const pageText = norm(document.body?.innerText || '');
+      const hasSearchWords = ['搜索', '查詢', '查找', 'search', 'pesquisa', '法院', 'court'].filter((k) => pageText.includes(k)).length >= 3;
+      const controls = document.querySelectorAll('form input, form select, form button, form textarea').length;
+      const formCount = document.querySelectorAll('form').length;
+      const candidateCards = Array.from(document.querySelectorAll('div,li,article,section,tr')).filter((el) => {
+        const t = norm(el.innerText || '');
+        if (t.length < 40) return false;
+        const isCase = /(?:\b[A-Z]{1,6}-?\d{1,6}\/\d{2,4}\b|\b\d{1,6}\/\d{2,4}\b|案(?:件)?(?:編號|號)?[:：\s]*[A-Za-z0-9\-/.]+)/i.test(t);
+        const hasDate = /(?:\d{4}[./-]\d{1,2}[./-]\d{1,2}|\d{1,2}[./-]\d{1,2}[./-]\d{4}|\d{4}年\d{1,2}月\d{1,2}日)/.test(t);
+        return isCase && hasDate;
+      }).length;
+      return formCount > 0 && controls >= 6 && candidateCards < 2 && hasSearchWords;
+    }
+    """
+    return bool(page.evaluate(script))
+
+
 def dedupe_cards(cards: list[dict[str, Any]]) -> list[dict[str, Any]]:
     seen: set[tuple[Any, ...]] = set()
     deduped: list[dict[str, Any]] = []
@@ -285,38 +334,147 @@ def is_resolved_sentence_url(value: Any) -> bool:
     return bool(re.match(r"^https?://[^\s]+/sentence/(zh|pt)/\d+/?$", value.strip(), flags=re.IGNORECASE))
 
 
-def parse_page(page: "Page", court_code: str, court_label: str, page_number: int) -> tuple[PageAttempt, list[dict[str, Any]]]:
-    url = build_result_url(court_code, page_number)
+def submit_real_search(page: "Page", court_code: str) -> tuple[bool, str | None]:
+    target_url = f"{BASE_URL}{RESULT_PATH}"
+    page.goto(target_url, wait_until="domcontentloaded", timeout=45_000)
+    page.wait_for_timeout(1200)
+
+    submit_ok = bool(
+        page.evaluate(
+            r"""
+        (courtCode) => {
+          const norm = (s) => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+          const selectCandidates = Array.from(document.querySelectorAll('select'));
+          let courtSelect = null;
+          for (const s of selectCandidates) {
+            const attrs = `${s.name||''} ${s.id||''} ${s.className||''}`.toLowerCase();
+            const hasOption = Array.from(s.options || []).some((o) => norm(o.value) === courtCode || norm(o.textContent).includes('中級法院'));
+            if ((attrs.includes('court') || attrs.includes('法院') || attrs.includes('法庭') || hasOption) && hasOption) {
+              courtSelect = s;
+              break;
+            }
+          }
+          if (!courtSelect) return false;
+
+          const targetOpt = Array.from(courtSelect.options || []).find((o) => norm(o.value) === courtCode)
+            || Array.from(courtSelect.options || []).find((o) => norm(o.textContent).includes('中級法院'));
+          if (!targetOpt) return false;
+
+          courtSelect.value = targetOpt.value;
+          courtSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+          const buttons = Array.from(document.querySelectorAll('button, input[type="submit"], input[type="button"], a'));
+          const submit = buttons.find((el) => {
+            const t = norm(el.innerText || el.value || el.textContent || '');
+            return t.includes('搜索') || t.includes('查詢') || t.includes('搜尋') || t.includes('search') || t.includes('pesquisa');
+          });
+
+          if (submit) {
+            submit.click();
+            return true;
+          }
+
+          const form = courtSelect.closest('form');
+          if (form) {
+            form.requestSubmit ? form.requestSubmit() : form.submit();
+            return true;
+          }
+          return false;
+        }
+        """,
+            court_code,
+        )
+    )
+
+    if not submit_ok:
+        return False, None
+
+    page.wait_for_timeout(1000)
+    page.wait_for_load_state("domcontentloaded", timeout=45_000)
+    wait_for_results_stable(page)
+    return True, page.url
+
+
+def parse_page_at_url(page: "Page", url: str, court_label: str, page_number: int) -> tuple[PageAttempt, list[dict[str, Any]]]:
     try:
         page.goto(url, wait_until="domcontentloaded", timeout=45_000)
         page.wait_for_timeout(1200)
         wait_for_results_stable(page)
+
         blocks = extract_card_blocks_from_dom(page)
+        valid, invalid_reason = evaluate_page_validity(blocks)
+        if not valid and page_looks_like_search_form(page):
+            invalid_reason = "search_form_like_page_detected"
+
+        if not valid:
+            return (
+                PageAttempt(
+                    page_number=page_number,
+                    url=url,
+                    success=False,
+                    card_blocks=len(blocks),
+                    parsed_cards=0,
+                    valid_result_page=False,
+                    invalid_reason=invalid_reason,
+                ),
+                [],
+            )
+
         cards = [parse_card(block, court_label=court_label, page_number=page_number) for block in blocks]
-        return PageAttempt(page_number=page_number, url=url, success=True, card_blocks=len(blocks), parsed_cards=len(cards)), cards
+        return (
+            PageAttempt(
+                page_number=page_number,
+                url=url,
+                success=True,
+                card_blocks=len(blocks),
+                parsed_cards=len(cards),
+                valid_result_page=True,
+            ),
+            cards,
+        )
     except Exception as exc:
         return (
-            PageAttempt(page_number=page_number, url=url, success=False, card_blocks=0, parsed_cards=0, error=str(exc)),
+            PageAttempt(
+                page_number=page_number,
+                url=url,
+                success=False,
+                card_blocks=0,
+                parsed_cards=0,
+                valid_result_page=False,
+                error=str(exc),
+            ),
             [],
         )
 
 
-def build_report(court_code: str, attempts: list[PageAttempt], total_before: int, total_after: int, cards: list[dict[str, Any]]) -> str:
+def build_report(
+    court_code: str,
+    start_state_url: str | None,
+    page1_real_result_reached: bool,
+    attempts: list[PageAttempt],
+    total_before: int,
+    total_after: int,
+    cards: list[dict[str, Any]],
+) -> str:
     pages_attempted = [a.page_number for a in attempts]
-    pages_success = [a.page_number for a in attempts if a.success]
+    valid_pages = [a.page_number for a in attempts if a.valid_result_page]
+    invalid_form_like_pages = [a.page_number for a in attempts if a.invalid_reason == "search_form_like_page_detected"]
     resolved_count = sum(1 for c in cards if is_resolved_sentence_url(c.get("text_url_or_action")))
-    pagination_success = len(pages_success) >= 2 and total_after > 0
+    pagination_success = page1_real_result_reached and len(valid_pages) >= 2 and total_after > 0
 
     lines = [
-        "# Day 14 deterministic pagination report",
+        "# Day 14 stateful pagination report",
         f"court code used: {court_code}",
         f"court label: {COURT_LABEL_MAP.get(court_code, 'unknown')}",
+        f"submitted result-state url: {start_state_url}",
+        f"page 1 real result page reached: {'yes' if page1_real_result_reached else 'no'}",
         f"pages attempted: {pages_attempted}",
-        f"pages successfully parsed: {pages_success}",
+        f"valid result pages parsed: {valid_pages}",
+        f"invalid search-form-like pages detected: {invalid_form_like_pages}",
         f"total cards before dedupe: {total_before}",
         f"total cards after dedupe: {total_after}",
         f"total resolved sentence URLs: {resolved_count}",
-        f"pagination appears successful: {pagination_success}",
+        f"stateful pagination appears successful: {pagination_success}",
         f"output json: {OUTPUT_JSON_PATH}",
         "",
         "## page attempts",
@@ -329,6 +487,8 @@ def build_report(court_code: str, attempts: list[PageAttempt], total_before: int
                     "page_number": a.page_number,
                     "url": a.url,
                     "success": a.success,
+                    "valid_result_page": a.valid_result_page,
+                    "invalid_reason": a.invalid_reason,
                     "card_blocks": a.card_blocks,
                     "parsed_cards": a.parsed_cards,
                     "error": a.error,
@@ -341,7 +501,7 @@ def build_report(court_code: str, attempts: list[PageAttempt], total_before: int
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Deterministic pagination extractor for court result cards.")
+    parser = argparse.ArgumentParser(description="Stateful pagination extractor for court result cards.")
     parser.add_argument("--court", default="tsi", choices=sorted(COURT_LABEL_MAP.keys()), help="Court code, default tsi")
     parser.add_argument("--pages", type=int, default=3, help="Number of pages to attempt, default 3")
     args = parser.parse_args()
@@ -351,6 +511,8 @@ def main() -> int:
     attempts: list[PageAttempt] = []
     all_cards: list[dict[str, Any]] = []
     court_label = COURT_LABEL_MAP.get(args.court, "unknown")
+    page1_real_result_reached = False
+    start_state_url: str | None = None
 
     sync_playwright = load_playwright()
     if not sync_playwright:
@@ -359,10 +521,11 @@ def main() -> int:
             attempts.append(
                 PageAttempt(
                     page_number=n,
-                    url=build_result_url(args.court, n),
+                    url=f"{BASE_URL}{RESULT_PATH}",
                     success=False,
                     card_blocks=0,
                     parsed_cards=0,
+                    valid_result_page=False,
                     error="playwright_not_installed",
                 )
             )
@@ -372,10 +535,33 @@ def main() -> int:
             context = browser.new_context(locale="zh-HK")
             page = context.new_page()
 
-            for n in range(1, max(1, args.pages) + 1):
-                attempt, cards = parse_page(page=page, court_code=args.court, court_label=court_label, page_number=n)
-                attempts.append(attempt)
-                all_cards.extend(cards)
+            submitted, result_state_url = submit_real_search(page=page, court_code=args.court)
+            if submitted and result_state_url:
+                start_state_url = result_state_url
+                page1_url = set_page_param_from_result_url(result_state_url, 1)
+                attempt1, cards1 = parse_page_at_url(page=page, url=page1_url, court_label=court_label, page_number=1)
+                attempts.append(attempt1)
+                all_cards.extend(cards1)
+                page1_real_result_reached = attempt1.valid_result_page
+
+                for n in range(2, max(1, args.pages) + 1):
+                    next_url = set_page_param_from_result_url(result_state_url, n)
+                    attempt, cards = parse_page_at_url(page=page, url=next_url, court_label=court_label, page_number=n)
+                    attempts.append(attempt)
+                    all_cards.extend(cards)
+            else:
+                for n in range(1, max(1, args.pages) + 1):
+                    attempts.append(
+                        PageAttempt(
+                            page_number=n,
+                            url=f"{BASE_URL}{RESULT_PATH}",
+                            success=False,
+                            card_blocks=0,
+                            parsed_cards=0,
+                            valid_result_page=False,
+                            invalid_reason="failed_to_submit_real_search",
+                        )
+                    )
 
             browser.close()
 
@@ -385,6 +571,8 @@ def main() -> int:
     OUTPUT_REPORT_PATH.write_text(
         build_report(
             court_code=args.court,
+            start_state_url=start_state_url,
+            page1_real_result_reached=page1_real_result_reached,
             attempts=attempts,
             total_before=len(all_cards),
             total_after=len(deduped_cards),
@@ -394,17 +582,19 @@ def main() -> int:
     )
 
     pages_attempted = [a.page_number for a in attempts]
-    pages_success = [a.page_number for a in attempts if a.success]
+    valid_pages = [a.page_number for a in attempts if a.valid_result_page]
+    invalid_form_like_pages = [a.page_number for a in attempts if a.invalid_reason == "search_form_like_page_detected"]
     resolved_count = sum(1 for c in deduped_cards if is_resolved_sentence_url(c.get("text_url_or_action")))
-    pagination_success = len(pages_success) >= 2 and len(deduped_cards) > 0
+    pagination_success = page1_real_result_reached and len(valid_pages) >= 2 and len(deduped_cards) > 0
 
-    print(f"court code used: {args.court}")
+    print(f"page 1 real result page reached: {'yes' if page1_real_result_reached else 'no'}")
     print(f"pages attempted: {pages_attempted}")
-    print(f"pages successfully parsed: {pages_success}")
+    print(f"valid result pages parsed: {valid_pages}")
+    print(f"invalid search-form-like pages detected: {invalid_form_like_pages}")
     print(f"total cards before dedupe: {len(all_cards)}")
     print(f"total cards after dedupe: {len(deduped_cards)}")
     print(f"total resolved sentence URLs: {resolved_count}")
-    print(f"pagination appears successful: {pagination_success}")
+    print(f"stateful pagination appears successful: {pagination_success}")
     print(f"output json: {OUTPUT_JSON_PATH}")
     print(f"report path: {OUTPUT_REPORT_PATH}")
 
