@@ -296,19 +296,52 @@ def read_manifest(path: Path) -> list[dict[str, Any]]:
     return records
 
 
-def build_duplicate_key(record: dict[str, Any]) -> tuple[str, str, str, str]:
+def normalize_source_identity_url(value: Any) -> str:
+    raw = normalize_space(value)
+    if not raw:
+        return ""
+    parsed = urlparse(raw)
+    scheme = (parsed.scheme or "https").lower()
+    netloc = parsed.netloc.lower()
+    path = parsed.path or "/"
+    if path != "/":
+        path = path.rstrip("/")
+    query_items = parse_qsl(parsed.query, keep_blank_values=True)
+    normalized_query = urlencode(sorted(query_items))
+    return urlunparse((scheme, netloc, path, parsed.params, normalized_query, ""))
+
+
+def get_authoritative_case_number(record: dict[str, Any]) -> str:
+    return normalize_space(record.get("authoritative_case_number") or record.get("source_list_case_number"))
+
+
+def get_authoritative_decision_date(record: dict[str, Any]) -> str:
+    return normalize_space(record.get("authoritative_decision_date") or record.get("source_list_decision_date"))
+
+
+def build_fallback_metadata_key(record: dict[str, Any]) -> tuple[str, str, str, str]:
     return (
-        normalize_space(record.get("authoritative_case_number")).lower(),
-        normalize_space(record.get("authoritative_decision_date")).lower(),
-        normalize_space(record.get("language")).lower(),
         normalize_space(record.get("court")).lower(),
+        get_authoritative_case_number(record).lower(),
+        get_authoritative_decision_date(record).lower(),
+        normalize_space(record.get("language")).lower(),
     )
+
+
+def build_duplicate_key(record: dict[str, Any]) -> tuple[str, str]:
+    text_url = normalize_source_identity_url(record.get("text_url_or_action"))
+    if text_url:
+        return ("text_url", text_url)
+    pdf_url = normalize_source_identity_url(record.get("pdf_url"))
+    if pdf_url:
+        return ("pdf_url", pdf_url)
+    return ("fallback_metadata", "|".join(build_fallback_metadata_key(record)))
 
 
 def append_record_to_corpus(record: dict[str, Any], manifest_fh, new_index: int) -> None:
     language = normalize_space(record.get("language")) or "unknown"
-    authoritative_case_number = normalize_space(record.get("source_list_case_number"))
-    authoritative_decision_date = normalize_space(record.get("source_list_decision_date"))
+    authoritative_case_number = get_authoritative_case_number(record)
+    authoritative_decision_date = get_authoritative_decision_date(record)
     case_slug = slugify_case_number(authoritative_case_number, new_index)
     year = extract_year(authoritative_decision_date)
 
@@ -488,15 +521,7 @@ def run() -> int:
                             "full_text": cleaned_text,
                         }
 
-                        authoritative_case_number = normalize_space(record.get("source_list_case_number"))
-                        authoritative_decision_date = normalize_space(record.get("source_list_decision_date"))
-                        
-                        duplicate_key = (
-                            authoritative_case_number.lower(),
-                            authoritative_decision_date.lower(),
-                            normalize_space(record.get("language")).lower(),
-                            normalize_space(record.get("court")).lower(),
-                        )
+                        duplicate_key = build_duplicate_key(record)
 
                         if duplicate_key in seen_keys:
                             stats.duplicates_skipped += 1

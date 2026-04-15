@@ -23,13 +23,12 @@ Because structure is proven, the limiting factor is dataset breadth. The next us
 Manifest source:
 - `data/corpus/raw/macau_court_cases/manifest.jsonl`
 
-Duplicate key (authoritative-first):
-1. `authoritative_case_number` (from `source_list_case_number`)
-2. `authoritative_decision_date` (from `source_list_decision_date`)
-3. `language`
-4. `court`
+Duplicate key priority (source-identity-first):
+1. normalized `text_url_or_action`,
+2. normalized `pdf_url` when text URL is missing,
+3. fallback metadata key `(court, authoritative_case_number, authoritative_decision_date, language)` only when both URLs are missing.
 
-Authoritative fields must strictly use the values parsed from the list page (`source_list_case_number`, `source_list_decision_date`). Detail-page extraction for these fields is removed to ensure exact consistency with Day 19 layout.
+`authoritative_case_number` and `authoritative_decision_date` continue to be sourced from list-page fields (`source_list_case_number`, `source_list_decision_date`) for fallback consistency.
 
 If duplicate key already exists:
 - skip corpus write,
