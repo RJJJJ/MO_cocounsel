@@ -33,10 +33,10 @@ Design choices:
 
 ## Metadata authority rules
 
-For each record:
+For each record, the metadata from the source list is considered authoritative:
 
-- `authoritative_case_number = detail_case_number if present else source_list_case_number`
-- `authoritative_decision_date = detail_decision_date if present else source_list_decision_date`
+- `authoritative_case_number = source_list_case_number`
+- `authoritative_decision_date = source_list_decision_date`
 
 `metadata.json` includes (minimum):
 
@@ -44,14 +44,11 @@ For each record:
 - `source_list_case_number`
 - `source_list_decision_date`
 - `source_list_case_type`
-- `detail_case_number`
-- `detail_decision_date`
-- `detail_title_or_issue`
 - `language`
 - `pdf_url`
 - `text_url_or_action`
 - `page_number`
-- `extraction_source` (`day18_selector_card_batch`)
+- `extraction_source` (e.g., `day18_selector_card_batch`, `day20_pagination_extension`)
 - `full_text_path`
 
 ## Naming / slug rules
@@ -85,7 +82,7 @@ This keeps a compact searchable ledger while detailed fields remain in `metadata
 When new pages are extracted:
 
 1. Produce the same normalized fields as Day 18 outputs.
-2. Resolve authoritative fields with the same rules.
+2. Resolve authoritative fields with the same rules (strictly from list-page metadata).
 3. Generate language/year/slug target folder.
 4. If same case already exists, either:
    - skip (if exact duplicate policy), or

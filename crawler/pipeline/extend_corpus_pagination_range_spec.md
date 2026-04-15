@@ -24,16 +24,17 @@ Manifest source:
 - `data/corpus/raw/macau_court_cases/manifest.jsonl`
 
 Duplicate key (authoritative-first):
-1. `authoritative_case_number`
-2. `authoritative_decision_date`
+1. `authoritative_case_number` (from `source_list_case_number`)
+2. `authoritative_decision_date` (from `source_list_decision_date`)
 3. `language`
 4. `court`
 
-Authoritative fields should prefer detail-page parsed values over list-page values when available.
+Authoritative fields must strictly use the values parsed from the list page (`source_list_case_number`, `source_list_decision_date`). Detail-page extraction for these fields is removed to ensure exact consistency with Day 19 layout.
 
 If duplicate key already exists:
 - skip corpus write,
 - increment duplicate counter,
+- log the skipped duplicate details (e.g. into `skipped_duplicates.txt`),
 - keep crawl running.
 
 ## Append-to-corpus rules
