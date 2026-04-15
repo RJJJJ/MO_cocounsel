@@ -1,0 +1,71 @@
+Citation Binding Layer Demo Report - Macau Court Cases
+query_received: 澳門 非法吸收存款 刑事 上訴
+retrieval_hits_received: 5
+citation_records_generated: 5
+citation_binding_layer_appears_successful: True
+citation_records:
+  [1] citation_label=澳門法院｜151/2026｜12/03/2026
+       chunk_id=151_2026_zh_c0007_23d297a28395
+       authoritative_case_number=151/2026
+       authoritative_decision_date=12/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       pdf_url=https://www.court.gov.mo/sentence/zh-c409775ab76054ae.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42387
+       chunk_text_preview=冀以取代原審法院之自由心證，原審裁判沒有沾有“審查證據方面明顯有錯誤”瑕疵，此部份的上訴理由不應成立。 6) 上訴人又指責獲證事實第32點及第33點均未載有犯罪構成要件中有關「施以暴力」的描述，未能足以認定其施以暴力或嚴重威脅，故認為原審裁判沾有“獲證明之事實上之事宜不足以支持作出該裁判”瑕疵。對此，檢察院同樣不予認同。 7) 上訴人的行為是否符合罪狀中「施以暴力」的構成要件，這明顯屬於法律適用的問題，不是“獲證明之事實上之事宜不足以支...
+       retrieval_source=bm25
+       score=22.505358
+       source_group_key=澳門法院::151/2026::12/03/2026::bm25
+  [2] citation_label=澳門法院｜151/2026｜12/03/2026
+       chunk_id=151_2026_zh_c0000_e1bb7733c024
+       authoritative_case_number=151/2026
+       authoritative_decision_date=12/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       pdf_url=https://www.court.gov.mo/sentence/zh-c409775ab76054ae.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42387
+       chunk_text_preview=第151/2026號刑事上訴案 上訴人：（第一嫌犯）(A) 日期：2026年3月12日 主要問題：審查證據錯誤、已證事實不足以支持裁判、吸毒罪的吸收、量刑過重、吸毒罪、販賣罪、抗拒及脅迫罪 摘要 從上述的已證事實所見，第1至3點的已證事實僅屬概括性的事實描述，當中所提到的“毒品‘冰’”，只是普羅大眾時下一種約定俗成的稱呼；事實上，在第17/2009號法律（經第4/2014號法律、第10/2016號法律、第10/2019號法律、第22/2...
+       retrieval_source=bm25
+       score=20.354060
+       source_group_key=澳門法院::151/2026::12/03/2026::bm25
+  [3] citation_label=澳門法院｜151/2026｜12/03/2026
+       chunk_id=151_2026_zh_c0013_98c9f6ae8fd4
+       authoritative_case_number=151/2026
+       authoritative_decision_date=12/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       pdf_url=https://www.court.gov.mo/sentence/zh-c409775ab76054ae.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42387
+       chunk_text_preview=務有關的行為，並直接造成被害警員的身體受到傷害。 四十三、 第二嫌犯清楚知悉毒品“冰”的性質及特徵，在未經法定許可的情況下，不法取得、持有、運載、出售、及準備出售上述麻醉藥品及精神藥物，目的是將之在澳門作販賣用途，藉此取得不法的金錢利益，同時第二嫌犯亦會將當中少部分毒品“冰”用作個人吸食。 四十四、 第二嫌犯清楚知悉毒品“冰”的性質及特徵，仍在未經法定許可的情況下，不法吸食上述麻醉藥品及精神藥物。 四十五、 第二嫌犯不法持有吸管、錫紙及...
+       retrieval_source=bm25
+       score=20.316432
+       source_group_key=澳門法院::151/2026::12/03/2026::bm25
+  [4] citation_label=澳門法院｜151/2026｜12/03/2026
+       chunk_id=151_2026_zh_c0005_c33570656445
+       authoritative_case_number=151/2026
+       authoritative_decision_date=12/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       pdf_url=https://www.court.gov.mo/sentence/zh-c409775ab76054ae.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42387
+       chunk_text_preview=28) 原審法庭認為第二嫌犯被指控以直接正犯，其既遂行為觸犯經第 4/2014號法律、第10/2016號法律、第 10/2019號法律、第22/2020號法律、第10/2021號法律、第18/2023號法律及第16/2024號法律修改的第17/2009號法律《禁止不法生產、販賣和吸食麻醉藥品及精神藥物》第8條第1款所規定及處罰的一項「不法取賣麻醉藥品及精神藥物罪』，以及同一法律第14條第1款所規定及處罰的一項「不法吸食麻醉藥品及精神藥物...
+       retrieval_source=bm25
+       score=17.791478
+       source_group_key=澳門法院::151/2026::12/03/2026::bm25
+  [5] citation_label=澳門法院｜151/2026｜12/03/2026
+       chunk_id=151_2026_zh_c0017_3c621b8b2614
+       authoritative_case_number=151/2026
+       authoritative_decision_date=12/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       pdf_url=https://www.court.gov.mo/sentence/zh-c409775ab76054ae.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42387
+       chunk_text_preview=”中的一部分是上訴人用作個人吸食。 基於此，本院認同這裡存在獲證明的事實不足以支持作出上訴人觸犯「不法吸食麻醉藥品及精神藥物罪」之裁判的情況，在此情況下，針對原審法院對上訴人所判處的一項「不法吸食麻醉藥品及精神藥物罪」應予廢止並開釋上訴人該項控罪。 ＊ 另一方面，關於上訴人所指，應將對上訴人所判處的一項「不法販賣麻醉藥品及精神藥物罪」吸收對其所判處的一項「不法吸食麻醉藥品及精神藥物罪」，基於本院已裁定開釋上訴人在案中的一項「不法吸食麻醉...
+       retrieval_source=bm25
+       score=15.579834
+       source_group_key=澳門法院::151/2026::12/03/2026::bm25
