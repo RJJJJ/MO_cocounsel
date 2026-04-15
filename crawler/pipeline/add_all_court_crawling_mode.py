@@ -41,6 +41,12 @@ class CrawlStats:
     duplicates_skipped_by_text_url: int = 0
     duplicates_skipped_by_pdf_url: int = 0
     duplicates_skipped_by_fallback_metadata: int = 0
+    cards_with_zh_text: int = 0
+    cards_with_pt_text: int = 0
+    cards_with_both_text_languages: int = 0
+    cards_with_zh_pdf: int = 0
+    cards_with_pt_pdf: int = 0
+    cards_with_both_pdf_languages: int = 0
     new_corpus_records_added: int = 0
     stop_reason: str = ""
 
@@ -186,11 +192,27 @@ def classify_document_links(links: list[dict[str, str]]) -> dict[str, Any]:
         if is_pdf and not other_pdf:
             other_pdf = abs_url
 
-    pdf_url = zh_pdf or pt_pdf or other_pdf
-    text_url_or_action = zh_text_url or pt_text_url
+    text_url_primary = zh_text_url or pt_text_url
+    pdf_url_primary = zh_pdf or pt_pdf or other_pdf
+    document_links: list[dict[str, str]] = []
+    if zh_text_url:
+        document_links.append({"kind": "text", "language": "zh", "url": zh_text_url})
+    if pt_text_url:
+        document_links.append({"kind": "text", "language": "pt", "url": pt_text_url})
+    if zh_pdf:
+        document_links.append({"kind": "pdf", "language": "zh", "url": zh_pdf})
+    if pt_pdf:
+        document_links.append({"kind": "pdf", "language": "pt", "url": pt_pdf})
     return {
-        "pdf_url": pdf_url,
-        "text_url_or_action": text_url_or_action,
+        "pdf_url_primary": pdf_url_primary,
+        "pdf_url_zh": zh_pdf,
+        "pdf_url_pt": pt_pdf,
+        "pdf_url": pdf_url_primary,
+        "text_url_primary": text_url_primary,
+        "text_url_zh": zh_text_url,
+        "text_url_pt": pt_text_url,
+        "text_url_or_action": text_url_primary,
+        "document_links": document_links,
     }
 
 
@@ -238,7 +260,14 @@ def parse_cards_from_current_page(page: "Page", page_number: int) -> list[dict[s
                 "source_list_decision_date": normalize_space(raw.get("decision_date")) or None,
                 "source_list_case_type": normalize_space(raw.get("case_type")) or None,
                 "pdf_url": link_fields["pdf_url"],
+                "pdf_url_primary": link_fields["pdf_url_primary"],
+                "pdf_url_zh": link_fields["pdf_url_zh"],
+                "pdf_url_pt": link_fields["pdf_url_pt"],
+                "text_url_primary": link_fields["text_url_primary"],
+                "text_url_zh": link_fields["text_url_zh"],
+                "text_url_pt": link_fields["text_url_pt"],
                 "text_url_or_action": link_fields["text_url_or_action"],
+                "document_links": link_fields["document_links"],
                 "page_number": page_number,
             }
         )
@@ -334,6 +363,40 @@ def normalize_source_identity_url(value: Any) -> str:
     return urlunparse((scheme, netloc, path, parsed.params, normalized_query, ""))
 
 
+def collect_document_urls(record: dict[str, Any], *, kind: str) -> list[str]:
+    urls: set[str] = set()
+    for entry in record.get("document_links") or []:
+        if not isinstance(entry, dict):
+            continue
+        if normalize_space(entry.get("kind")).lower() != kind:
+            continue
+        normalized = normalize_source_identity_url(entry.get("url"))
+        if normalized:
+            urls.add(normalized)
+
+    if kind == "text":
+        fallback_candidates = [
+            record.get("text_url_primary"),
+            record.get("text_url_zh"),
+            record.get("text_url_pt"),
+            record.get("text_url_or_action"),
+        ]
+    else:
+        fallback_candidates = [
+            record.get("pdf_url_primary"),
+            record.get("pdf_url_zh"),
+            record.get("pdf_url_pt"),
+            record.get("pdf_url"),
+        ]
+
+    for candidate in fallback_candidates:
+        normalized = normalize_source_identity_url(candidate)
+        if normalized:
+            urls.add(normalized)
+
+    return sorted(urls)
+
+
 def get_authoritative_case_number(record: dict[str, Any]) -> str:
     return normalize_space(record.get("authoritative_case_number") or record.get("source_list_case_number"))
 
@@ -352,12 +415,12 @@ def build_fallback_metadata_key(record: dict[str, Any]) -> tuple[str, str, str, 
 
 
 def build_duplicate_key(record: dict[str, Any]) -> tuple[str, str]:
-    text_url = normalize_source_identity_url(record.get("text_url_or_action"))
-    if text_url:
-        return ("text_url", text_url)
-    pdf_url = normalize_source_identity_url(record.get("pdf_url"))
-    if pdf_url:
-        return ("pdf_url", pdf_url)
+    text_urls = collect_document_urls(record, kind="text")
+    if text_urls:
+        return ("text_url", "|".join(text_urls))
+    pdf_urls = collect_document_urls(record, kind="pdf")
+    if pdf_urls:
+        return ("pdf_url", "|".join(pdf_urls))
     return ("fallback_metadata", "|".join(build_fallback_metadata_key(record)))
 
 
@@ -386,7 +449,14 @@ def append_record_to_corpus(record: dict[str, Any], manifest_fh, new_index: int)
         "source_list_case_type": normalize_space(record.get("source_list_case_type")),
         "language": language,
         "pdf_url": normalize_space(record.get("pdf_url")),
+        "pdf_url_primary": normalize_space(record.get("pdf_url_primary") or record.get("pdf_url")),
+        "pdf_url_zh": normalize_space(record.get("pdf_url_zh")),
+        "pdf_url_pt": normalize_space(record.get("pdf_url_pt")),
         "text_url_or_action": normalize_space(record.get("text_url_or_action")),
+        "text_url_primary": normalize_space(record.get("text_url_primary") or record.get("text_url_or_action")),
+        "text_url_zh": normalize_space(record.get("text_url_zh")),
+        "text_url_pt": normalize_space(record.get("text_url_pt")),
+        "document_links": record.get("document_links") or [],
         "page_number": record.get("page_number"),
         "extraction_source": "day24_all_court_crawling_mode",
         "full_text_path": relative_full_text_path,
@@ -399,7 +469,14 @@ def append_record_to_corpus(record: dict[str, Any], manifest_fh, new_index: int)
         "authoritative_decision_date": authoritative_decision_date,
         "court": metadata["court"],
         "pdf_url": metadata["pdf_url"],
+        "pdf_url_primary": metadata["pdf_url_primary"],
+        "pdf_url_zh": metadata["pdf_url_zh"],
+        "pdf_url_pt": metadata["pdf_url_pt"],
         "text_url_or_action": metadata["text_url_or_action"],
+        "text_url_primary": metadata["text_url_primary"],
+        "text_url_zh": metadata["text_url_zh"],
+        "text_url_pt": metadata["text_url_pt"],
+        "document_links": metadata["document_links"],
         "metadata_path": relative_metadata_path,
         "full_text_path": relative_full_text_path,
     }
@@ -417,11 +494,17 @@ def write_report(stats: CrawlStats) -> None:
         f"cards discovered: {stats.cards_discovered}",
         f"detail pages attempted: {stats.detail_pages_attempted}",
         f"detail pages succeeded: {stats.detail_pages_succeeded}",
-        "duplicate strategy used: text_url_or_action -> pdf_url -> (court, authoritative_case_number, authoritative_decision_date, language)",
+        "duplicate strategy used: sorted all text URLs -> sorted all pdf URLs -> (court, authoritative_case_number, authoritative_decision_date, language)",
         f"duplicates skipped: {stats.duplicates_skipped}",
         f"duplicates skipped by text_url: {stats.duplicates_skipped_by_text_url}",
         f"duplicates skipped by pdf_url: {stats.duplicates_skipped_by_pdf_url}",
         f"duplicates skipped by fallback metadata key: {stats.duplicates_skipped_by_fallback_metadata}",
+        f"cards with zh text: {stats.cards_with_zh_text}",
+        f"cards with pt text: {stats.cards_with_pt_text}",
+        f"cards with both text languages: {stats.cards_with_both_text_languages}",
+        f"cards with zh pdf: {stats.cards_with_zh_pdf}",
+        f"cards with pt pdf: {stats.cards_with_pt_pdf}",
+        f"cards with both pdf languages: {stats.cards_with_both_pdf_languages}",
         f"new corpus records added: {stats.new_corpus_records_added}",
         f"stop reason: {stats.stop_reason or 'none'}",
         f"whether all-court crawling appears successful: {'yes' if appears_successful else 'no'}",
@@ -437,14 +520,17 @@ def print_summary(stats: CrawlStats) -> None:
     print(f"cards discovered: {stats.cards_discovered}")
     print(f"detail pages attempted: {stats.detail_pages_attempted}")
     print(f"detail pages succeeded: {stats.detail_pages_succeeded}")
-    print(
-        "duplicate strategy used: text_url_or_action -> pdf_url -> "
-        "(court, authoritative_case_number, authoritative_decision_date, language)"
-    )
+    print("duplicate strategy used: sorted all text URLs -> sorted all pdf URLs -> fallback metadata key")
     print(f"duplicates skipped: {stats.duplicates_skipped}")
     print(f"duplicates skipped by text_url: {stats.duplicates_skipped_by_text_url}")
     print(f"duplicates skipped by pdf_url: {stats.duplicates_skipped_by_pdf_url}")
     print(f"duplicates skipped by fallback metadata key: {stats.duplicates_skipped_by_fallback_metadata}")
+    print(f"cards with zh text: {stats.cards_with_zh_text}")
+    print(f"cards with pt text: {stats.cards_with_pt_text}")
+    print(f"cards with both text languages: {stats.cards_with_both_text_languages}")
+    print(f"cards with zh pdf: {stats.cards_with_zh_pdf}")
+    print(f"cards with pt pdf: {stats.cards_with_pt_pdf}")
+    print(f"cards with both pdf languages: {stats.cards_with_both_pdf_languages}")
     print(f"new corpus records added: {stats.new_corpus_records_added}")
     print(f"whether all-court crawling appears successful: {'yes' if appears_successful else 'no'}")
 
@@ -525,7 +611,7 @@ def run() -> int:
                             (
                                 normalize_space(c.get("source_list_case_number")),
                                 normalize_space(c.get("source_list_decision_date")),
-                                normalize_space(c.get("text_url_or_action")),
+                                "|".join(collect_document_urls(c, kind="text")) or "|".join(collect_document_urls(c, kind="pdf")),
                             )
                             for c in page_cards
                         )
@@ -537,9 +623,19 @@ def run() -> int:
 
                     stats.valid_pages_parsed += 1
                     stats.cards_discovered += len(page_cards)
+                    stats.cards_with_zh_text += sum(1 for c in page_cards if normalize_space(c.get("text_url_zh")))
+                    stats.cards_with_pt_text += sum(1 for c in page_cards if normalize_space(c.get("text_url_pt")))
+                    stats.cards_with_both_text_languages += sum(
+                        1 for c in page_cards if normalize_space(c.get("text_url_zh")) and normalize_space(c.get("text_url_pt"))
+                    )
+                    stats.cards_with_zh_pdf += sum(1 for c in page_cards if normalize_space(c.get("pdf_url_zh")))
+                    stats.cards_with_pt_pdf += sum(1 for c in page_cards if normalize_space(c.get("pdf_url_pt")))
+                    stats.cards_with_both_pdf_languages += sum(
+                        1 for c in page_cards if normalize_space(c.get("pdf_url_zh")) and normalize_space(c.get("pdf_url_pt"))
+                    )
 
                     for card in page_cards:
-                        detail_url = normalize_space(card.get("text_url_or_action"))
+                        detail_url = normalize_space(card.get("text_url_primary") or card.get("text_url_or_action"))
                         if not detail_url:
                             continue
 

@@ -22,7 +22,7 @@ Core flow (unchanged in architecture, expanded in court scope):
 2. select court in the search form (`court=all` by default);
 3. submit search;
 4. parse result cards with selector-driven extraction;
-5. follow `text_url_or_action` links;
+5. follow `text_url_primary` links (backward-compatible alias: `text_url_or_action`);
 6. perform body-first detail extraction and text cleaning;
 7. append non-duplicate records into the existing raw corpus layout.
 
@@ -48,16 +48,20 @@ These modes reuse the same parser/extractor/append logic, differing only in `cou
 
 ## Duplicate handling
 
-Duplicate handling now prioritizes source-document identity to avoid false deduplication across court levels:
+Duplicate handling now prioritizes full source-document identity (not only one preferred URL) to avoid false deduplication across court levels:
 
 - read `data/corpus/raw/macau_court_cases/manifest.jsonl`;
 - build duplicate key using strict priority:
-  1. normalized `text_url_or_action` (primary),
-  2. normalized `pdf_url` (secondary, only if text URL missing),
+  1. sorted set of normalized text URLs from full card link set (`document_links`, `text_url_zh`, `text_url_pt`, `text_url_primary`),
+  2. sorted set of normalized PDF URLs from full card link set (`document_links`, `pdf_url_zh`, `pdf_url_pt`, `pdf_url_primary`),
   3. fallback metadata key `(court, authoritative_case_number, authoritative_decision_date, language)` only if both URLs are missing.
 - skip only when the highest-priority available key already exists;
 - append all non-duplicates to preserve distinct judgments that share case metadata but have different source URLs;
-- keep existing corpus directory structure and manifest schema intact.
+- keep existing corpus directory structure intact, while extending metadata/manifest link fields with:
+  - `text_url_primary`, `text_url_zh`, `text_url_pt`
+  - `pdf_url_primary`, `pdf_url_zh`, `pdf_url_pt`
+  - `document_links`
+  - backward-compatible aliases (`text_url_or_action`, `pdf_url`) remain.
 
 ## Stop conditions
 
@@ -81,11 +85,17 @@ Report and console summary include:
 - cards discovered
 - detail pages attempted
 - detail pages succeeded
-- duplicate strategy used (`text_url_or_action -> pdf_url -> fallback metadata`)
+- duplicate strategy used (`all text URL set -> all pdf URL set -> fallback metadata`)
 - duplicates skipped
 - duplicates skipped by `text_url`
 - duplicates skipped by `pdf_url`
 - duplicates skipped by fallback metadata key
+- cards with zh text
+- cards with pt text
+- cards with both text languages
+- cards with zh pdf
+- cards with pt pdf
+- cards with both pdf languages
 - new corpus records added
 - whether all-court crawling appears successful
 
