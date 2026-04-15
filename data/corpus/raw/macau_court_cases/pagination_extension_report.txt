@@ -1,0 +1,11 @@
+Day 20 pagination extension report
+===================================
+pages attempted: 0
+valid pages parsed: 0
+cards discovered: 0
+detail pages attempted: 0
+detail pages succeeded: 0
+duplicates skipped: 0
+new corpus records added: 0
+stop reason: playwright is not installed
+whether pagination extension appears successful: no
