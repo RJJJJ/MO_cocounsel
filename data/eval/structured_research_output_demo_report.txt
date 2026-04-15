@@ -1,0 +1,82 @@
+Structured Research Output Demo Report - Macau Court Cases
+query_received: 詐騙罪上訴量刑過重如何處理
+main_issue: 量刑過重
+sub_issues_count: 2
+answer_type: structured_research_output
+retrieval_hits_used: 5
+citation_count: 5
+findings_count: 5
+supporting_sources_count: 5
+structured_research_output_refinement_appears_successful: True
+answer_output_generated:
+  research_scope: Local deterministic legal retrieval pass over prepared Macau court chunks; query="詐騙罪上訴量刑過重如何處理", hits=5, citations=5. Findings are assembled from bound citation previews only.
+  top_case_numbers: 757/2025, 36/2026, 76/2026
+  preliminary_findings:
+    [1] Retrieved excerpt suggests: C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；d) 第三嫌犯E以直接共同正犯及既遂方式觸犯了《刑法典》第211條第4款a項結合第1款及第196條b項所規定及處罰的一項詐騙罪（相當巨額），判處兩年九個月徒刑，暫緩執行該徒刑，為期三年（已吸收以直接共同正犯及既遂方式觸犯的《刑法典》第244 條第1款a項及C項所規定及處罰的一項偽造文件罪，後者不作獨立判… (court=澳門法院, date=26/03/2026, rank=1).
+         citation_labels=澳門法院｜757/2025｜26/03/2026
+    [2] Retrieved excerpt suggests: 。 又或者，我們可以將之視為一種複合性的犯罪方式，即：它既具備符合詐騙罪的詭計情節，在實施犯罪計劃的過程中，行為人又使用了符合盜竊罪的手段情節，並構成犯罪的表面競合情況（參見中級法院第663/2021號裁判）。 然而，在定罪的層面，我們便應以情節較為嚴重的罪行來論處。 故此，本院認同上訴人所主張的見解，並認為四名嫌犯所實施的行為，包括“趁機取走”被害人的籌… (court=澳門法院, date=26/03/2026, rank=2).
+         citation_labels=澳門法院｜36/2026｜26/03/2026
+    [3] Retrieved excerpt suggests: 信自己所述為由，認為判決存在其指稱的瑕疵。 9) 在本案中，如上所述，原審法院已審查的證據充份及足夠，在事實層面，不存在應作無罪判決的合理懷疑，故被上訴裁判沒有違反上訴人所指的疑罪從無原則。 10) 上訴人提出認為觸犯的應為澳門《刑法典》第199條第1款及第4款b)項結合第196條b)項所規定及處罰之「信任之濫用罪（相當巨額）」。 11) 在本案中，經開庭… (court=澳門法院, date=12/03/2026, rank=3).
+         citation_labels=澳門法院｜76/2026｜12/03/2026
+    [4] Retrieved excerpt suggests: 第757/2025號刑事上訴案 上訴人：A 日期：2026年3月26日 主要問題：加重詐騙罪、量刑過重、緩刑 摘要 在侵犯財產罪的事件中，行為人向被害人／被害實體償還涉案款項的情節具有重要性。 即使在2018年1月1日至2019年12月31日期間，上訴人僅向被害實體返還了434,806.90澳門元而不屬於《刑法典》第201條第1款所指全數賠償的情節，但不能… (court=澳門法院, date=26/03/2026, rank=4).
+         citation_labels=澳門法院｜757/2025｜26/03/2026
+    [5] Retrieved excerpt suggests: 之女友J保管，以便持續推進業務。 58) 上訴人此舉係基於信任與業務運作考量，亦無違反輔助人的意思。 59) 後來，業務的運作並非如上訴人所想般的順利，相反，由第三嫌犯運作的資金在從事業務等灰色產業生意時最終產生虧損，故釀成現時輔助人的投資資金損失。 60) 綜上，上訴人從未有將港幣1,500萬元據為己有之意圖。2024年4月20日起之資金流出，均係基於當… (court=澳門法院, date=12/03/2026, rank=5).
+         citation_labels=澳門法院｜76/2026｜12/03/2026
+  supporting_sources:
+    [1] citation_label=澳門法院｜757/2025｜26/03/2026
+         chunk_id=757_2025_zh_c0002_0b42b7eee509
+         case_number=757/2025
+         decision_date=26/03/2026
+         court=澳門法院
+         retrieval_source=bm25
+         score=59.457505
+         pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+    [2] citation_label=澳門法院｜36/2026｜26/03/2026
+         chunk_id=36_2026_zh_c0013_793e2f1e1c1f
+         case_number=36/2026
+         decision_date=26/03/2026
+         court=澳門法院
+         retrieval_source=bm25
+         score=50.355409
+         pdf_url=https://www.court.gov.mo/sentence/zh-15d9013697be59af.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42353
+    [3] citation_label=澳門法院｜76/2026｜12/03/2026
+         chunk_id=76_2026_zh_c0016_92e118b2f55a
+         case_number=76/2026
+         decision_date=12/03/2026
+         court=澳門法院
+         retrieval_source=bm25
+         score=48.758151
+         pdf_url=https://www.court.gov.mo/sentence/zh-f9142c3b08d55571.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42317
+    [4] citation_label=澳門法院｜757/2025｜26/03/2026
+         chunk_id=757_2025_zh_c0000_6415798e445c
+         case_number=757/2025
+         decision_date=26/03/2026
+         court=澳門法院
+         retrieval_source=bm25
+         score=48.652170
+         pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+    [5] citation_label=澳門法院｜76/2026｜12/03/2026
+         chunk_id=76_2026_zh_c0006_b37f487c27a9
+         case_number=76/2026
+         decision_date=12/03/2026
+         court=澳門法院
+         retrieval_source=bm25
+         score=48.353700
+         pdf_url=https://www.court.gov.mo/sentence/zh-f9142c3b08d55571.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42317
+  coverage_notes:
+    - This is a retrieval-grounded preliminary research output generated deterministically.
+    - Each preliminary finding is attached to citation labels from citation binding records.
+    - Output should be treated as an initial research artifact for analyst/legal review.
+  limitations:
+    - No dense retrieval is enabled in the current local pipeline.
+    - No LLM-based legal reasoning or narrative synthesis is performed.
+    - Coverage can be limited by corpus scope, query phrasing, and sparse retrieval recall.
+  next_actions:
+    - Validate whether additional issue-specific subqueries should be added before retrieval.
+    - Cross-check top cited cases against full-text holdings for doctrinal consistency.
+    - Evaluate adding a local dense retrieval stub or search router in the next iteration.
