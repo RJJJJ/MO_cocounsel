@@ -820,17 +820,24 @@ Must-have:
 
 # MVP Scope
 
-The first real MVP should stay narrow.
+The first real MVP should stay narrow while remaining product-accurate.
 
 ## Recommended MVP
 Focus on:
 
 - Macau public judgments
-- labor law first
+- Macau statutes (laws and regulations)
 - hybrid retrieval
-- statute linking
+- statute-case linkage
 - citation cards
 - structured research summary
+
+Clarifications:
+
+- MVP first focuses on Macau public judgments and Macau statutes.
+- The architecture is cross-domain and not limited to labor law.
+- Early datasets may start with a small subset of cases for faster iteration, but that subset does not define product scope.
+- Day 1 delivery is retrieval foundation only; it does **not** include agent orchestration implementation.
 
 ## MVP Input
 - natural language legal question
