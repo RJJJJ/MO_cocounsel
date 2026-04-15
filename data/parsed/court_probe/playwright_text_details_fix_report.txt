@@ -4,6 +4,7 @@ sample cards attempted: 3
 successful text detail extractions: 0
 failed detail extractions: 3
 direct sentence pages opened count: 0
+failure ratio: 100.00%
 language counts: {}
 whether text extraction now appears successful: False
 
