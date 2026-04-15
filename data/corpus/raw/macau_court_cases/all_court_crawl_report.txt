@@ -6,7 +6,11 @@ valid pages parsed: 10
 cards discovered: 100
 detail pages attempted: 100
 detail pages succeeded: 100
-duplicates skipped: 22
-new corpus records added: 78
+duplicate strategy used: text_url_or_action -> pdf_url -> (court, authoritative_case_number, authoritative_decision_date, language)
+duplicates skipped: 30
+duplicates skipped by text_url: 30
+duplicates skipped by pdf_url: 0
+duplicates skipped by fallback metadata key: 0
+new corpus records added: 70
 stop reason: reached configured page range 1..10
 whether all-court crawling appears successful: yes
