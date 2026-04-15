@@ -1,0 +1,35 @@
+Macau Court Local Retrieval Evaluation Report
+bm25_input_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+query_test_set_path: data\eval\macau_court_query_test_set.jsonl
+total_bm25_records_loaded: 1265
+tokenizer_strategy_used: deterministic_regex_plus_cjk_bigrams
+top_k_used: 10
+total_queries_loaded: 13
+total_queries_evaluated: 13
+queries_with_expected_cases: 8
+exact_case_hit_count: 6
+hit@10: 6/8 (75.00%)
+
+hit_by_query_type:
+  - ambiguous_or_noisy: 0/0 (0.00%)
+  - case_number_lookup: 1/1 (100.00%)
+  - issue_fact_zh: 1/2 (50.00%)
+  - legal_concept_zh: 4/4 (100.00%)
+  - portuguese_or_mixed: 0/1 (0.00%)
+
+per_query_summary:
+  - query_id=Q001 | type=legal_concept_zh | hit=True | first_hit_rank=6 | expected=['100/2026', '119/2026', '120/2026'] | top_cases=['164/2026', '253/2026', '206/2026', '165/2026', '207/2026', '100/2026', '137/2026', '120/2026'] | query=假釋
+  - query_id=Q002 | type=legal_concept_zh | hit=True | first_hit_rank=2 | expected=['1073/2025', '117/2026', '147/2025'] | top_cases=['757/2025', '1073/2025', '34/2026', '85/2026', '76/2026', '151/2026'] | query=量刑過重
+  - query_id=Q003 | type=legal_concept_zh | hit=True | first_hit_rank=1 | expected=['310/2025', '728/2025', '871/2024'] | top_cases=['871/2024', '310/2025'] | query=誹謗
+  - query_id=Q004 | type=legal_concept_zh | hit=True | first_hit_rank=2 | expected=['1033/2025', '1073/2025', '157/2026'] | top_cases=['85/2026', '1073/2025', '401/2025', '345/2025', '31/2026', '446/2025', '157/2026'] | query=違令
+  - query_id=Q005 | type=issue_fact_zh | hit=False | first_hit_rank=None | expected=[] | top_cases=['1035/2025', '956/2025', '76/2026', '136/2025', '147/2025', '214/2025', '728/2025', '168/2026'] | query=合同之不能履行
+  - query_id=Q006 | type=issue_fact_zh | hit=False | first_hit_rank=None | expected=['1073/2025', '1087/2025/A', '1092/2025'] | top_cases=['147/2025', '871/2024', '310/2025', '164/2026'] | query=損害賠償
+  - query_id=Q007 | type=issue_fact_zh | hit=True | first_hit_rank=1 | expected=['36/2026', '757/2025'] | top_cases=['36/2026', '757/2025', '721/2025'] | query=加重詐騙
+  - query_id=Q008 | type=case_number_lookup | hit=False | first_hit_rank=None | expected=[] | top_cases=[] | query=79/2025
+  - query_id=Q009 | type=case_number_lookup | hit=True | first_hit_rank=1 | expected=['253/2026'] | top_cases=['253/2026'] | query=253/2026
+  - query_id=Q010 | type=portuguese_or_mixed | hit=False | first_hit_rank=None | expected=[] | top_cases=['629/2025', '384/2025', '388/2025', '1006/2025', '608/2025', '247/2025', '467/2025', '956/2025'] | query=processo n o 578/2025 recurso em matéria cível
+  - query_id=Q011 | type=portuguese_or_mixed | hit=False | first_hit_rank=None | expected=['1006/2025', '1035/2025', '543/2025'] | top_cases=['310/2025', '164/2026', '253/2026', '206/2026', '165/2026', '207/2026', '100/2026'] | query=假釋 liberdade condicional
+  - query_id=Q012 | type=ambiguous_or_noisy | hit=False | first_hit_rank=None | expected=[] | top_cases=['164/2026', '203/2026', '123/2026', '254/2026', '253/2026', '157/2026', '964/2025', '721/2025'] | query=上訴
+  - query_id=Q013 | type=ambiguous_or_noisy | hit=False | first_hit_rank=None | expected=[] | top_cases=['168/2026', '968/2025', '467/2025'] | query=公司
+
+local_retrieval_evaluation_appears_successful: True

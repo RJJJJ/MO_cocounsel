@@ -1,0 +1,9 @@
+BM25 Prep Report - Macau Court Cases
+chunks_input_path: data\corpus\prepared\macau_court_cases\chunks.jsonl
+bm25_output_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+total_chunks_read: 1265
+total_bm25_records_written: 1265
+zh_records_count: 692
+pt_records_count: 573
+average_bm25_text_length: 1123.37
+bm25_prep_successful: True

@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "36/2026",
+  "source_list_decision_date": "26/03/2026",
+  "source_list_case_type": "刑事訴訟程序的上訴",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-15d9013697be59af.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-15d9013697be59af.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-15d9013697be59af.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42353",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/42353",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/42353",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/42353"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-15d9013697be59af.pdf"
+    }
+  ],
+  "page_number": 1,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2026/36_2026/full_text.txt"
+}

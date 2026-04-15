@@ -1,0 +1,10 @@
+Chunking Prep Report - Macau Court Cases
+manifest_path: data\corpus\raw\macau_court_cases\manifest.jsonl
+chunks_output_path: data\corpus\prepared\macau_court_cases\chunks.jsonl
+total_corpus_records_read: 77
+total_chunk_records_written: 1265
+average_chunks_per_case: 16.43
+zh_chunks_count: 692
+pt_chunks_count: 573
+skipped_cases_count: 0
+chunking_prep_successful: True

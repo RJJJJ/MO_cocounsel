@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "316/2025",
+  "source_list_decision_date": "26/02/2026",
+  "source_list_case_type": "司法上訴(中級法院作為第一審法院的行政訴訟案件)",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-f8c13a73c8bf7f4a.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-f8c13a73c8bf7f4a.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-f8c13a73c8bf7f4a.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42193",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/42193",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/42193",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/42193"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-f8c13a73c8bf7f4a.pdf"
+    }
+  ],
+  "page_number": 8,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2026/316_2025/full_text.txt"
+}
