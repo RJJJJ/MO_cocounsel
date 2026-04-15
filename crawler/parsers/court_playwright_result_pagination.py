@@ -64,6 +64,8 @@ class PageAttempt:
     success: bool
     card_blocks: int
     parsed_cards: int
+    cards_with_case_number: int
+    cards_with_doc_links: int
     valid_result_page: bool
     invalid_reason: str | None = None
     error: str | None = None
@@ -85,14 +87,28 @@ def extract_field_by_label(text: str, keys: tuple[str, ...]) -> str | None:
 
 def set_page_param_from_result_url(result_url: str, page_number: int) -> str:
     parsed = urlparse(result_url)
-    query = dict(parse_qsl(parsed.query, keep_blank_values=True))
-    if "court" not in query:
-        query["court"] = "tsi"
-    if page_number <= 1:
-        query.pop("page", None)
-    else:
-        query["page"] = str(page_number)
-    return urlunparse((parsed.scheme, parsed.netloc, parsed.path, parsed.params, urlencode(query), parsed.fragment))
+    query_pairs = parse_qsl(parsed.query, keep_blank_values=True)
+
+    out_pairs: list[tuple[str, str]] = []
+    seen_page = False
+    seen_court = False
+    for k, v in query_pairs:
+        if k == "page":
+            if not seen_page:
+                seen_page = True
+                if page_number > 1:
+                    out_pairs.append((k, str(page_number)))
+            continue
+        out_pairs.append((k, v))
+        if k == "court":
+            seen_court = True
+
+    if not seen_court:
+        out_pairs.append(("court", "tsi"))
+    if page_number > 1 and not seen_page:
+        out_pairs.append(("page", str(page_number)))
+
+    return urlunparse((parsed.scheme, parsed.netloc, parsed.path, parsed.params, urlencode(out_pairs), parsed.fragment))
 
 
 def wait_for_results_stable(page: "Page") -> None:
@@ -262,26 +278,21 @@ def parse_card(card: dict[str, Any], court_label: str, page_number: int) -> dict
     }
 
 
-def evaluate_page_validity(cards: list[dict[str, Any]]) -> tuple[bool, str | None]:
-    if not cards:
-        return False, "no_candidate_cards"
+def evaluate_page_validity(parsed_cards: list[dict[str, Any]]) -> tuple[bool, str | None, int, int]:
+    parsed_count = len(parsed_cards)
+    cards_with_case_number = sum(1 for c in parsed_cards if normalize_space(c.get("case_number")))
+    cards_with_doc_links = sum(
+        1 for c in parsed_cards if normalize_space(c.get("pdf_url")) or normalize_space(c.get("text_url_or_action"))
+    )
 
-    repeated_cards = sum(1 for c in cards if int(c.get("repeated_count") or 0) >= 3)
-    meaningful_case_count = sum(1 for c in cards if CASE_RE.search(normalize_space(c.get("raw_card_text"))))
-    linked_count = 0
-    for c in cards:
-        pdf_url, text_url_or_action = parse_links(c.get("links", []))
-        if normalize_space(pdf_url) or normalize_space(text_url_or_action):
-            linked_count += 1
+    if parsed_count < 5:
+        return False, "parsed_cards_below_5", cards_with_case_number, cards_with_doc_links
+    if cards_with_case_number < 3:
+        return False, "cards_with_case_number_below_3", cards_with_case_number, cards_with_doc_links
+    if cards_with_doc_links < 3:
+        return False, "cards_with_doc_links_below_3", cards_with_case_number, cards_with_doc_links
 
-    if repeated_cards < 2:
-        return False, "not_enough_repeated_case_cards"
-    if meaningful_case_count < 2:
-        return False, "missing_meaningful_case_numbers"
-    if linked_count < 2:
-        return False, "missing_pdf_or_text_links"
-
-    return True, None
+    return True, None, cards_with_case_number, cards_with_doc_links
 
 
 def page_looks_like_search_form(page: "Page") -> bool:
@@ -339,52 +350,59 @@ def submit_real_search(page: "Page", court_code: str) -> tuple[bool, str | None]
     page.goto(target_url, wait_until="domcontentloaded", timeout=45_000)
     page.wait_for_timeout(1200)
 
-    submit_ok = bool(
-        page.evaluate(
-            r"""
-        (courtCode) => {
-          const norm = (s) => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
-          const selectCandidates = Array.from(document.querySelectorAll('select'));
-          let courtSelect = null;
-          for (const s of selectCandidates) {
-            const attrs = `${s.name||''} ${s.id||''} ${s.className||''}`.toLowerCase();
-            const hasOption = Array.from(s.options || []).some((o) => norm(o.value) === courtCode || norm(o.textContent).includes('中級法院'));
-            if ((attrs.includes('court') || attrs.includes('法院') || attrs.includes('法庭') || hasOption) && hasOption) {
-              courtSelect = s;
-              break;
-            }
-          }
-          if (!courtSelect) return false;
+    sel = page.locator("#wizcasesearch_sentence_filter_type_court")
+    target_label = COURT_LABEL_MAP.get(court_code, "")
+    try:
+        sel.wait_for(timeout=5000)
+        sel.select_option(value=court_code)
+    except Exception:
+        try:
+            if target_label:
+                sel.select_option(label=target_label)
+            else:
+                return False, None
+        except Exception:
+            return False, None
 
-          const targetOpt = Array.from(courtSelect.options || []).find((o) => norm(o.value) === courtCode)
-            || Array.from(courtSelect.options || []).find((o) => norm(o.textContent).includes('中級法院'));
-          if (!targetOpt) return false;
+    form = page.locator("form[action*='researchjudgments']").last
+    try:
+        form.wait_for(timeout=5000)
+    except Exception:
+        return False, None
 
-          courtSelect.value = targetOpt.value;
-          courtSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    submit_ok = False
+    candidate_selectors = [
+        "button[type='submit']",
+        "input[type='submit']",
+        "button:has-text('搜尋')",
+        "input[value='搜尋']",
+        "button",
+        "input[type='button']",
+    ]
 
-          const buttons = Array.from(document.querySelectorAll('button, input[type="submit"], input[type="button"], a'));
-          const submit = buttons.find((el) => {
-            const t = norm(el.innerText || el.value || el.textContent || '');
-            return t.includes('搜索') || t.includes('查詢') || t.includes('搜尋') || t.includes('search') || t.includes('pesquisa');
-          });
+    for selector in candidate_selectors:
+        btn = form.locator(selector)
+        if btn.count() == 0:
+            continue
+        for i in range(btn.count()):
+            try:
+                target = btn.nth(i)
+                if target.is_visible():
+                    target.scroll_into_view_if_needed()
+                    target.click(timeout=5000, force=True)
+                    submit_ok = True
+                    break
+            except Exception:
+                continue
+        if submit_ok:
+            break
 
-          if (submit) {
-            submit.click();
-            return true;
-          }
-
-          const form = courtSelect.closest('form');
-          if (form) {
-            form.requestSubmit ? form.requestSubmit() : form.submit();
-            return true;
-          }
-          return false;
-        }
-        """,
-            court_code,
-        )
-    )
+    if not submit_ok:
+        try:
+            form.evaluate("(f) => f.submit()")
+            submit_ok = True
+        except Exception:
+            submit_ok = False
 
     if not submit_ok:
         return False, None
@@ -402,7 +420,8 @@ def parse_page_at_url(page: "Page", url: str, court_label: str, page_number: int
         wait_for_results_stable(page)
 
         blocks = extract_card_blocks_from_dom(page)
-        valid, invalid_reason = evaluate_page_validity(blocks)
+        cards = [parse_card(block, court_label=court_label, page_number=page_number) for block in blocks]
+        valid, invalid_reason, cards_with_case_number, cards_with_doc_links = evaluate_page_validity(cards)
         if not valid and page_looks_like_search_form(page):
             invalid_reason = "search_form_like_page_detected"
 
@@ -413,14 +432,15 @@ def parse_page_at_url(page: "Page", url: str, court_label: str, page_number: int
                     url=url,
                     success=False,
                     card_blocks=len(blocks),
-                    parsed_cards=0,
+                    parsed_cards=len(cards),
+                    cards_with_case_number=cards_with_case_number,
+                    cards_with_doc_links=cards_with_doc_links,
                     valid_result_page=False,
                     invalid_reason=invalid_reason,
                 ),
                 [],
             )
 
-        cards = [parse_card(block, court_label=court_label, page_number=page_number) for block in blocks]
         return (
             PageAttempt(
                 page_number=page_number,
@@ -428,6 +448,8 @@ def parse_page_at_url(page: "Page", url: str, court_label: str, page_number: int
                 success=True,
                 card_blocks=len(blocks),
                 parsed_cards=len(cards),
+                cards_with_case_number=cards_with_case_number,
+                cards_with_doc_links=cards_with_doc_links,
                 valid_result_page=True,
             ),
             cards,
@@ -440,6 +462,8 @@ def parse_page_at_url(page: "Page", url: str, court_label: str, page_number: int
                 success=False,
                 card_blocks=0,
                 parsed_cards=0,
+                cards_with_case_number=0,
+                cards_with_doc_links=0,
                 valid_result_page=False,
                 error=str(exc),
             ),
@@ -491,6 +515,8 @@ def build_report(
                     "invalid_reason": a.invalid_reason,
                     "card_blocks": a.card_blocks,
                     "parsed_cards": a.parsed_cards,
+                    "cards_with_case_number": a.cards_with_case_number,
+                    "cards_with_doc_links": a.cards_with_doc_links,
                     "error": a.error,
                 },
                 ensure_ascii=False,
@@ -525,6 +551,8 @@ def main() -> int:
                     success=False,
                     card_blocks=0,
                     parsed_cards=0,
+                    cards_with_case_number=0,
+                    cards_with_doc_links=0,
                     valid_result_page=False,
                     error="playwright_not_installed",
                 )
@@ -544,11 +572,13 @@ def main() -> int:
                 all_cards.extend(cards1)
                 page1_real_result_reached = attempt1.valid_result_page
 
-                for n in range(2, max(1, args.pages) + 1):
-                    next_url = set_page_param_from_result_url(result_state_url, n)
-                    attempt, cards = parse_page_at_url(page=page, url=next_url, court_label=court_label, page_number=n)
-                    attempts.append(attempt)
-                    all_cards.extend(cards)
+                if page1_real_result_reached:
+                    real_result_state_url = page.url
+                    for n in range(2, max(1, args.pages) + 1):
+                        next_url = set_page_param_from_result_url(real_result_state_url, n)
+                        attempt, cards = parse_page_at_url(page=page, url=next_url, court_label=court_label, page_number=n)
+                        attempts.append(attempt)
+                        all_cards.extend(cards)
             else:
                 for n in range(1, max(1, args.pages) + 1):
                     attempts.append(
@@ -558,6 +588,8 @@ def main() -> int:
                             success=False,
                             card_blocks=0,
                             parsed_cards=0,
+                            cards_with_case_number=0,
+                            cards_with_doc_links=0,
                             valid_result_page=False,
                             invalid_reason="failed_to_submit_real_search",
                         )
