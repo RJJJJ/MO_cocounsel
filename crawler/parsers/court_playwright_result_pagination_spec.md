@@ -1,87 +1,83 @@
-# Day 14 Spec: Deterministic URL Pagination for Macau Courts Result Cards
+# Day 14 Spec: Stateful Pagination from Real Submitted Result State
 
-## Why deterministic URL pagination is preferred now
+## Why the previous direct URL pagination approach was insufficient
 
-Previous phases validated that result cards can be reliably extracted from Playwright-rendered pages. The main uncertainty was pagination traversal. After confirming stable query parameters (`court`, `page`), direct URL navigation is now preferred because it is:
+The prior Day 14 attempt treated URLs like `.../researchjudgments?court=tsi&page=2` as independent entry points. In practice, opening those URLs directly can render search-page chrome (or form-like shell) rather than true repeated judgment result cards. That means a URL can look paginated but still not represent a valid result dataset.
 
-- **Deterministic**: page 1, 2, 3 can be addressed directly without relying on fragile UI button state.
-- **Lower-maintenance**: avoids selector drift and click/timing issues from pagination controls.
-- **Easier to recover**: a single page failure can be logged and skipped without breaking full traversal.
-- **Reproducible**: inputs are explicit (`court=tsi&page=2`) and suitable for reruns.
+## Why pagination must start from a real submitted result-page state
 
-## Known court parameter mapping
+Pagination must begin only after Playwright performs a real UI search submission:
 
-- `tui` = 終審法院
-- `tsi` = 中級法院
-- `tjb` = 初級法院
-- `ta`  = 行政法院
-- `all` = 所有
+1. Open the search page.
+2. Select target court (`tsi` / 中級法院).
+3. Click search/submit.
+4. Wait for true page-1 result cards to stabilize.
 
-## Known page parameter rule
+Only after this state exists do we derive page 2/3 URLs from the submitted result URL. This keeps query/state parameters aligned with real server-side result context.
 
-Base path:
+## Updated navigation strategy
 
-- `https://www.court.gov.mo/zh/subpage/researchjudgments?court=<court_code>`
+1. `page.goto(search_page)`.
+2. Programmatically set/select court in the real court selector.
+3. Trigger actual submit click (`搜索/查詢/search/pesquisa` button or form submit fallback).
+4. Wait for result-card stability on page 1.
+5. Capture submitted result URL (`page.url`).
+6. Parse page 1 cards.
+7. Build page 2/3 URLs by mutating only `page` on the submitted URL.
+8. For each next page:
+   - `goto(state_compatible_paginated_url)`
+   - wait for stabilization
+   - run valid-page guard
+   - parse cards only if valid
+   - attach `page_number`
 
-Paginated pages:
+## Valid-page vs invalid-page detection criteria
 
-- `...&page=2`
-- `...&page=3`
-- `...&page=<n>`
+A page is valid only if it contains strong result-card signals:
 
-Implementation convention in this phase:
+- multiple repeated card-like blocks (`repeated_count >= 3`, with at least 2 blocks),
+- meaningful case-number hits,
+- non-empty `pdf_url` or `text_url_or_action` on at least 2 blocks.
 
-- Page 1 uses URL without explicit `page=1`.
-- Pages >=2 include explicit `page=<n>`.
+Invalid-page handling:
 
-## Page loading strategy
-
-For each target page number:
-
-1. Build deterministic URL from known `court` and `page` query params.
-2. `page.goto(url, wait_until="domcontentloaded")`.
-3. Wait for stability (multi-round card-count stabilization).
-4. Reuse validated DOM card extraction heuristic.
-5. Parse normalized card fields and attach `page_number`.
-6. If a page fails, record error and continue with remaining pages.
+- If criteria fail and DOM resembles search-form shell (many form controls, search keywords, low case-card candidates), mark page invalid with `search_form_like_page_detected`.
+- Invalid pages are explicitly reported and excluded from successful pagination output.
 
 ## Deduplication strategy
 
-Aggregate all pages first, then deduplicate by strong identity:
+Aggregate all valid parsed cards, then dedupe by:
 
-- Primary identity tuple:
-  - `(court, case_number, decision_date, pdf_url or text_url_or_action)`
-- Fallback when key fields are missing:
-  - `(court, raw_card_text)`
+- `(court, case_number, decision_date, pdf_url or text_url_or_action)`
 
-This minimizes duplicate carryover when the same judgment appears across pages or partial snapshots.
+Fallback key when these are absent:
+
+- `(court, raw_card_text)`
 
 ## Success criteria
 
 A run is considered successful when:
 
-- deterministic URLs are attempted for at least pages 1–3,
-- at least two pages parse successfully,
-- non-empty card output is produced,
-- output files are written:
+- page 1 is reached via real submitted result state,
+- pages 1..N are attempted from state-compatible URLs,
+- at least two pages are valid result pages,
+- output artifacts are generated:
   - `data/parsed/court_probe/playwright_result_cards_paginated.json`
   - `data/parsed/court_probe/playwright_pagination_report.txt`
-- terminal/report include:
-  - court code used
+- terminal/report contain:
+  - `page 1 real result page reached: yes/no`
   - pages attempted
-  - pages successfully parsed
+  - valid result pages parsed
+  - invalid search-form-like pages detected
   - total cards before/after dedupe
   - total resolved sentence URLs
-  - pagination success flag
+  - stateful pagination success flag
 
 ## Recommended next step
 
-Choose one of:
+Choose one:
 
-1. **Batch text-detail extraction from paginated cards**
-   - Input from deduplicated paginated result-card pool.
-   - Prioritize resolved `text_url_or_action` sentence URLs.
+1. Batch text-detail extraction from deduped paginated cards.
+2. Build raw corpus storage layout for index metadata + immutable raw text snapshots.
 
-2. **Build raw corpus storage layout**
-   - Separate index metadata (result cards) from full text corpus files.
-   - Keep immutable raw snapshots + normalized structured layers for reproducibility.
+(Out of scope for this Day 14 stateful-pagination fix.)
