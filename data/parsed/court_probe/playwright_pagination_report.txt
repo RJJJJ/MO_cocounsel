@@ -1,7 +1,7 @@
 # Day 14 stateful pagination report
 court code used: tsi
 court label: 中級法院
-submitted result-state url: None
+submitted result-state url: https://www.court.gov.mo/zh/subpage/researchjudgments
 page 1 real result page reached: no
 pages attempted: [1, 2, 3]
 valid result pages parsed: []
@@ -10,9 +10,9 @@ total cards before dedupe: 0
 total cards after dedupe: 0
 total resolved sentence URLs: 0
 stateful pagination appears successful: False
-output json: data/parsed/court_probe/playwright_result_cards_paginated.json
+output json: data\parsed\court_probe\playwright_result_cards_paginated.json
 
 ## page attempts
-{"page_number": 1, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments", "success": false, "valid_result_page": false, "invalid_reason": null, "card_blocks": 0, "parsed_cards": 0, "error": "playwright_not_installed"}
-{"page_number": 2, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments", "success": false, "valid_result_page": false, "invalid_reason": null, "card_blocks": 0, "parsed_cards": 0, "error": "playwright_not_installed"}
-{"page_number": 3, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments", "success": false, "valid_result_page": false, "invalid_reason": null, "card_blocks": 0, "parsed_cards": 0, "error": "playwright_not_installed"}
+{"page_number": 1, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tsi", "success": false, "valid_result_page": false, "invalid_reason": "not_enough_repeated_case_cards", "card_blocks": 1, "parsed_cards": 0, "error": null}
+{"page_number": 2, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tsi&page=2", "success": false, "valid_result_page": false, "invalid_reason": "not_enough_repeated_case_cards", "card_blocks": 1, "parsed_cards": 0, "error": null}
+{"page_number": 3, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tsi&page=3", "success": false, "valid_result_page": false, "invalid_reason": "not_enough_repeated_case_cards", "card_blocks": 1, "parsed_cards": 0, "error": null}
