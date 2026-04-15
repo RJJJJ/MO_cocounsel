@@ -1,0 +1,12 @@
+Day 17 selector-driven parser report
+pages parsed: [1, 2, 3]
+total cards before dedupe: 30
+total cards after dedupe: 27
+cards with decision_date: 27
+cards with case_number: 27
+cards with case_type: 27
+cards with pdf_url: 27
+cards with text_url_or_action: 27
+zh text links count: 21
+pt text links count: 6
+selector-driven parsing appears successful: True

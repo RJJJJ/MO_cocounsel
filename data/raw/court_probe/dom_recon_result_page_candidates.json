@@ -1,0 +1,559 @@
+{
+  "probe": "day16c_dom_recon_result_page",
+  "target_url": "https://www.court.gov.mo/zh/subpage/researchjudgments",
+  "court_selected": true,
+  "search_submitted": true,
+  "result_page_reached": true,
+  "analysis": {
+    "url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tsi",
+    "title": "澳門特別行政區法院網站 | 裁判書搜尋",
+    "repeated_card_candidates": [
+      {
+        "signature": "div#.",
+        "tag_name": "div",
+        "id": "",
+        "class_name": "",
+        "repetition_count": 10,
+        "text_length_distribution": {
+          "min": 69,
+          "median": 333,
+          "avg": 272,
+          "max": 599
+        },
+        "contains_date_like_text": true,
+        "contains_case_number_like_text": true,
+        "contains_pdf_link": true,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 10,
+          "case_like_hits": 10,
+          "pdf_link_hits": 10,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 6
+      },
+      {
+        "signature": "div#zh-language-case.case_list",
+        "tag_name": "div",
+        "id": "zh-language-case",
+        "class_name": "case_list",
+        "repetition_count": 10,
+        "text_length_distribution": {
+          "min": 69,
+          "median": 333,
+          "avg": 272,
+          "max": 599
+        },
+        "contains_date_like_text": true,
+        "contains_case_number_like_text": true,
+        "contains_pdf_link": true,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 10,
+          "case_like_hits": 10,
+          "pdf_link_hits": 10,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 6
+      },
+      {
+        "signature": "div#.container",
+        "tag_name": "div",
+        "id": "",
+        "class_name": "container",
+        "repetition_count": 5,
+        "text_length_distribution": {
+          "min": 4,
+          "median": 95,
+          "avg": 743,
+          "max": 2855
+        },
+        "contains_date_like_text": true,
+        "contains_case_number_like_text": true,
+        "contains_pdf_link": true,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 1,
+          "case_like_hits": 1,
+          "pdf_link_hits": 1,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 6
+      },
+      {
+        "signature": "li#.",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "",
+        "repetition_count": 53,
+        "text_length_distribution": {
+          "min": 1,
+          "median": 12,
+          "avg": 13,
+          "max": 44
+        },
+        "contains_date_like_text": true,
+        "contains_case_number_like_text": true,
+        "contains_pdf_link": true,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 10,
+          "case_like_hits": 10,
+          "pdf_link_hits": 10,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 5
+      },
+      {
+        "signature": "div#.note.more-block",
+        "tag_name": "div",
+        "id": "",
+        "class_name": "note more-block",
+        "repetition_count": 12,
+        "text_length_distribution": {
+          "min": 5,
+          "median": 102,
+          "avg": 143,
+          "max": 483
+        },
+        "contains_date_like_text": true,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 1,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 4
+      },
+      {
+        "signature": "div#.more-less",
+        "tag_name": "div",
+        "id": "",
+        "class_name": "more-less",
+        "repetition_count": 22,
+        "text_length_distribution": {
+          "min": 5,
+          "median": 43,
+          "avg": 96,
+          "max": 483
+        },
+        "contains_date_like_text": true,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 1,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 3
+      },
+      {
+        "signature": "div#.case_tit",
+        "tag_name": "div",
+        "id": "",
+        "class_name": "case_tit",
+        "repetition_count": 22,
+        "text_length_distribution": {
+          "min": 2,
+          "median": 2,
+          "avg": 2,
+          "max": 2
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 2
+      },
+      {
+        "signature": "li#.seperate",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "seperate",
+        "repetition_count": 10,
+        "text_length_distribution": {
+          "min": 24,
+          "median": 24,
+          "avg": 24,
+          "max": 24
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 2
+      },
+      {
+        "signature": "div#.decision.more-block",
+        "tag_name": "div",
+        "id": "",
+        "class_name": "decision more-block",
+        "repetition_count": 10,
+        "text_length_distribution": {
+          "min": 14,
+          "median": 43,
+          "avg": 40,
+          "max": 44
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 2
+      },
+      {
+        "signature": "div#.case_remark",
+        "tag_name": "div",
+        "id": "",
+        "class_name": "case_remark",
+        "repetition_count": 10,
+        "text_length_distribution": {
+          "min": 14,
+          "median": 43,
+          "avg": 40,
+          "max": 44
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 2
+      },
+      {
+        "signature": "div#.row-fluid",
+        "tag_name": "div",
+        "id": "",
+        "class_name": "row-fluid",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 4,
+          "median": 16,
+          "avg": 10,
+          "max": 16
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.first",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "first",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 4,
+          "median": 31,
+          "avg": 18,
+          "max": 31
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.recentjudgments.dropdown-submenu",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "recentjudgments dropdown-submenu",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 24,
+          "median": 24,
+          "avg": 24,
+          "max": 24
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.tui-yong.first",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "tui-yong first",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 4,
+          "median": 4,
+          "avg": 4,
+          "max": 4
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.tsi-yong",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "tsi-yong",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 4,
+          "median": 4,
+          "avg": 4,
+          "max": 4
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.tjb-yong",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "tjb-yong",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 4,
+          "median": 4,
+          "avg": 4,
+          "max": 4
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.ta-yong.last",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "ta-yong last",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 4,
+          "median": 4,
+          "avg": 4,
+          "max": 4
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.researchjudgments.current",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "researchjudgments current",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 5,
+          "median": 5,
+          "avg": 5,
+          "max": 5
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.casesearch",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "casesearch",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 6,
+          "median": 6,
+          "avg": 6,
+          "max": 6
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.summary",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "summary",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 5,
+          "median": 5,
+          "avg": 5,
+          "max": 5
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.relevantjudgments",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "relevantjudgments",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 6,
+          "median": 6,
+          "avg": 6,
+          "max": 6
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      },
+      {
+        "signature": "li#.annualopinion.last",
+        "tag_name": "li",
+        "id": "",
+        "class_name": "annualopinion last",
+        "repetition_count": 2,
+        "text_length_distribution": {
+          "min": 9,
+          "median": 9,
+          "avg": 9,
+          "max": 9
+        },
+        "contains_date_like_text": false,
+        "contains_case_number_like_text": false,
+        "contains_pdf_link": false,
+        "contains_txt_or_fulltext_link": false,
+        "support_counts": {
+          "date_like_hits": 0,
+          "case_like_hits": 0,
+          "pdf_link_hits": 0,
+          "txt_link_hits": 0
+        },
+        "heuristic_score": 0
+      }
+    ],
+    "card_header_candidates": [],
+    "metadata_block_candidates": [
+      {
+        "parent_signature": "div#.",
+        "selector": "ul",
+        "tag_name": "ul",
+        "class_name": "",
+        "text_preview": "判決/批示日期 案件編號 類別 裁判書/批示全文 26/03/2026 36/2026 刑事訴訟程序的上訴 主題 加重詐騙罪、加重盜竊罪、重新量刑 摘要 在詐騙罪當中，“詭計”是它的核心構成要件。 “這項犯罪通常是以取得他人之物作為其既遂的模式，因為它無須使用暴力或威嚇的手段（正如大家所知道），而是採用了特定的方式（錯誤或欺騙），令被害人相信了行為人，在不知道自己被欺騙及被欺詐的情況下讓行為人有機可乘”（參見《澳門刑法典註釋及評述》第三"
+      },
+      {
+        "parent_signature": "div#zh-language-case.case_list",
+        "selector": "ul",
+        "tag_name": "ul",
+        "class_name": "remark",
+        "text_preview": "表決 : 有表決聲明 裁判書製作人 : 盧映霞法官 助審法官 : 譚曉華法官 周艷平法官"
+      }
+    ],
+    "txt_link_candidates": []
+  }
+}
