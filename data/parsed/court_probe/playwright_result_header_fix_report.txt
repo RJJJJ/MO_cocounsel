@@ -1,0 +1,21 @@
+# Day 16B result-card header parsing fix report
+court code used: tsi
+court label: 中級法院
+submitted result-state url: None
+page 1 real result page reached: no
+pages parsed: []
+pages attempted: [1, 2, 3]
+total cards before dedupe: 0
+total cards after dedupe: 0
+valid case_number count: 0
+valid case_type count: 0
+records suspected of multi-card contamination: 0
+cards with pdf_url: 0
+cards with text_url_or_action: 0
+whether header fix appears successful: False
+output json: data/parsed/court_probe/playwright_result_cards_paginated_header_fixed.json
+
+## page attempts
+{"page_number": 1, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments", "success": false, "valid_result_page": false, "invalid_reason": null, "card_blocks": 0, "parsed_cards": 0, "cards_with_case_number": 0, "cards_with_doc_links": 0, "error": "playwright_not_installed"}
+{"page_number": 2, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments", "success": false, "valid_result_page": false, "invalid_reason": null, "card_blocks": 0, "parsed_cards": 0, "cards_with_case_number": 0, "cards_with_doc_links": 0, "error": "playwright_not_installed"}
+{"page_number": 3, "url": "https://www.court.gov.mo/zh/subpage/researchjudgments", "success": false, "valid_result_page": false, "invalid_reason": null, "card_blocks": 0, "parsed_cards": 0, "cards_with_case_number": 0, "cards_with_doc_links": 0, "error": "playwright_not_installed"}
