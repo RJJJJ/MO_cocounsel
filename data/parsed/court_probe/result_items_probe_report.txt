@@ -1,0 +1,3 @@
+# Court result list probe report (Day 4)
+input_html: data/raw/court_probe/search_attempt_last_30_days.html
+error: missing dependency bs4 (BeautifulSoup).
