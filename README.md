@@ -76,13 +76,14 @@ Users can input ordinary legal questions in natural language, and the system wil
 - Macau case law
 - explanatory materials where available
 
-Example:
+Example queries:
 - “僱主拖糧，員工可否即時解除合同？”
 - “澳門解僱通知未寫明理由，法律上有何風險？”
+- “買賣合同中的違約金條款是否可能過高？”
+- “交通事故後可否同時主張哪些損害賠償？”
 
 ### 2. Deep Research / multi-step legal research
-The system does not stop at one retrieval step.  
-It can:
+The system does not stop at one retrieval step. It can:
 
 - decompose a complex legal question
 - perform multi-step search
@@ -407,14 +408,18 @@ It is responsible for:
 ### 1. Query Normalizer
 Converts ordinary user language into legal retrieval language.
 
+Important note:
+The README examples under this section are **illustrative only**. They are not hardcoded constraints and do not imply that the system is limited to labor-law issues such as wage disputes. The same normalization layer should support many legal domains and many issue families.
+
 Example:
 - 拖糧 / 欠薪 / 不出糧 / 延遲支付工資
-- normalized into a unified issue representation
+- can be normalized into one issue representation in a labor-law context
 
 Responsibilities:
 - legal synonym normalization
 - issue code mapping
 - jurisdiction-specific term mapping
+- domain-aware query rewriting
 
 ### 2. Issue Decomposer
 Breaks one complex legal problem into sub-issues.
@@ -465,6 +470,145 @@ Binds each conclusion to:
 - source URL
 
 This is one of the most important components in the project.
+
+---
+
+## Issue Taxonomy and Legal Term Map
+
+MO_cocounsel should not depend on a single fixed list of hardcoded legal phrases. Instead, it should use an extensible **issue taxonomy** and **alias map**.
+
+This means the system should support:
+
+- issue taxonomy
+- issue aliases
+- Macau legal term map
+- procedural vs substantive issue map
+- remedy taxonomy
+
+Example taxonomy entry:
+
+```json
+{
+  "issue_code": "late_wage_payment",
+  "aliases": [
+    "拖糧",
+    "欠薪",
+    "不出糧",
+    "延遲支付工資",
+    "未按時支付工資"
+  ],
+  "related_issues": [
+    "employee_termination_with_just_cause",
+    "compensation_claim",
+    "burden_of_proof",
+    "interest_claim"
+  ]
+}
+```
+
+This is only one example issue family. The same structure should later cover many other categories, such as:
+
+- dismissal validity
+- contract breach
+- damages
+- prescription / limitation
+- procedural defects
+- tenancy disputes
+- tort liability
+- criminal procedure issues
+
+The point of writing this in the README is to document an **extensible architecture**, not a closed rule list.
+
+---
+
+## Authority Roles
+
+Retrieved authorities should not be treated as one flat list. MO_cocounsel should distinguish between different legal roles, such as:
+
+- core authority
+- supporting authority
+- adverse authority
+- limiting authority
+- procedural authority
+- remedy authority
+
+This helps the system produce better research summaries, compare tables, and memo outputs.
+
+---
+
+## Retrieval System Design Notes
+
+The retrieval engine is not designed in a vacuum. Its design should be informed by benchmark testing, reverse engineering of working legal retrieval tools, and repeated query evaluation.
+
+A production-like Macau legal retrieval system likely behaves as:
+
+```text
+User legal question
+-> query normalization
+-> issue tagging / issue decomposition
+-> retrieve large candidate set of cases
+-> hybrid ranking (keyword + semantic + metadata)
+-> select representative authorities
+-> generate structured legal summary
+-> bind summary points to cited authorities
+-> return expandable case cards / snippets
+```
+
+This suggests that the retrieval system is not just a search box, but a layered legal intelligence pipeline.
+
+### Observed strengths to preserve
+
+- not pure keyword search
+- likely hybrid retrieval behavior
+- recurring representative precedent anchors
+- structured, template-guided research summaries
+
+### Observed weaknesses to improve
+
+- synonym stability can drift
+- mixed issues can blur together
+- citation grounding may not be granular enough
+- recall may be high while precision is uneven
+
+MO_cocounsel should explicitly improve these areas through stronger normalization, finer issue decomposition, stricter evidence binding, and better re-ranking.
+
+---
+
+## Recommended Retrieval Output Schema
+
+The retrieval engine should not return only raw search hits. It should return a structured legal retrieval package:
+
+```json
+{
+  "raw_query": "...",
+  "normalized_query": "...",
+  "research_mode": "hybrid",
+  "main_issue": "...",
+  "sub_issues": ["...", "..."],
+  "core_cases": [
+    {
+      "case_number": "...",
+      "court_level": "...",
+      "decision_date": "...",
+      "reasoning_snippet": "...",
+      "source_url": "...",
+      "score": 0.92
+    }
+  ],
+  "supporting_cases": [],
+  "adverse_cases": [],
+  "applicable_statutes": [],
+  "structured_summary": [
+    {
+      "point_title": "...",
+      "point_text": "...",
+      "citations": ["..."]
+    }
+  ],
+  "evidence_gaps": [],
+  "caution_notes": []
+}
+```
 
 ---
 
@@ -716,6 +860,19 @@ Recommended evaluation setup:
 - hallucination checks
 - regression evaluation after each major update
 
+## Search Evaluation Dimensions
+
+The retrieval engine should be evaluated across dimensions such as:
+
+- query normalization stability
+- issue decomposition quality
+- core authority precision
+- adverse authority recall
+- citation grounding quality
+- evidence-role labeling accuracy
+- source-mode compliance
+- long-fact narrative issue extraction quality
+
 ---
 
 # Common Failure Modes
@@ -731,6 +888,17 @@ This project should avoid:
 - skipping citation binding
 - trying to cover all legal domains too early
 - not building issue taxonomy
+
+## Retrieval-specific observed failure patterns
+
+- paraphrase drift
+- remedy-dominant drift
+- procedure/substance blending
+- over-broad retrieval
+- insufficient adverse-case surfacing
+- citation not granular enough
+- anchor case over-dependence
+- weak exact-passage grounding
 
 ---
 
