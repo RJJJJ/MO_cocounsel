@@ -1,64 +1,64 @@
 Hybrid Retrieval Skeleton Demo Report - Macau Court Cases
-bm25_input_path: data/corpus/prepared/macau_court_cases/bm25_chunks.jsonl
+bm25_input_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
 retrieval_mode_used: hybrid_skeleton_bm25_active_dense_placeholder
-query_received: 假釋 316/2025
-normalized_query: 假釋 316/2025 提前釋放 刑法典第56條 釋放被判刑者
+query_received: 量刑過重
+normalized_query: 量刑過重 量刑明顯過重 刑罰過重 改判
 top_k_requested: 5
 top_k_returned: 5
 hybrid_retrieval_skeleton_appears_successful: True
 top_hits:
-  [1] score=53.482671
-       chunk_id=24_2026_zh_c0007_3461805eb3f6
+  [1] score=48.393581
+       chunk_id=757_2025_zh_c0002_0b42b7eee509
        retrieval_source=bm25
-       authoritative_case_number=24/2026
+       authoritative_case_number=757/2025
+       authoritative_decision_date=26/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；d) 第三嫌犯E以直接共同正犯及既遂方式觸犯了《刑法典》第211條第4款a項結合第1款及第196條b項所規定及處罰的一項詐騙罪（相當巨額），判處兩年九個月徒刑，暫緩執行該徒刑，為期三年（已吸收以直接共同正犯及既遂方式觸犯的《刑法典》第244 條第1款a項及C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；…” 19) 相對來說，以本案涉及之按揭貸款金額比較少及已填補及將可填補之部...
+       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+  [2] score=40.907856
+       chunk_id=728_2025_zh_c0010_d2c36fa77f6f
+       retrieval_source=bm25
+       authoritative_case_number=728/2025
        authoritative_decision_date=12/02/2026
        court=澳門法院
        language=zh
        case_type=刑事訴訟程序的上訴
-       chunk_text_preview=省且願意負責任地承擔犯罪行為之後果仍然存有疑慮。 基於此，法庭認為本案現階段尚未符合上述《刑法典》第56條第1款a)項的要件。 在一般預防方面，刑罰的目的除了是對犯罪者予以矯治外，亦為了防衛社會及確保社會成員對法律制度的信心。因此，就是否應該給予假釋，尚須考慮犯罪的惡性對社會安寧所產生的負面影響是否已經消除，以及提前釋放被判刑人會否影響法律誡命在公眾心目中的執行力及威懾力。 本案中，被判刑人非為本澳居民，在澳期間因實施了「強姦罪」而被判...
-       pdf_url=https://www.court.gov.mo/sentence/zh-198181ba100d00af.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42133
-  [2] score=51.562043
-       chunk_id=203_2026_zh_c0002_df4e79dae8bc
+       chunk_text_preview=事實才得出之心證，而且上訴人亦沒有提出任何原審法院沒有考慮之事實、客觀性證據及/或依據來推翻原審法院所認定之事實及/或原審法院基於其所認定之事實而得出之心證，同時，被上訴人亦不認為原審法院得出之心證存在任何違反一般經驗法則之明顯錯誤，為此，被上訴人不認為被訴判決存在著不可補正或不可克服的矛盾； 12. 綜合上述，被上訴人認為被訴判決內並不存在上訴人在其上訴陳述內提及的被訴判決在事實判斷及說明理由方面出現不可補救之矛盾，沾有澳門《刑事訴訟...
+       pdf_url=https://www.court.gov.mo/sentence/zh-5f6919955a8094cf.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42163
+  [3] score=40.589371
+       chunk_id=721_2025_zh_c0003_f11d8588f999
        retrieval_source=bm25
-       authoritative_case_number=203/2026
+       authoritative_case_number=721/2025
+       authoritative_decision_date=05/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=同時在第CR5-22-0063-PCC號卷宗所給予之緩刑期間內實施。因此，有充份理由相信，採用罰金刑無法達到處罰的目的。 5) 同時，過去所採用的暫緩執行徒刑，亦證明無法使上訴人糾正其行為，而一再犯罪。上訴人重復違反法律，從而顯示過去所給予的徒刑暫緩執行未能使上訴人知法守法，重新納入社會生活。上訴人以其實際行動排除了對其將來行為所抱有的任何期望。因此，考慮到本案的具體情況，尤其是上訴人過往的犯罪前科，本案對上訴人處以緩刑並不能適當及充分...
+       pdf_url=https://www.court.gov.mo/sentence/zh-77e596eefc61504f.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42345
+  [4] score=38.855422
+       chunk_id=34_2026_zh_c0000_de36cad31850
+       retrieval_source=bm25
+       authoritative_case_number=34/2026
        authoritative_decision_date=12/03/2026
        court=澳門法院
        language=zh
        case_type=刑事訴訟程序的上訴
-       chunk_text_preview=般預防要求亦較高。 須知道賄賂的行為破壞社會多年來所建設的廉潔奉公的核心社會價值，有關行為動搖大眾對澳門管治團隊依法施政的信心，使市民大眾對有關期望落空。 考慮是次犯罪之嚴重性並對社會造成之傷害，本法庭認為在此情況下提早釋放被判刑人，對社會公眾屬難以接受，將動搖社會公眾對法律制度之信心，不利於維護法律秩序及社會安寧，未能達到透過刑罰重新建立被犯罪破壞之法律制度之有效性及權威性之一般預防目的。因此，本案現階段尚未符合澳門《刑法典》第56條...
-       pdf_url=https://www.court.gov.mo/sentence/zh-862934f66e94c882.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42369
-  [3] score=50.625471
-       chunk_id=100_2026_zh_c0006_17f843fdeda8
+       chunk_text_preview=第34/2026號刑事上訴案 上訴人：（嫌犯）A 日期：2026年3月12日 主要問題：禁用證據、疑罪從無、適用法律錯誤、量刑過重、恐嚇罪 摘要 對於量刑時需考慮的情節，只要不存在對法定限制規範，如刑罰幅度或經驗法則的違反，也不存在所確定的具體刑罰顯示出完全不適度的話，上訴法院不應介入具體刑罰的確定。 ____________________ 盧映霞（裁判書製作人） 第34/2026刑事上訴案 上訴人：（嫌犯）A 澳門特別行政區中級法院...
+       pdf_url=https://www.court.gov.mo/sentence/zh-e7d54797a9c6d897.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42275
+  [5] score=38.515250
+       chunk_id=34_2026_zh_c0004_fcc08b9277bf
        retrieval_source=bm25
-       authoritative_case_number=100/2026
-       authoritative_decision_date=26/02/2026
+       authoritative_case_number=34/2026
+       authoritative_decision_date=12/03/2026
        court=澳門法院
        language=zh
        case_type=刑事訴訟程序的上訴
-       chunk_text_preview=中販賣毒品行為時尚未成年，年僅十七歲，心智尚未十分成熟，但販賣毒品行為本身的惡性相當高，相關犯罪行為對本澳的社會安寧及公共健康帶來顯而易見之負面影響。眾所周知，毒品對人體健康的損害、完整家庭的破壞及對社會的危害性都非常嚴重，而且在澳門從事販毒活動的情況至今仍未見有效遏止。 除此之外，考慮到本特區日益嚴重及年輕化的毒品犯罪，以及年輕人受毒品禍害而對社會未來所造成的不良影響，毒品問題嚴重影響公共健康 及安全，治理毒品問題需整個社會共同努力，...
-       pdf_url=https://www.court.gov.mo/sentence/zh-5bb24337c3797b0e.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42279
-  [4] score=50.063324
-       chunk_id=157_2026_zh_c0004_9f42b6d55f7a
-       retrieval_source=bm25
-       authoritative_case_number=157/2026
-       authoritative_decision_date=26/02/2026
-       court=澳門法院
-       language=zh
-       case_type=刑事訴訟程序的上訴
-       chunk_text_preview=不符合《刑法典》第56條第1款a項及b)項的規定，故裁定： 否決被判刑人A假釋申請，但不妨礙根據《刑事訴訟法典》第469條第1款的規定再次展開假釋程序。 根據《刑事訴訟法典》第468條第4款及第5款的規定，將本批示通知被判刑人及送交有關副本。 通知路環監獄及有關判刑卷宗。 採取必要措施。” 三、法律方面 上訴人認為已經符合假釋的條件，提出刑事起訴法庭不批准假釋的裁決違反了《刑法典》第56條第1款的規定。 現就上述上訴理由作出分析。 根據...
-       pdf_url=https://www.court.gov.mo/sentence/zh-b77c755a844ba130.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42247
-  [5] score=49.772040
-       chunk_id=120_2026_zh_c0007_5cf85b301992
-       retrieval_source=bm25
-       authoritative_case_number=120/2026
-       authoritative_decision_date=26/02/2026
-       court=澳門法院
-       language=zh
-       case_type=刑事訴訟程序的上訴
-       chunk_text_preview=人作出賠償，倘現時在被害人的損失仍未得到彌補的情況下提前釋放被判刑人，極有可能對潛在的不法分子釋出錯誤訊息，誤以為經濟性質的犯罪不屬嚴重犯罪以及犯罪的代價並不高，甚至會錯誤地選擇犧牲自由以換取金錢。 考慮到案件情節及本澳社會實際情況，倘若提早釋放被判刑人將引起相當程度的社會負面效果，對維護法律秩序方面所帶來相當的負面影響，將妨礙公眾對被觸犯的法律條文之效力所持有的期望，這樣無疑會削弱法律的威懾力，動搖社會成員對法律懲治犯罪功能的信心。 ...
-       pdf_url=https://www.court.gov.mo/sentence/zh-2583593f6cf11801.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42281
+       chunk_text_preview=即嫌犯）曾使用她的微信號及對丈夫的行為致歉。後來，警方亦在嫌犯的手機發現涉案的照片及存有涉案的微信帳號。由此可見，按照庭上各名被害人及證人的聲明，結合卷宗的書證，足以認定上述事實獲證明。 8) 根據《刑事訴訟法典》第114條規定，“評價證據係按經驗法則及有權限實體之自由心證為之，但法律另有規定者除外。”換言之，法官在對構成訴訟標的之事實作出認定時，除了法律對評價證據方面另有規定外，係依據經驗法則對證據材料進行分析判斷，從而在事實層面上作...
+       pdf_url=https://www.court.gov.mo/sentence/zh-e7d54797a9c6d897.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42275
