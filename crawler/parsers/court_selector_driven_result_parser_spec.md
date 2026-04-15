@@ -51,18 +51,38 @@ Primary classification is based on `href` (not visible anchor text):
 
 - zh TXT/fulltext:
   - `href` contains `/sentence/zh/` and does **not** end with `.pdf`
-  - set `text_url_or_action` (preferred), `text_url_zh`, `text_link_language=zh`
+  - set `text_url_zh`
 - pt TXT/fulltext:
   - `href` contains `/sentence/pt/` and does **not** end with `.pdf`
-  - set `text_url_pt` and fallback `text_url_or_action` if zh text link not present
+  - set `text_url_pt`
 - PDF:
   - `href` contains `/sentence/` and ends with `.pdf`
-  - if multiple PDFs exist, prefer zh PDF (`/sentence/zh-...pdf`), else pt PDF, else other PDF
+  - zh PDF: `/sentence/zh-...pdf` -> `pdf_url_zh`
+  - pt PDF: `/sentence/pt-...pdf` -> `pdf_url_pt`
+  - other PDF remains eligible only for primary fallback
 
-Link-priority behavior:
-- `pdf_url`: zh PDF first, then pt PDF, then other PDF.
-- `text_url_or_action`: zh text first, otherwise pt text.
-- keep both `text_url_zh` and `text_url_pt` when both exist.
+Link-preservation behavior:
+- preserve full per-card link coverage in `document_links`:
+  - `{"kind":"text","language":"zh","url":"..."}`
+  - `{"kind":"text","language":"pt","url":"..."}`
+  - `{"kind":"pdf","language":"zh","url":"..."}`
+  - `{"kind":"pdf","language":"pt","url":"..."}`
+- primary convenience fields:
+  - `text_url_primary`: zh text first, otherwise pt text.
+  - `pdf_url_primary`: zh PDF first, then pt PDF, then other PDF.
+- backward compatibility aliases are retained:
+  - `text_url_or_action` maps to `text_url_primary`
+  - `pdf_url` maps to `pdf_url_primary`
+
+## Duplicate handling for selector-driven output
+
+Deduplication must preserve bilingual source identity:
+
+1. use sorted set of all text URLs on the card (`text_url_zh`, `text_url_pt`);
+2. if text set is empty, use sorted set of available PDF URLs;
+3. metadata fields remain part of the key (`court`, `case_number`, `decision_date`).
+
+This avoids collapsing cards with different link sets.
 
 ## Deferred fields (detail-page phase)
 

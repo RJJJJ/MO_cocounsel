@@ -46,6 +46,10 @@ class ParseStats:
     with_text_url_or_action: int
     zh_text_links_count: int
     pt_text_links_count: int
+    both_text_links_count: int
+    zh_pdf_links_count: int
+    pt_pdf_links_count: int
+    both_pdf_links_count: int
     selector_successful: bool
 
 
@@ -130,16 +134,30 @@ def classify_document_links(links: list[dict[str, str]]) -> dict[str, Any]:
         if is_pdf and not other_pdf:
             other_pdf = abs_url
 
-    pdf_url = zh_pdf or pt_pdf or other_pdf
-    text_url_or_action = zh_text_url or pt_text_url
+    text_url_primary = zh_text_url or pt_text_url
+    pdf_url_primary = zh_pdf or pt_pdf or other_pdf
     text_link_language = "zh" if zh_text_url else ("pt" if pt_text_url else None)
+    document_links: list[dict[str, str]] = []
+    if zh_text_url:
+        document_links.append({"kind": "text", "language": "zh", "url": zh_text_url})
+    if pt_text_url:
+        document_links.append({"kind": "text", "language": "pt", "url": pt_text_url})
+    if zh_pdf:
+        document_links.append({"kind": "pdf", "language": "zh", "url": zh_pdf})
+    if pt_pdf:
+        document_links.append({"kind": "pdf", "language": "pt", "url": pt_pdf})
 
     return {
-        "pdf_url": pdf_url,
-        "text_url_or_action": text_url_or_action,
+        "pdf_url_primary": pdf_url_primary,
+        "pdf_url_zh": zh_pdf,
+        "pdf_url_pt": pt_pdf,
+        "pdf_url": pdf_url_primary,
+        "text_url_primary": text_url_primary,
+        "text_url_or_action": text_url_primary,
         "text_url_zh": zh_text_url,
         "text_url_pt": pt_text_url,
         "text_link_language": text_link_language,
+        "document_links": document_links,
     }
 
 
@@ -194,10 +212,15 @@ def parse_cards_from_current_page(page: "Page", page_number: int) -> list[dict[s
                 "case_number": normalize_space(raw.get("case_number")) or None,
                 "case_type": normalize_space(raw.get("case_type")) or None,
                 "pdf_url": link_fields["pdf_url"],
+                "pdf_url_primary": link_fields["pdf_url_primary"],
+                "pdf_url_zh": link_fields["pdf_url_zh"],
+                "pdf_url_pt": link_fields["pdf_url_pt"],
+                "text_url_primary": link_fields["text_url_primary"],
                 "text_url_or_action": link_fields["text_url_or_action"],
                 "text_url_zh": link_fields["text_url_zh"],
                 "text_url_pt": link_fields["text_url_pt"],
                 "text_link_language": link_fields["text_link_language"],
+                "document_links": link_fields["document_links"],
                 "raw_card_text": raw_card_text,
                 "page_number": page_number,
                 # deferred fields from detail pages:
@@ -217,11 +240,27 @@ def dedupe_cards(cards: list[dict[str, Any]]) -> list[dict[str, Any]]:
     seen: set[tuple[str, str, str, str]] = set()
 
     for card in cards:
+        text_urls = sorted(
+            {
+                normalize_space(card.get("text_url_zh")),
+                normalize_space(card.get("text_url_pt")),
+            }
+            - {""}
+        )
+        pdf_urls = sorted(
+            {
+                normalize_space(card.get("pdf_url_zh")),
+                normalize_space(card.get("pdf_url_pt")),
+                normalize_space(card.get("pdf_url")),
+            }
+            - {""}
+        )
+
         key = (
             normalize_space(card.get("court")) or "",
             normalize_space(card.get("case_number")) or "",
             normalize_space(card.get("decision_date")) or "",
-            normalize_space(card.get("text_url_or_action") or card.get("pdf_url")) or "",
+            "|".join(text_urls) if text_urls else "|".join(pdf_urls),
         )
         if key in seen:
             continue
@@ -239,6 +278,10 @@ def gather_stats(cards_before: list[dict[str, Any]], cards_after: list[dict[str,
     with_text_url = sum(1 for c in cards_after if c.get("text_url_or_action"))
     zh_count = sum(1 for c in cards_after if c.get("text_url_zh"))
     pt_count = sum(1 for c in cards_after if c.get("text_url_pt"))
+    both_text_count = sum(1 for c in cards_after if c.get("text_url_zh") and c.get("text_url_pt"))
+    zh_pdf_count = sum(1 for c in cards_after if c.get("pdf_url_zh"))
+    pt_pdf_count = sum(1 for c in cards_after if c.get("pdf_url_pt"))
+    both_pdf_count = sum(1 for c in cards_after if c.get("pdf_url_zh") and c.get("pdf_url_pt"))
 
     selector_successful = (
         len(pages_parsed) == 3
@@ -259,6 +302,10 @@ def gather_stats(cards_before: list[dict[str, Any]], cards_after: list[dict[str,
         with_text_url_or_action=with_text_url,
         zh_text_links_count=zh_count,
         pt_text_links_count=pt_count,
+        both_text_links_count=both_text_count,
+        zh_pdf_links_count=zh_pdf_count,
+        pt_pdf_links_count=pt_pdf_count,
+        both_pdf_links_count=both_pdf_count,
         selector_successful=selector_successful,
     )
 
@@ -276,6 +323,10 @@ def render_report(stats: ParseStats) -> str:
         f"cards with text_url_or_action: {stats.with_text_url_or_action}",
         f"zh text links count: {stats.zh_text_links_count}",
         f"pt text links count: {stats.pt_text_links_count}",
+        f"cards with both text languages: {stats.both_text_links_count}",
+        f"cards with zh pdf: {stats.zh_pdf_links_count}",
+        f"cards with pt pdf: {stats.pt_pdf_links_count}",
+        f"cards with both pdf languages: {stats.both_pdf_links_count}",
         f"selector-driven parsing appears successful: {stats.selector_successful}",
     ]
     return "\n".join(lines) + "\n"
