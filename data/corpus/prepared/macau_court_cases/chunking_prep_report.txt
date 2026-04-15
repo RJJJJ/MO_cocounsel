@@ -1,6 +1,6 @@
 Chunking Prep Report - Macau Court Cases
-manifest_path: data/corpus/raw/macau_court_cases/manifest.jsonl
-chunks_output_path: data/corpus/prepared/macau_court_cases/chunks.jsonl
+manifest_path: data\corpus\raw\macau_court_cases\manifest.jsonl
+chunks_output_path: data\corpus\prepared\macau_court_cases\chunks.jsonl
 total_corpus_records_read: 92
 total_chunk_records_written: 1693
 average_chunks_per_case: 18.40
