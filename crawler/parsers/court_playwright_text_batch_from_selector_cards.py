@@ -1,13 +1,3 @@
-"""Day 18: batch text-detail extraction from selector-driven result cards.
-
-Scope:
-- read Day 17 selector-driven cards as stable entry layer
-- follow each ``text_url_or_action`` detail URL with Playwright
-- extract detail-page content using body-first strategy for Macau Courts TXT/sentence pages
-- keep source-list metadata and parse authoritative detail metadata from normalized body text
-- output JSONL corpus + plain-text batch report
-"""
-
 from __future__ import annotations
 
 import json
@@ -50,13 +40,13 @@ def normalize_multiline_text(value: str | None) -> str:
 
     text = (value or "").replace("\r\n", "\n").replace("\r", "\n")
     text = text.replace("\u00a0", " ")
+    text = text.replace("\ufeff", "")
 
     normalized_lines: list[str] = []
     for line in text.split("\n"):
         cleaned = re.sub(r"[\t\f\v ]+", " ", line).strip()
         normalized_lines.append(cleaned)
 
-    # collapse repeated blank lines
     out_lines: list[str] = []
     blank_open = False
     for line in normalized_lines:
@@ -68,8 +58,7 @@ def normalize_multiline_text(value: str | None) -> str:
         out_lines.append(line)
         blank_open = False
 
-    out = "\n".join(out_lines).strip()
-    return out
+    return "\n".join(out_lines).strip()
 
 
 def detect_language_from_url(url: str | None) -> str:
@@ -90,32 +79,37 @@ def extract_body_first_text(page: "Page") -> str:
 
       const clone = body.cloneNode(true);
 
-      // Remove noisy non-content nodes.
       for (const sel of ['script', 'style', 'noscript']) {
         for (const el of clone.querySelectorAll(sel)) el.remove();
       }
 
-      // Remove known print blocks and print links.
       const allNodes = Array.from(clone.querySelectorAll('*'));
       for (const el of allNodes) {
         const text = norm(el.textContent || '');
         const style = ((el.getAttribute('style') || '') + ' ' + (el.style?.cssText || '')).toLowerCase();
         const onclick = (el.getAttribute('onclick') || '').toLowerCase();
+        const tag = (el.tagName || '').toLowerCase();
 
-        const hasPrintText = text.includes('打印全文') || text.toLowerCase().includes('imprimir') || text.toLowerCase() === 'print';
-        const printLike = onclick.includes('window.print') || style.includes('float: right');
+        const hasPrintText =
+          text.includes('打印全文') ||
+          text.includes('列印全文') ||
+          text.toLowerCase() === 'print' ||
+          text.toLowerCase().includes('imprimir');
 
-        if (hasPrintText && printLike) {
+        const printLike =
+          onclick.includes('window.print') ||
+          style.includes('float: right');
+
+        if (hasPrintText && (printLike || tag === 'a' || tag === 'div')) {
           el.remove();
           continue;
         }
 
-        if (el.tagName === 'A' && (onclick.includes('window.print') || hasPrintText)) {
+        if (tag === 'a' && (onclick.includes('window.print') || hasPrintText)) {
           el.remove();
         }
       }
 
-      // body-first: use whole body visible text.
       const raw = (clone.innerText || clone.textContent || '').trim();
       return raw;
     }
@@ -133,9 +127,9 @@ def remove_print_noise_from_text(text: str) -> str:
 
     bad_line_patterns = [
         r"^打印全文$",
-        r"^imprimir(?:\s+texto\s+integral)?$",
-        r"^print$",
         r"^列印全文$",
+        r"^print$",
+        r"^imprimir(?:\s+texto\s+integral)?$",
     ]
     compiled = [re.compile(p, flags=re.IGNORECASE) for p in bad_line_patterns]
 
@@ -149,57 +143,102 @@ def remove_print_noise_from_text(text: str) -> str:
     return "\n".join(cleaned_lines)
 
 
+def get_non_empty_lines(text: str, limit: int | None = None) -> list[str]:
+    lines = [line.strip() for line in text.split("\n") if line.strip()]
+    if limit is not None:
+        return lines[:limit]
+    return lines
+
+
 def parse_detail_case_number(text: str) -> str | None:
+    lines = get_non_empty_lines(text, limit=20)
+
     patterns = [
-        r"第\s*([0-9]{1,6}/[0-9]{4})\s*號案",
-        r"卷宗編號\s*[:：]\s*([0-9]{1,6}/[0-9]{4})",
-        r"案件編號\s*[:：]\s*([0-9]{1,6}/[0-9]{4})",
-        r"案號\s*[:：]\s*([0-9]{1,6}/[0-9]{4})",
+        r"(?:案件編號|卷宗編號|編號|案號)\s*[:：]?\s*(?:第)?\s*([0-9]{1,6}/[0-9]{4})\s*號?",
+        r"^第\s*([0-9]{1,6}/[0-9]{4})\s*號(?:.*案)?$",
         r"\b([0-9]{1,6}/[0-9]{4})\b",
     ]
-    for pattern in patterns:
-        m = re.search(pattern, text)
-        if m:
-            return m.group(1)
+
+    for line in lines:
+        for pattern in patterns:
+            m = re.search(pattern, line)
+            if m:
+                return normalize_space(m.group(1)) or None
+
     return None
 
 
 def parse_detail_decision_date(text: str) -> str | None:
+    lines = get_non_empty_lines(text, limit=20)
+
     patterns = [
-        r"日期\s*[:：]\s*([0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日)",
-        r"日期\s*[:：]\s*([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})",
-        r"判決日期\s*[:：]\s*([0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日)",
+        r"(?:裁判日期|判決日期|日期)\s*[:：]\s*([0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日)",
+        r"(?:裁判日期|判決日期|日期)\s*[:：]\s*([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})",
         r"\b([0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日)\b",
         r"\b([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})\b",
     ]
-    for pattern in patterns:
-        m = re.search(pattern, text)
-        if m:
-            return m.group(1)
+
+    for line in lines:
+        for pattern in patterns:
+            m = re.search(pattern, line)
+            if m:
+                return normalize_space(m.group(1)) or None
+
     return None
 
 
+def looks_like_title_value(value: str) -> bool:
+    v = normalize_space(value)
+    if not v:
+        return False
+    if len(v) < 2 or len(v) > 120:
+        return False
+    if re.fullmatch(r"[0-9]{1,6}/[0-9]{4}", v):
+        return False
+    if "日期" in v:
+        return False
+    if "裁判書製作人" in v:
+        return False
+    if "澳門特別行政區" in v:
+        return False
+    return True
+
+
 def parse_detail_title_or_issue(text: str) -> str | None:
-    lines = [line.strip() for line in text.split("\n") if line.strip()]
+    lines = get_non_empty_lines(text, limit=20)
 
-    label_patterns = [
-        re.compile(r"^(關鍵詞|關鍵字)\s*[:：]\s*(.+)$"),
-        re.compile(r"^重要法律問題\s*[:：]\s*(.+)$"),
-    ]
+    # 優先：前幾行中帶冒號的題名型欄位，但不把欄位名寫死到只剩單一格式
+    # 這裡只排除明顯不是 title 的 key
     for line in lines:
-        for pattern in label_patterns:
-            m = pattern.match(line)
-            if m:
-                return normalize_space(m.group(2)) or None
+        m = re.match(r"^([^:：]{1,20})\s*[:：]\s*(.+)$", line)
+        if not m:
+            continue
 
-    # fallback: short headline-like line near top before 摘要/主文 etc.
-    stop_tokens = ("摘要", "主文", "裁判", "事實", "理由")
-    for idx, line in enumerate(lines[:10]):
-        if any(token in line for token in stop_tokens):
+        key = normalize_space(m.group(1))
+        value = normalize_space(m.group(2))
+
+        if key in {
+            "案件編號", "卷宗編號", "編號", "案號",
+            "日期", "裁判日期", "判決日期",
+            "上訴人", "主上訴人", "主被上訴人",
+            "附帶上訴人", "附帶被上訴人",
+            "聲請人", "被訴實體",
+        }:
+            continue
+
+        if looks_like_title_value(value):
+            return value
+
+    # 次優先：前幾行中第一條看起來像短標題的行
+    stop_tokens = (
+        "摘要", "摘 要", "裁判摘要", "裁判書製作人",
+        "一、案情敘述", "一、 案件概述", "澳門特別行政區"
+    )
+    for line in lines[:10]:
+        if any(token == line or token in line for token in stop_tokens):
             break
-        if 6 <= len(line) <= 50 and not re.search(r"\d{1,6}/\d{4}", line) and "日期" not in line:
-            if idx > 0:  # avoid taking the very first generic site header
-                return line
+        if looks_like_title_value(line) and not re.search(r"[0-9]{1,6}/[0-9]{4}", line):
+            return line
 
     return None
 
@@ -233,7 +272,9 @@ def build_record(card: dict[str, Any], detail_url: str, full_text: str) -> dict[
         "detail_title_or_issue": detail_title_or_issue,
         "language": detect_language_from_url(detail_url),
         "full_text": full_text,
-        "detail_metadata_authoritative": bool(detail_case_number or detail_decision_date or detail_title_or_issue),
+        "detail_metadata_authoritative": bool(
+            detail_case_number or detail_decision_date or detail_title_or_issue
+        ),
         "extracted_from": detail_url,
     }
 
