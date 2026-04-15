@@ -1,0 +1,11 @@
+# Day 12 TXT/fulltext detail extraction fix report
+input_cards_path: data/parsed/court_probe/playwright_result_cards_refined.json
+sample cards attempted: 3
+successful text detail extractions: 0
+failed detail extractions: 3
+direct sentence pages opened count: 0
+language counts: {}
+whether text extraction now appears successful: False
+
+failures:
+- Playwright is not installed in this environment.
