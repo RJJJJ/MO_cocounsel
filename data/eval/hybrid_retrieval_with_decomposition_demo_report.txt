@@ -1,77 +1,73 @@
 Hybrid Retrieval With Decomposition Demo Report - Macau Court Cases
-query_received: 量刑過重與緩刑，是否可上訴
+query_received: 253/2026
 decomposition_used: on
-subqueries_generated_count: 6
-retrieval_hits_before_merge: 30
-retrieval_hits_after_merge: 15
+subqueries_generated_count: 2
+retrieval_hits_before_merge: 10
+retrieval_hits_after_merge: 8
 top_k_requested: 5
 top_k_returned: 5
 decomposition_aware_retrieval_appears_successful: True
 retrieval_subqueries:
-  [1] 量刑過重與緩刑，是否可上訴
-  [2] 量刑過重與緩刑 是否可上訴
-  [3] 量刑過重
-  [4] 量刑過重 緩刑 上訴
-  [5] 緩刑
-  [6] 上訴
+  [1] 253/2026
+  [2] 案件編號 253/2026
 top_hits:
-  [1] score=55.257024
-       chunk_id=757_2025_zh_c0002_0b42b7eee509
+  [1] score=28.002106
+       chunk_id=253_2026_zh_c0000_c92a90b81a77
        retrieval_source=bm25
-       authoritative_case_number=757/2025
+       authoritative_case_number=253/2026
        authoritative_decision_date=26/03/2026
        court=澳門法院
        language=zh
        case_type=刑事訴訟程序的上訴
-       chunk_text_preview=C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；d) 第三嫌犯E以直接共同正犯及既遂方式觸犯了《刑法典》第211條第4款a項結合第1款及第196條b項所規定及處罰的一項詐騙罪（相當巨額），判處兩年九個月徒刑，暫緩執行該徒刑，為期三年（已吸收以直接共同正犯及既遂方式觸犯的《刑法典》第244 條第1款a項及C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；…” 19) 相對來說，以本案涉及之按揭貸款金額比較少及已填補及將可填補之部...
-       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
-       matched_subqueries=量刑過重與緩刑，是否可上訴; 量刑過重與緩刑 是否可上訴; 量刑過重; 量刑過重 緩刑 上訴
-  [2] score=48.065358
-       chunk_id=721_2025_zh_c0003_f11d8588f999
+       chunk_text_preview=案件編號: 第253/2026號（刑事上訴案） 日期: 2026年3月26日 重要法律問題：假釋 摘 要 假釋作為一項執行徒刑的機制，必須同時符合特別預防和一般預防犯罪兩方面的要求。假釋一般預防方面的要求是，假釋不能影響維護法律秩序及社會安寧，這是從整個社會的角度對假釋提出的一個前提要求。簡言之，服刑人即使符合了特別預防方面的要求，但是，如不能滿足一般預防方面的要求，亦不能批准假釋。 假釋制度是「針對個人」的徒刑執行制度，即便同案犯共同...
+       pdf_url=https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42357
+       matched_subqueries=253/2026; 案件編號 253/2026
+  [2] score=22.866640
+       chunk_id=253_2026_zh_c0011_5fc202bb8d72
        retrieval_source=bm25
-       authoritative_case_number=721/2025
-       authoritative_decision_date=05/03/2026
+       authoritative_case_number=253/2026
+       authoritative_decision_date=26/03/2026
        court=澳門法院
        language=zh
        case_type=刑事訴訟程序的上訴
-       chunk_text_preview=同時在第CR5-22-0063-PCC號卷宗所給予之緩刑期間內實施。因此，有充份理由相信，採用罰金刑無法達到處罰的目的。 5) 同時，過去所採用的暫緩執行徒刑，亦證明無法使上訴人糾正其行為，而一再犯罪。上訴人重復違反法律，從而顯示過去所給予的徒刑暫緩執行未能使上訴人知法守法，重新納入社會生活。上訴人以其實際行動排除了對其將來行為所抱有的任何期望。因此，考慮到本案的具體情況，尤其是上訴人過往的犯罪前科，本案對上訴人處以緩刑並不能適當及充分...
-       pdf_url=https://www.court.gov.mo/sentence/zh-77e596eefc61504f.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42345
-       matched_subqueries=量刑過重與緩刑，是否可上訴; 量刑過重與緩刑 是否可上訴; 量刑過重; 量刑過重 緩刑 上訴
-  [3] score=47.238952
-       chunk_id=34_2026_zh_c0000_de36cad31850
+       chunk_text_preview=__________ 周艷平（裁判書製作人） ________________________________ 簡靜霞（第一助審法官） ________________________________ 盧映霞（第二助審法官） 1 253/2026 15
+       pdf_url=https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42357
+       matched_subqueries=253/2026; 案件編號 253/2026
+  [3] score=17.388105
+       chunk_id=956_2025_pt_c0033_efbc6e1c8e82
        retrieval_source=bm25
-       authoritative_case_number=34/2026
+       authoritative_case_number=956/2025
+       authoritative_decision_date=26/03/2026
+       court=澳門法院
+       language=pt
+       case_type=民事及勞動訴訟程序的上訴
+       chunk_text_preview=unto) Jerónimo Alberto G. Santos (2o Juiz-Adjunto) (Foi-me traduzido o acórdão para a língua portuguesa) 1 Disponível em https://www.dgsi.pt/jtrp.nsf/56a6e7121657f91e80257cda00381fdf/2663a6d52e10224880258aff005c3642?Open...
+       pdf_url=https://www.court.gov.mo/sentence/pt-16e663c96caf1707.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/pt/42363
+       matched_subqueries=案件編號 253/2026
+  [4] score=15.605488
+       chunk_id=253_2026_zh_c0004_3809392baef4
+       retrieval_source=bm25
+       authoritative_case_number=253/2026
+       authoritative_decision_date=26/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=計劃以實際行動回饋社會。雖A曾有一次違規紀錄,但其能及時糾正,並能保持長期穩定行為,反映其自省能力及紀律意識有所提升。」(參見卷宗第13頁) 35) 而且,挪亞家庭互助協會的B社工亦表示,上訴人在獄中認真學習,討論與分享。(參見卷宗第24至25頁) 36) 從上述內容可見,上訴人在服刑過程中,已學會尊重法律紀律,懂得反思過錯,對自己的犯罪行為感到懊悔,亦決心改過自身,在獄中的行為及態度均屬積極,而沒有消極放任。 37) 針對2024年1...
+       pdf_url=https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42357
+       matched_subqueries=案件編號 253/2026
+  [5] score=15.474058
+       chunk_id=693_2025_zh_c0002_6c214b6985f2
+       retrieval_source=bm25
+       authoritative_case_number=693/2025
        authoritative_decision_date=12/03/2026
        court=澳門法院
        language=zh
-       case_type=刑事訴訟程序的上訴
-       chunk_text_preview=第34/2026號刑事上訴案 上訴人：（嫌犯）A 日期：2026年3月12日 主要問題：禁用證據、疑罪從無、適用法律錯誤、量刑過重、恐嚇罪 摘要 對於量刑時需考慮的情節，只要不存在對法定限制規範，如刑罰幅度或經驗法則的違反，也不存在所確定的具體刑罰顯示出完全不適度的話，上訴法院不應介入具體刑罰的確定。 ____________________ 盧映霞（裁判書製作人） 第34/2026刑事上訴案 上訴人：（嫌犯）A 澳門特別行政區中級法院...
-       pdf_url=https://www.court.gov.mo/sentence/zh-e7d54797a9c6d897.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42275
-       matched_subqueries=量刑過重與緩刑，是否可上訴; 量刑過重與緩刑 是否可上訴; 量刑過重; 量刑過重 緩刑 上訴
-  [4] score=44.759190
-       chunk_id=34_2026_zh_c0004_fcc08b9277bf
-       retrieval_source=bm25
-       authoritative_case_number=34/2026
-       authoritative_decision_date=12/03/2026
-       court=澳門法院
-       language=zh
-       case_type=刑事訴訟程序的上訴
-       chunk_text_preview=即嫌犯）曾使用她的微信號及對丈夫的行為致歉。後來，警方亦在嫌犯的手機發現涉案的照片及存有涉案的微信帳號。由此可見，按照庭上各名被害人及證人的聲明，結合卷宗的書證，足以認定上述事實獲證明。 8) 根據《刑事訴訟法典》第114條規定，“評價證據係按經驗法則及有權限實體之自由心證為之，但法律另有規定者除外。”換言之，法官在對構成訴訟標的之事實作出認定時，除了法律對評價證據方面另有規定外，係依據經驗法則對證據材料進行分析判斷，從而在事實層面上作...
-       pdf_url=https://www.court.gov.mo/sentence/zh-e7d54797a9c6d897.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42275
-       matched_subqueries=量刑過重與緩刑，是否可上訴; 量刑過重與緩刑 是否可上訴; 量刑過重; 量刑過重 緩刑 上訴
-  [5] score=43.091072
-       chunk_id=728_2025_zh_c0010_d2c36fa77f6f
-       retrieval_source=bm25
-       authoritative_case_number=728/2025
-       authoritative_decision_date=12/02/2026
-       court=澳門法院
-       language=zh
-       case_type=刑事訴訟程序的上訴
-       chunk_text_preview=事實才得出之心證，而且上訴人亦沒有提出任何原審法院沒有考慮之事實、客觀性證據及/或依據來推翻原審法院所認定之事實及/或原審法院基於其所認定之事實而得出之心證，同時，被上訴人亦不認為原審法院得出之心證存在任何違反一般經驗法則之明顯錯誤，為此，被上訴人不認為被訴判決存在著不可補正或不可克服的矛盾； 12. 綜合上述，被上訴人認為被訴判決內並不存在上訴人在其上訴陳述內提及的被訴判決在事實判斷及說明理由方面出現不可補救之矛盾，沾有澳門《刑事訴訟...
-       pdf_url=https://www.court.gov.mo/sentence/zh-5f6919955a8094cf.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42163
-       matched_subqueries=量刑過重與緩刑，是否可上訴; 量刑過重與緩刑 是否可上訴; 量刑過重; 量刑過重 緩刑 上訴
+       case_type=澳門以外的法院或仲裁員作出的裁判的審查及確認
+       chunk_text_preview=由香港特別行政區高等法院原訟法庭所作出的民事判決書所載之內容，本院未見一旦在澳門特別行政區認可和執行該判決將違反澳門特別行政區法律的基本原則或者公共秩序。 有鑑於《民事訴訟法典》第1200條第1款所規定的各項要件均已悉數符合，應裁定聲請人的理由成立。 *** 五、 決定 綜上所述，本院合議庭決定確認香港特別行政區高等法院原訟法庭於2025年2月18日作出的民事判決，案件編號：HCA315/2024。 訴訟費用由被聲請人負擔。 依法登錄本...
+       pdf_url=https://www.court.gov.mo/sentence/zh-4dec5bf14d03fd4f.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42321
+       matched_subqueries=案件編號 253/2026

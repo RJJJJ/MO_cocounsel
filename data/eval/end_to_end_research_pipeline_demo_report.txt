@@ -1,0 +1,50 @@
+End-to-End Research Pipeline Demo Report - Day 32
+query_received: 加重詐騙 損害賠償 量刑過重
+decomposition_used: on
+subqueries_generated_count: 7
+retrieval_hits_after_merge: 21
+citation_records_generated: 5
+answer_draft_generated: True
+end_to_end_research_pipeline_appears_successful: True
+
+answer_result:
+{
+  "query": "加重詐騙 損害賠償 量刑過重",
+  "decomposition_summary": {
+    "main_issue": "量刑過重",
+    "sub_issues": [
+      "詐騙",
+      "加重詐騙",
+      "損害賠償",
+      "賠償"
+    ],
+    "retrieval_subqueries": [
+      "加重詐騙 損害賠償 量刑過重",
+      "量刑過重",
+      "量刑過重 詐騙 加重詐騙 損害賠償",
+      "量刑過重 賠償",
+      "詐騙",
+      "加重詐騙",
+      "損害賠償"
+    ]
+  },
+  "retrieval_summary": {
+    "hits_used": 5,
+    "top_case_numbers": [
+      "757/2025",
+      "76/2026",
+      "147/2025"
+    ]
+  },
+  "citation_summary": {
+    "citation_labels": [
+      "澳門法院｜757/2025｜26/03/2026",
+      "澳門法院｜757/2025｜26/03/2026",
+      "澳門法院｜757/2025｜26/03/2026",
+      "澳門法院｜76/2026｜12/03/2026",
+      "澳門法院｜147/2025｜12/03/2026"
+    ],
+    "source_count": 5
+  },
+  "answer_draft": "Local deterministic legal retrieval pass over prepared Macau court chunks; query=\"加重詐騙 損害賠償 量刑過重\", hits=5, citations=5. Findings are assembled from bound citation previews only."
+}

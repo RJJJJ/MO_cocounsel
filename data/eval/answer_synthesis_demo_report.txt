@@ -1,43 +1,43 @@
 Answer Synthesis Skeleton Demo Report - Macau Court Cases
-query_received: 澳門 勞動合同 解除 賠償
+query_received: 量刑過重
 retrieval_hits_used: 5
 citation_records_used: 5
 answer_type: structured_research_draft
 answer_synthesis_skeleton_appears_successful: True
 answer_draft_generated:
-  provisional_summary: [Draft | Retrieval-Grounded] This structured research draft is generated deterministically from 5 hybrid retrieval hits for query "澳門 勞動合同 解除 賠償". Initial support appears in top sources: 澳門法院｜214/2025｜05/03/2026, 澳門法院｜214/2025｜05/03/2026. It summarizes retrieved excerpts only and is not final legal advice.
+  provisional_summary: [Draft | Retrieval-Grounded] This structured research draft is generated deterministically from 5 hybrid retrieval hits for query "量刑過重". Initial support appears in top sources: 澳門法院｜757/2025｜26/03/2026, 澳門法院｜728/2025｜12/02/2026. It summarizes retrieved excerpts only and is not final legal advice.
   key_findings:
-    [1] Retrieved excerpt indicates: 5條第2款所規定。 75. 被上訴判決一方面指責上訴人所提出多項人證及書證未能證明二人僱佣關係；但對於指控上訴人及第二嫌犯的僱佣關係屬虛假卻沒有說明及指出其基於哪些證據結論他們二人僱佣是虛假，故被上訴判決作出這樣說明理由明顯是前後有矛盾的，一方面要求嫌犯一方上訴人及第二嫌犯自證其僱佣關係存在，另外一方面對於認定其虛假僱佣卻沒有具體說明理由，明顯地，被上訴判… (court=澳門法院, date=05/03/2026, rank=1).
-         citation_labels=澳門法院｜214/2025｜05/03/2026
-    [2] Retrieved excerpt indicates: 包括： 包 實施了虛偽的結婚、事實婚、收養或訂立勞動合同的行為； ； 存在使他人或本人取得在澳門特別行政區的居留許可或逗留特別許可的決定性動機； 許 上述虛偽行為實際上被用作向本澳當局要求實現應予譴責的目的，即以虛假的方式申請居留許可或特別逗留許可。 4. 事實上，不論是被上訴判決當中事實或控訴書的事實當中均沒有調查到上訴人為第二嫌犯取得逗留的犯罪動機和目… (court=澳門法院, date=05/03/2026, rank=2).
-         citation_labels=澳門法院｜214/2025｜05/03/2026
-    [3] Retrieved excerpt indicates: 第691/2025號-I（刑事上訴案） 對中級法院裁判的異議／澄清 聲請人：（涉案員工）(A) 一、案情敘述 在第691/2025號刑事上訴案中，本院於2025年12月4日裁定上訴人「(B)保險股份有限公司」的上訴理由成立，廢止被上訴的判決，開釋上訴人被處的輕微違反以及民事賠償。 ＊ 涉案員工(A)（聲請人）於2025年12月15日對上述裁判提出不服的意見… (court=澳門法院, date=12/03/2026, rank=3).
-         citation_labels=澳門法院｜691/2025-I｜12/03/2026
-    [4] Retrieved excerpt indicates: procedente o presente recurso, por provado, reconhecer-se os vícios nos termos acima expostos e ser revogado o douto Acórdão Recorrido, assim se fazendo a Costumeira JUSTIÇA. * Re… (court=澳門法院, date=19/03/2026, rank=4).
-         citation_labels=澳門法院｜1035/2025｜19/03/2026
-    [5] Retrieved excerpt indicates: 勞動合同履行之事實變更。 39. 事實上，根據本案中證人E的證言及載於卷宗第127頁及128頁書證顯示，第二嫌犯在其上班工作一個月後出現腰椎間盤突出入住鏡湖醫院，及後其回到國內繼續治療，因此，第二嫌犯不能到本澳上班是因為其疾病而影響其履行勞動關係，故第二嫌犯出現不履行勞動合同實際上非因其意做成。(參見文係1、卷宗第127頁及128頁) 40. 本案中，並無… (court=澳門法院, date=05/03/2026, rank=5).
-         citation_labels=澳門法院｜214/2025｜05/03/2026
+    [1] Retrieved excerpt indicates: C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；d) 第三嫌犯E以直接共同正犯及既遂方式觸犯了《刑法典》第211條第4款a項結合第1款及第196條b項所規定及處罰的一項詐騙罪（相當巨額），判處兩年九個月徒刑，暫緩執行該徒刑，為期三年（已吸收以直接共同正犯及既遂方式觸犯的《刑法典》第244 條第1款a項及C項所規定及處罰的一項偽造文件罪，後者不作獨立判… (court=澳門法院, date=26/03/2026, rank=1).
+         citation_labels=澳門法院｜757/2025｜26/03/2026
+    [2] Retrieved excerpt indicates: 事實才得出之心證，而且上訴人亦沒有提出任何原審法院沒有考慮之事實、客觀性證據及/或依據來推翻原審法院所認定之事實及/或原審法院基於其所認定之事實而得出之心證，同時，被上訴人亦不認為原審法院得出之心證存在任何違反一般經驗法則之明顯錯誤，為此，被上訴人不認為被訴判決存在著不可補正或不可克服的矛盾； 12. 綜合上述，被上訴人認為被訴判決內並不存在上訴人在其上訴… (court=澳門法院, date=12/02/2026, rank=2).
+         citation_labels=澳門法院｜728/2025｜12/02/2026
+    [3] Retrieved excerpt indicates: 同時在第CR5-22-0063-PCC號卷宗所給予之緩刑期間內實施。因此，有充份理由相信，採用罰金刑無法達到處罰的目的。 5) 同時，過去所採用的暫緩執行徒刑，亦證明無法使上訴人糾正其行為，而一再犯罪。上訴人重復違反法律，從而顯示過去所給予的徒刑暫緩執行未能使上訴人知法守法，重新納入社會生活。上訴人以其實際行動排除了對其將來行為所抱有的任何期望。因此，考慮… (court=澳門法院, date=05/03/2026, rank=3).
+         citation_labels=澳門法院｜721/2025｜05/03/2026
+    [4] Retrieved excerpt indicates: 第34/2026號刑事上訴案 上訴人：（嫌犯）A 日期：2026年3月12日 主要問題：禁用證據、疑罪從無、適用法律錯誤、量刑過重、恐嚇罪 摘要 對於量刑時需考慮的情節，只要不存在對法定限制規範，如刑罰幅度或經驗法則的違反，也不存在所確定的具體刑罰顯示出完全不適度的話，上訴法院不應介入具體刑罰的確定。 ____________________ 盧映霞（裁判… (court=澳門法院, date=12/03/2026, rank=4).
+         citation_labels=澳門法院｜34/2026｜12/03/2026
+    [5] Retrieved excerpt indicates: 即嫌犯）曾使用她的微信號及對丈夫的行為致歉。後來，警方亦在嫌犯的手機發現涉案的照片及存有涉案的微信帳號。由此可見，按照庭上各名被害人及證人的聲明，結合卷宗的書證，足以認定上述事實獲證明。 8) 根據《刑事訴訟法典》第114條規定，“評價證據係按經驗法則及有權限實體之自由心證為之，但法律另有規定者除外。”換言之，法官在對構成訴訟標的之事實作出認定時，除了法律… (court=澳門法院, date=12/03/2026, rank=5).
+         citation_labels=澳門法院｜34/2026｜12/03/2026
   cited_sources:
-    [1] citation_label=澳門法院｜214/2025｜05/03/2026
-         chunk_id=214_2025_zh_c0010_5a623e137f85
-         pdf_url=https://www.court.gov.mo/sentence/zh-dea4106141d17e08.pdf
-         text_url_or_action=https://www.court.gov.mo/sentence/zh/42253
-    [2] citation_label=澳門法院｜214/2025｜05/03/2026
-         chunk_id=214_2025_zh_c0001_1c941c9e6363
-         pdf_url=https://www.court.gov.mo/sentence/zh-dea4106141d17e08.pdf
-         text_url_or_action=https://www.court.gov.mo/sentence/zh/42253
-    [3] citation_label=澳門法院｜691/2025-I｜12/03/2026
-         chunk_id=691_2025-I_zh_c0000_31bbb1a0dd80
-         pdf_url=https://www.court.gov.mo/sentence/zh-195ef6b4d054c7b4.pdf
-         text_url_or_action=https://www.court.gov.mo/sentence/zh/42349
-    [4] citation_label=澳門法院｜1035/2025｜19/03/2026
-         chunk_id=1035_2025_pt_c0016_5431bc316b1a
-         pdf_url=https://www.court.gov.mo/sentence/pt-1142ed706452f7f7.pdf
-         text_url_or_action=https://www.court.gov.mo/sentence/pt/42381
-    [5] citation_label=澳門法院｜214/2025｜05/03/2026
-         chunk_id=214_2025_zh_c0005_e30206e7089c
-         pdf_url=https://www.court.gov.mo/sentence/zh-dea4106141d17e08.pdf
-         text_url_or_action=https://www.court.gov.mo/sentence/zh/42253
+    [1] citation_label=澳門法院｜757/2025｜26/03/2026
+         chunk_id=757_2025_zh_c0002_0b42b7eee509
+         pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+    [2] citation_label=澳門法院｜728/2025｜12/02/2026
+         chunk_id=728_2025_zh_c0010_d2c36fa77f6f
+         pdf_url=https://www.court.gov.mo/sentence/zh-5f6919955a8094cf.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42163
+    [3] citation_label=澳門法院｜721/2025｜05/03/2026
+         chunk_id=721_2025_zh_c0003_f11d8588f999
+         pdf_url=https://www.court.gov.mo/sentence/zh-77e596eefc61504f.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42345
+    [4] citation_label=澳門法院｜34/2026｜12/03/2026
+         chunk_id=34_2026_zh_c0000_de36cad31850
+         pdf_url=https://www.court.gov.mo/sentence/zh-e7d54797a9c6d897.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42275
+    [5] citation_label=澳門法院｜34/2026｜12/03/2026
+         chunk_id=34_2026_zh_c0004_fcc08b9277bf
+         pdf_url=https://www.court.gov.mo/sentence/zh-e7d54797a9c6d897.pdf
+         text_url_or_action=https://www.court.gov.mo/sentence/zh/42275
   source_notes:
     - Deterministic synthesis only: no generative model was used.
     - All findings are assembled from retrieval chunk previews and citation records.
