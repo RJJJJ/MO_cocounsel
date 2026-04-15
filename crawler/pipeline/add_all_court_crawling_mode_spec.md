@@ -48,17 +48,16 @@ These modes reuse the same parser/extractor/append logic, differing only in `cou
 
 ## Duplicate handling
 
-Duplicate handling reuses existing corpus manifest rules:
+Duplicate handling now prioritizes source-document identity to avoid false deduplication across court levels:
 
 - read `data/corpus/raw/macau_court_cases/manifest.jsonl`;
-- build duplicate keys from:
-  - `authoritative_case_number`
-  - `authoritative_decision_date`
-  - `language`
-  - `court`
-- skip records already present;
-- append only new records;
-- keep current corpus directory structure and manifest schema intact.
+- build duplicate key using strict priority:
+  1. normalized `text_url_or_action` (primary),
+  2. normalized `pdf_url` (secondary, only if text URL missing),
+  3. fallback metadata key `(court, authoritative_case_number, authoritative_decision_date, language)` only if both URLs are missing.
+- skip only when the highest-priority available key already exists;
+- append all non-duplicates to preserve distinct judgments that share case metadata but have different source URLs;
+- keep existing corpus directory structure and manifest schema intact.
 
 ## Stop conditions
 
@@ -82,7 +81,11 @@ Report and console summary include:
 - cards discovered
 - detail pages attempted
 - detail pages succeeded
+- duplicate strategy used (`text_url_or_action -> pdf_url -> fallback metadata`)
 - duplicates skipped
+- duplicates skipped by `text_url`
+- duplicates skipped by `pdf_url`
+- duplicates skipped by fallback metadata key
 - new corpus records added
 - whether all-court crawling appears successful
 
