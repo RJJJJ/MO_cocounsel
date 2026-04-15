@@ -7,11 +7,21 @@ import argparse
 import json
 import math
 import re
+import sys
 import unicodedata
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from crawler.retrieval.improve_chinese_legal_query_normalization import (
+    ChineseLegalQueryNormalizer,
+    NormalizedQuery,
+)
 
 PREPARED_ROOT = Path("data/corpus/prepared/macau_court_cases")
 BM25_CHUNKS_PATH = PREPARED_ROOT / "bm25_chunks.jsonl"
@@ -115,9 +125,17 @@ class MixedTokenizer:
 
 
 class LocalBM25Index:
-    def __init__(self, records: list[dict[str, Any]], tokenizer: MixedTokenizer, k1: float = 1.5, b: float = 0.75) -> None:
+    def __init__(
+        self,
+        records: list[dict[str, Any]],
+        tokenizer: MixedTokenizer,
+        k1: float = 1.5,
+        b: float = 0.75,
+        query_normalizer: ChineseLegalQueryNormalizer | None = None,
+    ) -> None:
         self.records = records
         self.tokenizer = tokenizer
+        self.query_normalizer = query_normalizer
         self.k1 = k1
         self.b = b
         self.doc_tokens: list[list[str]] = []
@@ -163,10 +181,18 @@ class LocalBM25Index:
     def _normalize_case_for_match(case_number: str) -> str:
         return re.sub(r"\s+", "", (case_number or "").lower())
 
-    def search(self, query: str, top_k: int = 10) -> tuple[list[RankedHit], TokenizerResult]:
-        query_tokens = self.tokenizer.tokenize(query)
+    def search(
+        self, query: str, top_k: int = 10
+    ) -> tuple[list[RankedHit], TokenizerResult, NormalizedQuery | None]:
+        normalized_query: NormalizedQuery | None = None
+        effective_query = query
+        if self.query_normalizer is not None:
+            normalized_query = self.query_normalizer.normalize_query(query)
+            effective_query = normalized_query.expanded_query
+
+        query_tokens = self.tokenizer.tokenize(effective_query)
         if not query_tokens.tokens:
-            return [], query_tokens
+            return [], query_tokens, normalized_query
 
         query_case_refs = {
             token for token in query_tokens.tokens if "/" in token and any(ch.isdigit() for ch in token)
@@ -216,7 +242,7 @@ class LocalBM25Index:
             )
 
         ranked = sorted(scored_hits, key=lambda x: x.score, reverse=True)
-        return ranked[: max(top_k, 1)], query_tokens
+        return ranked[: max(top_k, 1)], query_tokens, normalized_query
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -238,6 +264,11 @@ def parse_args() -> argparse.Namespace:
         choices=["deterministic", "auto", "jieba"],
         default="deterministic",
         help="tokenizer backend (default: deterministic)",
+    )
+    parser.add_argument(
+        "--enable-query-normalization",
+        action="store_true",
+        help="enable Chinese legal query normalization before tokenization",
     )
     return parser.parse_args()
 
@@ -290,8 +321,9 @@ def main() -> None:
 
         bm25_records = read_jsonl(BM25_CHUNKS_PATH)
         tokenizer = MixedTokenizer(mode=args.tokenizer)
-        bm25_index = LocalBM25Index(records=bm25_records, tokenizer=tokenizer)
-        hits, query_tokens = bm25_index.search(query=args.query, top_k=args.top_k)
+        query_normalizer = ChineseLegalQueryNormalizer() if args.enable_query_normalization else None
+        bm25_index = LocalBM25Index(records=bm25_records, tokenizer=tokenizer, query_normalizer=query_normalizer)
+        hits, query_tokens, normalized_query = bm25_index.search(query=args.query, top_k=args.top_k)
 
         success = bool(bm25_records) and bool(query_tokens.tokens) and len(hits) > 0
         write_demo_report(
@@ -306,6 +338,11 @@ def main() -> None:
         print(f"total bm25 records loaded: {len(bm25_records)}")
         print(f"tokenizer strategy used: {bm25_index.tokenizer_strategy_used}")
         print(f"query received: {args.query}")
+        print(f"query normalization enabled: {args.enable_query_normalization}")
+        if normalized_query is not None:
+            print(f"normalized query: {normalized_query.normalized_query}")
+            print(f"expanded query: {normalized_query.expanded_query}")
+            print(f"normalization rules applied: {normalized_query.applied_rules}")
         print(f"top_k returned: {len(hits)}")
         print(f"bm25 query prototype appears successful: {success}")
 
