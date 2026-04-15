@@ -500,11 +500,6 @@ def run() -> int:
 
                         if duplicate_key in seen_keys:
                             stats.duplicates_skipped += 1
-                            # --- 新增這段來記錄被跳過的案件 ---
-                            skipped_log_path = CORPUS_ROOT / "skipped_duplicates.txt"
-                            with skipped_log_path.open("a", encoding="utf-8") as log_file:
-                                log_file.write(f"重複跳過 | 案號: {authoritative_case_number} | 日期: {authoritative_decision_date} | 語言: {record.get('language')} | 網址: {detail_url}\n")
-                            # ------------------------------------
                             continue
 
                         append_record_to_corpus(record, manifest_fh, new_index=new_index)
