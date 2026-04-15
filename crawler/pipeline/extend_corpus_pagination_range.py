@@ -94,42 +94,6 @@ def ensure_unique_case_dir(base_dir: Path) -> Path:
         suffix += 1
 
 
-def choose_authoritative(record: dict[str, Any], detail_key: str, source_key: str) -> str:
-    detail = normalize_space(record.get(detail_key))
-    return detail or normalize_space(record.get(source_key))
-
-
-def parse_detail_case_number(text: str) -> str | None:
-    lines = [line.strip() for line in text.split("\n") if line.strip()][:20]
-    patterns = [
-        r"(?:案件編號|卷宗編號|編號|案號)\s*[:：]?\s*(?:第)?\s*([0-9]{1,6}/[0-9]{4})\s*號?",
-        r"^第\s*([0-9]{1,6}/[0-9]{4})\s*號(?:.*案)?$",
-        r"\b([0-9]{1,6}/[0-9]{4})\b",
-    ]
-    for line in lines:
-        for pattern in patterns:
-            m = re.search(pattern, line)
-            if m:
-                return normalize_space(m.group(1)) or None
-    return None
-
-
-def parse_detail_decision_date(text: str) -> str | None:
-    lines = [line.strip() for line in text.split("\n") if line.strip()][:20]
-    patterns = [
-        r"(?:裁判日期|判決日期|日期)\s*[:：]\s*([0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日)",
-        r"(?:裁判日期|判決日期|日期)\s*[:：]\s*([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})",
-        r"\b([0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日)\b",
-        r"\b([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})\b",
-    ]
-    for line in lines:
-        for pattern in patterns:
-            m = re.search(pattern, line)
-            if m:
-                return normalize_space(m.group(1)) or None
-    return None
-
-
 def detect_language_from_url(url: str | None) -> str:
     lower = (url or "").lower()
     if "/zh/" in lower:
@@ -343,8 +307,8 @@ def build_duplicate_key(record: dict[str, Any]) -> tuple[str, str, str, str]:
 
 def append_record_to_corpus(record: dict[str, Any], manifest_fh, new_index: int) -> None:
     language = normalize_space(record.get("language")) or "unknown"
-    authoritative_case_number = choose_authoritative(record, "detail_case_number", "source_list_case_number")
-    authoritative_decision_date = choose_authoritative(record, "detail_decision_date", "source_list_decision_date")
+    authoritative_case_number = normalize_space(record.get("source_list_case_number"))
+    authoritative_decision_date = normalize_space(record.get("source_list_decision_date"))
     case_slug = slugify_case_number(authoritative_case_number, new_index)
     year = extract_year(authoritative_decision_date)
 
@@ -361,12 +325,9 @@ def append_record_to_corpus(record: dict[str, Any], manifest_fh, new_index: int)
 
     metadata = {
         "court": normalize_space(record.get("court")),
-        "source_list_case_number": normalize_space(record.get("source_list_case_number")),
-        "source_list_decision_date": normalize_space(record.get("source_list_decision_date")),
+        "source_list_case_number": authoritative_case_number,
+        "source_list_decision_date": authoritative_decision_date,
         "source_list_case_type": normalize_space(record.get("source_list_case_type")),
-        "detail_case_number": normalize_space(record.get("detail_case_number")),
-        "detail_decision_date": normalize_space(record.get("detail_decision_date")),
-        "detail_title_or_issue": normalize_space(record.get("detail_title_or_issue")),
         "language": language,
         "pdf_url": normalize_space(record.get("pdf_url")),
         "text_url_or_action": normalize_space(record.get("text_url_or_action")),
@@ -523,23 +484,13 @@ def run() -> int:
 
                         record = {
                             **card,
-                            "detail_case_number": parse_detail_case_number(cleaned_text),
-                            "detail_decision_date": parse_detail_decision_date(cleaned_text),
-                            "detail_title_or_issue": None,
                             "language": detect_language_from_url(detail_url),
                             "full_text": cleaned_text,
                         }
 
-                        authoritative_case_number = choose_authoritative(
-                            record,
-                            "detail_case_number",
-                            "source_list_case_number",
-                        )
-                        authoritative_decision_date = choose_authoritative(
-                            record,
-                            "detail_decision_date",
-                            "source_list_decision_date",
-                        )
+                        authoritative_case_number = normalize_space(record.get("source_list_case_number"))
+                        authoritative_decision_date = normalize_space(record.get("source_list_decision_date"))
+                        
                         duplicate_key = (
                             authoritative_case_number.lower(),
                             authoritative_decision_date.lower(),
@@ -549,6 +500,11 @@ def run() -> int:
 
                         if duplicate_key in seen_keys:
                             stats.duplicates_skipped += 1
+                            # --- 新增這段來記錄被跳過的案件 ---
+                            skipped_log_path = CORPUS_ROOT / "skipped_duplicates.txt"
+                            with skipped_log_path.open("a", encoding="utf-8") as log_file:
+                                log_file.write(f"重複跳過 | 案號: {authoritative_case_number} | 日期: {authoritative_decision_date} | 語言: {record.get('language')} | 網址: {detail_url}\n")
+                            # ------------------------------------
                             continue
 
                         append_record_to_corpus(record, manifest_fh, new_index=new_index)

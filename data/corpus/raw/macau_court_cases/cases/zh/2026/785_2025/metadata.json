@@ -3,13 +3,10 @@
   "source_list_case_number": "785/2025",
   "source_list_decision_date": "05/03/2026",
   "source_list_case_type": "刑事訴訟程序的上訴",
-  "detail_case_number": "785/2025",
-  "detail_decision_date": "2026年3月5日",
-  "detail_title_or_issue": "",
   "language": "zh",
   "pdf_url": "https://www.court.gov.mo/sentence/zh-a41117a9a957ebd5.pdf",
   "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42249",
-  "page_number": 7,
+  "page_number": 5,
   "extraction_source": "day20_pagination_extension",
   "full_text_path": "cases/zh/2026/785_2025/full_text.txt"
 }

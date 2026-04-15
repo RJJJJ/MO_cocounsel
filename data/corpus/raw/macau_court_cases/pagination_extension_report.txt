@@ -1,11 +1,11 @@
 Day 20 pagination extension report
 ===================================
-pages attempted: 9
-valid pages parsed: 8
-cards discovered: 80
-detail pages attempted: 80
-detail pages succeeded: 80
-duplicates skipped: 15
-new corpus records added: 65
-stop reason: duplicate result page signature detected at page 9
+pages attempted: 10
+valid pages parsed: 10
+cards discovered: 100
+detail pages attempted: 100
+detail pages succeeded: 100
+duplicates skipped: 48
+new corpus records added: 52
+stop reason: reached configured max page 10
 whether pagination extension appears successful: yes

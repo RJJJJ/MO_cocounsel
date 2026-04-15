@@ -1,0 +1,12 @@
+{
+  "court": "中級法院",
+  "source_list_case_number": "136/2025",
+  "source_list_decision_date": "26/02/2026",
+  "source_list_case_type": "行政, 稅務及海關方面的司法裁判的上訴",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-6158f91c1c76bb04.pdf",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42191",
+  "page_number": 9,
+  "extraction_source": "day20_pagination_extension",
+  "full_text_path": "cases/zh/2026/136_2025/full_text.txt"
+}

@@ -1,0 +1,59 @@
+BM25 Query Demo Report - Macau Court Cases
+bm25_input_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+total_bm25_records_loaded: 1468
+tokenizer_strategy_used: deterministic_regex_plus_cjk_bigrams
+query_received: 757/2025
+top_k_requested: 5
+top_k_returned: 5
+bm25_query_prototype_successful: True
+top_hits:
+  [1] score=20.288878
+       chunk_id=757_2025_zh_c0000_996a9c224e13
+       authoritative_case_number=757/2025
+       authoritative_decision_date=26/03/2026
+       court=中級法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=第757/2025號刑事上訴案 上訴人：A 日期：2026年3月26日 主要問題：加重詐騙罪、量刑過重、緩刑 摘要 在侵犯財產罪的事件中，行為人向被害人／被害實體償還涉案款項的情節具有重要性。 即使在2018年1月1日至2019年12月31日期間，上訴人僅向被害實體返還了434,806.90澳門元而不屬於《刑法典》第201條第1款所指全數賠償的情節，但不能否認的是，部分還款對於量刑而言仍然是有重要性的。 因此，對於上訴人已償還款項的部分...
+       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+  [2] score=19.401813
+       chunk_id=757_2025_zh_c0010_9245273c1c8f
+       authoritative_case_number=757/2025
+       authoritative_decision_date=26/03/2026
+       court=中級法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=____________________ 盧映霞（裁判書製作人） ____________________ 譚曉華（第一助審法官） ____________________ 周艷平（第二助審法官） 1 雖然控訴書及被上訴的裁判均沒有提到犯罪的主觀方式，但根據控訴及裁判邏輯，這裡應該理解為以故意方式實施的犯罪。 2 參考了 2025年五個刑事法庭的審判結果。 3 見法院網站的實時資料 4 包括借款的本金及利息，故有關本金應約為38萬澳門幣...
+       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+  [3] score=13.735783
+       chunk_id=757_2025_zh_c0005_529b99a79a5d
+       authoritative_case_number=757/2025
+       authoritative_decision_date=26/03/2026
+       court=中級法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=長閣下提交了法律意見書（卷宗第503頁至第505頁背頁的內容在此視為完全轉錄），當中的結論內容如下： 綜合而言，我們認為： 1) 上訴人指被上訴裁判違反類案類判原則的上訴理由不成立； 2) 考慮被害銀行目前仍可申請拍賣上訴人抵押的物業以取得部分賠償的具體情況，建議本案可將上訴人被判處的4年徒刑減為3年徒刑且准予緩刑3年，其中緩刑條件為，上訴人需在3年緩刑期間內，每月向被害銀行支付至少5,000澳門元至完全彌補損失。 ＊ 本院接受上訴人提...
+       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+  [4] score=13.501089
+       chunk_id=757_2025_zh_c0004_a86ac6bdfbd2
+       authoritative_case_number=757/2025
+       authoritative_decision_date=26/03/2026
+       court=中級法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=125-CEO進行拍賣程序〔是次底價為澳門幣173萬〕，且銀行沒有於本案追究，故應改為判處三年徒刑，緩刑執行〔其父母願意協助其每月支付不少於澳門幣5,000元的賠償〕。 2) 原審法院之所以判處4年實際徒刑，乃考慮到被害人G銀行有相當巨額的損失，尤其是其所借出澳門幣231萬中大部份尚未被清還。 3) 這亦是本案與其他同類型詐騙案件的最大不同之處；後者案件特點是，嫌犯透過詐騙銀行獲得借款後有依期還款一段時間，但後來又因經濟問題而停止還款，...
+       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+  [5] score=13.470906
+       chunk_id=757_2025_zh_c0009_8e2bb05dc906
+       authoritative_case_number=757/2025
+       authoritative_decision_date=26/03/2026
+       court=中級法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=措施。在符合法定前提的條件下，法院針對個案‘可以’（而並非‘必須’）裁定徒刑的暫緩執行。給予刑罰的暫緩執行應以對行為人將來的行為作有利的預測為基礎，且令人有信心透過刑罰的威嚇，行為人能從判刑中汲取到教訓，並有理由相信其藉著將來遵守法律及符合法律的生活而不會再次犯罪。 緩刑的前提要件包括形式要件（針對不超逾三年的徒刑）及實質要件（存在正面的社會期盼）。所謂‘正面的社會期盼’，或稱為‘社會的良好預測’，是指透過分析行為人的人格、生活條件、實...
+       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
