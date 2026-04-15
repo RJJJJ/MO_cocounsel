@@ -2,58 +2,58 @@ BM25 Query Demo Report - Macau Court Cases
 bm25_input_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
 total_bm25_records_loaded: 1265
 tokenizer_strategy_used: deterministic_regex_plus_cjk_bigrams
-query_received: 757/2025
+query_received: 假釋
 top_k_requested: 5
 top_k_returned: 5
 bm25_query_prototype_successful: True
 top_hits:
-  [1] score=22.798699
-       chunk_id=757_2025_zh_c0010_998c82519e45
-       authoritative_case_number=757/2025
+  [1] score=5.664455
+       chunk_id=164_2026_zh_c0004_5d9130c79e2c
+       authoritative_case_number=164/2026
+       authoritative_decision_date=26/02/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=。 6. 上訴人報稱其具有小學六年級程度的學歷，入獄前曾經營工程公司，在公司倒閉後便沒有再尋找工作直至入獄。 7. 上訴人是首次入獄。 8. 據上訴人在監獄的紀錄，上訴人屬信任類，上訴人在服刑期間沒有反紀律之紀錄，監獄對其行為的總評價為“良”，評語為:行為良好，表現可予接受（見卷宗第8頁）。 9. 上訴人沒有參與獄中舉辦的學習活動及職業培訓。 10. 上訴人哥哥的朋友有偶爾探訪其，其與家人會以申請致電及書信保持聯繫。 11. 上訴人表示...
+       pdf_url=https://www.court.gov.mo/sentence/zh-f9a8bc453cbfc6f5.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42261
+  [2] score=5.653113
+       chunk_id=253_2026_zh_c0008_8fc0272a25aa
+       authoritative_case_number=253/2026
        authoritative_decision_date=26/03/2026
        court=澳門法院
        language=zh
        case_type=刑事訴訟程序的上訴
-       chunk_text_preview=----------------------------- --------------- ------------------------------------------------------------ TSI-757/2025 第20頁，共21頁
-       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
-  [2] score=17.238947
-       chunk_id=757_2025_zh_c0000_6415798e445c
-       authoritative_case_number=757/2025
+       chunk_text_preview=。 因此，XX姓囚犯被科處收押於紀律囚室六日並剝奪放風權利，上訴人被科處收押於紀律囚室三日並剝奪放風權利。 14. 上訴人沒有參與監獄的學習活動。 15. 上訴人於2025年6月25日參與獄中的洗衣職訓。 16. 上訴人曾參與監獄舉辦的多項活動，包括：宗教活動（基督教）、2024年職涯發展計劃課程、原來是癮講座、2025年生涯規劃之個人興趣探索及成長-攝影班、男子體育競技比賽、劇場培訓計劃-廣播劇製作班、2025年原生藝術活動。 17....
+       pdf_url=https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42357
+  [3] score=5.635675
+       chunk_id=206_2026_zh_c0006_57bdfc3f8667
+       authoritative_case_number=206/2026
+       authoritative_decision_date=24/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=助理的工作。 18. 上訴人就是次假釋事宜發表意見，其透過信件作出聲明。上訴人表示，其犯罪對社會帶來極大的負面影響，不但使受害人蒙受損失，也影響自己的家庭，感到羞愧及愧疚；其對獄中的違規行為後悔不已，但其後端正思想，努力改造，於去年5月再次參與監獄的清潔工房職訓，其會珍惜工作，努力做事。上訴人承諾不再觸犯法律，以積極態度回饋社會，請求法官批准其假釋申請，讓其早日回家團聚。 * 三、法律方面 本上訴案件涉及的問題為：假釋要件。 * 澳門《...
+       pdf_url=https://www.court.gov.mo/sentence/zh-cedacb52acdf7fa2.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42351
+  [4] score=5.635675
+       chunk_id=165_2026_zh_c0003_03369033bd26
+       authoritative_case_number=165/2026
+       authoritative_decision_date=05/03/2026
+       court=澳門法院
+       language=zh
+       case_type=刑事訴訟程序的上訴
+       chunk_text_preview=年級，故沒有參與獄中的職訓。 10. 上訴人在休閒期間亦積極參與獄中的各項活動。 11. 上訴人現年45歲，澳門出生，大學程度，已婚。上訴人入獄前與母親、太太及兒子於澳門同住，自幼與父母、哥哥、姐姐和弟弟生活，父親當散工，母親為工廠工人，家庭經濟雖較貧窮，但關係親密。上訴人與前女友誕下一名女兒，後來與現任太太結婚，並生下一名兒子，兒子現由太太照顧，且關係良好。 12. 上訴人表示十八歲中學畢業後，便考入海關，同時於城市大學讀夜校至大學畢...
+       pdf_url=https://www.court.gov.mo/sentence/zh-51e6b73281989706.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42189
+  [5] score=5.600894
+       chunk_id=207_2026_zh_c0005_0737b604a6c7
+       authoritative_case_number=207/2026
        authoritative_decision_date=26/03/2026
        court=澳門法院
        language=zh
        case_type=刑事訴訟程序的上訴
-       chunk_text_preview=第757/2025號刑事上訴案 上訴人：A 日期：2026年3月26日 主要問題：加重詐騙罪、量刑過重、緩刑 摘要 在侵犯財產罪的事件中，行為人向被害人／被害實體償還涉案款項的情節具有重要性。 即使在2018年1月1日至2019年12月31日期間，上訴人僅向被害實體返還了434,806.90澳門元而不屬於《刑法典》第201條第1款所指全數賠償的情節，但不能否認的是，部分還款對於量刑而言仍然是有重要性的。 因此，對於上訴人已償還款項的部分...
-       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
-  [3] score=13.841614
-       chunk_id=757_2025_zh_c0009_5e7a4f8daf88
-       authoritative_case_number=757/2025
-       authoritative_decision_date=26/03/2026
-       court=澳門法院
-       language=zh
-       case_type=刑事訴訟程序的上訴
-       chunk_text_preview=；再者，上訴人已透過不動產確保了被害銀行的債權獲得保障，更以變賣物業的方式償還了大部分的貸款。 因此，按照同類型案件的量刑準則，本院認為暫緩2年執行對上訴人所判處的前述刑罰仍然可以達到阻嚇犯罪的預防作用，包括在一般預防的層面以及在特別預防的層面。 此外，對於檢察院代表所指的賠償義務，由於涉案的款項受借貸合同所約束，有關的金額計算方式有別於以「詐騙罪」為依據的賠償計算方式，而且被害實體已明確表示不在本案中處理民事賠償事宜，即使本案不訂定賠...
-       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
-  [4] score=13.389118
-       chunk_id=757_2025_zh_c0005_5fa9c80b6c6e
-       authoritative_case_number=757/2025
-       authoritative_decision_date=26/03/2026
-       court=澳門法院
-       language=zh
-       case_type=刑事訴訟程序的上訴
-       chunk_text_preview=表示若獲銀行批准貸款，收費則按照獲銀行批給的按揭貸款金額的一定百分比（8.5%）作為其收取的報酬，嫌犯表示同意。 六、 B於是透過J向嫌犯收取其澳門居民身份證副本、工作證明、K銀行存摺副本等資料。 七、 B隨後親自或透過他人製作嫌犯的工作入息證明及K銀行存摺記錄。 八、 經B協助製作的上述工作入息證明顯示，嫌犯自2014年1月起在「XX置業發展（澳門）有限公司」任職市場經理，月薪為38,000澳門元（見卷宗第248頁）；上述K銀行存摺記...
-       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
-  [5] score=13.009883
-       chunk_id=757_2025_zh_c0001_57c69989cd37
-       authoritative_case_number=757/2025
-       authoritative_decision_date=26/03/2026
-       court=澳門法院
-       language=zh
-       case_type=刑事訴訟程序的上訴
-       chunk_text_preview=在量刑中考慮：上訴人自2018年1月1日至2019年12月31日向對被害銀行還款合共澳門幣434,806.9元。以及，批出涉案貸款澳門幣2,310,000元之抵押物，位於XXX單位，現時正在民事法庭案件編號CV1-21-0125-CEO進行拍賣程序，最近一次拍賣底價為澳門幣1,730,400元；及銀行亦表明不會在本案提出民事請求。 7) 上訴人所觸犯之罪名所保護之法益為被害人之財產，對有關法益之侵害，事實上已透過上述還款及可以透過拍賣相...
-       pdf_url=https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf
-       text_url_or_action=https://www.court.gov.mo/sentence/zh/42383
+       chunk_text_preview=須給予被判刑者假釋： a）經考慮案件之情節，行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 b）釋放被判刑者顯示不影響維護法律秩序及社會安寧。 二、假釋之期間相等於徒刑之剩餘未服時間，但絕對不得超逾五年。 三、實行假釋須經被判刑者同意。 * 根據《刑法典》第56條第1款的規定，是否給予假釋取決於假釋的形式要件及實質要件是否同時成立。 本案，上訴人...
+       pdf_url=https://www.court.gov.mo/sentence/zh-36ed0ff4c89e09fd.pdf
+       text_url_or_action=https://www.court.gov.mo/sentence/zh/42373

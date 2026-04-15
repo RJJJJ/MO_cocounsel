@@ -1,0 +1,35 @@
+Macau Court Local Retrieval Evaluation Report (Baseline vs Normalized)
+bm25_input_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+query_test_set_path: data\eval\macau_court_query_test_set.jsonl
+total_bm25_records_loaded: 1265
+top_k_used: 10
+total_queries_evaluated: 13
+baseline_tokenizer_strategy: deterministic_regex_plus_cjk_bigrams
+normalized_tokenizer_strategy: deterministic_regex_plus_cjk_bigrams
+normalization_strategy_used: case_number_format_normalization, high_value_legal_query_expansion, legal_variant_mapping
+
+baseline_hit@10: 7/9 (77.78%)
+normalized_hit@10: 7/9 (77.78%)
+normalized_retrieval_appears_improved: False
+
+hit_by_query_type_before_after:
+  - ambiguous_or_noisy: baseline=0/0 (0.00%) | normalized=0/0 (0.00%)
+  - case_number_lookup: baseline=2/2 (100.00%) | normalized=2/2 (100.00%)
+  - issue_fact_zh: baseline=1/2 (50.00%) | normalized=2/2 (100.00%)
+  - legal_concept_zh: baseline=4/4 (100.00%) | normalized=3/4 (75.00%)
+  - portuguese_or_mixed: baseline=0/1 (0.00%) | normalized=0/1 (0.00%)
+
+per_query_before_after:
+  - query_id=Q001 | type=legal_concept_zh | baseline_hit=True@6 | normalized_hit=True@3 | query=假釋 | normalized_query=假釋 | expanded_query=假釋 提前釋放 刑法典第56條 釋放被判刑者 | expected=['100/2026', '119/2026', '120/2026']
+  - query_id=Q002 | type=legal_concept_zh | baseline_hit=True@2 | normalized_hit=True@6 | query=量刑過重 | normalized_query=量刑過重 | expanded_query=量刑過重 量刑明顯過重 刑罰過重 改判 | expected=['1073/2025', '117/2026', '147/2025']
+  - query_id=Q003 | type=legal_concept_zh | baseline_hit=True@1 | normalized_hit=True@1 | query=誹謗 | normalized_query=誹謗 | expanded_query=誹謗 名譽 侮辱 侵犯名譽 | expected=['310/2025', '728/2025', '871/2024']
+  - query_id=Q004 | type=legal_concept_zh | baseline_hit=True@2 | normalized_hit=False@None | query=違令 | normalized_query=違令 | expanded_query=違令 違反法庭命令 不遵令 拒不履行命令 | expected=['1033/2025', '1073/2025', '157/2026']
+  - query_id=Q005 | type=issue_fact_zh | baseline_hit=False@None | normalized_hit=False@None | query=合同之不能履行 | normalized_query=合同不能履行 | expanded_query=合同不能履行 合約不能履行 履行不能 債務不履行 | expected=[]
+  - query_id=Q006 | type=issue_fact_zh | baseline_hit=False@None | normalized_hit=True@4 | query=損害賠償 | normalized_query=損害賠償 | expanded_query=損害賠償 賠償損失 損失賠償 民事賠償 | expected=['1073/2025', '1087/2025/A', '1092/2025']
+  - query_id=Q007 | type=issue_fact_zh | baseline_hit=True@1 | normalized_hit=True@1 | query=加重詐騙 | normalized_query=加重詐騙 | expanded_query=加重詐騙 | expected=['36/2026', '757/2025']
+  - query_id=Q008 | type=case_number_lookup | baseline_hit=True@1 | normalized_hit=True@1 | query=157 / 2026 | normalized_query=157/2026 | expanded_query=157/2026 | expected=['157/2026']
+  - query_id=Q009 | type=case_number_lookup | baseline_hit=True@1 | normalized_hit=True@1 | query=253/2026 | normalized_query=253/2026 | expanded_query=253/2026 | expected=['253/2026']
+  - query_id=Q010 | type=portuguese_or_mixed | baseline_hit=False@None | normalized_hit=False@None | query=processo n o 578/2025 recurso em matéria cível | normalized_query=processo n o 578/2025recurso em matéria cível | expanded_query=processo n o 578/2025recurso em matéria cível | expected=[]
+  - query_id=Q011 | type=portuguese_or_mixed | baseline_hit=False@None | normalized_hit=False@None | query=假釋 liberdade condicional | normalized_query=假釋 liberdade condicional | expanded_query=假釋 liberdade condicional 提前釋放 刑法典第56條 釋放被判刑者 | expected=['1006/2025', '1035/2025', '543/2025']
+  - query_id=Q012 | type=ambiguous_or_noisy | baseline_hit=False@None | normalized_hit=False@None | query=上訴 | normalized_query=上訴 | expanded_query=上訴 | expected=[]
+  - query_id=Q013 | type=ambiguous_or_noisy | baseline_hit=False@None | normalized_hit=False@None | query=公司 | normalized_query=公司 | expanded_query=公司 | expected=[]
