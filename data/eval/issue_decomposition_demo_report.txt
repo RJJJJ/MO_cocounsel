@@ -1,0 +1,33 @@
+Issue Decomposition Layer Demo Report - Macau Court Cases
+query_received: 253/2026 加重詐騙 損害賠償 量刑過重與緩刑 上訴撤銷
+normalized_query: 253/2026 加重詐騙 損害賠償 量刑過重與緩刑 上訴撤銷
+main_issue: 量刑過重
+sub_issue_count: 6
+retrieval_subquery_count: 8
+issue_decomposition_appears_successful: True
+query_terms:
+  [1] 253/2026
+  [2] 量刑過重
+  [3] 緩刑
+  [4] 詐騙
+  [5] 加重詐騙
+  [6] 損害賠償
+  [7] 上訴
+  [8] 撤銷
+  [9] 賠償
+sub_issues:
+  [1] 緩刑
+  [2] 詐騙
+  [3] 加重詐騙
+  [4] 損害賠償
+  [5] 上訴
+  [6] 撤銷
+retrieval_subqueries:
+  [1] 253/2026 加重詐騙 損害賠償 量刑過重與緩刑 上訴撤銷
+  [2] 量刑過重
+  [3] 量刑過重 緩刑 詐騙 加重詐騙
+  [4] 253/2026 量刑過重 緩刑
+  [5] 量刑過重 賠償
+  [6] 緩刑
+  [7] 詐騙
+  [8] 加重詐騙
