@@ -1,0 +1,7 @@
+# Day 11 Playwright text-detail report (environment fallback)
+total cards parsed: 12
+corrected case_number hit count: 12
+corrected case_type hit count: 12
+text entry resolved count: 12
+sample text details extracted count: 0
+whether txt/fulltext extraction appears successful: False
