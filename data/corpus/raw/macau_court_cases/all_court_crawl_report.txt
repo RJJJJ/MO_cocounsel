@@ -1,0 +1,12 @@
+Day 24 all-court crawling mode report
+====================================
+court mode used: all
+pages attempted: 10
+valid pages parsed: 10
+cards discovered: 100
+detail pages attempted: 100
+detail pages succeeded: 100
+duplicates skipped: 22
+new corpus records added: 78
+stop reason: reached configured page range 1..10
+whether all-court crawling appears successful: yes
