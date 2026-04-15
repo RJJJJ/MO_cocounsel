@@ -835,9 +835,10 @@ Focus on:
 Clarifications:
 
 - MVP first focuses on Macau public judgments and Macau statutes.
-- The architecture is cross-domain and not limited to labor law.
-- Early datasets may start with a small subset of cases for faster iteration, but that subset does not define product scope.
+- The architecture is cross-domain and not labor-law-limited.
+- Early iterations may use a small subset of cases for faster retrieval testing, but that subset does not define product scope.
 - Day 1 delivery is retrieval foundation only; it does **not** include agent orchestration implementation.
+- Direction remains: **Macau Legal Retrieval Engine first, agents second.**
 
 ## MVP Input
 - natural language legal question
