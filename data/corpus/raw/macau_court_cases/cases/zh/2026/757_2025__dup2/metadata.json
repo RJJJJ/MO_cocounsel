@@ -1,0 +1,15 @@
+{
+  "court": "中級法院",
+  "source_list_case_number": "757/2025",
+  "source_list_decision_date": "26/03/2026",
+  "source_list_case_type": "刑事訴訟程序的上訴",
+  "detail_case_number": "757/2025",
+  "detail_decision_date": "2026年3月26日",
+  "detail_title_or_issue": "",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42383",
+  "page_number": 1,
+  "extraction_source": "day20_pagination_extension",
+  "full_text_path": "cases/zh/2026/757_2025__dup2/full_text.txt"
+}

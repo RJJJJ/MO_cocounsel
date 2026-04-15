@@ -1,0 +1,15 @@
+{
+  "court": "中級法院",
+  "source_list_case_number": "181/2026",
+  "source_list_decision_date": "12/03/2026",
+  "source_list_case_type": "刑事訴訟程序的上訴",
+  "detail_case_number": "181/2026",
+  "detail_decision_date": "2026年3月12日",
+  "detail_title_or_issue": "",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-90361fe569a5bbe0.pdf",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42347",
+  "page_number": 4,
+  "extraction_source": "day20_pagination_extension",
+  "full_text_path": "cases/zh/2026/181_2026/full_text.txt"
+}

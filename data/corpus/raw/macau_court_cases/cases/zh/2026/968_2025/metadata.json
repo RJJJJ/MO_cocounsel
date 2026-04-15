@@ -1,0 +1,15 @@
+{
+  "court": "中級法院",
+  "source_list_case_number": "968/2025",
+  "source_list_decision_date": "05/03/2026",
+  "source_list_case_type": "民事及勞動訴訟程序的上訴",
+  "detail_case_number": "968/2025",
+  "detail_decision_date": "2026年3月5日",
+  "detail_title_or_issue": "",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-06b35c7066d73703.pdf",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42243",
+  "page_number": 7,
+  "extraction_source": "day20_pagination_extension",
+  "full_text_path": "cases/zh/2026/968_2025/full_text.txt"
+}

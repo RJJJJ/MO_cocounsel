@@ -5,11 +5,11 @@
   "source_list_case_type": "澳門以外的法院或仲裁員作出的裁判的審查及確認",
   "detail_case_number": "",
   "detail_decision_date": "2024年9月12日",
-  "detail_title_or_issue": "（審查及確認外地判決）",
+  "detail_title_or_issue": "",
   "language": "zh",
   "pdf_url": "https://www.court.gov.mo/sentence/zh-a137e3c06880e1fb.pdf",
   "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42333",
-  "page_number": 2,
-  "extraction_source": "day18_selector_card_batch",
+  "page_number": 3,
+  "extraction_source": "day20_pagination_extension",
   "full_text_path": "cases/zh/2024/223_2025/full_text.txt"
 }

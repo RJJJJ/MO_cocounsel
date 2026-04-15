@@ -35,11 +35,11 @@ def normalize_text(value: Any) -> str:
     return str(value).strip()
 
 
-def choose_authoritative(record: dict[str, Any], detail_key: str, source_key: str) -> str:
-    detail_value = normalize_text(record.get(detail_key))
-    if detail_value:
-        return detail_value
-    return normalize_text(record.get(source_key))
+def choose_authoritative(record: dict[str, Any], primary_key: str, fallback_key: str) -> str:
+    primary_value = normalize_text(record.get(primary_key))
+    if primary_value:
+        return primary_value
+    return normalize_text(record.get(fallback_key))
 
 
 def extract_year(authoritative_decision_date: str, fallback_year: str = "unknown_year") -> str:
@@ -98,16 +98,8 @@ def build_layout(records: list[dict[str, Any]]) -> BuildStats:
     with MANIFEST_PATH.open("w", encoding="utf-8") as manifest_file:
         for index, record in enumerate(records, start=1):
             language = normalize_text(record.get("language")) or "unknown"
-            authoritative_case_number = choose_authoritative(
-                record,
-                detail_key="detail_case_number",
-                source_key="source_list_case_number",
-            )
-            authoritative_decision_date = choose_authoritative(
-                record,
-                detail_key="detail_decision_date",
-                source_key="source_list_decision_date",
-            )
+            authoritative_case_number = normalize_text(record.get("source_list_case_number"))
+            authoritative_decision_date = normalize_text(record.get("source_list_decision_date"))
             case_slug = slugify_case_number(authoritative_case_number, index=index)
             year = extract_year(authoritative_decision_date)
 
@@ -128,9 +120,6 @@ def build_layout(records: list[dict[str, Any]]) -> BuildStats:
                 "source_list_case_number": normalize_text(record.get("source_list_case_number")),
                 "source_list_decision_date": normalize_text(record.get("source_list_decision_date")),
                 "source_list_case_type": normalize_text(record.get("source_list_case_type")),
-                "detail_case_number": normalize_text(record.get("detail_case_number")),
-                "detail_decision_date": normalize_text(record.get("detail_decision_date")),
-                "detail_title_or_issue": normalize_text(record.get("detail_title_or_issue")),
                 "language": language,
                 "pdf_url": normalize_text(record.get("pdf_url")),
                 "text_url_or_action": normalize_text(record.get("text_url_or_action")),
