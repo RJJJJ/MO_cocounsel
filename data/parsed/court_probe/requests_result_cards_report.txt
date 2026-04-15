@@ -1,0 +1,2 @@
+# Court deterministic result-card parser report (Day 9)
+error: missing dependency bs4 (BeautifulSoup).
