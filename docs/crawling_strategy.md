@@ -19,6 +19,8 @@ It can still be useful for:
 
 But it may be unreliable as the only long-run source for complete corpus acquisition.
 
+Additional observation: when using `court=all`, result windows may repeat across pages, which can inflate apparent coverage without increasing unique judgments.
+
 ### Practical implication
 
 If the project later needs stronger global coverage, the safer default strategy is:
