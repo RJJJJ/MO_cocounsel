@@ -1,0 +1,12 @@
+Court judgment search form probe report
+html_source: local
+selected_form_index: 1
+detected_form_action: https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui
+detected_form_method: post
+total_fields_found: 17
+guessed_date_fields: from=wizcasesearch_sentence_filter_type[decisionDate][left_date], to=wizcasesearch_sentence_filter_type[decisionDate][right_date]
+search_request_attempted: True
+response_status_code: 200
+final_url: https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui
+response_length: 40512
+payload_keys: ['wizcasesearch_sentence_filter_type[_token]', 'wizcasesearch_sentence_filter_type[decisionDate][left_date]', 'wizcasesearch_sentence_filter_type[decisionDate][right_date]']

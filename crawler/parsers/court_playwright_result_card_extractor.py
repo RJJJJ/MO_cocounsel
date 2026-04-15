@@ -82,134 +82,120 @@ def fill_recent_30_days(page: Page) -> bool:
     end_date = date.today()
     start_date = end_date - timedelta(days=30)
 
-    selectors = [
-        "input[type='date']",
-        "input[name*='date' i]",
-        "input[name*='日期']",
-        "input[id*='date' i]",
-        "input[id*='日期']",
-    ]
+    # 先用網站較可能接受的格式
+    start_value = start_date.strftime("%d/%m/%Y")
+    end_value = end_date.strftime("%d/%m/%Y")
 
-    candidates = []
-    for selector in selectors:
-        loc = page.locator(selector)
-        for idx in range(min(loc.count(), 6)):
-            candidates.append(loc.nth(idx))
+    left = page.locator("#wizcasesearch_sentence_filter_type_decisionDate_left_date")
+    right = page.locator("#wizcasesearch_sentence_filter_type_decisionDate_right_date")
 
-    filled = 0
-    for idx, loc in enumerate(candidates[:2]):
-        value = start_date.isoformat() if idx == 0 else end_date.isoformat()
-        try:
-            loc.click(timeout=2_000)
-            loc.fill(value, timeout=2_000)
-            filled += 1
-        except Exception:
-            continue
+    try:
+        left.wait_for(timeout=5000)
+        right.wait_for(timeout=5000)
 
-    return filled > 0
+        left.click()
+        left.fill("")
+        left.type(start_value, delay=30)
+
+        right.click()
+        right.fill("")
+        right.type(end_value, delay=30)
+
+        return True
+    except Exception:
+        return False
 
 
 def try_select_intermediate_court(page: Page) -> str:
-    """Try selecting 中級法院, fallback to all courts."""
-    select_loc = page.locator("select")
-    for i in range(select_loc.count()):
-        sel = select_loc.nth(i)
+    sel = page.locator("#wizcasesearch_sentence_filter_type_court")
+    try:
+        sel.wait_for(timeout=5000)
+        sel.select_option(label="中級法院")
+        return "中級法院"
+    except Exception:
         try:
-            options = sel.locator("option")
-            texts = [normalize_space(options.nth(j).inner_text()) for j in range(options.count())]
+            sel.select_option(label="所有")
+            return "所有"
         except Exception:
-            continue
-
-        target_text = next((t for t in texts if "中級法院" in t), None)
-        if not target_text:
-            continue
-
-        try:
-            sel.select_option(label=target_text)
-            return "中級法院"
-        except Exception:
-            pass
-
-        for j in range(options.count()):
-            t = texts[j]
-            if "中級法院" not in t:
-                continue
-            try:
-                value = options.nth(j).get_attribute("value")
-                if value:
-                    sel.select_option(value=value)
-                    return "中級法院"
-            except Exception:
-                continue
-
-    return "全部"
+            return "unknown"
 
 
 def click_search(page: Page) -> bool:
-    search_labels = ["搜尋", "搜索", "Search", "查詢"]
-    for label in search_labels:
-        btn = page.get_by_role("button", name=label)
-        if btn.count() > 0:
-            try:
-                btn.first.click(timeout=4_000)
-                return True
-            except Exception:
-                pass
+    # 先鎖定裁判書搜尋主表單
+    form = page.locator("form[action*='researchjudgments']").last
 
-    fallback_selectors = [
-        "button:has-text('搜尋')",
-        "button:has-text('搜索')",
-        "button:has-text('Search')",
+    try:
+        form.wait_for(timeout=5000)
+    except Exception:
+        return False
+
+    candidate_selectors = [
         "button[type='submit']",
         "input[type='submit']",
+        "button:has-text('搜尋')",
+        "input[value='搜尋']",
+        "button",
+        "input[type='button']",
     ]
-    for selector in fallback_selectors:
-        btn = page.locator(selector)
-        if btn.count() > 0:
+
+    for selector in candidate_selectors:
+        btn = form.locator(selector)
+        if btn.count() == 0:
+            continue
+        for i in range(btn.count()):
             try:
-                btn.first.click(timeout=4_000)
-                return True
+                target = btn.nth(i)
+                if target.is_visible():
+                    target.scroll_into_view_if_needed()
+                    target.click(timeout=5000, force=True)
+                    return True
             except Exception:
                 continue
-    return False
+
+    # 最後保底：直接提交 form
+    try:
+        form.evaluate("(f) => f.submit()")
+        return True
+    except Exception:
+        return False
 
 
 def wait_for_results_stable(page: Page) -> None:
     """Wait until rendered result-card count is stable."""
-    script = """
-() => {
-  const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
-  const dateRe = /(?:\d{4}[./-]\d{1,2}[./-]\d{1,2}|\d{1,2}[./-]\d{1,2}[./-]\d{4}|\d{4}年\d{1,2}月\d{1,2}日)/;
-  const caseRe = /(?:\b[A-Z]{1,6}-?\d{1,6}\/\d{2,4}\b|\b\d{1,6}\/\d{2,4}\b|案(?:件)?(?:編號|號)?[:：\s]*[A-Za-z0-9\-/.]+)/i;
-  const elems = Array.from(document.querySelectorAll('div,li,article,section,tr'));
-  const sigMap = new Map();
-  for (const el of elems) {
-    const cls = norm(el.className || '').replace(/\s+/g, '.');
-    const sig = `${el.tagName}|${cls}`;
-    sigMap.set(sig, (sigMap.get(sig) || 0) + 1);
-  }
+    script = r"""
+    () => {
+    const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
+    const dateRe = /(?:\d{4}[./-]\d{1,2}[./-]\d{1,2}|\d{1,2}[./-]\d{1,2}[./-]\d{4}|\d{4}年\d{1,2}月\d{1,2}日)/;
+    const caseRe = /(?:\b[A-Z]{1,6}-?\d{1,6}\/\d{2,4}\b|\b\d{1,6}\/\d{2,4}\b|案(?:件)?(?:編號|號)?[:：\s]*[A-Za-z0-9\-/.]+)/i;
+    const elems = Array.from(document.querySelectorAll('div,li,article,section,tr'));
+    const sigMap = new Map();
+    for (const el of elems) {
+        const cls = norm(el.className || '').replace(/\s+/g, '.');
+        const sig = `${el.tagName}|${cls}`;
+        sigMap.set(sig, (sigMap.get(sig) || 0) + 1);
+    }
 
-  let count = 0;
-  for (const el of elems) {
-    const txt = norm(el.innerText || '');
-    if (!txt || txt.length < 40) continue;
-    const cls = norm(el.className || '').replace(/\s+/g, '.');
-    const sig = `${el.tagName}|${cls}`;
-    const repeated = (sigMap.get(sig) || 0) >= 3;
-    let score = 0;
-    if (dateRe.test(txt)) score += 1;
-    if (caseRe.test(txt)) score += 1;
-    if (txt.includes('摘要') || txt.toLowerCase().includes('summary')) score += 1;
-    if (txt.includes('主題') || txt.toLowerCase().includes('subject')) score += 1;
-    if (txt.includes('裁判結果') || txt.toLowerCase().includes('resultado')) score += 1;
-    const links = Array.from(el.querySelectorAll('a[href]')).map((a) => `${a.href} ${norm(a.innerText || '')}`.toLowerCase());
-    if (links.some((x) => x.includes('pdf'))) score += 1;
-    if (links.some((x) => x.includes('全文') || x.includes('text'))) score += 1;
-    if (repeated && score >= 3) count += 1;
-  }
-  return count;
-}
-"""
+    let count = 0;
+    for (const el of elems) {
+        const txt = norm(el.innerText || '');
+        if (!txt || txt.length < 40) continue;
+        const cls = norm(el.className || '').replace(/\s+/g, '.');
+        const sig = `${el.tagName}|${cls}`;
+        const repeated = (sigMap.get(sig) || 0) >= 3;
+        let score = 0;
+        if (dateRe.test(txt)) score += 1;
+        if (caseRe.test(txt)) score += 1;
+        if (txt.includes('摘要') || txt.toLowerCase().includes('summary')) score += 1;
+        if (txt.includes('主題') || txt.toLowerCase().includes('subject')) score += 1;
+        if (txt.includes('裁判結果') || txt.toLowerCase().includes('resultado')) score += 1;
+        const links = Array.from(el.querySelectorAll('a[href]')).map((a) => `${a.href} ${norm(a.innerText || '')}`.toLowerCase());
+        if (links.some((x) => x.includes('pdf'))) score += 1;
+        if (links.some((x) => x.includes('全文') || x.includes('text'))) score += 1;
+        if (repeated && score >= 3) count += 1;
+    }
+    return count;
+    }
+    """
 
     stable_rounds = 0
     prev = -1
@@ -226,60 +212,60 @@ def wait_for_results_stable(page: Page) -> None:
 
 
 def extract_card_blocks_from_dom(page: Page) -> list[dict[str, Any]]:
-    script = """
-() => {
-  const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
-  const dateRe = /(?:\d{4}[./-]\d{1,2}[./-]\d{1,2}|\d{1,2}[./-]\d{1,2}[./-]\d{4}|\d{4}年\d{1,2}月\d{1,2}日)/;
-  const caseRe = /(?:\b[A-Z]{1,6}-?\d{1,6}\/\d{2,4}\b|\b\d{1,6}\/\d{2,4}\b|案(?:件)?(?:編號|號)?[:：\s]*[A-Za-z0-9\-/.]+)/i;
-  const elems = Array.from(document.querySelectorAll('div,li,article,section,tr'));
+    script = r"""
+    () => {
+    const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
+    const dateRe = /(?:\d{4}[./-]\d{1,2}[./-]\d{1,2}|\d{1,2}[./-]\d{1,2}[./-]\d{4}|\d{4}年\d{1,2}月\d{1,2}日)/;
+    const caseRe = /(?:\b[A-Z]{1,6}-?\d{1,6}\/\d{2,4}\b|\b\d{1,6}\/\d{2,4}\b|案(?:件)?(?:編號|號)?[:：\s]*[A-Za-z0-9\-/.]+)/i;
+    const elems = Array.from(document.querySelectorAll('div,li,article,section,tr'));
 
-  const sigMap = new Map();
-  for (const el of elems) {
-    const cls = norm(el.className || '').replace(/\s+/g, '.');
-    const sig = `${el.tagName}|${cls}`;
-    sigMap.set(sig, (sigMap.get(sig) || 0) + 1);
-  }
+    const sigMap = new Map();
+    for (const el of elems) {
+        const cls = norm(el.className || '').replace(/\s+/g, '.');
+        const sig = `${el.tagName}|${cls}`;
+        sigMap.set(sig, (sigMap.get(sig) || 0) + 1);
+    }
 
-  const out = [];
-  for (const el of elems) {
-    const rawText = norm(el.innerText || '');
-    if (!rawText || rawText.length < 40 || rawText.length > 3000) continue;
+    const out = [];
+    for (const el of elems) {
+        const rawText = norm(el.innerText || '');
+        if (!rawText || rawText.length < 40 || rawText.length > 3000) continue;
 
-    const cls = norm(el.className || '').replace(/\s+/g, '.');
-    const signature = `${el.tagName}|${cls}`;
-    const repeatedCount = sigMap.get(signature) || 0;
-    if (repeatedCount < 3) continue;
+        const cls = norm(el.className || '').replace(/\s+/g, '.');
+        const signature = `${el.tagName}|${cls}`;
+        const repeatedCount = sigMap.get(signature) || 0;
+        if (repeatedCount < 3) continue;
 
-    const links = Array.from(el.querySelectorAll('a[href]')).map((a) => ({
-      href: a.getAttribute('href') || '',
-      text: norm(a.innerText || ''),
-    }));
+        const links = Array.from(el.querySelectorAll('a[href]')).map((a) => ({
+        href: a.getAttribute('href') || '',
+        text: norm(a.innerText || ''),
+        }));
 
-    let score = 0;
-    if (dateRe.test(rawText)) score += 1;
-    if (caseRe.test(rawText)) score += 1;
-    if (rawText.includes('主題') || rawText.toLowerCase().includes('subject')) score += 1;
-    if (rawText.includes('摘要') || rawText.toLowerCase().includes('summary')) score += 1;
-    if (rawText.includes('裁判結果') || rawText.toLowerCase().includes('resultado')) score += 1;
+        let score = 0;
+        if (dateRe.test(rawText)) score += 1;
+        if (caseRe.test(rawText)) score += 1;
+        if (rawText.includes('主題') || rawText.toLowerCase().includes('subject')) score += 1;
+        if (rawText.includes('摘要') || rawText.toLowerCase().includes('summary')) score += 1;
+        if (rawText.includes('裁判結果') || rawText.toLowerCase().includes('resultado')) score += 1;
 
-    const flatLinks = links.map((l) => `${l.href} ${l.text}`.toLowerCase());
-    if (flatLinks.some((v) => v.includes('pdf'))) score += 1;
-    if (flatLinks.some((v) => v.includes('全文') || v.includes('text'))) score += 1;
+        const flatLinks = links.map((l) => `${l.href} ${l.text}`.toLowerCase());
+        if (flatLinks.some((v) => v.includes('pdf'))) score += 1;
+        if (flatLinks.some((v) => v.includes('全文') || v.includes('text'))) score += 1;
 
-    if (score < 3) continue;
+        if (score < 3) continue;
 
-    out.push({
-      signature,
-      repeated_count: repeatedCount,
-      score,
-      raw_card_text: rawText,
-      links,
-    });
-  }
+        out.push({
+        signature,
+        repeated_count: repeatedCount,
+        score,
+        raw_card_text: rawText,
+        links,
+        });
+    }
 
-  return out;
-}
-"""
+    return out;
+    }
+    """
     return page.evaluate(script)
 
 
@@ -407,6 +393,19 @@ def build_report(total_detected: int, cards: list[dict[str, Any]], looks_true: b
 
     return "\n".join(lines) + "\n"
 
+def wait_after_submit(page: Page) -> None:
+    try:
+        page.wait_for_url("**/subpage/searchresult**", timeout=15000)
+        return
+    except Exception:
+        pass
+
+    try:
+        page.wait_for_load_state("domcontentloaded", timeout=10000)
+    except Exception:
+        pass
+
+    page.wait_for_timeout(3000)
 
 def main() -> int:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
@@ -422,20 +421,18 @@ def main() -> int:
             page = context.new_page()
 
             page.goto(TARGET_URL, wait_until="domcontentloaded", timeout=45_000)
-            page.wait_for_timeout(2_000)
+            page.wait_for_timeout(2000)
 
-            fill_recent_30_days(page)
+            date_ok = fill_recent_30_days(page)
             selected_court = try_select_intermediate_court(page)
+
+            if not date_ok:
+                raise RuntimeError("failed to fill date inputs")
+
             if not click_search(page):
                 raise RuntimeError("search submit failed: no search button clicked")
 
-            try:
-                page.wait_for_load_state("networkidle", timeout=20_000)
-            except TimeoutError:
-                pass
-
-            wait_for_results_stable(page)
-            page.wait_for_timeout(1_500)
+            wait_after_submit(page)
 
             RESULT_HTML_PATH.write_text(page.content(), encoding="utf-8")
             page.screenshot(path=str(RESULT_SCREENSHOT_PATH), full_page=True)

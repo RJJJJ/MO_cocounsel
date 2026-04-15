@@ -1,0 +1,504 @@
+{
+  "source_url": "https://www.court.gov.mo/zh/subpage/researchjudgments",
+  "html_source": "local",
+  "forms_found": 2,
+  "selected_form_index": 1,
+  "forms": [
+    {
+      "action": "/zh/subpage/searchresult",
+      "method": "get",
+      "inputs": [
+        {
+          "name": "q",
+          "id": null,
+          "type": "text",
+          "value": null,
+          "placeholder": "快速搜尋"
+        },
+        {
+          "name": "btSub",
+          "id": null,
+          "type": "button",
+          "value": null,
+          "placeholder": null
+        }
+      ],
+      "selects": [],
+      "textareas": [],
+      "hidden_fields": []
+    },
+    {
+      "action": "/zh/subpage/researchjudgments?court=tui",
+      "method": "post",
+      "inputs": [
+        {
+          "name": "wizcasesearch_sentence_filter_type[procNo]",
+          "id": "wizcasesearch_sentence_filter_type_procNo",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[decisionDate][left_date]",
+          "id": "wizcasesearch_sentence_filter_type_decisionDate_left_date",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[decisionDate][right_date]",
+          "id": "wizcasesearch_sentence_filter_type_decisionDate_right_date",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[subject]",
+          "id": "wizcasesearch_sentence_filter_type_subject",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[sumary]",
+          "id": "wizcasesearch_sentence_filter_type_sumary",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[resultDecision]",
+          "id": "wizcasesearch_sentence_filter_type_resultDecision",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[recContent][logic]",
+          "id": null,
+          "type": "radio",
+          "value": "AND",
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[recContent][logic]",
+          "id": null,
+          "type": "radio",
+          "value": "OR",
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[recContent][key][]",
+          "id": "con1",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[recContent][key][]",
+          "id": "con1",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[recContent][key][]",
+          "id": "con1",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[recContent][key][]",
+          "id": "con1",
+          "type": "text",
+          "value": null,
+          "placeholder": null
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[_token]",
+          "id": "wizcasesearch_sentence_filter_type__token",
+          "type": "hidden",
+          "value": "599331885cc30cc3af7a6c95322f8ff179d07938",
+          "placeholder": null
+        }
+      ],
+      "selects": [
+        {
+          "name": "wizcasesearch_sentence_filter_type[court]",
+          "id": "wizcasesearch_sentence_filter_type_court",
+          "options": [
+            {
+              "value": "",
+              "text": ""
+            },
+            {
+              "value": "tui",
+              "text": "終審法院"
+            },
+            {
+              "value": "tsi",
+              "text": "中級法院"
+            },
+            {
+              "value": "tjb",
+              "text": "初級法院"
+            },
+            {
+              "value": "ta",
+              "text": "行政法院"
+            },
+            {
+              "value": "all",
+              "text": "所有"
+            }
+          ]
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[ProcType]",
+          "id": "wizcasesearch_sentence_filter_type_ProcType",
+          "options": [
+            {
+              "value": "",
+              "text": ""
+            },
+            {
+              "value": "11",
+              "text": "民法及民事訴訟法"
+            },
+            {
+              "value": "12",
+              "text": "刑法及刑事訴訟法"
+            },
+            {
+              "value": "13",
+              "text": "登記及公證法"
+            },
+            {
+              "value": "14",
+              "text": "行政法"
+            },
+            {
+              "value": "15",
+              "text": "稅務法"
+            },
+            {
+              "value": "16",
+              "text": "海關法"
+            },
+            {
+              "value": "17",
+              "text": "商法"
+            },
+            {
+              "value": "18",
+              "text": "勞動法及勞動訴訟法"
+            },
+            {
+              "value": "19",
+              "text": "著作權法"
+            },
+            {
+              "value": "20",
+              "text": "其他"
+            }
+          ]
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[TuiEspecie]",
+          "id": "wizcasesearch_sentence_filter_type_TuiEspecie",
+          "options": [
+            {
+              "value": "",
+              "text": ""
+            },
+            {
+              "value": "1",
+              "text": "民事訴訟程序上訴"
+            },
+            {
+              "value": "2",
+              "text": "勞動訴訟程序上訴"
+            },
+            {
+              "value": "3",
+              "text": "刑事訴訟程序上訴"
+            },
+            {
+              "value": "4",
+              "text": "對行政司法裁判的上訴"
+            },
+            {
+              "value": "5",
+              "text": "對稅務訴訟的司法裁判的上訴"
+            },
+            {
+              "value": "6",
+              "text": "對海關訴訟的司法裁判的上訴"
+            },
+            {
+              "value": "7",
+              "text": "統一司法見解"
+            },
+            {
+              "value": "8",
+              "text": "管轄權的衝突"
+            },
+            {
+              "value": "9",
+              "text": "審判權的衝突"
+            },
+            {
+              "value": "10",
+              "text": "人身保護令"
+            },
+            {
+              "value": "11",
+              "text": "保護上訴"
+            },
+            {
+              "value": "13",
+              "text": "管轄權及審判權的衝突"
+            },
+            {
+              "value": "14",
+              "text": "憲法性上訴"
+            },
+            {
+              "value": "15",
+              "text": "自行迴避請求"
+            },
+            {
+              "value": "16",
+              "text": "向院長提起的聲明異議"
+            },
+            {
+              "value": "17",
+              "text": "其他"
+            },
+            {
+              "value": "18",
+              "text": "拒絕互相對立的合議庭裁判上訴的決定之上訴"
+            },
+            {
+              "value": "19",
+              "text": "合議庭普通刑事案"
+            },
+            {
+              "value": "20",
+              "text": "由該法院作為第一審級審理的案件"
+            },
+            {
+              "value": "21",
+              "text": "選舉上之司法上訴"
+            },
+            {
+              "value": "22",
+              "text": "輕微違反案(道路交通法)"
+            },
+            {
+              "value": "23",
+              "text": "關於集會權和示威權的上訴"
+            },
+            {
+              "value": "24",
+              "text": "司法援助"
+            },
+            {
+              "value": "25",
+              "text": "普通訴訟程序 – 預審"
+            },
+            {
+              "value": "26",
+              "text": "聲請拒卻法官的上訴"
+            },
+            {
+              "value": "27",
+              "text": "依職權指定律師"
+            },
+            {
+              "value": "28",
+              "text": "繼承人之確認資格"
+            },
+            {
+              "value": "29",
+              "text": "聲請拒卻法官"
+            },
+            {
+              "value": "30",
+              "text": "再審的非常上訴"
+            },
+            {
+              "value": "31",
+              "text": "效力中止"
+            },
+            {
+              "value": "32",
+              "text": "提供擔保"
+            },
+            {
+              "value": "33",
+              "text": "效力中止"
+            },
+            {
+              "value": "34",
+              "text": "聲請拒卻法官"
+            }
+          ]
+        },
+        {
+          "name": "wizcasesearch_sentence_filter_type[TuiJudegDecision]",
+          "id": "wizcasesearch_sentence_filter_type_TuiJudegDecision",
+          "options": [
+            {
+              "value": "",
+              "text": ""
+            },
+            {
+              "value": "1",
+              "text": "岑浩輝法官"
+            },
+            {
+              "value": "2",
+              "text": "朱健法官"
+            },
+            {
+              "value": "3",
+              "text": "利馬法官"
+            },
+            {
+              "value": "6",
+              "text": "司徒民正法官"
+            },
+            {
+              "value": "18",
+              "text": "何偉寧法官"
+            },
+            {
+              "value": "35",
+              "text": "宋敏莉法官"
+            },
+            {
+              "value": "4",
+              "text": "賴健雄法官"
+            },
+            {
+              "value": "5",
+              "text": "蔡武彬法官"
+            },
+            {
+              "value": "7",
+              "text": "陳廣勝法官"
+            },
+            {
+              "value": "9",
+              "text": "白富華法官"
+            },
+            {
+              "value": "10",
+              "text": "譚曉華法官"
+            },
+            {
+              "value": "13",
+              "text": "趙約翰法官"
+            },
+            {
+              "value": "24",
+              "text": "馮文莊法官"
+            },
+            {
+              "value": "32",
+              "text": "簡靜霞法官"
+            },
+            {
+              "value": "33",
+              "text": "盧映霞法官"
+            },
+            {
+              "value": "37",
+              "text": "盛銳敏法官"
+            },
+            {
+              "value": "11",
+              "text": "查贇法官"
+            },
+            {
+              "value": "12",
+              "text": "高麗斯法官"
+            },
+            {
+              "value": "14",
+              "text": "周艷平法官"
+            },
+            {
+              "value": "15",
+              "text": "蕭偉志法官"
+            },
+            {
+              "value": "16",
+              "text": "葉迅生法官"
+            },
+            {
+              "value": "17",
+              "text": "梁祝麗法官"
+            },
+            {
+              "value": "20",
+              "text": "唐曉峰法官"
+            },
+            {
+              "value": "21",
+              "text": "林炳輝法官"
+            },
+            {
+              "value": "22",
+              "text": "張婉媚法官"
+            },
+            {
+              "value": "23",
+              "text": "岑勁丹法官"
+            },
+            {
+              "value": "27",
+              "text": "施仲文法官"
+            },
+            {
+              "value": "28",
+              "text": "鄧澳華法官"
+            },
+            {
+              "value": "30",
+              "text": "葉少芬法官"
+            },
+            {
+              "value": "31",
+              "text": "陳維威法官"
+            },
+            {
+              "value": "34",
+              "text": "梁鳳明法官"
+            },
+            {
+              "value": "36",
+              "text": "陳志榮法官"
+            },
+            {
+              "value": "25",
+              "text": "李年龍法官"
+            }
+          ]
+        }
+      ],
+      "textareas": [],
+      "hidden_fields": [
+        {
+          "name": "wizcasesearch_sentence_filter_type[_token]",
+          "id": "wizcasesearch_sentence_filter_type__token",
+          "type": "hidden",
+          "value": "599331885cc30cc3af7a6c95322f8ff179d07938",
+          "placeholder": null
+        }
+      ]
+    }
+  ]
+}

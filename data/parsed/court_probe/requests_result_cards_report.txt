@@ -1,2 +1,23 @@
 # Court deterministic result-card parser report (Day 9)
-error: missing dependency bs4 (BeautifulSoup).
+input_html: data\raw\court_probe\requests_replay_after_submit.html
+output_json: data\parsed\court_probe\requests_result_cards.json
+
+total cards detected: 0
+total cards parsed: 0
+hit count - court: 0
+hit count - decision_date: 0
+hit count - case_number: 0
+hit count - case_type: 0
+hit count - pdf_url: 0
+hit count - text_url: 0
+hit count - subject: 0
+hit count - summary: 0
+hit count - decision_result: 0
+hit count - reporting_judge: 0
+hit count - assistant_judges: 0
+hit count - raw_card_text: 0
+
+looks_like_true_judgment_cards: False
+
+sample cards (first 3):
+- (none)

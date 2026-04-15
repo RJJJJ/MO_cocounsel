@@ -1,0 +1,173 @@
+{
+  "endpoint_under_test": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+  "total_payload_variants_tested": 8,
+  "tested_date_formats": [
+    "YYYY-MM-DD",
+    "YYYY/MM/DD"
+  ],
+  "best_candidate_payload": "B_plus_court_YYYY-MM-DD",
+  "whether_any_variant_reduced_form_page_markers": false,
+  "recommendation": "escalate",
+  "variants": [
+    {
+      "payload_name": "A_token_date_only_YYYY-MM-DD",
+      "payload_keys": [
+        "wizcasesearch_sentence_filter_type[_token]",
+        "wizcasesearch_sentence_filter_type[decisionDate][left_date]"
+      ],
+      "response_status": 200,
+      "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+      "response_length": 40493,
+      "looks_like_search_form": true,
+      "appears_to_contain_candidate_case_or_result_markers": true,
+      "search_form_marker_hits": 5,
+      "candidate_marker_hits": 6,
+      "case_number_hits": 0,
+      "score": 7,
+      "html_output_path": "data\\raw\\court_probe\\payload_matrix\\A_token_date_only_YYYY-MM-DD.html",
+      "summary_output_path": "data\\raw\\court_probe\\payload_matrix\\A_token_date_only_YYYY-MM-DD_summary.json",
+      "error": null
+    },
+    {
+      "payload_name": "B_plus_court_YYYY-MM-DD",
+      "payload_keys": [
+        "wizcasesearch_sentence_filter_type[_token]",
+        "wizcasesearch_sentence_filter_type[court]",
+        "wizcasesearch_sentence_filter_type[decisionDate][left_date]"
+      ],
+      "response_status": 200,
+      "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+      "response_length": 40513,
+      "looks_like_search_form": true,
+      "appears_to_contain_candidate_case_or_result_markers": true,
+      "search_form_marker_hits": 5,
+      "candidate_marker_hits": 6,
+      "case_number_hits": 0,
+      "score": 7,
+      "html_output_path": "data\\raw\\court_probe\\payload_matrix\\B_plus_court_YYYY-MM-DD.html",
+      "summary_output_path": "data\\raw\\court_probe\\payload_matrix\\B_plus_court_YYYY-MM-DD_summary.json",
+      "error": null
+    },
+    {
+      "payload_name": "C_plus_court_proctype_YYYY-MM-DD",
+      "payload_keys": [
+        "wizcasesearch_sentence_filter_type[_token]",
+        "wizcasesearch_sentence_filter_type[court]",
+        "wizcasesearch_sentence_filter_type[decisionDate][left_date]"
+      ],
+      "response_status": 200,
+      "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+      "response_length": 40513,
+      "looks_like_search_form": true,
+      "appears_to_contain_candidate_case_or_result_markers": true,
+      "search_form_marker_hits": 5,
+      "candidate_marker_hits": 6,
+      "case_number_hits": 0,
+      "score": 7,
+      "html_output_path": "data\\raw\\court_probe\\payload_matrix\\C_plus_court_proctype_YYYY-MM-DD.html",
+      "summary_output_path": "data\\raw\\court_probe\\payload_matrix\\C_plus_court_proctype_YYYY-MM-DD_summary.json",
+      "error": null
+    },
+    {
+      "payload_name": "D_plus_court_keyword_YYYY-MM-DD",
+      "payload_keys": [
+        "wizcasesearch_sentence_filter_type[_token]",
+        "wizcasesearch_sentence_filter_type[court]",
+        "wizcasesearch_sentence_filter_type[decisionDate][left_date]",
+        "wizcasesearch_sentence_filter_type[recContent][logic]"
+      ],
+      "response_status": 200,
+      "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+      "response_length": 40513,
+      "looks_like_search_form": true,
+      "appears_to_contain_candidate_case_or_result_markers": true,
+      "search_form_marker_hits": 5,
+      "candidate_marker_hits": 6,
+      "case_number_hits": 0,
+      "score": 7,
+      "html_output_path": "data\\raw\\court_probe\\payload_matrix\\D_plus_court_keyword_YYYY-MM-DD.html",
+      "summary_output_path": "data\\raw\\court_probe\\payload_matrix\\D_plus_court_keyword_YYYY-MM-DD_summary.json",
+      "error": null
+    },
+    {
+      "payload_name": "A_token_date_only_YYYY-MM-DD",
+      "payload_keys": [
+        "wizcasesearch_sentence_filter_type[_token]",
+        "wizcasesearch_sentence_filter_type[decisionDate][left_date]"
+      ],
+      "response_status": 200,
+      "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+      "response_length": 40493,
+      "looks_like_search_form": true,
+      "appears_to_contain_candidate_case_or_result_markers": true,
+      "search_form_marker_hits": 5,
+      "candidate_marker_hits": 6,
+      "case_number_hits": 0,
+      "score": 7,
+      "html_output_path": "data\\raw\\court_probe\\payload_matrix\\A_token_date_only_YYYY-MM-DD.html",
+      "summary_output_path": "data\\raw\\court_probe\\payload_matrix\\A_token_date_only_YYYY-MM-DD_summary.json",
+      "error": null
+    },
+    {
+      "payload_name": "B_plus_court_YYYY-MM-DD",
+      "payload_keys": [
+        "wizcasesearch_sentence_filter_type[_token]",
+        "wizcasesearch_sentence_filter_type[court]",
+        "wizcasesearch_sentence_filter_type[decisionDate][left_date]"
+      ],
+      "response_status": 200,
+      "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+      "response_length": 40513,
+      "looks_like_search_form": true,
+      "appears_to_contain_candidate_case_or_result_markers": true,
+      "search_form_marker_hits": 5,
+      "candidate_marker_hits": 6,
+      "case_number_hits": 0,
+      "score": 7,
+      "html_output_path": "data\\raw\\court_probe\\payload_matrix\\B_plus_court_YYYY-MM-DD.html",
+      "summary_output_path": "data\\raw\\court_probe\\payload_matrix\\B_plus_court_YYYY-MM-DD_summary.json",
+      "error": null
+    },
+    {
+      "payload_name": "C_plus_court_proctype_YYYY-MM-DD",
+      "payload_keys": [
+        "wizcasesearch_sentence_filter_type[_token]",
+        "wizcasesearch_sentence_filter_type[court]",
+        "wizcasesearch_sentence_filter_type[decisionDate][left_date]"
+      ],
+      "response_status": 200,
+      "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+      "response_length": 40513,
+      "looks_like_search_form": true,
+      "appears_to_contain_candidate_case_or_result_markers": true,
+      "search_form_marker_hits": 5,
+      "candidate_marker_hits": 6,
+      "case_number_hits": 0,
+      "score": 7,
+      "html_output_path": "data\\raw\\court_probe\\payload_matrix\\C_plus_court_proctype_YYYY-MM-DD.html",
+      "summary_output_path": "data\\raw\\court_probe\\payload_matrix\\C_plus_court_proctype_YYYY-MM-DD_summary.json",
+      "error": null
+    },
+    {
+      "payload_name": "D_plus_court_keyword_YYYY-MM-DD",
+      "payload_keys": [
+        "wizcasesearch_sentence_filter_type[_token]",
+        "wizcasesearch_sentence_filter_type[court]",
+        "wizcasesearch_sentence_filter_type[decisionDate][left_date]",
+        "wizcasesearch_sentence_filter_type[recContent][logic]"
+      ],
+      "response_status": 200,
+      "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+      "response_length": 40513,
+      "looks_like_search_form": true,
+      "appears_to_contain_candidate_case_or_result_markers": true,
+      "search_form_marker_hits": 5,
+      "candidate_marker_hits": 6,
+      "case_number_hits": 0,
+      "score": 7,
+      "html_output_path": "data\\raw\\court_probe\\payload_matrix\\D_plus_court_keyword_YYYY-MM-DD.html",
+      "summary_output_path": "data\\raw\\court_probe\\payload_matrix\\D_plus_court_keyword_YYYY-MM-DD_summary.json",
+      "error": null
+    }
+  ]
+}

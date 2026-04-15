@@ -1,0 +1,20 @@
+{
+  "payload_name": "A_token_date_only_YYYY-MM-DD",
+  "payload": {
+    "wizcasesearch_sentence_filter_type[_token]": "2026/04/15",
+    "wizcasesearch_sentence_filter_type[decisionDate][left_date]": "2026/03/16"
+  },
+  "payload_keys": [
+    "wizcasesearch_sentence_filter_type[_token]",
+    "wizcasesearch_sentence_filter_type[decisionDate][left_date]"
+  ],
+  "response_status": 200,
+  "final_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui",
+  "response_length": 40493,
+  "looks_like_search_form": true,
+  "appears_to_contain_candidate_markers": true,
+  "search_form_marker_hits": 5,
+  "candidate_marker_hits": 6,
+  "case_number_hits": 0,
+  "error": null
+}

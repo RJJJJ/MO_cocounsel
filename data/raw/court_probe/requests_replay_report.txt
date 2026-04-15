@@ -1,0 +1,11 @@
+Day 7 requests replay probe report
+preflight_get_status: 200
+post_status: 200
+post_url_used: https://www.court.gov.mo/zh/subpage/searchresult
+final_url: https://www.court.gov.mo/zh/subpage/searchresult
+response_length: 29680
+looks_like_search_form: False
+search_form_marker_hits: 2
+contains_candidate_case_markers: True
+candidate_case_marker_hits: 4
+replay_appears_successful: True
