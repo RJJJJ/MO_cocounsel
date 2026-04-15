@@ -1,0 +1,17 @@
+# Day 13 controlled batch text-detail extraction report
+input_cards_path: data/parsed/court_probe/playwright_result_cards_refined.json
+target batch range: 20-50
+resolved sentence URL candidates: 12
+total records attempted: 12
+total succeeded: 0
+total failed: 12
+non-empty full_text count: 0
+failure ratio: 100.00%
+zh count: 0
+pt count: 0
+average text length: 0.00
+direct sentence pages opened count: 0
+whether batch extraction appears successful: False
+
+failures:
+- Playwright is not installed in this environment.

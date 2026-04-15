@@ -1,11 +1,10 @@
-"""Day 12: Fix TXT/fulltext detail extraction via direct sentence URL navigation.
+"""Day 13: Controlled batch TXT/fulltext detail extraction.
 
 Scope constraints:
-- input only from refined result cards JSON
-- sample only first 1~3 cards with text_url_or_action
-- primary path is direct page.goto(text_url_or_action)
-- fallback to popup/modal/overlay extraction only when direct navigation fails
-- no pagination, no batch job, no database writes
+- input from refined result cards JSON only
+- no pagination, no database writes
+- prioritize direct sentence URL navigation
+- keep fallback extraction path as backup
 """
 
 from __future__ import annotations
@@ -24,9 +23,11 @@ from crawler.parsers.court_text_extraction_success import compute_extraction_suc
 
 PARSED_DIR = Path("data/parsed/court_probe")
 INPUT_CARDS_PATH = PARSED_DIR / "playwright_result_cards_refined.json"
-OUTPUT_SAMPLES_PATH = PARSED_DIR / "playwright_text_details_sample.json"
-OUTPUT_REPORT_PATH = PARSED_DIR / "playwright_text_details_fix_report.txt"
+OUTPUT_BATCH_PATH = PARSED_DIR / "playwright_text_details_batch.jsonl"
+OUTPUT_REPORT_PATH = PARSED_DIR / "playwright_text_details_batch_report.txt"
 
+TARGET_MIN_BATCH = 20
+TARGET_MAX_BATCH = 50
 MIN_FULLTEXT_CHARS = 240
 MIN_FULLTEXT_WORDS = 60
 
@@ -79,22 +80,18 @@ def clean_full_text(text: str) -> str:
             continue
         kept.append(line)
 
-    text_joined = "\n".join(kept)
-    return normalize_space(text_joined)
+    return normalize_space("\n".join(kept))
 
 
 def good_full_text(text: str) -> bool:
     text = normalize_space(text)
     if not text:
         return False
-
     if len(text) < MIN_FULLTEXT_CHARS:
         return False
-
     if len(re.findall(r"\S+", text)) < MIN_FULLTEXT_WORDS:
         return False
 
-    # Avoid metadata-only strings: date + case number + tiny text.
     has_case_number = bool(re.search(r"\b\d{1,6}/\d{4}\b", text))
     has_date = bool(re.search(r"\b\d{1,2}/\d{1,2}/\d{4}\b", text))
     if has_case_number and has_date and len(text) < 420:
@@ -107,16 +104,6 @@ def extract_visible_main_text(page: "Page") -> str:
     script = r"""
     () => {
       const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
-      const isVisible = (el) => {
-        if (!el) return false;
-        const style = window.getComputedStyle(el);
-        if (!style) return false;
-        if (style.visibility === 'hidden' || style.display === 'none') return false;
-        if (style.opacity === '0') return false;
-        const rect = el.getBoundingClientRect();
-        return rect.width > 0 && rect.height > 0;
-      };
-
       const removeSelectors = [
         'script', 'style', 'noscript', 'header', 'footer', 'nav',
         '.navbar', '.menu', '.breadcrumb', '.breadcrumbs',
@@ -148,7 +135,6 @@ def extract_visible_main_text(page: "Page") -> str:
 
       const all = [];
       for (const el of bodyClone.querySelectorAll('h1,h2,h3,p,li,div,td,section')) {
-        if (!isVisible(document.querySelector(el.tagName.toLowerCase()))) continue;
         const txt = norm(el.innerText || el.textContent || '');
         if (txt.length >= 40) all.push(txt);
       }
@@ -164,13 +150,7 @@ def extract_visible_main_text(page: "Page") -> str:
 
 
 def extract_overlay_text(page: "Page") -> str:
-    selectors = [
-        ".fancybox-inner",
-        ".mfp-content",
-        ".modal-body",
-        ".ui-dialog-content",
-        ".overlay-content",
-    ]
+    selectors = [".fancybox-inner", ".mfp-content", ".modal-body", ".ui-dialog-content", ".overlay-content"]
     for selector in selectors:
         try:
             loc = page.locator(selector)
@@ -181,18 +161,6 @@ def extract_overlay_text(page: "Page") -> str:
         except PLAYWRIGHT_ERROR:
             continue
     return ""
-
-
-def build_detail_sample(card: dict[str, Any], source_url: str, full_text: str) -> dict[str, Any]:
-    return {
-        "case_number": card.get("case_number"),
-        "decision_date": card.get("decision_date"),
-        "title_or_issue": card.get("subject") or card.get("case_type"),
-        "full_text": full_text,
-        "source_type": "txt/fulltext",
-        "extracted_from": source_url,
-        "language": detect_language_from_url(source_url),
-    }
 
 
 def try_direct_navigation(page: "Page", url: str) -> tuple[str, str]:
@@ -211,7 +179,6 @@ def try_direct_navigation(page: "Page", url: str) -> tuple[str, str]:
 
 
 def fallback_modal_attempt(page: "Page", url: str) -> tuple[str, str]:
-    # Fallback strategy only: retry with a fresh goto and prioritize known overlay containers.
     page.goto(url, wait_until="networkidle", timeout=45000)
     page.wait_for_timeout(1500)
 
@@ -226,57 +193,88 @@ def fallback_modal_attempt(page: "Page", url: str) -> tuple[str, str]:
     raise RuntimeError("fallback modal/overlay strategy failed")
 
 
+def build_detail_record(card: dict[str, Any], source_url: str, full_text: str) -> dict[str, Any]:
+    return {
+        "case_number": card.get("case_number"),
+        "decision_date": card.get("decision_date"),
+        "language": detect_language_from_url(source_url),
+        "title_or_issue": card.get("subject") or card.get("case_type"),
+        "full_text": full_text,
+        "source_type": "txt/fulltext",
+        "extracted_from": source_url,
+        "court": card.get("court") or "unknown",
+    }
+
+
+def choose_batch_candidates(cards: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    resolved = [c for c in cards if isinstance(c.get("text_url_or_action"), str) and is_sentence_url(c["text_url_or_action"])]
+    if len(resolved) >= TARGET_MIN_BATCH:
+        return resolved[: min(TARGET_MAX_BATCH, len(resolved))]
+    return resolved[: min(TARGET_MAX_BATCH, len(resolved))]
+
+
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
 def main() -> int:
     if not INPUT_CARDS_PATH.exists():
         print(f"missing input file: {INPUT_CARDS_PATH}")
         return 1
 
     cards: list[dict[str, Any]] = json.loads(INPUT_CARDS_PATH.read_text(encoding="utf-8"))
+    batch_cards = choose_batch_candidates(cards)
+    attempted = len(batch_cards)
 
-    candidates = [c for c in cards if isinstance(c.get("text_url_or_action"), str) and is_sentence_url(c["text_url_or_action"])]
-    sample_cards = candidates[:3]
-
-    attempted = len(sample_cards)
     success_count = 0
     failed_count = 0
     direct_opened_count = 0
-    language_counts: Counter[str] = Counter()
-    results: list[dict[str, Any]] = []
+    records: list[dict[str, Any]] = []
     failures: list[str] = []
+    language_counts: Counter[str] = Counter()
 
     global PLAYWRIGHT_ERROR
     playwright_error, sync_playwright = load_playwright()
     if not sync_playwright:
-        OUTPUT_SAMPLES_PATH.parent.mkdir(parents=True, exist_ok=True)
-        OUTPUT_SAMPLES_PATH.write_text(json.dumps([], ensure_ascii=False, indent=2), encoding="utf-8")
+        write_jsonl(OUTPUT_BATCH_PATH, [])
         appears_successful, failure_ratio = compute_extraction_success(
             attempted=attempted,
             successful=0,
             failed=attempted,
             non_empty_full_text_count=0,
         )
+        avg_text_length = 0.0
         report_lines = [
-            "# Day 12 TXT/fulltext detail extraction fix report",
+            "# Day 13 controlled batch text-detail extraction report",
             f"input_cards_path: {INPUT_CARDS_PATH}",
-            f"sample cards attempted: {attempted}",
-            "successful text detail extractions: 0",
-            f"failed detail extractions: {attempted}",
-            "direct sentence pages opened count: 0",
+            f"target batch range: {TARGET_MIN_BATCH}-{TARGET_MAX_BATCH}",
+            f"resolved sentence URL candidates: {len([c for c in cards if isinstance(c.get('text_url_or_action'), str) and is_sentence_url(c['text_url_or_action'])])}",
+            f"total records attempted: {attempted}",
+            "total succeeded: 0",
+            f"total failed: {attempted}",
+            "non-empty full_text count: 0",
             f"failure ratio: {failure_ratio:.2%}",
-            "language counts: {}",
-            f"whether text extraction now appears successful: {appears_successful}",
+            "zh count: 0",
+            "pt count: 0",
+            f"average text length: {avg_text_length:.2f}",
+            "direct sentence pages opened count: 0",
+            f"whether batch extraction appears successful: {appears_successful}",
             "",
             "failures:",
             "- Playwright is not installed in this environment.",
         ]
         OUTPUT_REPORT_PATH.write_text("\n".join(report_lines) + "\n", encoding="utf-8")
-        print("sample cards attempted:", attempted)
-        print("successful text detail extractions: 0")
-        print("failed detail extractions:", attempted)
-        print("direct sentence pages opened count: 0")
-        print("language counts: {}")
-        print(f"failure ratio: {failure_ratio:.2%}")
-        print(f"whether text extraction now appears successful: {appears_successful}")
+
+        print(f"total records attempted: {attempted}")
+        print("total succeeded: 0")
+        print(f"total failed: {attempted}")
+        print("zh count: 0")
+        print("pt count: 0")
+        print(f"average text length: {avg_text_length:.2f}")
+        print(f"whether batch extraction appears successful: {appears_successful}")
         print("warning: Playwright is not installed in this environment.")
         return 0 if appears_successful else 2
 
@@ -287,70 +285,75 @@ def main() -> int:
         context = browser.new_context(locale="zh-HK")
         page = context.new_page()
 
-        for idx, card in enumerate(sample_cards, start=1):
-            text_url = card["text_url_or_action"]
+        for idx, card in enumerate(batch_cards, start=1):
+            url = card["text_url_or_action"]
             try:
-                source_url, full_text = try_direct_navigation(page, text_url)
+                source_url, full_text = try_direct_navigation(page, url)
                 direct_opened_count += 1
-                sample = build_detail_sample(card, source_url, full_text)
-                results.append(sample)
+                record = build_detail_record(card, source_url, full_text)
+                records.append(record)
                 success_count += 1
-                language_counts[sample["language"]] += 1
-                print(f"[{idx}] success via direct navigation: {text_url}")
+                language_counts[record["language"]] += 1
+                print(f"[{idx}] success via direct navigation: {url}")
             except Exception as direct_exc:
-                print(f"[{idx}] direct navigation failed, trying fallback: {text_url} | {direct_exc}")
+                print(f"[{idx}] direct navigation failed, trying fallback: {url} | {direct_exc}")
                 try:
-                    source_url, full_text = fallback_modal_attempt(page, text_url)
-                    sample = build_detail_sample(card, source_url, full_text)
-                    results.append(sample)
+                    source_url, full_text = fallback_modal_attempt(page, url)
+                    record = build_detail_record(card, source_url, full_text)
+                    records.append(record)
                     success_count += 1
-                    language_counts[sample["language"]] += 1
-                    print(f"[{idx}] success via fallback: {text_url}")
+                    language_counts[record["language"]] += 1
+                    print(f"[{idx}] success via fallback: {url}")
                 except Exception as fallback_exc:
                     failed_count += 1
-                    failures.append(f"{text_url} | direct={direct_exc} | fallback={fallback_exc}")
-                    print(f"[{idx}] failed extraction: {text_url}")
+                    failures.append(f"{url} | direct={direct_exc} | fallback={fallback_exc}")
+                    print(f"[{idx}] failed extraction: {url}")
 
         browser.close()
 
-    OUTPUT_SAMPLES_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_SAMPLES_PATH.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
+    write_jsonl(OUTPUT_BATCH_PATH, records)
 
-    non_empty_full_text_count = sum(1 for item in results if normalize_space(item.get("full_text")))
+    non_empty_full_text_count = sum(1 for row in records if normalize_space(row.get("full_text")))
     appears_successful, failure_ratio = compute_extraction_success(
         attempted=attempted,
         successful=success_count,
         failed=failed_count,
         non_empty_full_text_count=non_empty_full_text_count,
     )
+    avg_text_length = (
+        sum(len(normalize_space(row.get("full_text"))) for row in records) / len(records)
+        if records
+        else 0.0
+    )
+
     report_lines = [
-        "# Day 12 TXT/fulltext detail extraction fix report",
+        "# Day 13 controlled batch text-detail extraction report",
         f"input_cards_path: {INPUT_CARDS_PATH}",
-        f"sample cards attempted: {attempted}",
-        f"successful text detail extractions: {success_count}",
-        f"failed detail extractions: {failed_count}",
-        f"direct sentence pages opened count: {direct_opened_count}",
+        f"target batch range: {TARGET_MIN_BATCH}-{TARGET_MAX_BATCH}",
+        f"resolved sentence URL candidates: {len([c for c in cards if isinstance(c.get('text_url_or_action'), str) and is_sentence_url(c['text_url_or_action'])])}",
+        f"total records attempted: {attempted}",
+        f"total succeeded: {success_count}",
+        f"total failed: {failed_count}",
         f"non-empty full_text count: {non_empty_full_text_count}",
         f"failure ratio: {failure_ratio:.2%}",
-        f"language counts: {dict(language_counts)}",
-        f"whether text extraction now appears successful: {appears_successful}",
+        f"zh count: {language_counts.get('zh', 0)}",
+        f"pt count: {language_counts.get('pt', 0)}",
+        f"average text length: {avg_text_length:.2f}",
+        f"direct sentence pages opened count: {direct_opened_count}",
+        f"whether batch extraction appears successful: {appears_successful}",
         "",
         "failures:",
         *([f"- {line}" for line in failures] or ["- none"]),
-        "",
-        "sample outputs:",
-        json.dumps(results, ensure_ascii=False, indent=2),
     ]
     OUTPUT_REPORT_PATH.write_text("\n".join(report_lines) + "\n", encoding="utf-8")
 
-    print(f"sample cards attempted: {attempted}")
-    print(f"successful text detail extractions: {success_count}")
-    print(f"failed detail extractions: {failed_count}")
-    print(f"direct sentence pages opened count: {direct_opened_count}")
-    print(f"non-empty full_text count: {non_empty_full_text_count}")
-    print(f"failure ratio: {failure_ratio:.2%}")
-    print(f"language counts: {dict(language_counts)}")
-    print(f"whether text extraction now appears successful: {appears_successful}")
+    print(f"total records attempted: {attempted}")
+    print(f"total succeeded: {success_count}")
+    print(f"total failed: {failed_count}")
+    print(f"zh count: {language_counts.get('zh', 0)}")
+    print(f"pt count: {language_counts.get('pt', 0)}")
+    print(f"average text length: {avg_text_length:.2f}")
+    print(f"whether batch extraction appears successful: {appears_successful}")
 
     return 0 if appears_successful else 2
 
