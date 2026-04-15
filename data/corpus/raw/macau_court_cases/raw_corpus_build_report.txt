@@ -1,0 +1,9 @@
+Day 19 raw corpus build report
+================================
+total records read: 27
+total corpus records written: 27
+zh records written: 21
+pt records written: 6
+records with authoritative case number: 27
+records with authoritative decision date: 27
+raw corpus layout build appears successful: yes
