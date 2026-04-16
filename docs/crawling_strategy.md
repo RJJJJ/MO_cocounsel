@@ -100,9 +100,33 @@ Deterministic baseline remains required as fallback + benchmark/regression guard
 - Child crawler still depends on upstream site stability and selector continuity.
 - Completeness proof remains bounded by configured page windows.
 
-## Day 60 recommended next step
+## Day 60 convergence-crawl rationale
 
-Build a **retrieval eval/regression pack** against the sentence-id-authoritative merged corpus (post-Day 59A), including duplicate-policy regression checks.
+Single-pass page scans are now explicitly treated as potentially incomplete because page drift can move records across pages/runs. Day 60 extends the authoritative strategy to **per-court repeated rescans**:
+
+1. converge court A (e.g., `tui`) by repeated full-pass rounds;
+2. then converge court B (`tsi`);
+3. then court C (`tjb`);
+4. then court D (`ta`);
+5. then merge/dedupe.
+
+Convergence stop is operationally defined as:
+
+- configured consecutive rounds with zero newly discovered `sentence_id`.
+
+This improves practical coverage but does not claim mathematical exhaustiveness.
+
+## Current limitations after Day 60
+
+- Convergence criteria are heuristic and configurable, not a completeness proof.
+- Some discovered `sentence_id` may still fail detail extraction due to transient site issues.
+- Round/page retries are conservative; severe site instability can still reduce coverage.
+- Metadata remains post-merge attachment; Day 60 does not regenerate metadata.
+- Retrieval regression baselines for convergence effects are not yet bundled.
+
+## Day 61 recommended next step
+
+Build a **convergence results audit + retrieval regression pack** against the sentence-id-authoritative merged corpus, including coverage delta tracking by court and duplicate-policy regression checks.
 
 ### Engineering note
 

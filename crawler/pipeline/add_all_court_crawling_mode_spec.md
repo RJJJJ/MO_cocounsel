@@ -116,3 +116,36 @@ Choose one next increment:
 - Pagination is page-only after page-1 snapshot is established.
 - Child dedupe/admission shifts to sentence-id-first, and missing sentence-id rows are skipped from authoritative path.
 - This is a focused hardening pass for court-entry correctness and authoritative identity clarity.
+
+## Day 60 convergence crawl rationale (incremental extension)
+
+Day 60 keeps Day 59A semantics but adds court-level convergence crawling because page drift is a coverage problem:
+
+- a single page-1..N pass can miss records when result cards drift between runs/pages;
+- therefore each court should be rescanned repeatedly until no new `sentence_id` is discovered;
+- convergence stop definition is operational (configured consecutive zero-new rounds), not mathematical exhaustiveness proof.
+
+### Day 60 per-court convergence flow
+
+For one court (`tui` / `tsi` / `tjb` / `ta`):
+
+1. start from homepage form and submit the selected court;
+2. scan pages forward (`start-page..end-page`, optional `max-pages-per-round`);
+3. collect `sentence_id` from cards;
+4. if `sentence_id` already seen in session/output state, skip detail fetch immediately;
+5. if `sentence_id` is new, attempt detail fetch and append record if full text quality passes;
+6. repeat rounds until convergence stop rule is met (or max rounds safety cap reached).
+
+### Day 60 CLI additions
+
+- `--until-converged`
+- `--max-rounds`
+- `--zero-new-round-stop`
+- `--max-pages-per-round`
+- `--max-consecutive-no-new-pages` (optional page-level early stop)
+
+### Day 60 limitations and next step
+
+- Convergence improves practical harvest coverage, but does not guarantee perfect completeness.
+- `court=all` remains useful for broad coverage/debug/demo, not authoritative full-harvest.
+- Recommended next step: **Day 61 = convergence results audit + retrieval regression pack**.
