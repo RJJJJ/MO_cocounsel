@@ -16,11 +16,12 @@ A configurable local Chinese-capable instruct model is required because:
 
 ### Current baseline default
 
-- `Qwen3 8B`
+- `Qwen2.5 7B Instruct`
 - role: current stable benchmark model for local metadata generation connection
 
 ### Current upgrade candidates
 
+- `Qwen3 8B`
 - `Qwen3 14B` (if local hardware/runtime permits)
 - `Qwen2.5 14B Instruct`
 - other local Chinese-capable instruct models already available in environment
@@ -49,7 +50,8 @@ This means:
 
 ### Current policy
 
-- `Qwen3 8B` remains the current baseline default
+- `Qwen2.5 7B Instruct` remains the current baseline default
+- stronger candidates such as `Qwen3 8B` may be evaluated in parallel
 - candidate outputs should be compared through the existing metadata comparison harness before changing defaults
 
 ### Minimum upgrade checks
@@ -76,7 +78,7 @@ Before a new model is promoted, it should be tested on a sample batch and checke
 Pick one immediate follow-up:
 
 1. run Day 42 comparison harness with the current baseline default model output,
-2. run the same sample batch with an upgrade candidate,
+2. run the same sample batch with an upgrade candidate such as `Qwen3 8B`,
 3. compare both outputs before changing default model policy,
 4. then build a dedicated prompt/eval loop for metadata fields if upgrade looks promising.
 
