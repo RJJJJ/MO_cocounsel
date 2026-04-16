@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Day 44: local metadata model prompt/eval loop runner.
+"""Day 47: local metadata model prompt/eval loop runner.
 
 Builds a repeatable local-only loop for comparing prompt versions on sample cases.
 
@@ -25,7 +25,7 @@ DEFAULT_BASELINE_PATH = Path("data/eval/deterministic_metadata_extraction_baseli
 DEFAULT_EVAL_SET_PATH = Path("data/eval/metadata_field_evaluation_set.jsonl")
 DEFAULT_OUTPUT_DIR = Path("data/eval/metadata_prompt_eval_loop")
 DEFAULT_REPORT_PATH = Path("data/eval/metadata_model_prompt_eval_loop_report.txt")
-DEFAULT_PROMPT_VERSIONS = "day44_prompt_a,day44_prompt_b"
+DEFAULT_PROMPT_VERSIONS = "day45_prompt_b_tch_norm,day47_prompt_a"
 DEFAULT_MODEL_NAMES = "qwen2.5:7b-instruct"
 
 GENERATION_FIELDS = ["case_summary", "holding", "legal_basis", "disputed_issues"]
@@ -213,7 +213,7 @@ def run_single_prompt_eval(
 
 def build_loop_report(summaries: list[LoopRunSummary], report_path: Path) -> str:
     lines: list[str] = [
-        "Metadata Model Prompt/Eval Loop Report - Day 44",
+        "Metadata Model Prompt/Eval Loop Report - Day 47",
         f"report_path: {report_path}",
         "",
     ]
@@ -246,6 +246,7 @@ def build_loop_report(summaries: list[LoopRunSummary], report_path: Path) -> str
     lines.extend(
         [
             "=== Aggregated Summary ===",
+            f"current default model used: {DEFAULT_MODEL_NAMES.split(',')[0].strip()}",
             f"prompt versions evaluated: {prompts}",
             f"sample cases processed: {total_sample_cases}",
             f"successful generations: {total_success}",
@@ -258,7 +259,7 @@ def build_loop_report(summaries: list[LoopRunSummary], report_path: Path) -> str
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Build local metadata model prompt/eval loop (Day 44).")
+    parser = argparse.ArgumentParser(description="Build local metadata model prompt/eval loop (Day 47).")
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT_PATH)
     parser.add_argument("--baseline-input", type=Path, default=DEFAULT_BASELINE_PATH)
     parser.add_argument("--eval-set", type=Path, default=DEFAULT_EVAL_SET_PATH)
@@ -321,6 +322,7 @@ def main() -> int:
     comparison_runs = sum(1 for item in summaries if item.comparison_run_completed)
     loop_success = bool(summaries) and total_success > 0 and comparison_runs > 0
 
+    print(f"current default model used: {DEFAULT_MODEL_NAMES.split(',')[0].strip()}")
     print(f"prompt versions evaluated: {prompts}")
     print(f"sample cases processed: {total_cases}")
     print(f"successful generations: {total_success}")
