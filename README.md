@@ -88,7 +88,101 @@ Completed work includes:
 
 ---
 
-## 3. Data Source
+## 3. Target CoCounsel Capability Map
+
+The repository is currently **retrieval-first**, but the product direction is broader than search alone.  
+The long-term capability map is intentionally organized into four CoCounsel-style capability groups.
+
+### A. Legal Research
+Target capability set includes:
+
+- natural-language legal question retrieval
+- Deep Research / multi-step legal research
+- issue decomposition
+- case-oriented research summaries
+- statute-oriented research summaries
+- research mode control:
+  - case-only
+  - statute-only
+  - hybrid analysis
+- court-specific / source-specific retrieval
+- timeline / legal evolution analysis
+- adverse-case / limiting-case retrieval
+
+Representative target behavior:
+
+- user enters an ordinary legal question
+- system decomposes the legal issues
+- system retrieves relevant Macau judgments and, later, statutes/materials
+- system returns structured findings instead of a single paragraph
+- system distinguishes supportive authorities from adverse or limiting authorities
+
+### B. Document Review / Analysis
+Target capability set includes:
+
+- upload-and-analyze legal documents
+- contract review
+- clause summarization
+- contract data extraction
+- document comparison
+- benchmark against standard document
+- batch review
+- case-material organization
+- legal sufficiency checks for notices / pleadings / contracts
+
+Representative target behavior:
+
+- upload PDF / DOCX / image / scanned material
+- extract clauses, facts, timeline, parties, risks, and possible legal issues
+- connect document contents back to Macau law and case authorities
+- compare document versions and surface legal-significance deltas
+
+### C. Drafting / Work Product
+Target capability set includes:
+
+- research memo generation
+- case brief generation
+- plain-language rewrite
+- client-style explanation draft
+- pre-litigation issue checklist
+- risk checklist generation
+- comparison tables
+- draft-first legal work product generation
+
+Representative target behavior:
+
+- transform research output into memo / brief / checklist / compare table / explanatory draft
+- keep outputs grounded in retrieved authorities rather than free-form LLM generation
+
+### D. Workflow / Agent Capabilities
+Target capability set includes:
+
+- Research Agent
+- Citation Agent
+- Document Analysis Agent
+- Comparison Agent
+- Memo Drafting Agent
+- Issue Spotting Agent
+- Evidence Gap Agent
+- Task Planner / Workflow Orchestrator
+
+Representative target behavior:
+
+- accept a task such as “analyze this dismissal notice”
+- decide whether to first extract facts, decompose issues, retrieve cases, locate statutes, compare versions, or generate risk output
+- preserve grounding between each conclusion and its supporting source material
+
+### Important scope note
+These are **target product capabilities**, not a claim that all of them are already implemented in this repository.
+
+Current repository status remains:
+
+- retrieval / metadata / pipeline / API / demo are the main delivered layers
+- document analysis, drafting, and agent workflows are roadmap-aligned next-stage capabilities
+
+---
+
+## 4. Data Source
 
 Primary source:
 
@@ -106,7 +200,7 @@ Known source characteristics already accounted for in the project:
 
 ---
 
-## 4. Core Technical Decisions
+## 5. Core Technical Decisions
 
 ### Metadata source preference
 For retrieved cases:
@@ -145,7 +239,7 @@ Model-generated Chinese metadata is normalized to Traditional Chinese, without b
 
 ---
 
-## 5. Current API Surface
+## 6. Current API Surface
 
 ### `POST /api/research/query`
 
@@ -189,7 +283,7 @@ This design makes the output inspectable and demo-friendly, instead of returning
 
 ---
 
-## 6. Frontend Demo
+## 7. Frontend Demo
 
 The repository includes a browser demo file:
 
@@ -224,7 +318,7 @@ These cover:
 
 ---
 
-## 7. Validated Repository Files
+## 8. Validated Repository Files
 
 This README is aligned to repository files that already exist in the codebase, including:
 
@@ -246,7 +340,7 @@ So the current repo state is best understood as:
 
 ---
 
-## 8. Minimal Local Usage
+## 9. Minimal Local Usage
 
 ### A. Build an API-ready research envelope from the pipeline
 
@@ -275,7 +369,7 @@ The test coverage includes:
 
 ---
 
-## 9. Research Output Shape
+## 10. Research Output Shape
 
 At the current stage, the project is moving toward a structured legal research package rather than a flat list of search hits.
 
@@ -305,7 +399,7 @@ This is a better product foundation than a plain text answer because it preserve
 
 ---
 
-## 10. Current Strengths
+## 11. Current Strengths
 
 What this repository already shows well:
 
@@ -323,7 +417,7 @@ For portfolio purposes, this is materially stronger than a generic “LLM + chat
 
 ---
 
-## 11. Current Limitations
+## 12. Current Limitations
 
 This prototype still has real limitations:
 
@@ -342,9 +436,12 @@ This prototype still has real limitations:
 5. **Agent workflows are intentionally not the main line yet**  
    The project is still prioritizing a reliable research substrate.
 
+6. **Statute retrieval / broader document-analysis workflows are part of product direction, but not yet fully delivered in the current repository surface**  
+   The current delivered core is still judgment-centered retrieval plus metadata-aware presentation.
+
 ---
 
-## 12. Why This Project Matters
+## 13. Why This Project Matters
 
 MO_cocounsel is valuable because it is trying to solve the hard part first:
 
@@ -367,7 +464,7 @@ That makes it a portfolio project about:
 
 ---
 
-## 13. Near-Term Roadmap
+## 14. Near-Term Roadmap
 
 Current next-stage priorities are:
 
@@ -376,6 +473,13 @@ Current next-stage priorities are:
 - stronger integration consistency
 - demo/API/frontend polish for presentation
 
+Next major product-expansion directions are:
+
+- stronger statute retrieval integration
+- document analysis and document comparison workflows
+- grounded drafting / memo-style work products
+- agent-assisted research orchestration built on top of the retrieval substrate
+
 Not the current priority:
 
 - jumping early into large multi-agent orchestration
@@ -383,6 +487,6 @@ Not the current priority:
 
 ---
 
-## 14. One-Line Summary
+## 15. One-Line Summary
 
-**MO_cocounsel is a retrieval-first Macau legal research prototype built on public court judgments, with metadata-aware case cards, an API-ready response envelope, endpoint tests, and a frontend demo integration layer.**
+**MO_cocounsel is a retrieval-first Macau legal research prototype built on public court judgments, with a broader CoCounsel-style roadmap covering legal research, document review, drafting, and workflow agents; the currently delivered layers are metadata-aware case cards, an API-ready response envelope, endpoint tests, and a frontend demo integration layer.**
