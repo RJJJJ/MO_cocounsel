@@ -1,72 +1,72 @@
 {
   "summary": {
-    "raw_query": "第253/2026號",
-    "normalized_case_query": "253/2026",
-    "exact_match_candidates_found": 12,
+    "raw_query": "1087/2025/A",
+    "normalized_case_query": "1087/2025/A",
+    "exact_match_candidates_found": 5,
     "fallback_used": false,
     "top_k_returned": 5,
     "exact_case_number_lookup_refinement_successful": true
   },
   "hits": [
     {
-      "chunk_id": "253_2026_zh_c0000_c92a90b81a77",
-      "authoritative_case_number": "253/2026",
-      "authoritative_decision_date": "26/03/2026",
+      "chunk_id": "1087_2025_A_zh_c0000_c840e2fb9767",
+      "authoritative_case_number": "1087/2025/A",
+      "authoritative_decision_date": "12/02/2026",
       "court": "澳門法院",
       "language": "zh",
-      "case_type": "刑事訴訟程序的上訴",
-      "pdf_url": "https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf",
-      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42357",
+      "case_type": "效力之中止",
+      "pdf_url": "https://www.court.gov.mo/sentence/zh-02f1ffc676bdda1f.pdf",
+      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42147",
       "score": 100.0,
-      "retrieval_source": "exact_case_number_match:253/2026"
+      "retrieval_source": "exact_case_number_match:1087/2025/A"
     },
     {
-      "chunk_id": "253_2026_zh_c0001_3223beab4f20",
-      "authoritative_case_number": "253/2026",
-      "authoritative_decision_date": "26/03/2026",
+      "chunk_id": "1087_2025_A_zh_c0001_ef47f402bc14",
+      "authoritative_case_number": "1087/2025/A",
+      "authoritative_decision_date": "12/02/2026",
       "court": "澳門法院",
       "language": "zh",
-      "case_type": "刑事訴訟程序的上訴",
-      "pdf_url": "https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf",
-      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42357",
+      "case_type": "效力之中止",
+      "pdf_url": "https://www.court.gov.mo/sentence/zh-02f1ffc676bdda1f.pdf",
+      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42147",
       "score": 100.0,
-      "retrieval_source": "exact_case_number_match:253/2026"
+      "retrieval_source": "exact_case_number_match:1087/2025/A"
     },
     {
-      "chunk_id": "253_2026_zh_c0002_36e57743f89f",
-      "authoritative_case_number": "253/2026",
-      "authoritative_decision_date": "26/03/2026",
+      "chunk_id": "1087_2025_A_zh_c0002_77723d065de5",
+      "authoritative_case_number": "1087/2025/A",
+      "authoritative_decision_date": "12/02/2026",
       "court": "澳門法院",
       "language": "zh",
-      "case_type": "刑事訴訟程序的上訴",
-      "pdf_url": "https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf",
-      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42357",
+      "case_type": "效力之中止",
+      "pdf_url": "https://www.court.gov.mo/sentence/zh-02f1ffc676bdda1f.pdf",
+      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42147",
       "score": 100.0,
-      "retrieval_source": "exact_case_number_match:253/2026"
+      "retrieval_source": "exact_case_number_match:1087/2025/A"
     },
     {
-      "chunk_id": "253_2026_zh_c0003_a02775c4a8bc",
-      "authoritative_case_number": "253/2026",
-      "authoritative_decision_date": "26/03/2026",
+      "chunk_id": "1087_2025_A_zh_c0003_ebd611185a92",
+      "authoritative_case_number": "1087/2025/A",
+      "authoritative_decision_date": "12/02/2026",
       "court": "澳門法院",
       "language": "zh",
-      "case_type": "刑事訴訟程序的上訴",
-      "pdf_url": "https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf",
-      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42357",
+      "case_type": "效力之中止",
+      "pdf_url": "https://www.court.gov.mo/sentence/zh-02f1ffc676bdda1f.pdf",
+      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42147",
       "score": 100.0,
-      "retrieval_source": "exact_case_number_match:253/2026"
+      "retrieval_source": "exact_case_number_match:1087/2025/A"
     },
     {
-      "chunk_id": "253_2026_zh_c0004_3809392baef4",
-      "authoritative_case_number": "253/2026",
-      "authoritative_decision_date": "26/03/2026",
+      "chunk_id": "1087_2025_A_zh_c0004_d4acfa039db3",
+      "authoritative_case_number": "1087/2025/A",
+      "authoritative_decision_date": "12/02/2026",
       "court": "澳門法院",
       "language": "zh",
-      "case_type": "刑事訴訟程序的上訴",
-      "pdf_url": "https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf",
-      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42357",
+      "case_type": "效力之中止",
+      "pdf_url": "https://www.court.gov.mo/sentence/zh-02f1ffc676bdda1f.pdf",
+      "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42147",
       "score": 100.0,
-      "retrieval_source": "exact_case_number_match:253/2026"
+      "retrieval_source": "exact_case_number_match:1087/2025/A"
     }
   ]
 }

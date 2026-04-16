@@ -1,0 +1,17 @@
+Search Router Layer Demo Report - Macau Court Cases
+query received: erro ostensivo
+query_type: ambiguous_or_noisy
+routing_strategy: conservative_direct_retrieval
+decomposition recommended: False
+retrieval mode used: conservative_direct_bm25|direct
+top_k_returned: 5
+whether search router layer appears successful: True
+router_result_json:
+{
+  "original_query": "erro ostensivo",
+  "normalized_query": "erro ostensivo",
+  "query_type": "ambiguous_or_noisy",
+  "routing_strategy": "conservative_direct_retrieval",
+  "decomposition_recommended": false,
+  "retrieval_mode": "conservative_direct_bm25"
+}
