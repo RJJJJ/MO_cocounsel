@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Any
 
 DEFAULT_BASELINE_PATH = Path("data/eval/deterministic_metadata_extraction_baseline_output.jsonl")
-DEFAULT_MODEL_PATH = Path("data/eval/local_model_metadata_generation_output.jsonl")
+DEFAULT_MODEL_PATH = Path("data/eval/model_generated_metadata_output.jsonl")
 DEFAULT_REPORT_PATH = Path("data/eval/metadata_generation_comparison_harness_report.txt")
 
 COMPARED_FIELDS = ["case_summary", "holding", "legal_basis", "disputed_issues"]
