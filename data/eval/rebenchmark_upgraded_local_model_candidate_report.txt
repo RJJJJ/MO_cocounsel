@@ -1,0 +1,31 @@
+Re-benchmark Upgraded Local Model Candidate Report - Day 48
+report_path: data\eval\rebenchmark_upgraded_local_model_candidate_report.txt
+
+=== Fixed Benchmark Conditions ===
+current_model_name: qwen2.5:3b-instruct
+candidate_model_name: qwen3:4b-instruct
+prompt_version: day45_prompt_b_tch_norm
+sample cases used: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A', '1092/2025', '117/2026', '118/2026', '119/2026', '120/2026']
+sample_case_count: 10
+same_input_batch: yes
+same_generation_script: connect_local_chinese_model_metadata_generation.py
+same_normalization: Traditional Chinese normalization enabled
+same_timeout_and_input_truncation_policy: yes
+
+=== Current Model Results ===
+generation success count: 10
+generation total count: 10
+field completeness: {'case_summary': 10, 'holding': 10, 'legal_basis': 10, 'disputed_issues': 9}
+script normalization applied: 1
+runtime seconds: 458.29
+
+=== Candidate Model Results ===
+generation success count: 10
+generation total count: 10
+field completeness: {'case_summary': 10, 'holding': 10, 'legal_basis': 10, 'disputed_issues': 10}
+script normalization applied: 0
+runtime seconds: 1330.23
+
+=== Decision Support ===
+comparison-ready yes/no: yes
+promotion hint: candidate appears promotable; run final acceptance check then consider default switch

@@ -1,16 +1,16 @@
 Local Model Metadata Generation Report - Day 45
 input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
-output_jsonl_path: data\eval\upgraded_local_model_candidate_benchmark\current__qwen2.5_3b-instruct__day45_prompt_b_tch_norm.jsonl
+output_jsonl_path: data\eval\metadata_prompt_eval_loop\model_output__qwen2.5_3b-instruct__day45_prompt_b_tch_norm.jsonl
 model_backend: ollama_cli
 model_name: qwen2.5:3b-instruct
 prompt_version: day45_prompt_b_tch_norm
-sample cases selected: 10
-sample case numbers: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A', '1092/2025', '117/2026', '118/2026', '119/2026', '120/2026']
-model-generated cases written: 10
-generation success count: 10
+sample cases selected: 5
+sample case numbers: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A']
+model-generated cases written: 5
+generation success count: 5
 generation failure count: 0
-script normalization applied count: 1
-script normalization applied yes/no: True
+script normalization applied count: 0
+script normalization applied yes/no: False
 generation fields attempted: ['case_summary', 'holding', 'legal_basis', 'disputed_issues']
 whether local model metadata generation appears successful: True
 
@@ -43,14 +43,15 @@ Sample outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "澳門特別行政區中級法院合議庭裁定上訴人A的刑事上訴理由不成立，維持原判。主要問題集中在假釋的實質要件上，包括行為人在執行徒刑期間的人格轉變情況及提早釋放被判刑人對社會安寧的影響。",
-    "holding": "合議庭認為上訴人尚未滿足《刑法典》第56條第1款a項和b項規定的假釋實質要件，因此否決了其假釋申請。",
+    "case_summary": "澳門特別行政區中級法院合議庭裁定上訴人A的上訴理由不成立，維持原判。案件涉及假釋申請，主要問題為是否符合《刑法典》第56條第1款a項及b項規定的實質要件。合議庭考慮到被判刑人的服刑表現、犯罪背景以及其人格轉變情況等因素，認為不符合假釋條件。",
+    "holding": "上訴人A的上訴理由不成立，維持原判。",
     "legal_basis": [
-      "《刑法典》第56條第1款"
+      "《刑法典》第56條第1款a項",
+      "《刑法典》第56條第1款b項"
     ],
     "disputed_issues": [
-      "行為人在執行徒刑期間的人格轉變情況",
-      "提早釋放被判刑人對社會安寧的影響"
+      "假釋的前提要件是否符合",
+      "假釋的實質要件是否滿足"
     ]
   },
   "generation_status": "local_model_generated",
@@ -146,16 +147,15 @@ Sample outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "上訴人A對初級法院的判決不服提起上訴，主要爭議點在於家庭暴力罪及加重傷害身體完整性罪的認定。上訴人認為獲證明之事實不足以支持作出該裁判，以及適用法律錯誤。此外，針對緩刑問題亦提出異議。",
+    "case_summary": "上訴人A對初級法院的判決不服提起上訴，主要爭議點在於家庭暴力罪及加重傷害身體完整性罪的認定。上訴人認為原審裁判存在獲證明之事實不足以支持作出該裁判之瑕疵，以及法律適用錯誤。",
     "holding": "合議庭裁定上訴人的上訴理由部份成立，改為判處： - 上訴人以直接正犯、犯罪既遂方式觸犯之一項澳門《刑法典》第140條的規定第2款、同一法典第137條第1款所規定及處罰之『加重傷害身體完整性罪』(針對第一被害人)，判處一年六個月徒刑。 - 維持原審法院對上訴人以直接正犯、犯罪既遂方式觸犯之一項澳門《刑法典》第140條的規定第2款、同一法典第137條第1款所規定及處罰之『加重傷害身體完整性罪』(針對第二被害人)所判處的九個月徒刑。 - 二罪並罰，合共判處二年徒刑，有關徒刑暫緩三年執行，緩刑期間接受考驗制度，並由社工局負責執行。",
     "legal_basis": [
-      "《刑法典》第400條第1款",
-      "《刑法典》第48條第1款"
+      "《刑法典》第400條第2款a)項",
+      "《刑事訴訟法典》第400條第1款"
     ],
     "disputed_issues": [
-      "獲證明之事實上之事宜不足以支持作出該裁判",
-      "適用法律錯誤",
-      "緩刑問題"
+      "獲證明之事實不足以支持作出該裁判",
+      "法律適用錯誤"
     ]
   },
   "generation_status": "local_model_generated",

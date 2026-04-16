@@ -26,7 +26,7 @@ DEFAULT_EVAL_SET_PATH = Path("data/eval/metadata_field_evaluation_set.jsonl")
 DEFAULT_OUTPUT_DIR = Path("data/eval/metadata_prompt_eval_loop")
 DEFAULT_REPORT_PATH = Path("data/eval/metadata_model_prompt_eval_loop_report.txt")
 DEFAULT_PROMPT_VERSIONS = "day45_prompt_b_tch_norm,day47_prompt_a"
-DEFAULT_MODEL_NAMES = "qwen2.5:7b-instruct"
+DEFAULT_MODEL_NAMES = "qwen2.5:3b-instruct"
 
 GENERATION_FIELDS = ["case_summary", "holding", "legal_basis", "disputed_issues"]
 

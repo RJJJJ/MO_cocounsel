@@ -1,9 +1,9 @@
-Metadata Model Prompt/Eval Loop Report - Day 44
+Metadata Model Prompt/Eval Loop Report - Day 47
 report_path: data\eval\metadata_model_prompt_eval_loop_report.txt
 
 === run_1 ===
-model_name: qwen2.5:7b-instruct
-prompt_version: day44_prompt_a
+model_name: qwen2.5:3b-instruct
+prompt_version: day45_prompt_b_tch_norm
 sample cases used: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A']
 generation success count: 5
 generation total count: 5
@@ -12,24 +12,25 @@ evaluation-ready: yes
 comparison-ready: yes
 eval run completed: yes
 comparison run completed: yes
-model_output_path: data\eval\metadata_prompt_eval_loop\model_output__qwen2.5_7b-instruct__day44_prompt_a.jsonl
+model_output_path: data\eval\metadata_prompt_eval_loop\model_output__qwen2.5_3b-instruct__day45_prompt_b_tch_norm.jsonl
 
 === run_2 ===
-model_name: qwen2.5:7b-instruct
-prompt_version: day44_prompt_b
+model_name: qwen2.5:3b-instruct
+prompt_version: day47_prompt_a
 sample cases used: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A']
-generation success count: 5
+generation success count: 3
 generation total count: 5
-fields generated: {'case_summary': 5, 'holding': 5, 'legal_basis': 5, 'disputed_issues': 4}
+fields generated: {'case_summary': 3, 'holding': 3, 'legal_basis': 2, 'disputed_issues': 3}
 evaluation-ready: yes
 comparison-ready: yes
 eval run completed: yes
 comparison run completed: yes
-model_output_path: data\eval\metadata_prompt_eval_loop\model_output__qwen2.5_7b-instruct__day44_prompt_b.jsonl
+model_output_path: data\eval\metadata_prompt_eval_loop\model_output__qwen2.5_3b-instruct__day47_prompt_a.jsonl
 
 === Aggregated Summary ===
-prompt versions evaluated: ['day44_prompt_a', 'day44_prompt_b']
+current default model used: qwen2.5:3b-instruct
+prompt versions evaluated: ['day45_prompt_b_tch_norm', 'day47_prompt_a']
 sample cases processed: 10
-successful generations: 10
+successful generations: 8
 comparison runs completed: 2
 whether metadata model prompt/eval loop appears successful: True

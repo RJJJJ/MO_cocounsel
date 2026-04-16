@@ -1,0 +1,32 @@
+Metadata Field Evaluation Report - Day 40
+evaluation_set_path: data\eval\metadata_field_evaluation_set.jsonl
+predictions_path: data\eval\metadata_prompt_eval_loop\model_output__qwen2.5_3b-instruct__day45_prompt_b_tch_norm.jsonl
+cases in set: 8
+cases evaluated: 2
+cases missing predictions: 6
+missing case numbers: 36/2026, 118/2026, 1/2025, 1035/2025, 705/2025, 384/2025
+
+Field coverage:
+- case_summary: 1.000
+- holding: 1.000
+- legal_basis: 1.000
+- disputed_issues: 0.500
+
+case_summary score summary:
+- loose_text_overlap_avg: 0.125
+- containment_signal_avg: 0.000
+
+holding score summary:
+- loose_text_overlap_avg: 0.000
+- containment_signal_avg: 0.000
+
+legal_basis score summary:
+- exact_match_avg: 0.000
+- normalized_overlap_avg: 0.000
+
+disputed_issues score summary:
+- exact_match_avg: 0.000
+- normalized_overlap_avg: 0.000
+
+weakest field: holding
+whether metadata field evaluation appears successful: False

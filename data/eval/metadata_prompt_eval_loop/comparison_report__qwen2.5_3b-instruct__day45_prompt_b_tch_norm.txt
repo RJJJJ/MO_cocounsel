@@ -1,0 +1,1474 @@
+Metadata Generation Comparison Harness Report - Day 42
+
+baseline cases loaded: 77
+model-generated cases loaded: 5
+
+case: 1/2025
+language: pt
+- field: case_summary
+  baseline_value: I – O n.º 2 do artigo 128.º do DL n.º 74/99/M, de 8 de Novembro, dispõe que “sempre que, por imposição do dono da obra ou em virtude de deferimento de reclamação do empreiteiro, sejam executados trabalhos a mais, o prazo contratual para conclusão da obra é prorrogado a requeri...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * * * V - DECISÃO Em face de todo o que fica exposto e justificado, os juízes do TSI acordam em julgar improcedente o recurso, mantendo-se a decisão recorrida.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: artigo 128.º | artigo 159.º | artigo 168.º | artigo 174.º | artigo 171.º | artigo 169.º | artigo 124º | artigo 21º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 司法上訴(中級法院作為第一審法院的行政訴訟案件)
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 100/2026
+language: zh
+- field: case_summary
+  baseline_value: 除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 假釋並不具有自動性，它除了需要符合啟動假釋程序的客觀要件外，還需要考慮面對被判刑人所犯下的罪行，以及被判刑人的人格表現，一旦提早釋放被判刑人，是否會對社會安寧造成衝擊、讓人認為刑罰的力度未足以達到阻嚇犯罪的作用；此外，更重要的是，還需要考慮到被判刑人在服刑期間的...
+  model_value: 澳門特別行政區中級法院合議庭裁定上訴人A的上訴理由不成立，維持原判。案件涉及假釋申請，主要問題為是否符合《刑法典》第56條第1款a項及b項規定的實質要件。合議庭考慮到被判刑人的服刑表現、犯罪背景以及其人格轉變情況等因素，認為不符合假釋條件。
+  comparison_status: different
+- field: holding
+  baseline_value: 判處上訴人繳付4個計算單位之司法費。
+  model_value: 上訴人A的上訴理由不成立，維持原判。
+  comparison_status: different
+- field: legal_basis
+  baseline_value: 第56條 | 第14條 | 第8條 | 第18條 | 第66條 | 第21條 | 第468條
+  model_value: 《刑法典》第56條第1款a項 | 《刑法典》第56條第1款b項
+  comparison_status: different
+- field: disputed_issues
+  baseline_value: 否決假釋 | 假釋的實質要件 摘要 除了法律所規定的客觀前提要件外 | 《刑法典》第56條第1款a項及b項還規定了當中的實質要件 | 即： — 行為人以往之生活及其人格 | 以及於執行徒刑期間在人格方面之演變情況 | 期待被判刑者一旦獲釋 | 將能以對社會負責之方式生活而不再犯罪屬有依據者 | 及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧
+  model_value: 假釋的前提要件是否符合 | 假釋的實質要件是否滿足
+  comparison_status: different
+
+case: 1006/2025
+language: pt
+- field: case_summary
+  baseline_value: I - Quem tem a obrigação de controlar a assiduidade e pontualidade dos trabalhadores é sempre a entidade patronal, e é esta que deve ter os respectivos registos nesta matéria. No caso de esta não apresentar esses dados em litígio, a sua conduta esta sujeita a livre apreciação ...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: IV - Quanto à primeira condição, justifica-se que o réu deponha perante o Tribunal Colectivo, de forma que o depoimento tenha maior utilidade e eficácia, contribuindo para uma justa decisão da causa.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: Art. 13.º | Art. 481.º | Art. 335. | Art. 33.º | Art. 42.º | Art. 6.º | Art. 335.º | art. 4.º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 1026/2025
+language: zh
+- field: case_summary
+  baseline_value: 鑑於未見《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條所規定之不予認可的情況，亦未見其他足以妨礙有關聲請的法定原因，涉案香港特別行政區國際仲裁中心所作之仲裁裁決應予以確認。
+  model_value: 本案件涉及聲請人A針對被聲請人B提起的審查及確認外地裁判之特別程序，請求確認香港國際仲裁中心於2024年11月1日所作之除訟費外的裁決書HKIAC/24140號。本案中，仲裁庭裁定申請人就其申索勝訴，並命令被聲請人償還港幣HKD10,000,000元及支付相關利息。
+  comparison_status: different
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合議庭決定確認香港國際仲裁中心於2024年11月1日作出的第HKIAC/24140號卷宗的除訟費外的裁決書。
+  model_value: 鑑於不存在《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條所規定之不予認可的情況，亦未見其他足以妨礙有關聲請的法定原因，應裁定聲請人的理由成立。
+  comparison_status: different
+- field: legal_basis
+  baseline_value: 第7條 | 第1201條 | 第70條 | 第1條 | 第1200條
+  model_value: 第19/2019號法律《仲裁法》第70條
+  comparison_status: different
+- field: disputed_issues
+  baseline_value: 澳門以外的法院或仲裁員作出的裁判的審查及確認
+  model_value: <empty>
+  comparison_status: model_missing_field
+
+case: 1033/2025
+language: zh
+- field: case_summary
+  baseline_value: 編號：第1033/2025號 (刑事上訴案) 上訴人：A 日期：2026年3月12日 主要法律問題：家庭暴力罪、適用法律錯誤、獲證明之事實上之事宜不足以支持作出該裁判 摘 要 * 《刑事訴訟法典》第400條第2款a)項所指的獲認定的事實不足以支持裁判之瑕疵為：所謂的事實不充分的瑕疵僅存在於法院沒有證實必要的可資作出適當法律適用以及決定案件實體問題的事實；法院在審判過程中必須在該刑事訴訟案件的標的包括控訴書或辯護詞所界定的範圍內，對這些事實作譴責。1 在適用《刑法典》第48條第1款之規定時，必須考慮是否滿足了緩刑的形式前提及實質前提。形式前提是指不超...
+  model_value: 上訴人A對初級法院的判決不服提起上訴，主要爭議點在於家庭暴力罪及加重傷害身體完整性罪的認定。上訴人認為原審裁判存在獲證明之事實不足以支持作出該裁判之瑕疵，以及法律適用錯誤。
+  comparison_status: different
+- field: holding
+  baseline_value: 9 於原審判決第3頁，原審法院對嫌犯的控罪改為：嫌犯A為直接正犯，其既遂行為觸犯了：一項第2/2016號法律《預防及打擊家庭暴力法》第18條第1款結合第4條第1款及第2款(一)項所規定及處罰的『家庭暴力罪』，卻於判決部份未有指明，應屬明顯筆誤，因此依職權將之更正。
+  model_value: 合議庭裁定上訴人的上訴理由部份成立，改為判處： - 上訴人以直接正犯、犯罪既遂方式觸犯之一項澳門《刑法典》第140條的規定第2款、同一法典第137條第1款所規定及處罰之『加重傷害身體完整性罪』(針對第一被害人)，判處一年六個月徒刑。 - 維持原審法院對上訴人以直接正犯、犯罪既遂方式觸犯之一項澳門《刑法典》第140條的規定第2款、同一法典第137條第1款所規定及處罰之『加重傷害身體完整性罪』(針對第二被害人)所判處的九個月徒刑。 - 二罪並罰，合共判處二年徒刑，有關徒刑暫緩三年執行，緩刑期間接受考驗制度，並由社工局負責執行。
+  comparison_status: different
+- field: legal_basis
+  baseline_value: 第400條 | 第48條 | 第4條 | 第18條 | 第140條 | 第137條 | 第142條 | 第40條
+  model_value: 《刑法典》第400條第2款a)項 | 《刑事訴訟法典》第400條第1款
+  comparison_status: different
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: 獲證明之事實不足以支持作出該裁判 | 法律適用錯誤
+  comparison_status: different
+
+case: 1035/2025
+language: pt
+- field: case_summary
+  baseline_value: I - Em 27/03/2024, o tribunal arbitral declarou ineficaz a convenção de arbitragem em virtude da oposição deduzida pela Ré à luz do art.º 84.º, n.º 3 da Lei n.º 19/2019, julgando-se, por conseguinte, incompetente para a composição do litígio. II – O art.º 66.º do DL n.º 63/85/...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * * * V - DECISÃO Em face de todo o que fica exposto e justificado, os juízes do Tribunal de 2ª Instância acordam em negar provimento ao recurso, mantendo-se a sentença recorrida do TA.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: Artigo 98.º | artigo 113.º | Artigo 113º | artigo 115º | art. 98.º | artigo 84.º | artigo 319.º | artigo 631º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 行政, 稅務及海關方面的其他訴訟程序
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 1073/2025
+language: zh
+- field: case_summary
+  baseline_value: 上訴法院在過往多個上訴
+  model_value: 澳門特別行政區檢察院指控嫌犯A以直接正犯及既遂的方式觸犯《道路交通法》第89條所規定及處罰的一項「逃避責任罪」。原審法院判決嫌犯A被控以直接正犯、既遂的方式1觸犯一項由第3/2007號法律《道路交通法》第89條所規定及處罰的「逃避責任罪」，罪名成立，判處102日罰金，罰金之日額定為120澳門元，即合共12,240澳門元。此外，原審法院判決嫌犯A禁止駕駛，為期七個月。本上訴案涉及審查證據錯誤、量刑過重及逃避責任罪的問題。
+  comparison_status: different
+- field: holding
+  baseline_value: 維持被上訴判決中的其他決定。
+  model_value: 本上訴案裁定上訴人A的上訴理由部分成立，因此改判上訴人75日的罰金，每日120澳門元，合共9,000澳門元。維持原審法院對上訴人所科處的禁止駕駛為期七個月的附加刑。
+  comparison_status: different
+- field: legal_basis
+  baseline_value: 第114條 | 第400條 | 第40條 | 第65條 | 第89條 | 第94條 | 第47條 | 第121條
+  model_value: 《刑事訴訟法典》第114條 | 《刑法典》第47條第1款 | 《道路交通法》第89條及第94條
+  comparison_status: different
+- field: disputed_issues
+  baseline_value: 審查證據錯誤 | 量刑過重 | 逃避責任罪 摘要 上訴法院在過往多個上訴裁判中均指出（其中 | 參見中級法院第741/2025號合議庭裁判）： “在審查證據方面 | 《刑事訴訟法典》第114條規定：‘評價證據係按經驗法則及有權限實體之自由心證為之 | 但法律另有規定者除外’ | 即法院在認定事實所運用的自由心證證實不能質疑的 | 一方面法律賦予法官自由審理證據的權力
+  model_value: 審查證據錯誤 | 量刑過重 | 逃避責任罪
+  comparison_status: different
+
+case: 1087/2025/A
+language: zh
+- field: case_summary
+  baseline_value: 1. 根據《行政訴訟法典》第120條及第121條第1款規定，批准中止行政行為之效力取決於下列要件之同時成立：1) 被針對的行政行為具有積極內容(或有關行為有消極內容，但亦有部份積極內容，而中止效力僅限於有積極內容之部份)；2) 預料執行有關行政行為，將對聲請人或其在司法上訴中所維護或將在司法上訴中維護之利益造成難以彌補之損失；3) 中止行政行為之效力不會嚴重侵害該行為在具體情況下所謀求之公共利益，以及4) 卷宗內無強烈跡象顯示司法上訴屬違法。 2. 本案中，由於聲請人未能提供足夠證據以支持立即執行行政行為將對其做成難以彌補的損害，因此，在上述各項要...
+  model_value: 本案件涉及保安司司長宣告聲請人於2009年11月6日獲批的居留許可無效的行政行為。聲請人請求中止該行政行為效力，但被聲請實體及檢察院認為不符合《行政訴訟法典》第120條及第121條第1款規定的要件。
+  comparison_status: different
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合議庭不批准是次中止行政行為效力的聲請。
+  model_value: 本院合議庭不批准是次中止行政行為效力的聲請。
+  comparison_status: different
+- field: legal_basis
+  baseline_value: 第120條 | 第121條 | 第129條 | 第122條
+  model_value: 《行政訴訟法典》第120條 | 《行政訴訟法典》第121條第1款
+  comparison_status: different
+- field: disputed_issues
+  baseline_value: 效力之中止
+  model_value: 難以彌補之損失的要件是否已符合 | 中止行政行為效力不會嚴重侵害該行為在具體情況下所謀求之公共利益 | 卷宗內無強烈跡象顯示司法上訴屬違法
+  comparison_status: different
+
+case: 1092/2025
+language: zh
+- field: case_summary
+  baseline_value: 編號：第1092/2025號 (刑事上訴案) 上訴人：(A) 日期：2026年2月26日 主要法律問題：審查證據方面明顯有錯誤 疑罪從無原則 遺留審查/或說明理由不足 摘 要 一、審查證據方面明顯有錯誤，是指法院認定事實時，明顯有違經驗法則和常理，或明顯違反法定證據價值法則，或違反職業準則。錯誤必須是顯而易見的，明顯到一般留意的人也不可能不發現。 二、疑罪從無原則，也稱作疑點利益歸於被告原則，是指法院在認定事實的審查證據過程中，對所審查的證據所需要證明的事實的真偽存有合理懷疑，在這種情況下，法院就應該以對嫌犯最有利為依歸，作出有利於嫌犯的事實的決定...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付6個計算單位之司法費，上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第355條 | 第360條 | 第211條 | 第196條 | 第400條 | 第114條 | 第10條 | 第418條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 117/2026
+language: zh
+- field: case_summary
+  baseline_value: 第3/2007號法律《道路交通法》第108條第1款規定： “一、如駕駛員自首次判罰其禁止駕駛的判決轉為確定之日起計五年內已兩次被判罰禁止駕駛，而又實施另一可科處禁止駕駛的違法行為，法院應裁定吊銷其駕駛執照或第八十條第一款（四）項所指文件，且不影響第九十二條的適用。”（粗體及底線是我們加上的）。 從中所見，立法者對於上訴人這種重複違反交通規定的情況，採用了“應”裁定吊銷其駕駛執照的表述方式，意味著立法者認為在此情況下，違例者未有在之前的刑罰當中吸取足夠的教訓，因而原則上需要吊銷違例者的駕駛執照，以便加強行為人的守法意識，並體現立法者對其他道路使用者的...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對本上訴程序，判處上訴人支付4個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第108條 | 第109條 | 第99條 | 第12條 | 第106條 | 第125條 | 第46條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 實際執行吊銷駕駛執照的附加刑 | 不遵守交通紅燈管制的輕微違反 摘要 第3/2007號法律《道路交通法》第108條第1款規定： “一 | 如駕駛員自首次判罰其禁止駕駛的判決轉為確定之日起計五年內已兩次被判罰禁止駕駛 | 而又實施另一可科處禁止駕駛的違法行為 | 法院應裁定吊銷其駕駛執照或第八十條第一款（四）項所指文件 | 且不影響第九十二條的適用
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 118/2026
+language: zh
+- field: case_summary
+  baseline_value: 案件編號: 第118/2026號（刑事上訴案） 日期: 2026年3月12日 重要法律問題： - 審查證據方面明顯有錯誤 摘 要 審查證據方面明顯有錯誤，是指法院在審查證據並認定事實時，明顯有違經驗法則和常理，或明顯違反法定證據價值法則，或明顯違反職業準則。錯誤必須是顯而易見的，明顯到一般留意的人也不可能不發現。 疑罪從無原則，是指法院在認定事實的審查證據過程中，對所審查的證據所需要證明的事實的真偽存有合理懷疑，在這種情況下，法院就應該以對嫌犯最有利為依歸，作出有利於嫌犯的事實的決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 四、決定 綜上所述，本院裁定上訴人A的上訴理由均不成立，維持原審判決。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第11條 | 第9條 | 第12條 | 第25條 | 第114條 | 第400條 | 第418條 | 第410條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 119/2026
+language: zh
+- field: case_summary
+  baseline_value: 編號：第119/2026號（刑事上訴案） 日期：2026年2月26日 主要問題： 假釋 摘 要 假釋作為一項執行徒刑的機制，不可偏離刑罰的目的，即：保護法益及使行為人重新納入社會，因此，要求在特別預防方面和一般預防方面均符合假釋的要求，缺一不可。 裁判書製作人 ________________ 周艷平 澳門特別行政區中級法院 合議庭裁判書 編號：第119/2026號（刑事上訴案） 上訴人：A 日期：2026年2月26日 一、 案情敘述 澳門初級法院刑事起訴法庭於PLC-034-17-2-A案審理上訴人A的假釋個案，於2025年12月19日作出批示，...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * 四、決定 綜上所述，合議庭裁定上訴人A的上訴理由不成立，維持被上訴批示之決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第56條 | 第468條 | 第469條 | 第18條 | 第21條 | 第48條 | 第129條 | 第128條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 假釋 摘 要 假釋作為一項執行徒刑的機制 | 不可偏離刑罰的目的 | 即：保護法益及使行為人重新納入社會 | 因此 | 要求在特別預防方面和一般預防方面均符合假釋的要求 | 缺一不可
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 120/2026
+language: zh
+- field: case_summary
+  baseline_value: 對於侵犯財產性質的犯罪，行為人是否有彌補其對被害人所造成的損害是一項重要的考慮因素，倘若上訴人有意對被害人作出賠償，理應在案件被揭發時起，便採取積極的彌補態度。 然而，上訴人自案件被揭發至今已兩年多的時間，仍未有向兩名被害人作出任何賠償，考慮到涉案的金額，倘若在此情況下仍提早釋放上訴人，將有可能令社會大眾誤以為可以透過低成本的方式侵犯他人的財產，這樣將不利於本澳刑罰在一般預防層面的阻嚇作用。 ____________________ 盧映霞（
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付4個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第56條 | 第211條 | 第196條 | 第468條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 否決假釋 | 假釋的實質要件 摘要 對於侵犯財產性質的犯罪 | 行為人是否有彌補其對被害人所造成的損害是一項重要的考慮因素 | 倘若上訴人有意對被害人作出賠償 | 理應在案件被揭發時起 | 便採取積極的彌補態度
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 123/2026
+language: zh
+- field: case_summary
+  baseline_value: 編號：第123/2026號 (刑事上訴案) 聲明異議人：A 日期：2026年3月12日 主要法律問題：假釋 摘 要 在重新分析本案的情況，上訴人觸犯一項『逃避責任罪』、一項『詐騙罪（相當巨額）』及一項『過失傷害身體完整性罪』，有關犯罪行為對社會安寧及法律秩序均構成嚴重的影響，危害到大眾的財產安全和社會的安寧，對本澳社會秩序造成嚴重的負面影響，其不法性及故意程度甚高，守法意識薄弱。 本院在簡要裁判中認同了上訴人在近一年行為有所改善，但考慮上訴人曾數次在獄中違規，僅憑上訴人在服刑期間的近期表現並不足以使法院就上訴人提前獲釋後能否誠實生活不再犯罪作出有利...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處聲明異議人繳付3個計算單位之司法費以及相關的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第56條 | 第468條 | 第469條 | 第410條 | 第15條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 124/2026
+language: pt
+- field: case_summary
+  baseline_value: Processo n.º 124/2026 (Autos de suspensão da eficácia) Data : 05 de Março de 2026 Requerente : A Entidade Requerida : Secretário para a Segurança * * * ACORDAM OS JUÍZES NO TRIBUNAL DE SEGUNDA INSTÂNCIA DA RAEM: I - RELATÓRIO A, Requerente, devidamente identificado nos autos, ...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * * * V - DECISÃO Em face de todo o que fica exposto e justificado, os juízes do TSI acordam em indeferir o pedido da suspensão da eficácia da decisão que declarou a nulidade da autorização da fixação da residência an...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 121.º | artigo 126.º | artigo 120.º | artigo 121.º | artigo 122.º | artigo 123.º | artigo 129.º | artigo 121º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: Declaração de Nulidade de Autorização de Residência Visado: A 1- Concordo com a proposta n
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 136/2025
+language: zh
+- field: case_summary
+  baseline_value: 上訴案第136/2025號 日期：2026年2月26日 主題： - 駕駛學校校長 - 校長的職務 - 違法行為 - 法律上的不確定概念 - 行為的嚴重性 - 行為的重複性 摘 要 1. 《道路交通規章》第102條第一列舉性地規定了駕駛學校校長的職務及義務，對於駕駛學校校長的違法行為限定在違反與教學業務有關還是與校長本身的職務有關沒有任何意義，因為校長的職務完全包括了與教學業務有關的行為。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 無需判處訴訟費用的支付。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第102條 | 第84條 | 第79條 | 第100條 | 第25條 | 第92條 | 第95條 | 第9條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 行政, 稅務及海關方面的司法裁判的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 137/2026
+language: zh
+- field: case_summary
+  baseline_value: --- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) -- --- 日期：26/02/2026 ----------------------------------------------------------- --- 裁判書製作法官：簡靜霞法官 ------------------------------------------------ 澳門特別行政區中級法院 簡要裁判 編號：第137/2026號 (刑事上訴案) 上訴人：A 日期：2026年2月26日 一、案情敘述 初級法院刑事起訴法庭在PLC-...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付4個計算單位之司法 費，上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第56條 | 第400條 | 第211條 | 第196條 | 第468條 | 第410條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 145/2026
+language: zh
+- field: case_summary
+  baseline_value: --- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) --- 日期：26/02/2025 ------------------------------------------------------------------------------------- --- 裁判書製作法官：譚曉華法官 -------------------------------------------------------------------- 簡要裁判 編號：第145/2026號 (刑事上訴案) 上訴人：A 日期：20...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付3個計算單位之司法費，上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第211條 | 第196條 | 第221條 | 第201條 | 第74條 | 第56條 | 第468條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 147/2025
+language: zh
+- field: case_summary
+  baseline_value: 1、緩刑的制度是一種以犯罪的預防為唯一目的刑事懲罰制度，尤其是容許對被判刑人設立緩刑期間的履行一定的義務，包括作出一定的行為或付出一定的代價以消除其犯罪行為帶來的危害的措施。 2、於緩刑的義務的制度，《刑法典》第四十九條（義務）規定： “一、暫緩執行徒刑時，得規定被判刑者履行某些旨在彌補犯罪惡害之義務，尤其係下列義務： a) 在一定期間內向受害人支付全部須付之損害賠償或支付法院認為有可能支付之部分損害賠償，或透過提供適當之擔保以保證支付損害賠償； b) 給予受害人適當之精神上滿足； c) 捐款予社會互助機構或本地區，或作同等價值之特定給付。 二、在...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 事實上，《刑法典》第49條第1款當中規定了“旨在彌補犯罪惡害之義務”，所以，在原審法院未有陳明除了為被害人所定出的賠償金額外，還有哪些需要彌補的惡害的情況下，原審法院所裁定的支付慰金問的義務便存在錯誤適用法律（《刑法典》第49條第1款）的瑕疵，故應撤銷該項緩刑義務。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第142條 | 第138條 | 第93條 | 第48條 | 第49條 | 第1條 | 第2條 | 第86條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 151/2026
+language: zh
+- field: case_summary
+  baseline_value: 從上述的已證
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對本上訴程序，判處上訴人支付6個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第14條 | 第8條 | 第311條 | 第15條 | 第18條 | 第67條 | 第48條 | 第71條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 審查證據錯誤 | 已證事實不足以支持裁判 | 吸毒罪的吸收 | 量刑過重 | 吸毒罪 | 販賣罪 | 抗拒及脅迫罪 摘要 從上述的已證事實所見 | 第1至3點的已證事實僅屬概括性的事實描述
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 157/2026
+language: zh
+- field: case_summary
+  baseline_value: --- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) -- --- 日期：26/02/2026 ----------------------------------------------------------- --- 裁判書製作法官：譚曉華法官 ------------------------------------------------ 簡要裁判 編號：第157/2026號 (刑事上訴案) 上訴人：A 日期：2026年2月26日 一、 案情敘述 初級法院刑事起訴法庭在PLC-132-18-2-A卷...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付3個計算單位之司法費，上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第204條 | 第14條 | 第15條 | 第92條 | 第312條 | 第89條 | 第197條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 164/2026
+language: zh
+- field: case_summary
+  baseline_value: --- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) --- 日期：26/02/2025 ------------------------------------------------------------------------------------- --- 裁判書製作法官：周艷平法官 -------------------------------------------------------------------- 簡要裁判書 編號：第164/2026號（刑事上訴案） 上訴人: A 日期：2...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * 四、決定 綜上所述，裁判書製作人裁定上訴人A的上訴理由明顯不成立，駁回上訴，並維持被上訴之決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第56條 | 第468條 | 第410條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 165/2026
+language: zh
+- field: case_summary
+  baseline_value: 案件編號:第165/2026號（刑事上訴案） 日期: 2026年3月5日 重要法律問題：假釋 摘 要 假釋作為一項執行徒刑的機制，不可偏離刑罰的目的，即：保護法益及使行為人重新納入社會，因此，要求在特別預防方面和一般預防方面均符合假釋的要求，缺一不可。 假釋一般預防方面的要求是，假釋不能影響維護法律秩序及社會安寧，這是從整個社會的角度對假釋提出的一個前提要求。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * 四、決定 綜上所述，本合議庭裁定上訴人A的上訴理由不成立，維持被上訴批示之決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第56條 | 第468條 | 第469條 | 第40條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 168/2026
+language: zh
+- field: case_summary
+  baseline_value: 1. 若被執行人已就執行提出異議，並有意提供擔保以中止執行程序的進行，根據《民事訴訟法典》第898條第1款及第2款規定，其除了須於起訴狀中指出提供擔保之原因外，亦應指出須擔保之數額以及其欲以何種方式提供擔保，而請求執行人隨後得就擔保之數額或適當性提出爭執。 2. 根據《民事訴訟法典》第898條第3款所指向的第893條第3款及第4款規定，由於所提供擔保之適當性備受爭執，法官在命令採取必要之調查措施，須定出應以何種方式提供擔保，而法官在就擔保之適當性進行審理時，須考慮有關財產被強制變賣時可能引致之價值減損以及進行變賣可引致之開支 3. 鑑於被執行人擬提...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合議庭裁定上訴人上訴理由不成立，並維持被上訴判決。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第898條 | 第893條 | 第1071條 | 第7條 | 第619條 | 第662條 | 第701條 | 第895條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 174/2026
+language: zh
+- field: case_summary
+  baseline_value: 1. 在回歸前已依法獲承認為私人所擁有的不動產，在澳門特別行政區成立後 – 除非法律明文所禁止(例如是《文化遺產保護法》第37條(其規定“被評定或待評定的不動產，不得因取得時效而取得”) – 得由另一私人以取得時效的方式，取得有關所有權。 2. 根據起訴狀所陳述，原告所聲稱的占有始自1987年，且按其主張整個取得時效所須的法定期間均發生於《文化遺產保護法》生效前，對於《文化遺產保護法》第37條是否必然構成取得時效訴訟理由成立的阻礙，有關問題非全無討論空間。 3. 基於此，並考慮到原告所主張的占有是否屬實、其始自何時及延續至何時等問題亦只有在仍受爭議
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合議庭裁定原告的主上訴以及兩名被告的附帶上訴均理由成立，繼而廢止被上訴批示，並命令主訴訟程序及反訴均須繼續進行，除非有其他足以妨礙其進行的原因。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第37條 | 第429條 | 第218條 | 第7條 | 第115條 | 第41條 | 第11條 | 第125條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 184/2026
+language: zh
+- field: case_summary
+  baseline_value: 編號：第184/2026號 (刑事上訴案) 上訴人：A 日期：2026年3月12日 被上訴決定：初級法院否決假釋的批示 主要法律問題：假釋 摘 要 假釋的條件必須包含了以下的所有基本內容： 1. 被判處六個月以上的徒刑；
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付6個計算單位之司法費，上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第56條 | 第211條 | 第196條 | 第469條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 187/2026
+language: pt
+- field: case_summary
+  baseline_value: Processo n.º 187/2026 (Autos de suspensão da eficácia) Relator : Jerónimo Alberto Gonçalves Santos Data : 12 de Março de 2026 Requerente : A Entidade Requerida : Secretário para a Segurança * * * ACORDAM NO TRIBUNAL DE SEGUNDA INSTÂNCIA DA RAEM * I - RELATÓRIO Em 2019 o requer...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * IV - DECISÃO Em face de todo o que fica exposto, acordam os juízes do TSI em deferir o pedido da suspensão da eficácia do despacho de 12 de Janeiro de 2026 do Senhor Secretário para a Segurança que revogou a autoriz...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 120º | art. 121º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 效力之中止
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 203/2026
+language: zh
+- field: case_summary
+  baseline_value: --- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) --- 日期：12/03/2026 --- 裁判書製作法官：譚曉華法官 簡要裁判 編號：第203/2026號 (刑事上訴案) 上訴人：A 日期：2026年3月12日 一、 案情敘述 初級法院刑事起訴法庭在PLC-122-25-2-A卷宗內審理了被判刑人A的假釋個案，於2026年2月2日作出裁決，不批准其假釋。 被判刑人不服，向本院提起上訴，上訴理由詳載於卷宗第125至135頁，有關內容在此視為完全轉錄。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付3個計算單位之司法費以及上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第339條 | 第56條 | 第468條 | 第469條 | 第410條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 206/2026
+language: zh
+- field: case_summary
+  baseline_value: --- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) - --- 日期：24/03/2026 -------------------------------------------------------------------------------------- --- 裁判書製作法官：周艷平法官 --------------------------------------------------------------------- 簡要裁判書 編號：第206/2026號 (刑事上訴案) 上訴人：A ...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * 四、決定 綜上所述，裁判書製作人裁定上訴人A的上訴理由明顯不成立， 駁回上訴並維持原審判決。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第56條 | 第40條 | 第468條 | 第469條 | 第33條 | 第32條 | 第2條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 207/2026
+language: zh
+- field: case_summary
+  baseline_value: --- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) -- --- 日期：26/03/2026 ----------------------------------------------------------- --- 裁判書製作法官：周艷平法官 ------------------------------------------------ 簡要裁判書 編號：第207/2026號 (刑事上訴案) 上訴人：A 日期：2026年3月26日 一、案情敘述 初級法院刑事起訴法庭在PLC-003-24-2º-A...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * 四、決定 綜上所述，裁判書製作人裁定上訴人A的上訴理由明顯不成立， 駁回上訴並維持原審判決。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第56條 | 第468條 | 第469條 | 第400條 | 第13條 | 第14條 | 第152條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 214/2025
+language: zh
+- field: case_summary
+  baseline_value: 指出載於答辯狀之結論。 二、緊隨案件敘述部分之後為
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 四、決定 綜上所述，合議庭裁定上訴人的上訴理由成立，撤銷原審法院對兩名嫌犯的有罪判決，並將卷宗發回初級法院，以便按照《刑事訴訟法典》第418條規定，由另一合議庭對整個訴訟標的作重新審判。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第360條 | 第78條 | 第400條 | 第2條 | 第10條 | 第11條 | 第116條 | 第6條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 215/2026
+language: zh
+- field: case_summary
+  baseline_value: 本院認為，對於侵犯財產性質的犯罪，行為人是否有彌補其對被害人所造成的損害是一項重要的考慮因素，倘若上訴人有意對被害人作出賠償，理應在案件被揭發時起，便採取積極的彌補態度。 然而，上訴人自案件被揭發至今已三年多的時間，但仍未有向被害人G作出任何賠償，因此未能真正反映上訴人具備積極彌補行為所造成惡害的充分悔意，意味著刑罰至今仍未能對其發揮足夠的特別預防作用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付4個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第211條 | 第196條 | 第329條 | 第56條 | 第468條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 223/2025
+language: zh
+- field: case_summary
+  baseline_value: 特別訴訟案第223/2025號 （審查及確認外地判決） 聲 請 人：A 被聲請人：B 澳門特別行政區中級法院合議庭判決書 一、申請人A，女，居住於澳門，對被聲請人B，男，居住於內地，提出了申請審查及確認中華人民共和國山西省太原市小店區人民法院於2024年11月1日所作的（2024）晋0105民初15927號民事調解書，其訴訟理由如下： 1. 聲請人及被聲請人於2022年10月31日在澳門特別行政區民事登記局締結婚姻；（附件3：婚姻登記之敘述證明） 2.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 澳門特別行政區，2026年3月19日 ____________________ 蔡武彬 (裁判書製作人) ____________________ 馮文莊 (第一助審法官) ____________________ 盛銳敏 (第二助審法官) 1 中級法院2000年7月27日判決，上訴案第57/2000號。Alberto dos Reis, Processos Especiais, Vol 2º, p 163。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第3條 | 第2條 | 第11條 | 第1200條 | 第144條 | 第141條 | 第242條 | 第1204條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 澳門以外的法院或仲裁員作出的裁判的審查及確認
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 24/2026
+language: zh
+- field: case_summary
+  baseline_value: 除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 原審法庭考慮到上訴人在服刑期間仍有三次違規的記錄，其總評價為“差”，可見其並未有從過往的刑罰當中吸取足夠的教訓，雖然上訴人自稱已知錯並會改正，但其所指的這種悔悟態度卻未有反映在其客觀的行為之中。 行為人的真誠悔悟不單止是嘴裡說說就算，還需要透過其行為表現來加以印...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付4個計算單位之司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第56條 | 第400條 | 第157條 | 第468條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 否決假釋 | 假釋的實質要件 摘要 除了法律所規定的客觀前提要件外 | 《刑法典》第56條第1款a項及b項還規定了當中的實質要件 | 即： — 行為人以往之生活及其人格 | 以及於執行徒刑期間在人格方面之演變情況 | 期待被判刑者一旦獲釋 | 將能以對社會負責之方式生活而不再犯罪屬有依據者 | 及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 247/2025
+language: pt
+- field: case_summary
+  baseline_value: Processo nº 247/2025 (Autos de recurso jurisdicional em matéria cível) Decisão recorrida proferida no processo n.º CV1-23-0009-CAS Data: 26 de Fevereiro de 2026 Recorrente: A有限公司 Recorrida: Companhia de Engenharia B Limitada (B工程有限公司) * ACORDAM NO TRIBUNAL DE SEGUNDA INSTÂNCIA...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * III – DECISÃO Pelo que fica exposto, acordam os juízes do Tribunal de Segunda Instância em negar provimento ao recurso, mantendo-se a decisão recorrida.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 1º | art. 261º | art. 1520º | art.284º | art. 73º | art. 253º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 253/2026
+language: zh
+- field: case_summary
+  baseline_value: 案件編號: 第253/2026號（刑事上訴案） 日期: 2026年3月26日 重要法律問題：假釋 摘 要 假釋作為一項執行徒刑的機制，必須同時符合特別預防和一般預防犯罪兩方面的要求。假釋一般預防方面的要求是，假釋不能影響維護法律秩序及社會安寧，這是從整個社會的角度對假釋提出的一個前提要求。簡言之，服刑人即使符合了特別預防方面的要求，但是，如不能滿足一般預防方面的要求，亦不能批准假釋。 假釋制度是「針對個人」的徒刑執行制度，即便同案犯共同犯罪，其假釋申請與審核是獨立的，同案犯的假釋有利因素不會自動惠及其他同案共犯，亦不會因同案共犯獲假釋而自動享有假釋。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 四、 決定 綜上所述，本合議庭裁定上訴人A的上訴理由不成立，維持被上訴批示之決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第56條 | 第468條 | 第469條 | 第40條 | 第14條 | 第8條 | 第21條 | 第22條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 254/2026
+language: zh
+- field: case_summary
+  baseline_value: --- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) --- 日期：19/03/2026 ------------------------------------------------------------------------------------- --- 裁判書製作法官：譚曉華法官 -------------------------------------------------------------------- 簡要裁判 編號：第254/2026號 (刑事上訴案) 上訴人：A 日期：20...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付3個計算單位之司法費以及上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第407條 | 第204條 | 第198條 | 第56條 | 第468條 | 第469條 | 第410條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 31/2026
+language: zh
+- field: case_summary
+  baseline_value: “可接納的理由”是讓法院根據案件實際情況，並透過經驗法則和客觀標準來把“可接納的理由”此一不確定概念來加以具體化，因此並不存在一個定律。例如，司法見解一般認為，《道路交通法》第109條第1款中所指的，尤其應考慮職業司機或以駕駛機動車輛賴以維生的違法人士，這是為了避免一旦實質執行禁止駕駛將影響彼等生存、生計的可能性。 ____________________ 盧映霞（
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對上訴程序，判處上訴人支付3個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第109條 | 第12條 | 第99條 | 第92條 | 第312條 | 第40條 | 第65條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 禁止駕駛的緩刑 | 交通輕微違反 摘要 “可接納的理由”是讓法院根據案件實際情況 | 並透過經驗法則和客觀標準來把“可接納的理由”此一不確定概念來加以具體化 | 因此並不存在一個定律
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 310/2025
+language: zh
+- field: case_summary
+  baseline_value: 當涉及侮辱、誹謗等侵犯名譽犯罪的案件時，被歸責之當事人的切身感受無疑應當受到法律的充分關注，但僅此並不足以使得刑事處罰具有適當性或正當性。作出歸責者使用一般的貶低、卑鄙甚或淫穢性言語，並不必然被直接認定為侵犯他人人格、名譽或別人對其觀感，只有當其言語違反了社會道德尊嚴所必需的最低倫理、依照普通人的客觀標準亦認定為侵犯名譽時，刑事處罰才是適當及必需的。 ＊ 《司法組織綱要法》第18條第1款規定：“在民事及勞動法上的民事方面，第一審法院及中級法院的法定上訴利益限額分別為澳門幣十萬元及一百萬元”。 《民事訴訟法典》第583條第1款規定：“除非另有規定，僅...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對上訴程序，判處上訴人支付6個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第18條 | 第583條 | 第174條 | 第177條 | 第183條 | 第27條 | 第400條 | 第13條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 公開及詆譭罪 | 民事賠償請求 摘要 當涉及侮辱 | 誹謗等侵犯名譽犯罪的案件時 | 被歸責之當事人的切身感受無疑應當受到法律的充分關注 | 但僅此並不足以使得刑事處罰具有適當性或正當性
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 316/2025
+language: zh
+- field: case_summary
+  baseline_value: 1. 根據《行政程序法典》第122條第2款c)項，標的屬不能、不可理解或構成犯罪之行為均屬無效行為。 2. 本案中，司法上訴人獲批給之居留許可因建基於犯罪
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合議庭裁定司法上訴人上訴理由不成立，並維持被上訴決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第122條 | 第123條 | 第5條 | 第8條 | 第40條 | 第1條 | 第38條 | 第124條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 司法上訴(中級法院作為第一審法院的行政訴訟案件)
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 34/2026
+language: zh
+- field: case_summary
+  baseline_value: 對於量刑時需考慮的情節，只要不存在對法定限制規範，如刑罰幅度或經驗法則的違反，也不存在所確定的具體刑罰顯示出完全不適度的話，上訴法院不應介入具體刑罰的確定。 ____________________ 盧映霞（
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對本上訴程序，判處上訴人支付8個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第147條 | 第116條 | 第40條 | 第64條 | 第5條 | 第10條 | 第11條 | 第114條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 禁用證據 | 疑罪從無 | 適用法律錯誤 | 量刑過重 | 恐嚇罪 摘要 對於量刑時需考慮的情節 | 只要不存在對法定限制規範 | 如刑罰幅度或經驗法則的違反 | 也不存在所確定的具體刑罰顯示出完全不適度的話
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 345/2025
+language: zh
+- field: case_summary
+  baseline_value: 中級法院曾在其第620/2025號
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對上訴程序，判處上訴人支付2個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第109條 | 第142條 | 第93條 | 第94條 | 第121條 | 第92條 | 第312條 | 第400條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 暫緩執行禁止駕駛附加刑的可接納理由 摘要 中級法院曾在其第620/2025號裁判中提到： “‘可接納的理由’是讓法院根據案件實際情況 | 並透過經驗法則和客觀標準來把‘可接納的理由’此一不確定概念來加以具體化 | 因此並不存在一個定律 | 例如司法見解一般認為的 | 《道路交通法》第109條第1款中所指的‘可接納的理由’ | 尤其應考慮職業司機或以駕駛機動車輛賴以維生的違法人士 | 這是為了避免一旦實質執行禁止駕駛將影響彼等生存 | 生計的可能性”
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 36/2026
+language: zh
+- field: case_summary
+  baseline_value: 在詐騙罪當中，“詭計”是它的核心構成要件。 “這項犯罪通常是以取得他人之物作為其既遂的模式，因為它無須使用暴力或威嚇的手段（正如大家所知道），而是採用了特定的方式（錯誤或欺騙），令被害人相信了行為人，在不知道自己被欺騙及被欺詐的情況下讓行為人有機可乘”（參見《澳門刑法典註釋及評述》第三冊對第211條所作的註釋，澳門法律及司法培訓中心出版）。 所以，它往往體現為行為人以哄騙、謊言、捏造的故事……來誤導被害人，使其對
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: ＊ ＊ ＊ ＊ 2026年3月26日於澳門特別行政區 ____________________ 盧映霞（裁判書製作人） ____________________ 譚曉華（第一助審法官） ____________________ 周艷平（第二助審法官） (附表決聲明) 表決聲明 本人（第二助審法官）不同意合議庭大多數意見，認為應維持原審法院認定四名嫌犯的行為符合「加重盜竊罪」的決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第211條 | 第198條 | 第197條 | 第196條 | 第201條 | 第400條 | 第10條 | 第11條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 加重詐騙罪 | 加重盜竊罪 | 重新量刑 摘要 在詐騙罪當中 | “詭計”是它的核心構成要件
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 384/2025
+language: pt
+- field: case_summary
+  baseline_value: 1 – Não contende com as regras da experiência considerar que o depoimento indirecto tem menor força persuasiva na formação da convicção do tribunal que teria o depoimento de quem presenciou os factos em controvérsia. 2 – O incidente de impugnação da admissão de testemunha a pr...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: Pelo que fica exposto, acordam os juízes do Tribunal de Segunda Instância em negar provimento ao recurso.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 538º | art. 9º | art. 536º | art. 519º | art. 414º | art. 62º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 388/2025
+language: pt
+- field: case_summary
+  baseline_value: 1. A imputação do cumprimento é ainda um aspecto do cumprimento e, como tal, a factualidade em que se assenta recai no âmbito do ónus de alegação e de prova do devedor embargante. 2. Tendo o credor exequente alegado a existência da dívida exequenda e tendo o devedor executado ...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: DECISÃO Pelo que fica exposto, acordam os juízes do Tribunal de Segunda Instância em conceder provimento ao recurso, revogando a decisão recorrida e substituindo-a por outra que julga improcedentes os embargos de exec...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 102º | art. 103º | art. 107º | art. 87º | art. 549º | art. 699º | art. 335º | art. 700º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 401/2025
+language: zh
+- field: case_summary
+  baseline_value: 原審法院一方面認為上訴人離開現場的目的是為著“逃避交通事故可能引致的刑事及民事責任。”（第十一點已證
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: ＊ 四、決定 綜上所述，本院裁定上訴人(A)的上訴理由成立。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第400條 | 第418條 | 第89條 | 第94條 | 第121條 | 第92條 | 第312條 | 第11條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 已證事實存在矛盾 | 發回重審 | 逃避責任 摘要 原審法院一方面認為上訴人離開現場的目的是為著“逃避交通事故可能引致的刑事及民事責任
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 446/2025
+language: zh
+- field: case_summary
+  baseline_value: 編號：第446/2025號 (刑事上訴案) 上訴人：A 日期：2026年2月26日 主要法律問題：在審查證據方面存有明顯錯誤、適用法律錯誤 摘 要 * 一、當《刑法典》第2條第4款規定“如作出可處罰之事實當時所生效之刑法規定與之後之法律所規定者不同，必須適用具體顯示對行為人較有利之制度，但判刑已確定者，不在此限。”時即表示與其選取一項對同時可適用的法律進行抽象比較的標準，更應選取一項考慮到具體個案的特殊情況來確定較為有利之法律的標準。 二、《刑事訴訟法典》第400條第2款c）項的上訴理據（在審查證據面明顯有錯誤之瑕疵）所針對的是原審法院對審查證據的...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * 2026年2月26日 ______________________________ 簡靜霞 (裁判書製作人) ______________________________ 盧映霞 (第一助審法官) ______________________________ 譚曉華 (第二助審法官) 1 合共217,280澳門元的財產及非財產損賠償，並須連同判決作出之日起計直至完全支付為止的法定利息。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第2條 | 第400條 | 第312條 | 第30條 | 第14條 | 第311條 | 第18條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 467/2025
+language: pt
+- field: case_summary
+  baseline_value: Processo n.º 467/2025 (Autos de recurso jurisdicional em matéria cível) Decisão recorrida proferida no processo nº FM1-14-0357-CPE-G Recorrente : A Recorrida : B * ACORDAM NO TRIBUNAL DE SEGUNDA INSTÂNCIA DA RAEM I – RELATÓRIO. Decorreu inventário judicial no Juízo de Família ...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 2 Artigo 658.º do CPC: “O recurso de revisão é interposto no tribunal onde se encontrar o processo em que foi proferida a decisão a rever, mas é dirigido ao tribunal que a proferiu”.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 662º | art. 658º | art. 653º | art. 26º | art. 971º | art. 631º | art. 358º | Artigo 658.º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 502/2025
+language: pt
+- field: case_summary
+  baseline_value: I – No caso, o Recorrente beneficiou da concessão de autorização de residência dado que o seu pai também era residente, embora não permanente, de Macau. Deste modo, com a caducidade da autorização de residência do pai do Recorrente, caiu o pressuposto que esteve na base da ref...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * * * V - DECISÃO Em face de todo o que fica exposto e justificado, os juízes do TSI acordam em julgar improcedente o recurso, mantendo-se a decisão recorrida.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: artigo 38.º | artigo 43.º | artigo 93.º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 司法上訴(中級法院作為第一審法院的行政訴訟案件)
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 543/2025
+language: pt
+- field: case_summary
+  baseline_value: I. Nos termos do disposto no art. 122º n.º 2 al. c) do CPA: São, designadamente, actos nulos: c) Os actos cujo objecto seja impossível, ininteligível ou constitua um crime. II. Num caso como o presente em que a autorização da residência foi concedida para efeitos de reunião fa...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: DECISÃO Face ao exposto, acordam em julgar improcedente o recurso.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 122º | artigo 11.º | art. 123º | art. 11º | art. 38º | art. 11.º | art. 38.° | art. 11.°
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: Revogação da autorização de residência | Prática de crime | Actos administrativos nulos | efeitos putativos
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 548/2025
+language: zh
+- field: case_summary
+  baseline_value: 上訴案第548/2025號 (民事及勞動上訴)_ 上訴人：A 被上訴人：B C 澳門特別行政區中級法院合議庭判決書 一、案情敘述 澳門特別行政區初級法院民事庭在原告B及C對被告A提起的民事訴訟案件（第CV3-17-0004-PAO號）中，經過法定的程序，尤其是合議庭確定了已證事實之後，最後尊敬的合議庭主席 閣下於2024年7月30日作出了判決，判處被告A向原告B及C支付RMB¥6,934,687.61（陸佰玖拾叁萬肆仟陸佰捌拾柒圓陸角壹分），附加自2017年1月6日起以日息0.13356164%計算的遲延利息，直至完全及實際支付為止。 被告A不服上...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 四、決定 綜上所述，本院合議庭裁定上訴人上訴理由不能成立，駁回上訴，維持被上訴的決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第29條 | 第370條 | 第598條 | 第1條 | 第2條 | 第4條 | 第3條 | 第5條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 551/2024-I
+language: zh
+- field: case_summary
+  baseline_value: 編號：第551/2024號-I（刑事上訴案） 向評議會異議 日期：2026年3月5日 重要法律問題： - 以郵寄方式通知裁判書 - 裁判書確定日期 - 審判權終結 - 認可和解協議 摘 要 1.根據《刑事訴訟法典》第100條第2款及《民事訴訟法典》第201條第2款的規定，如使用郵寄方式作出通知，則推定在郵政掛號日之後第三日接獲通知；如該日非為工作日，則推定在該日隨後之第一個工作日接獲通知。 2.本案，中級法院以郵寄方式通知上訴人及其律師、從屬上訴人及其律師，寄件的郵政掛號日為2025年10月3日；郵政掛號日後第三日為10月6日，該日為工作日，因此，...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 然而，中級法院作出合議裁判之後、等待裁判決定之前，在這一時段，由於中級法院已經對訴訟標的作出了司法決定，因此，就訴訟標的已經不能再重新作出任何形式的司法決定。也就是說，就訴訟標的而言，中級法院的審判權在作出上述裁判並送達當事人後，已經行使完畢，當事人應透過倘有的上訴機制對裁判進行爭執。當事人雙方在收到裁判書之後再達成和解協議，這屬於執行方面的和解，應交由負責執行的初級法院處理。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第100條 | 第201條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 608/2025
+language: pt
+- field: case_summary
+  baseline_value: Processo nº 608/2025 (Autos de recurso jurisdicional em matéria cível) Decisão recorrida proferida no processo n.º CV4-21-0014-CAO Data: 12 de Março de 2026 Recorrente: A Recorrida: B * ACORDAM NO TRIBUNAL DE SEGUNDA INSTÂNCIA DA RAEM I – RELATÓRIO O recorrente e a recorrida c...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * III – DECISÃO Pelo que fica exposto, acordam os juízes do Tribunal de Segunda Instância em negar provimento ao recurso, mantendo-se a decisão recorrida.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 228º | art. 273º | art. 873º | art. 1137º | art. 282º | art. 430º | art. 5º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 629/2025
+language: pt
+- field: case_summary
+  baseline_value: 1 – Quando a parte a quem um documento particular é oposto declara que desconhece se é verdadeira a assinatura constante do documento esta assinatura só se tem por verdadeira se for atribuída à parte declarante pela parte que pretende beneficiar da prova resultante do document...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: DECISÃO Pelo que fica exposto, acordam os juízes do Tribunal de Segunda Instância em negar provimento ao recurso, mantendo-se a decisão recorrida.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: art. 549º | art. 356º | art. 410º | art. 368º | art. 370º | art. 820º | art. 829º | art. 1111º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 646/2025
+language: zh
+- field: case_summary
+  baseline_value: 在《民事訴訟法典》第1200條第1款所規定的各項要件均已悉數符合的情況下，香港特別行政區法院作出的遺囑認證授予書應予以確認。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合議庭決定確認香港特別行政區高等法院原訟法庭於2023年4月28所發出之遺囑認證授予書，編號HCAG005138/2023。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第1200條 | 第1201條 | 第1204條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 澳門以外的法院或仲裁員作出的裁判的審查及確認
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 686/2025
+language: zh
+- field: case_summary
+  baseline_value: 1. 根據《行政程序法典》第122條第2款c)項，標的屬不能、不可理解或構成犯罪之行為均屬無效行為。 2. 《行政程序法典》第123條第3款的規定並非旨在令無效的行政行為的無效性消失，而是在有關行政行為依然屬無效的情況下，探討是否存在一些已產生的法律效果得基於行政法的一般原則而應予以保留。 3. 司法上訴人基於其自身作出的犯罪行為而獲得在澳門的居留許可，在此情況下，行政當局必須依法宣告有關行為屬無效，因此，難以接受司法上訴人所提出的行政當局違反信任原則、公正原則及善意原則的觀點。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合議庭裁定司法上訴人上訴理由不成立，並維持被上訴決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第122條 | 第123條 | 第5條 | 第7條 | 第8條 | 第157條 | 第18條 | 第11條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 司法上訴(中級法院作為第一審法院的行政訴訟案件)
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 691/2025-I
+language: zh
+- field: case_summary
+  baseline_value: 結果錯誤地顯示為：“上訴人(B)保險股份有限公司的上訴理由不成立”（參見卷宗第265頁），令其對
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對本聲請，判處聲請人支付2個計算單位的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第58條 | 第1條 | 第4條 | 第571條 | 第573條 | 第633條 | 第569條 | 第390條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 693/2025
+language: zh
+- field: case_summary
+  baseline_value: 在《民事訴訟法典》第1200條第1款所規定的各項要件均已悉數符合的情況下，香港特別行政區法院作出的民事判決應予以確認。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合議庭決定確認香港特別行政區高等法院原訟法庭於2025年2月18日作出的民事判決，案件編號：HCA315/2024。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第1200條 | 第1201條 | 第1204條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 澳門以外的法院或仲裁員作出的裁判的審查及確認
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 705/2025
+language: pt
+- field: case_summary
+  baseline_value: Face ao acto administrativo anterior através do qual se avaliou a situação da Recorrente e que se determinou o regresso dela ao serviço, a sujeitar a trabalhos leves, a partir da data concretamente fixada, o qual, uma vez praticado sem impugnação tempestiva, se consolidou na o...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: DECISÃO Pelo exposto, julga-se improcedente o recurso jurisdicional.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: artigo 110° | artigo 116° | Artigo 8° | artigo 116.° | artigo 7° | artigo 30.° | artigo 122.° | artigo 33°
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: Parecer da Junta de Saúde | Faltas por doença | Faltas por acidente em serviço
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 721/2025
+language: zh
+- field: case_summary
+  baseline_value: 立法者針對「加重侮辱罪」，採取了“選擇刑”（pena alternativa）的罰則，也就是說，審判者可先在徒刑或罰金之間選擇所適用的主刑類別。 但《刑法典》第44條的規定並不適用於“選擇刑”的制度，而是適用於“替代刑”（pena substituída）的罰則。 例如：在「醉酒駕駛罪」中，根據第3/2007號法律第90條第1款的規定： “一、任何人在公共道路上駕駛車輛而其每公升血液中的酒精含量等於或超過1.2克，如其他法律規定無訂定較重處罰，則科處最高一年徒刑及禁止駕駛一年至三年。” 針對「醉酒駕駛罪」，立法者在一開始訂出罰則時，已沒有給予徒刑或...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: ＊ 2026年3月5日於澳門特別行政區 ____________________ 盧映霞（裁判書製作人） ____________________ 譚曉華（第一助審法官） ____________________ 周艷平（第二助審法官） 1 雖然控訴書及被上訴的判決均沒有提到犯罪的主觀方式，但根據控訴及判決邏輯，這裡應該理解為以故意方式實施的犯罪。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第44條 | 第90條 | 第64條 | 第40條 | 第65條 | 第175條 | 第178條 | 第48條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 選擇刑 | 緩刑 | 加重悔辱罪 摘要 立法者針對「加重侮辱罪」 | 採取了“選擇刑”（pena alternativa）的罰則 | 也就是說 | 審判者可先在徒刑或罰金之間選擇所適用的主刑類別
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 728/2025
+language: zh
+- field: case_summary
+  baseline_value: 編號：第728/2025號 (刑事上訴案) 上訴人：A 日期：2026年2月12日 主要法律問題： - 在說明理由方面出現不可補救之矛盾 - 審查證據方面明顯有錯誤 摘 要 1. 在本案中，原審法院在說明理由部分已說明其形成心證的過程，並清楚、客觀及合理地說明了不採納上訴人的陳述的理由。其後，分析原審法院所認定的事實、未經法院認定的事實以及相關的判決及理由說明，原審法院在説明理由方面並未出現不可補救之矛盾。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付3個計算單位之司法費，以及二分之一上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第177條 | 第174條 | 第176條 | 第12條 | 第400條 | 第40條 | 第44條 | 第64條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 738/2025
+language: zh
+- field: case_summary
+  baseline_value: 1. 根據現行的民事訴訟制度，當事人在組織起訴狀或反訴的訴因，又或提出抗辯時，根據當事人處分原則以及責任自負原則，其有責任陳述請求或抗辯成立所必須的主要
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述，本院合 議庭裁定兩名上訴人上訴理由不成立，並維持被上訴判決。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第1條 | 第2條 | 第3條 | 第10條 | 第11條 | 第12條 | 第13條 | 第14條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 757/2025
+language: zh
+- field: case_summary
+  baseline_value: 在侵犯財產罪的事件中，行為人向被害人／被害實體償還涉案款項的情節具有重要性。 即使在2018年1月1日至2019年12月31日期間，上訴人僅向被害實體返還了434,806.90澳門元而不屬於《刑法典》第201條第1款所指全數賠償的情節，但不能否認的是，部分還款對於量刑而言仍然是有重要性的。 因此，對於上訴人已償還款項的部分，原審法院理應在量刑時作出考慮。 另一方面，根據已證的
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 5 例如中級法院第 259/2018號合議庭裁判，針對詐騙80萬人民幣判處3年9個月徒刑，詐騙40萬人民幣判處3年徒刑 例如中級法院第386/2025號合議庭裁判，針對詐騙47.7萬澳門幣判處3年徒刑 6 中級法院第 323/2025號合議庭裁判的司法見解中－「但是，上訴人缺席第一審的庭審，而其積極賠償的行為，即使不符合《刑法典》第201 條以及第221 條所規定的刑罰的特別減輕，也並不妨礙上訴法院對此在上訴階段作出適當的衡量。」...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第201條 | 第40條 | 第65條 | 第211條 | 第196條 | 第244條 | 第400條 | 第48條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 加重詐騙罪 | 量刑過重 | 緩刑 摘要 在侵犯財產罪的事件中 | 行為人向被害人／被害實體償還涉案款項的情節具有重要性
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 76/2026
+language: zh
+- field: case_summary
+  baseline_value: 「信任之濫用罪」與「詐騙罪」兩者間最主要的差別是被害人交付金錢時是否出於被詭計所欺騙或誤導。 參照葡萄牙最高法院於1993年6月24日在第44287號卷宗所作出的
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對上訴程序，判處三名上訴人各支付15個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第211條 | 第196條 | 第400條 | 第418條 | 第40條 | 第65條 | 第29條 | 第48條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 審查證據錯誤 | 量刑過重 | 改判相當巨額信任之濫用罪 | 相當巨額詐騙罪 摘要 「信任之濫用罪」與「詐騙罪」兩者間最主要的差別是被害人交付金錢時是否出於被詭計所欺騙或誤導
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 785/2025
+language: zh
+- field: case_summary
+  baseline_value: 編號：第785/2025號 (刑事上訴案) 上訴人：A 日期：2026年3月5日 主要法律問題： - 審查證據方面明顯有錯誤 - 法律適用 摘 要 1. 具體分析相關的證據，原審法院除了聽取了上訴人在審判聽證中所作的聲明亦宣讀了上訴人在偵查階段所提供的聲明，另外，雖然被害人拒絕作證，但在審判聽證中聽取了案中其他證人的證言，審查了案中的文件等。原審法院客觀分析種種證據，並根據自由心證原則對上訴人實施了有關罪行的事實做出判斷。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付3個計算單位之司法費，以及三分之二上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第18條 | 第129條 | 第19條 | 第137條 | 第16條 | 第400條 | 第114條 | 第338條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 815/2024
+language: zh
+- field: case_summary
+  baseline_value: 關於審查證據的錯誤，上訴法院在過往多個上訴
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 針對上訴程序，裁定上訴人支付6個計算單位的司法費。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第78條 | 第18條 | 第21條 | 第22條 | 第400條 | 第114條 | 第338條 | 第48條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 審查證據的錯誤 | 假結婚 摘要 關於審查證據的錯誤 | 上訴法院在過往多個上訴裁判中均指出（其中 | 參見中級法院第741/2025號合議庭裁判）：有關的錯誤必須是顯而易見的 | 即使一般人也能輕易發現的
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 84/2025
+language: pt
+- field: case_summary
+  baseline_value: I – O n.º 2 do artigo 128.º do DL n.º 74/99/M, de 8 de Novembro, dispõe que “sempre que, por imposição do dono da obra ou em virtude de deferimento de reclamação do empreiteiro, sejam executados trabalhos a mais, o prazo contratual para conclusão da obra é prorrogado a requeri...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * * * V - DECISÃO Em face de todo o que fica exposto e justificado, os juízes do TSI acordam em julgar improcedente o recurso, mantendo-se a decisão recorrida.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: artigo 128.º | artigo 159.º | artigo 168.º | artigo 174.º | artigo 171.º | artigo 124º | artigo 21º | artigo 38.º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 司法上訴(中級法院作為第一審法院的行政訴訟案件)
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 85/2026
+language: zh
+- field: case_summary
+  baseline_value: 在被上訴的判決中，原審法院在考慮《刑法典》第64條的選擇準則時指出： “根據嫌犯的犯罪紀錄，嫌犯為初犯，但考慮到本案情節，法庭認為選科非剝奪自由的刑罰，即罰金，並不足以達到處罰的目的，因此，應選科剝奪自由的刑罰，即徒刑。” 原審法院考慮了上訴人屬初犯的情況，這是一項對上訴人有利的因素；然而，原審法院並沒有具體指明案中有哪些具體的情節妨礙法院選用罰金刑。 本院認為，根據卷宗的資料，由於並未發現足以導致原審法院不優先考慮罰金刑的具體因素，因此，本院認同上訴人在這裡所持的觀點，並認為原審法院對上訴人選擇徒刑是違反了《刑法典》第64條所規定的準則。 ___...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: ＊ 四、決定 綜上所述，本院裁定上訴人A的上訴理由成立，為此，廢止原審法院的量刑決定，並根據《刑法典》第64條、第40條及第65條的規定，改為科處上訴人20日的罰金，每日的罰金為150澳門元，合共3,000澳門元，倘若不繳納或不獲准以勞動代替，則執行13日的徒刑。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第64條 | 第121條 | 第312條 | 第27條 | 第40條 | 第65條 | 第44條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 量刑過重 | 違令罪 摘要 在被上訴的判決中 | 原審法院在考慮《刑法典》第64條的選擇準則時指出： “根據嫌犯的犯罪紀錄 | 嫌犯為初犯 | 但考慮到本案情節 | 法庭認為選科非剝奪自由的刑罰 | 即罰金 | 並不足以達到處罰的目的
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 856/2025
+language: pt
+- field: case_summary
+  baseline_value: Face ao acto administrativo anterior através do qual se avaliou a situação da Recorrente e que se determinou o regresso dela ao serviço, a sujeitar a trabalhos leves, a partir da data concretamente fixada, o qual, uma vez praticado sem impugnação tempestiva, se consolidou na o...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: DECISÃO Pelo exposto, julga-se improcedente o recurso jurisdicional.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: artigo 116.º | artigo 105.º | art. 589º | art. 149º | artigo 30.º | artigo 122.º | artigo 111.º | artigo 262.º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: Parecer da Junta de Saúde | Faltas por doença | Faltas por acidente em serviço
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 871/2024
+language: zh
+- field: case_summary
+  baseline_value: 編號：第871/2024號 (刑事上訴案) 上訴人：(A)、(B)基金、(C) 日期：2026年2月26日 主要法律問題：誹謗罪、審查證據方面出現明顯錯誤 摘 要 * 《刑法典》第174條「誹謗罪」規定： 一、向第三人將一事實歸責於他人，而該事實係侵犯他人名譽或別人對他人之觀感者，即使以懷疑方式作出該歸責，或向第三人作出侵犯他人名譽或別人對他人觀感之判斷者，又或傳述以上所歸責之事實或所作之判斷者，處最高六個月徒刑，或科最高二百四十日罰金。 二、如屬下列情況，該行為不予處罰： ａ）該歸責係為實現正當利益而作出；及 ｂ）行為人證明該歸責之事實為真實，或...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處三名上訴人各繳付6個計算單位之司法費，上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第174條 | 第177條 | 第175條 | 第16條 | 第17條 | 第400條 | 第6條 | 第10條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 891/2024
+language: zh
+- field: case_summary
+  baseline_value: 卷宗編號：891/2024 （對澳門以外地方之法院或仲裁員所作裁判之審查案） 日期： 2026年3月12日 主旨：遺產處理裁判之審查及確認 裁 判 要 旨 一. 對澳門以外法院裁判的確認須符合澳門《民事訴訟法典》第1200條所列之各項要件，其中a及f項所述之內容由法院依職權作出認定(見同一法典第1204條)。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 裁判 據上論結，本中級法院確認中華人民共和國福建省莆田市涵江區人民法院作出的編號(2022)閩0303民初1344號之民事判決書及福建省莆田市中級人民法院作出的編號(2023)閩03民終246號之民事判決書。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第1200條 | 第1204條 | 第2147條 | 第1199條 | 第11條 | 第20條 | 第3條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 澳門以外的法院或仲裁員作出的裁判的審查及確認
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 954/2025
+language: zh
+- field: case_summary
+  baseline_value: 卷宗編號：954/2025 （對澳門以外地方之法院或仲裁員所作裁判之審查案） 日期： 2026年3月12日 主旨： 離婚裁判之審查及確認 裁 判 要 旨 一. 對澳門以外法院裁判的確認須符合澳門《民事訴訟法典》第1200條所列之各項要件，其中a及f項所述之內容由法院依職權作出認定(見同一法典第1204條)。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * 澳門特別行政區, 2026年3月12日 馮文莊 (裁判書製作人) 盛銳敏 (第一助審法官) Foi-me Traduzido o Acórdão para a Língua Portuguesa 羅睿恆 (第二助法官) 2025-954-確認離婚判決-內地 7
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第1200條 | 第1204條 | 第1628條 | 第3條 | 第20條 | 第30條 | 第6條 | 第11條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 澳門以外的法院或仲裁員作出的裁判的審查及確認
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 956/2025
+language: pt
+- field: case_summary
+  baseline_value: I – Um crédito pode ser unilateralmente comercial, ou bilateralmente comercial, também pode ser formalmente mercantil e/ou substancialmente mercantil, a razão de criar um regime de taxa de juros mais vantajosos para os créditos comerciais consiste na ideia de que os créditos c...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: * * * V ‒ DECISÃO Em face de todo o que fica exposto e justificado, os juízes do Tribunal de 2ª Instância acordam em negar provimento ao presente recurso, mantendo-se a sentença recorrida.
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: artigo 569º | Artigo 569.º | artigo 563º | artigo 569º. | artigo 3.º | artigo 29.º | artigo 63.º | artigo 29º
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 964/2025
+language: zh
+- field: case_summary
+  baseline_value: 1. 在澳門的民事訴訟制度中，當事人得就原審法院的
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: - 上訴人上訴理由不成立，維持被上訴判決。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第599條 | 第629條 | 第569條 | 第589條 | 第598條 | 第18條 | 第52條 | 第65條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 968/2025
+language: zh
+- field: case_summary
+  baseline_value: 1. 根據《民事訴訟法典》第29條規定，當事人可在該規定容許的前提下，賦予或排除澳門法院的管轄權。此表示，法律容許雙方當事人基於意思自治，透過雙方的合意，排除《民事訴訟法典》的法定管轄權規則的適用。 2. 基於當事人的約定具有相對性，根據《民事訴訟法典》第31條第2款規定，僅訂立賦予或排除管轄權協議的立約人，在被提起訴訟時，得以違反該協議為由提出法院無管轄權之爭辯。 3. 本案中，上訴人既非管轄權協議的當事人，亦非無償還能力財產的輔助人，且有關財產亦不能視為是處於不到庭狀況，因此，違反排除審判權之協議的抗辯不能由上訴人提出，亦不得由法院依職權審理。...
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: *** 五、 決定 綜上所述 ，本院合議庭裁定上訴人上訴理由不成立，並維持被上訴判決。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第29條 | 第31條 | 第34條 | 第575條 | 第1144條 | 第1145條 | 第1147條 | 第1187條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 民事及勞動訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 997/2025
+language: zh
+- field: case_summary
+  baseline_value: 編號：第997/2025號 (刑事上訴案) 上訴人：A 日期：2026年2月26日 主要法律問題：普通傷人、審查證據方面明顯有錯誤 摘 要 (一)、《刑法典》第137條規定（普通傷害身體完整性）: 一、傷害他人身體或健康者，處最高三年徒刑或科罰金。 二、非經告訴不得進行刑事程序。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: 判處上訴人繳付6個計算單位之司法費，上訴的訴訟費用。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第137條 | 第114條 | 第48條 | 第49條 | 第400條 | 第338條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 刑事訴訟程序的上訴
+  model_value: <empty>
+  comparison_status: model_pending
+
+case: 998/2025
+language: zh
+- field: case_summary
+  baseline_value: 在我們的制度中，並沒有規範兩種不同的緩刑制度（緩刑“條件”、緩刑“義務”），緩刑的制度只有一個，而且不論法庭所使用的用詞是緩刑“條件”還是緩刑“義務”，均需遵守《刑法典》及《刑事訴訟法典》當中所規定的緩刑制度，尤其需遵守辯論原則。 基於此，由於原審法院在作出被上訴的
+  model_value: <empty>
+  comparison_status: model_pending
+- field: holding
+  baseline_value: ＊ 四、決定 綜上所述，本院依職權宣告被上訴的批示無效，將卷宗交還原審法院，以便依法履行相應的程序後，再重新作出決定。
+  model_value: <empty>
+  comparison_status: model_pending
+- field: legal_basis
+  baseline_value: 第48條 | 第49條 | 第53條 | 第54條 | 第476條 | 第106條 | 第400條 | 第89條
+  model_value: <empty>
+  comparison_status: model_pending
+- field: disputed_issues
+  baseline_value: 附加刑的緩刑條件 摘要 在我們的制度中 | 並沒有規範兩種不同的緩刑制度（緩刑“條件” | 緩刑“義務”） | 緩刑的制度只有一個 | 而且不論法庭所使用的用詞是緩刑“條件”還是緩刑“義務” | 均需遵守《刑法典》及《刑事訴訟法典》當中所規定的緩刑制度 | 尤其需遵守辯論原則
+  model_value: <empty>
+  comparison_status: model_pending
+
+=== Aggregated Summary ===
+cases compared: 5
+fields compared: 308
+fields where model is missing: 289
+model-missing case count: 72
+comparison-ready: yes

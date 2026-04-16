@@ -1,0 +1,26 @@
+Expanded Current Default Model Generation Batch Report - Day 49
+report_path: data\eval\expanded_current_default_model_generation_batch_report.txt
+
+=== Fixed Conditions ===
+current default model used: qwen2.5:3b-instruct
+prompt version fixed: day45_prompt_b_tch_norm
+Traditional Chinese normalization enabled: yes
+deterministic baseline remains benchmark/fallback: yes
+
+=== Local Paths ===
+input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+output_jsonl_path: data\eval\expanded_current_default_model_generation_batch_output.jsonl
+inner_generation_report_path: data\eval\expanded_current_default_model_generation_inner_report.txt
+deterministic_baseline_path: data\eval\deterministic_metadata_extraction_baseline_output.jsonl
+
+=== Expanded Batch Summary ===
+sample cases selected: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A', '1092/2025', '117/2026', '118/2026', '119/2026', '120/2026', '123/2026', '136/2025', '137/2026', '145/2026', '147/2025', '151/2026', '157/2026', '164/2026', '165/2026', '168/2026', '174/2026', '184/2026', '203/2026', '206/2026']
+sample_case_count: 24
+generation success count: 24
+generation total count: 24
+field completeness: {'case_summary': 24, 'holding': 24, 'legal_basis': 24, 'disputed_issues': 24}
+script normalization applied yes/no: True
+script normalization applied count: 1
+comparison harness compatible yes/no: True
+runtime seconds: 1079.28
+whether expanded current-default batch appears successful: True
