@@ -28,7 +28,8 @@
       }
       h1,
       h2,
-      h3 {
+      h3,
+      h4 {
         margin-top: 0;
       }
       form {
@@ -44,7 +45,8 @@
       }
       input,
       button,
-      textarea {
+      textarea,
+      select {
         font: inherit;
         border-radius: 8px;
         border: 1px solid #b8c3d6;
@@ -76,7 +78,7 @@
       }
       .cases {
         display: grid;
-        gap: 12px;
+        gap: 10px;
       }
       .controls-grid {
         display: grid;
@@ -92,19 +94,87 @@
         border-radius: 10px;
         padding: 12px;
         background: #fff;
+        display: grid;
+        gap: 8px;
+      }
+      .case-header {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .case-title-block h3 {
+        margin-bottom: 4px;
+        font-size: 16px;
+      }
+      .case-title-block p {
+        margin: 0;
+        font-size: 13px;
+      }
+      .toggle-details-btn {
+        white-space: nowrap;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: #edf2ff;
+        color: #1f3f9a;
+        border: 1px solid #cfdaff;
+        font-size: 12px;
+      }
+      .case-meta-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px 12px;
+      }
+      .meta-item {
+        margin: 0;
+        font-size: 13px;
+      }
+      .meta-label {
+        color: #4a5c85;
+        font-weight: 600;
+      }
+      .long-field {
+        margin: 0;
+        border: 1px solid #e0e6f5;
+        border-radius: 8px;
+        background: #fbfcff;
+        padding: 8px;
+      }
+      .long-field summary {
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .preview {
+        color: #5f6f91;
+        margin-left: 6px;
+      }
+      .long-field-content {
+        margin: 8px 0 0;
+        font-size: 13px;
+        line-height: 1.45;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
       }
       .tag {
         display: inline-block;
-        margin-right: 6px;
-        margin-top: 6px;
-        padding: 3px 8px;
+        padding: 2px 8px;
         border-radius: 999px;
         background: #ebefff;
         color: #263c93;
         font-size: 12px;
       }
+      .links {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
       .links a {
-        margin-right: 12px;
+        font-size: 13px;
       }
       pre {
         margin: 0;
@@ -116,8 +186,13 @@
         padding: 10px;
       }
       @media (max-width: 840px) {
-        form {
+        form,
+        .case-meta-grid {
           grid-template-columns: 1fr;
+        }
+        .case-header {
+          flex-direction: column;
+          align-items: stretch;
         }
       }
     </style>
@@ -125,9 +200,9 @@
   <body>
     <main>
       <section class="panel">
-        <h1>Day 57 Demo: FastAPI Research Endpoint Integration</h1>
+        <h1>Day 58 Demo: Dense Case-Card Layout Refinement</h1>
         <p class="muted">
-          Minimal front-end demo for <code>POST /api/research/query</code>.
+          Front-end demo for <code>POST /api/research/query</code> with denser case-card scanning.
         </p>
         <form id="query-form">
           <label>
@@ -216,12 +291,46 @@
       const casesNode = document.getElementById('cases');
       let latestResults = [];
 
+      function escapeHtml(value) {
+        return String(value ?? '-')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#39;');
+      }
+
       function metricBlock(label, value) {
         return `
           <div class="metric">
-            <div class="muted">${label}</div>
-            <strong>${value}</strong>
+            <div class="muted">${escapeHtml(label)}</div>
+            <strong>${escapeHtml(value)}</strong>
           </div>
+        `;
+      }
+
+      function textPreview(value, maxLength = 100) {
+        const normalized = String(value || '').trim();
+        if (!normalized) {
+          return '-';
+        }
+        if (normalized.length <= maxLength) {
+          return normalized;
+        }
+        return `${normalized.slice(0, maxLength)}...`;
+      }
+
+      function renderLongField(label, value, isArray = false) {
+        const raw = isArray ? (Array.isArray(value) ? value.join('、') : '') : String(value || '');
+        const content = raw.trim() || '-';
+        return `
+          <details class="long-field">
+            <summary>
+              <strong>${escapeHtml(label)}:</strong>
+              <span class="preview">${escapeHtml(textPreview(content, 120))}</span>
+            </summary>
+            <div class="long-field-content">${escapeHtml(content)}</div>
+          </details>
         `;
       }
 
@@ -236,29 +345,46 @@
         results.forEach((item, index) => {
           const card = document.createElement('article');
           card.className = 'case-card';
-          const tags = (item.card_tags || []).map((tag) => `<span class="tag">${tag}</span>`).join('');
-          const legalBasis = (item.legal_basis || []).join('、') || '-';
-          const disputedIssues = (item.disputed_issues || []).join('、') || '-';
+          const tags = (item.card_tags || []).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
 
           card.innerHTML = `
-            <h3>${index + 1}. ${item.card_title || '(Untitled case card)'}</h3>
-            <p class="muted">${item.card_subtitle || '-'}</p>
-            <p><strong>Case Number:</strong> ${item.authoritative_case_number || '-'}</p>
-            <p><strong>Decision Date:</strong> ${item.authoritative_decision_date || '-'}</p>
-            <p><strong>Court:</strong> ${item.court || '-'}</p>
-            <p><strong>Case Type:</strong> ${item.case_type || '-'}</p>
-            <p><strong>Language:</strong> ${item.language || '-'}</p>
-            <p><strong>Metadata Source:</strong> ${item.metadata_source || '-'}</p>
-            <p><strong>Summary:</strong> ${item.case_summary || '-'}</p>
-            <p><strong>Holding:</strong> ${item.holding || '-'}</p>
-            <p><strong>Legal Basis:</strong> ${legalBasis}</p>
-            <p><strong>Disputed Issues:</strong> ${disputedIssues}</p>
-            <p class="links">
-              <a href="${item.pdf_url || '#'}" target="_blank" rel="noopener noreferrer">pdf_url</a>
-              <a href="${item.text_url_or_action || '#'}" target="_blank" rel="noopener noreferrer">text_url_or_action</a>
-            </p>
-            <div>${tags}</div>
+            <header class="case-header">
+              <div class="case-title-block">
+                <h3>${index + 1}. ${escapeHtml(item.card_title || '(Untitled case card)')}</h3>
+                <p class="muted">${escapeHtml(item.card_subtitle || '-')}</p>
+              </div>
+              <button type="button" class="toggle-details-btn" aria-expanded="false">Expand details</button>
+            </header>
+            <section class="case-meta-grid">
+              <p class="meta-item"><span class="meta-label">Case Number:</span> ${escapeHtml(item.authoritative_case_number || '-')}</p>
+              <p class="meta-item"><span class="meta-label">Decision Date:</span> ${escapeHtml(item.authoritative_decision_date || '-')}</p>
+              <p class="meta-item"><span class="meta-label">Court:</span> ${escapeHtml(item.court || '-')}</p>
+              <p class="meta-item"><span class="meta-label">Case Type:</span> ${escapeHtml(item.case_type || '-')}</p>
+              <p class="meta-item"><span class="meta-label">Language:</span> ${escapeHtml(item.language || '-')}</p>
+              <p class="meta-item"><span class="meta-label">Metadata Source:</span> ${escapeHtml(item.metadata_source || '-')}</p>
+            </section>
+            ${renderLongField('Summary', item.case_summary)}
+            ${renderLongField('Holding', item.holding)}
+            ${renderLongField('Legal Basis', item.legal_basis, true)}
+            ${renderLongField('Disputed Issues', item.disputed_issues, true)}
+            <div class="links">
+              <a href="${escapeHtml(item.pdf_url || '#')}" target="_blank" rel="noopener noreferrer">pdf_url</a>
+              <a href="${escapeHtml(item.text_url_or_action || '#')}" target="_blank" rel="noopener noreferrer">text_url_or_action</a>
+            </div>
+            <div class="tags">${tags || '<span class="muted">No tags</span>'}</div>
           `;
+
+          const toggleButton = card.querySelector('.toggle-details-btn');
+          toggleButton.addEventListener('click', () => {
+            const detailsNodes = card.querySelectorAll('.long-field');
+            const shouldExpand = toggleButton.getAttribute('aria-expanded') !== 'true';
+            detailsNodes.forEach((node) => {
+              node.open = shouldExpand;
+            });
+            toggleButton.setAttribute('aria-expanded', String(shouldExpand));
+            toggleButton.textContent = shouldExpand ? 'Collapse details' : 'Expand details';
+          });
+
           casesNode.appendChild(card);
         });
       }
