@@ -1,7 +1,7 @@
 Metadata Generation Comparison Harness Report - Day 42
 
 baseline cases loaded: 77
-model-generated cases loaded: 0
+model-generated cases loaded: 3
 
 case: 1/2025
 language: pt
@@ -27,19 +27,19 @@ language: zh
 - field: case_summary
   baseline_value: 除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 假釋並不具有自動性，它除了需要符合啟動假釋程序的客觀要件外，還需要考慮面對被判刑人所犯下的罪行，以及被判刑人的人格表現，一旦提早釋放被判刑人，是否會對社會安寧造成衝擊、讓人認為刑罰的力度未足以達到阻嚇犯罪的作用；此外，更重要的是，還需要考慮到被判刑人在服刑期間的...
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: holding
   baseline_value: 判處上訴人繳付4個計算單位之司法費。
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: legal_basis
   baseline_value: 第56條 | 第14條 | 第8條 | 第18條 | 第66條 | 第21條 | 第468條
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: disputed_issues
   baseline_value: 否決假釋 | 假釋的實質要件 摘要 除了法律所規定的客觀前提要件外 | 《刑法典》第56條第1款a項及b項還規定了當中的實質要件 | 即： — 行為人以往之生活及其人格 | 以及於執行徒刑期間在人格方面之演變情況 | 期待被判刑者一旦獲釋 | 將能以對社會負責之方式生活而不再犯罪屬有依據者 | 及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 
 case: 1006/2025
 language: pt
@@ -65,38 +65,38 @@ language: zh
 - field: case_summary
   baseline_value: 鑑於未見《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條所規定之不予認可的情況，亦未見其他足以妨礙有關聲請的法定原因，涉案香港特別行政區國際仲裁中心所作之仲裁裁決應予以確認。
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: holding
   baseline_value: *** 五、 決定 綜上所述，本院合議庭決定確認香港國際仲裁中心於2024年11月1日作出的第HKIAC/24140號卷宗的除訟費外的裁決書。
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: legal_basis
   baseline_value: 第7條 | 第1201條 | 第70條 | 第1條 | 第1200條
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: disputed_issues
   baseline_value: 澳門以外的法院或仲裁員作出的裁判的審查及確認
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 
 case: 1033/2025
 language: zh
 - field: case_summary
   baseline_value: 編號：第1033/2025號 (刑事上訴案) 上訴人：A 日期：2026年3月12日 主要法律問題：家庭暴力罪、適用法律錯誤、獲證明之事實上之事宜不足以支持作出該裁判 摘 要 * 《刑事訴訟法典》第400條第2款a)項所指的獲認定的事實不足以支持裁判之瑕疵為：所謂的事實不充分的瑕疵僅存在於法院沒有證實必要的可資作出適當法律適用以及決定案件實體問題的事實；法院在審判過程中必須在該刑事訴訟案件的標的包括控訴書或辯護詞所界定的範圍內，對這些事實作譴責。1 在適用《刑法典》第48條第1款之規定時，必須考慮是否滿足了緩刑的形式前提及實質前提。形式前提是指不超...
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: holding
   baseline_value: 9 於原審判決第3頁，原審法院對嫌犯的控罪改為：嫌犯A為直接正犯，其既遂行為觸犯了：一項第2/2016號法律《預防及打擊家庭暴力法》第18條第1款結合第4條第1款及第2款(一)項所規定及處罰的『家庭暴力罪』，卻於判決部份未有指明，應屬明顯筆誤，因此依職權將之更正。
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: legal_basis
   baseline_value: 第400條 | 第48條 | 第4條 | 第18條 | 第140條 | 第137條 | 第142條 | 第40條
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 - field: disputed_issues
   baseline_value: 刑事訴訟程序的上訴
   model_value: <empty>
-  comparison_status: model_pending
+  comparison_status: model_missing_field
 
 case: 1035/2025
 language: pt
@@ -1467,12 +1467,8 @@ language: zh
   comparison_status: model_pending
 
 === Aggregated Summary ===
-cases compared: 0
+cases compared: 3
 fields compared: 308
 fields where model is missing: 308
-model-missing case count: 77
+model-missing case count: 74
 comparison-ready: no
-
-placeholder mode status:
-- baseline available: yes
-- model-generated layer pending: yes

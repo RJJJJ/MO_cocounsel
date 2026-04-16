@@ -1,5 +1,5 @@
 Metadata Generation Target Schema Demo Report - Day 38
-input_chunks_path: data/corpus/prepared/macau_court_cases/bm25_chunks.jsonl
+input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
 sample_case_limit: 3
 sample cases processed: 3
 sample case numbers: ['1/2025', '100/2026', '1006/2025']

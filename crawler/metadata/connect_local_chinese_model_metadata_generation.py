@@ -67,12 +67,17 @@ class LocalModelRunner:
         raise ValueError(f"Unsupported backend: {self.backend}")
 
     def _run_ollama_cli(self, prompt: str) -> str:
+        env = os.environ.copy()
+        env["PYTHONIOENCODING"] = "utf-8"
         completed = subprocess.run(
             ["ollama", "run", self.model_name, prompt],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=self.timeout_seconds,
             check=False,
+            env=env,
         )
         if completed.returncode != 0:
             raise RuntimeError(f"ollama run failed: {completed.stderr.strip() or completed.stdout.strip()}")
@@ -91,6 +96,8 @@ class LocalModelRunner:
                 shell=True,
                 capture_output=True,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
                 timeout=self.timeout_seconds,
                 check=False,
             )

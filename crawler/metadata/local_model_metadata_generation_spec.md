@@ -1,93 +1,66 @@
-# Local Model Metadata Generation Spec (Day 43)
-
-## Why this is now the next priority
-
-Day 38~Day 42 already established:
-
-- target metadata output schema,
-- deterministic extraction baseline,
-- field-level evaluation set,
-- comparison harness between baseline and model-generated metadata.
-
-The immediate next step is to connect an actual **local model generation path** so the comparison harness can move from placeholder mode into real side-by-side evaluation on the same cases.
-
-## Role split
-
-- **Deterministic baseline = benchmark/fallback**
-  - stable and reproducible
-  - no model dependency
-  - safety backstop when model generation is unavailable
-
-- **Local model layer = future primary generation layer**
-  - expected to improve semantic quality of digest fields
-  - currently connected in sample-batch mode first
-
 ## Model selection strategy
 
 A configurable local Chinese-capable instruct model is required because:
 
 1. deployment environments may have different local model availability,
 2. quality/speed tradeoffs vary by machine,
-3. product evolution may require stronger local variants without rewriting pipeline code.
+3. product evolution may require stronger local variants without rewriting pipeline code,
+4. candidate models should be benchmarked before promotion into the primary generation path.
 
 ### Required model policy
 
 - local-only model backend
 - no cloud API and no hosted model endpoint
 - backend and model name must be configurable
+- generated outputs must preserve model-specific auditability for comparison
 
-### Preferred default
+### Current baseline default
 
-- `Qwen2.5 7B Instruct` (local, instruct-tuned, Chinese capable)
+- `Qwen3 8B`
+- role: current stable benchmark model for local metadata generation connection
 
-### Acceptable stronger local variants
+### Current upgrade candidates
 
+- `Qwen3 14B` (if local hardware/runtime permits)
 - `Qwen2.5 14B Instruct`
 - other local Chinese-capable instruct models already available in environment
 
-## Input selection strategy (sample-batch first)
+### Promotion rule
 
-This round prioritizes **running path reliability** over full 77-case generation.
+A candidate local model should only replace the current default after comparison against the existing baseline on:
 
-- default path uses prepared case chunks (`bm25_chunks.jsonl`)
-- case-level text is formed by concatenating selected chunks
-- optional filtering:
-  - language filter (default `zh`)
-  - explicit case-number list
-- sample batch target: typically 3–10 cases
+- JSON format stability
+- metadata field completeness
+- case_summary quality
+- holding fidelity
+- legal_basis usefulness
+- disputed_issues usefulness
+- local runtime practicality
 
-Full-text-only mode can be added later if needed, but selected chunk text is enough to validate schema contract + comparison compatibility.
+## Model evaluation and promotion policy
 
-## Output contract
+The local model layer is configurable by design.
 
-Each generated JSONL record must keep Day 38-compatible shape:
+This means:
 
-- `core_case_metadata`
-- `generated_digest_metadata`
-  - `case_summary`
-  - `holding`
-  - `legal_basis`
-  - `disputed_issues`
-- `generation_status`
-- `generation_method = local_model_generated`
-- `model_name`
-- `prompt_version`
-- `provenance_notes`
+- the project does not assume one permanent model forever,
+- new candidate local Chinese models may be tested,
+- promotion to default model should be benchmark-driven rather than assumption-driven.
 
-Primary local output paths:
+### Current policy
 
-- `data/eval/model_generated_metadata_output.jsonl`
-- `data/eval/local_model_metadata_generation_report.txt`
+- `Qwen3 8B` remains the current baseline default
+- candidate outputs should be compared through the existing metadata comparison harness before changing defaults
 
-## Required audit fields
+### Minimum upgrade checks
 
-Every output record must include:
+Before a new model is promoted, it should be tested on a sample batch and checked for:
 
-- `model_name`
-- `prompt_version`
-- `generation_status`
-
-This keeps model-result provenance traceable when comparing against baseline and during later prompt/eval iteration.
+- valid JSON output rate
+- field coverage rate
+- semantic usefulness of generated metadata
+- lower obvious hallucination / vague filler rate
+- acceptable runtime on local hardware
 
 ## Current limitations
 
@@ -95,12 +68,16 @@ This keeps model-result provenance traceable when comparing against baseline and
 - prompt optimization is intentionally minimal in this round
 - model availability/performance depends on local runtime environment
 - failed generations are recorded with fallback empty field payloads and failure status
+- different local models may produce meaningfully different metadata style/quality even under the same prompt
+- model upgrade should not bypass comparison-harness-based evaluation
 
 ## Recommended next step
 
 Pick one immediate follow-up:
 
-1. run Day 42 comparison harness directly with generated local model output,
-2. build a dedicated prompt/eval loop for metadata fields and iterate quality against Day 40 evaluation set.
+1. run Day 42 comparison harness with the current baseline default model output,
+2. run the same sample batch with an upgrade candidate,
+3. compare both outputs before changing default model policy,
+4. then build a dedicated prompt/eval loop for metadata fields if upgrade looks promising.
 
-Both follow-ups should keep deterministic baseline as benchmark/fallback.
+Deterministic baseline should remain benchmark/fallback throughout.

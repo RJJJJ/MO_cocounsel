@@ -1,0 +1,62 @@
+Route-Specific Local Retrieval Evaluation Report - Day 37
+query_test_set_path: data\eval\macau_court_query_test_set.jsonl
+bm25_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+top_k: 10
+total_queries_evaluated: 13
+number_of_slices_reported: 6
+strongest_slice: single_legal_concept (3/3, 100.00%)
+weakest_slice: portuguese_or_mixed (0/1, 0.00%)
+route_specific_evaluation_slicing_appears_successful: True
+
+slice_summaries:
+- slice: case_number_lookup
+  total_queries: 3
+  queries_with_expected_cases: 2
+  exact_case_hit_count: 2
+  hit@k: 100.00%
+  notes: sample size is healthy
+- slice: single_legal_concept
+  total_queries: 3
+  queries_with_expected_cases: 3
+  exact_case_hit_count: 3
+  hit@k: 100.00%
+  notes: sample size is healthy
+- slice: multi_issue_legal_query
+  total_queries: 0
+  queries_with_expected_cases: 0
+  exact_case_hit_count: 0
+  hit@k: 0.00%
+  notes: sample count is small (n=0)
+- slice: mixed_fact_legal_query
+  total_queries: 0
+  queries_with_expected_cases: 0
+  exact_case_hit_count: 0
+  hit@k: 0.00%
+  notes: sample count is small (n=0)
+- slice: portuguese_or_mixed
+  total_queries: 1
+  queries_with_expected_cases: 1
+  exact_case_hit_count: 0
+  hit@k: 0.00%
+  notes: sample count is small (n=1)
+- slice: ambiguous_or_noisy
+  total_queries: 6
+  queries_with_expected_cases: 3
+  exact_case_hit_count: 2
+  hit@k: 66.67%
+  notes: sample size is healthy
+
+per_query_route_trace:
+- query_id=Q001 | assigned_slice=ambiguous_or_noisy | router_query_type=ambiguous_or_noisy | routing_strategy=conservative_direct_retrieval | retrieval_mode=conservative_direct_bm25 | hit@10=True | expected=['100/2026', '119/2026', '120/2026'] | top_cases=['24/2026', '203/2026', '100/2026', '157/2026', '120/2026', '123/2026', '165/2026', '254/2026']
+- query_id=Q002 | assigned_slice=single_legal_concept | router_query_type=single_legal_concept | routing_strategy=direct_hybrid_skeleton_bm25_first | retrieval_mode=direct_bm25_or_hybrid_skeleton | hit@10=True | expected=['1073/2025', '117/2026', '147/2025'] | top_cases=['757/2025', '728/2025', '721/2025', '34/2026', '76/2026', '1073/2025', '36/2026']
+- query_id=Q003 | assigned_slice=ambiguous_or_noisy | router_query_type=ambiguous_or_noisy | routing_strategy=conservative_direct_retrieval | retrieval_mode=conservative_direct_bm25 | hit@10=True | expected=['310/2025', '728/2025', '871/2024'] | top_cases=['871/2024', '310/2025', '721/2025']
+- query_id=Q004 | assigned_slice=ambiguous_or_noisy | router_query_type=ambiguous_or_noisy | routing_strategy=conservative_direct_retrieval | retrieval_mode=conservative_direct_bm25 | hit@10=False | expected=['1033/2025', '1073/2025', '157/2026'] | top_cases=['998/2025', '85/2026', '446/2025', '136/2025', '964/2025', '147/2025', '145/2026', '31/2026']
+- query_id=Q005 | assigned_slice=ambiguous_or_noisy | router_query_type=ambiguous_or_noisy | routing_strategy=conservative_direct_retrieval | retrieval_mode=conservative_direct_bm25 | hit@10=False | expected=[] | top_cases=['136/2025', '147/2025', '998/2025', '76/2026', '120/2026', '214/2025']
+- query_id=Q006 | assigned_slice=single_legal_concept | router_query_type=single_legal_concept | routing_strategy=direct_hybrid_skeleton_bm25_first | retrieval_mode=direct_bm25_or_hybrid_skeleton | hit@10=True | expected=['1073/2025', '1087/2025/A', '1092/2025'] | top_cases=['147/2025', '871/2024', '310/2025', '1087/2025/A']
+- query_id=Q007 | assigned_slice=single_legal_concept | router_query_type=single_legal_concept | routing_strategy=direct_hybrid_skeleton_bm25_first | retrieval_mode=direct_bm25_or_hybrid_skeleton | hit@10=True | expected=['36/2026', '757/2025'] | top_cases=['36/2026', '757/2025', '721/2025']
+- query_id=Q008 | assigned_slice=case_number_lookup | router_query_type=case_number_lookup | routing_strategy=prefer_exact_case_number_path_then_hybrid_fallback | retrieval_mode=exact_case_number_heavy_bm25 | hit@10=True | expected=['157/2026'] | top_cases=['157/2026']
+- query_id=Q009 | assigned_slice=case_number_lookup | router_query_type=case_number_lookup | routing_strategy=prefer_exact_case_number_path_then_hybrid_fallback | retrieval_mode=exact_case_number_heavy_bm25 | hit@10=True | expected=['253/2026'] | top_cases=['253/2026']
+- query_id=Q010 | assigned_slice=case_number_lookup | router_query_type=case_number_lookup_pt_mixed | routing_strategy=exact_case_number_heavy_with_pt_context_retention | retrieval_mode=exact_case_number_heavy_bm25_pt_context | hit@10=False | expected=[] | top_cases=['388/2025', '629/2025', '384/2025', '467/2025', '1006/2025', '247/2025', '608/2025']
+- query_id=Q011 | assigned_slice=portuguese_or_mixed | router_query_type=portuguese_or_mixed | routing_strategy=language_aware_bm25_path | retrieval_mode=bm25_language_aware_pt_or_mixed | hit@10=False | expected=['1006/2025', '1035/2025', '543/2025'] | top_cases=['24/2026', '203/2026', '100/2026', '157/2026', '120/2026', '123/2026', '165/2026', '254/2026']
+- query_id=Q012 | assigned_slice=ambiguous_or_noisy | router_query_type=ambiguous_or_noisy | routing_strategy=conservative_direct_retrieval | retrieval_mode=conservative_direct_bm25 | hit@10=False | expected=[] | top_cases=['164/2026', '203/2026', '123/2026', '254/2026', '253/2026', '157/2026', '964/2025', '721/2025']
+- query_id=Q013 | assigned_slice=ambiguous_or_noisy | router_query_type=ambiguous_or_noisy | routing_strategy=conservative_direct_retrieval | retrieval_mode=conservative_direct_bm25 | hit@10=False | expected=[] | top_cases=['168/2026', '968/2025', '467/2025']

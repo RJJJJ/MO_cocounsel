@@ -1,17 +1,18 @@
-Deterministic Metadata Extraction Baseline Report - Day 39
+Deterministic Metadata Extraction Improved Rules Report - Day 41
 input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
-output_jsonl_path: data\eval\deterministic_metadata_extraction_baseline_output.jsonl
+output_jsonl_path: data\eval\deterministic_metadata_extraction_improved_output.jsonl
 cases processed: 77
 case_summary populated: 77
 holding populated: 77
 legal_basis populated: 77
 disputed_issues populated: 77
-whether deterministic metadata extraction baseline appears successful: True
+whether deterministic metadata extraction rule improvement appears successful: True
 
-Notes:
-- Baseline is deterministic and heuristic-only.
-- zh/pt use different extraction patterns.
-- Empty/fallback handling is explicit for all required digest fields.
+Rule changes:
+- Prefer heading-level concise issue extraction for case_summary (zh: 主題/主要問題, pt: Assunto/Descritores).
+- Tighter heading stop-boundary handling to avoid summary bleed into procedural sections.
+- Holding uses scored dispositive sentence selection with zh/pt-specific keywords.
+- Disputed issues kept conservative to avoid regressions (pattern-first + case_type fallback).
 
 Sample shaped metadata outputs:
 
@@ -111,8 +112,8 @@ Sample shaped metadata outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "I – O n.º 2 do artigo 128.º do DL n.º 74/99/M, de 8 de Novembro, dispõe que “sempre que, por imposição do dono da obra ou em virtude de deferimento de reclamação do empreiteiro, sejam executados trabalhos a mais, o prazo contratual para conclusão da obra é prorrogado a requeri...",
-    "holding": "* * * V - DECISÃO Em face de todo o que fica exposto e justificado, os juízes do TSI acordam em julgar improcedente o recurso, mantendo-se a decisão recorrida.",
+    "case_summary": "O n.º 2 do artigo 128.º do DL n.º 74/99/M, de 8 de Novembro, dispõe que “sempre que, por imposição do dono da obra ou em virtude de deferimento de reclamação do empreiteiro, sejam executados trabalhos a mais, o prazo contratual para conclusão da obra é prorrogado a requeriment...",
+    "holding": "* * V - DECISÃO Em face de todo o que fica exposto e justificado, os juízes do TSI acordam em julgar improcedente o recurso, mantendo-se a decisão recorrida.",
     "legal_basis": [
       "artigo 128.º",
       "artigo 159.º",
@@ -127,12 +128,12 @@ Sample shaped metadata outputs:
       "司法上訴(中級法院作為第一審法院的行政訴訟案件)"
     ]
   },
-  "generation_status": "deterministic_baseline",
+  "generation_status": "deterministic_improved_day41",
   "generation_method": "deterministic_rule_based_extraction_local_only",
   "provenance_notes": [
     "No LLM used.",
     "No external API/database used.",
-    "Heuristic extraction only; quality is baseline-level."
+    "Day 41 targeted rule refinement (case_summary/holding priority)."
   ]
 }
 
@@ -163,8 +164,8 @@ Sample shaped metadata outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 假釋並不具有自動性，它除了需要符合啟動假釋程序的客觀要件外，還需要考慮面對被判刑人所犯下的罪行，以及被判刑人的人格表現，一旦提早釋放被判刑人，是否會對社會安寧造成衝擊、讓人認為刑罰的力度未足以達到阻嚇犯罪的作用；此外，更重要的是，還需要考慮到被判刑人在服刑期間的...",
-    "holding": "判處上訴人繳付4個計算單位之司法費。",
+    "case_summary": "本案聚焦否決假釋、假釋的實質要件 摘要 除了法律所規定的客觀前提要件外、《刑法典》第56條第1款a項及b項還規定了當中的實質要件、即： — 行為人以往之生活及其人格、以及於執行徒刑期間在人格方面之演變情況、期待被判刑者一旦獲釋、將能以對社會負責之方式生活而不再犯罪屬有依據者、及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 假釋並不具有自動性、它除了需要符合啟動假釋程序的客觀要件外、還需要考慮面對被判刑人所犯下的罪行、以及被...",
+    "holding": "＊ 四、決定 綜上所述，合議庭裁定上訴人A的上訴理由不成立，並維持原判。",
     "legal_basis": [
       "第56條",
       "第14條",
@@ -185,12 +186,12 @@ Sample shaped metadata outputs:
       "及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧"
     ]
   },
-  "generation_status": "deterministic_baseline",
+  "generation_status": "deterministic_improved_day41",
   "generation_method": "deterministic_rule_based_extraction_local_only",
   "provenance_notes": [
     "No LLM used.",
     "No external API/database used.",
-    "Heuristic extraction only; quality is baseline-level."
+    "Day 41 targeted rule refinement (case_summary/holding priority)."
   ]
 }
 
@@ -285,27 +286,27 @@ Sample shaped metadata outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "I - Quem tem a obrigação de controlar a assiduidade e pontualidade dos trabalhadores é sempre a entidade patronal, e é esta que deve ter os respectivos registos nesta matéria. No caso de esta não apresentar esses dados em litígio, a sua conduta esta sujeita a livre apreciação ...",
-    "holding": "IV - Quanto à primeira condição, justifica-se que o réu deponha perante o Tribunal Colectivo, de forma que o depoimento tenha maior utilidade e eficácia, contribuindo para uma justa decisão da causa.",
+    "case_summary": "Quem tem a obrigação de controlar a assiduidade e pontualidade dos trabalhadores é sempre a entidade patronal, e é esta que deve ter os respectivos registos nesta matéria.",
+    "holding": "* * V ‒ DECISÃO Em face de todo o que fica exposto e justificado, os juízes do Tribunal de 2ª Instância acordam em negar provimento aos recursos (interlocutórios e finais), confirmando-se as decisões recorridas (inclu...",
     "legal_basis": [
-      "Art. 13.º",
-      "Art. 481.º",
-      "Art. 335.",
-      "Art. 33.º",
-      "Art. 42.º",
-      "Art. 6.º",
-      "Art. 335.º",
+      "art. 13.º",
+      "art. 481.º",
+      "art. 335.",
+      "art. 33.º",
+      "art. 42.º",
+      "art. 6.º",
+      "art. 335.º",
       "art. 4.º"
     ],
     "disputed_issues": [
       "民事及勞動訴訟程序的上訴"
     ]
   },
-  "generation_status": "deterministic_baseline",
+  "generation_status": "deterministic_improved_day41",
   "generation_method": "deterministic_rule_based_extraction_local_only",
   "provenance_notes": [
     "No LLM used.",
     "No external API/database used.",
-    "Heuristic extraction only; quality is baseline-level."
+    "Day 41 targeted rule refinement (case_summary/holding priority)."
   ]
 }
