@@ -29,8 +29,8 @@ DEFAULT_INPUT_PATH = Path("data/corpus/prepared/macau_court_cases/bm25_chunks.js
 DEFAULT_OUTPUT_DIR = Path("data/eval/upgraded_local_model_candidate_benchmark")
 DEFAULT_REPORT_PATH = Path("data/eval/upgraded_local_model_candidate_benchmark_report.txt")
 DEFAULT_PROMPT_VERSION = "day45_prompt_b_tch_norm"
-DEFAULT_CURRENT_MODEL = "qwen2.5:7b-instruct"
-DEFAULT_CANDIDATE_MODEL = "qwen3.5:4b"
+DEFAULT_CURRENT_MODEL = "qwen2.5:3b-instruct"
+DEFAULT_CANDIDATE_MODEL = "qwen3:4b-instruct"
 
 
 @dataclass(frozen=True)

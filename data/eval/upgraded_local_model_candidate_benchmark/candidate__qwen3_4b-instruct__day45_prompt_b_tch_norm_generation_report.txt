@@ -1,0 +1,185 @@
+Local Model Metadata Generation Report - Day 45
+input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+output_jsonl_path: data\eval\upgraded_local_model_candidate_benchmark\candidate__qwen3_4b-instruct__day45_prompt_b_tch_norm.jsonl
+model_backend: ollama_cli
+model_name: qwen3:4b-instruct
+prompt_version: day45_prompt_b_tch_norm
+sample cases selected: 10
+sample case numbers: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A', '1092/2025', '117/2026', '118/2026', '119/2026', '120/2026']
+model-generated cases written: 10
+generation success count: 10
+generation failure count: 0
+script normalization applied count: 0
+script normalization applied yes/no: False
+generation fields attempted: ['case_summary', 'holding', 'legal_basis', 'disputed_issues']
+whether local model metadata generation appears successful: True
+
+Sample outputs:
+
+=== sample_case_1 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "100/2026",
+    "authoritative_decision_date": "26/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5bb24337c3797b0e.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42279",
+    "source_chunk_ids": [
+      "100_2026_zh_c0000_82cdcdb56831",
+      "100_2026_zh_c0001_f9c40d3c99f8",
+      "100_2026_zh_c0002_383f91369ba1",
+      "100_2026_zh_c0003_ef23a02b0792",
+      "100_2026_zh_c0004_f0561356a2f5",
+      "100_2026_zh_c0005_3f1a70b298c9",
+      "100_2026_zh_c0006_17f843fdeda8",
+      "100_2026_zh_c0007_4eaf46e783f5",
+      "100_2026_zh_c0008_bdc568066c4b"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/100_2026/full_text.txt",
+      "cases/zh/2026/100_2026/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "上訴人A因販賣麻醉藥品及精神藥物罪被判處4年徒刑，現已服刑達三分之二且超過六個月，符合假釋的形式要件。然而，法院認為其犯罪情節惡劣，入獄前價值觀偏差，服刑期間有違規紀錄，表現評價為「一般」，且未獲獄方正面肯定。上訴人雖為初犯、認罪並提供協助，但其行為對澳門社會安寧造成嚴重影響，且毒品犯罪問題日益嚴重、年輕化，導致公眾對法律制度的威懾力存有合理擔憂。法院認為提早釋放將損害一般預防與特別預防效果，故否決其假釋請求，並維持原判。",
+    "holding": "上訴人A雖符合假釋的形式要件，但未滿足《刑法典》第56條第1款a項及b項所規定的實質要件，其人格演變與守法意識尚未獲得足夠證據支持，且提早釋放將影響法律秩序與社會安寧的維護，因此駁回上訴，維持原判決否決假釋。",
+    "legal_basis": [
+      "《刑法典》第56條第1款a項",
+      "《刑法典》第56條第1款b項"
+    ],
+    "disputed_issues": [
+      "上訴人是否符合假釋的實質要件",
+      "提早釋放上訴人是否會影響維護法律秩序及社會安寧",
+      "上訴人服刑期間的人格演變是否足以證明其能以對社會負責的方式生活而不再犯罪"
+    ]
+  },
+  "generation_status": "local_model_generated",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen3:4b-instruct",
+  "prompt_version": "day45_prompt_b_tch_norm",
+  "script_normalization_applied": false,
+  "output_script": "traditional_chinese",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli"
+  ]
+}
+
+=== sample_case_2 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "1026/2025",
+    "authoritative_decision_date": "26/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "澳門以外的法院或仲裁員作出的裁判的審查及確認",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5d3ba8dddfd2e769.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42365",
+    "source_chunk_ids": [
+      "1026_2025_zh_c0000_a9c126d85c8e",
+      "1026_2025_zh_c0001_c30435ec25ad",
+      "1026_2025_zh_c0002_1bcbbb28473d",
+      "1026_2025_zh_c0003_84ea7096f58a"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/1026_2025/full_text.txt",
+      "cases/zh/2026/1026_2025/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "聲請人A針對被聲請人B，請求確認香港國際仲裁中心於2024年11月1日作出的HKIAC/24140號仲裁裁決。該裁決涉及借款合同爭議，確認聲請人有效持有抵押股份的押記，並命令被聲請人償還港幣10,000,000元，並支付相應利息。聲請人提出相關事實與理據，被聲請人未提出抗辯或陳述。本院審視後認為，該裁決未見違反《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條所規定之不予認可情形，亦無其他法定原因妨礙確認，故裁定確認該裁決。",
+    "holding": "涉案香港國際仲裁中心所作之仲裁裁決，因未見《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條所規定之不予認可情況，亦無其他法定原因，應予以確認。",
+    "legal_basis": [
+      "第19/2019號法律《仲裁法》第70條",
+      "第2/2013號行政長官公告《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條"
+    ],
+    "disputed_issues": [
+      "仲裁裁決是否違反公共秩序或公共政策",
+      "仲裁裁決是否對當事人具有約束力",
+      "裁決內容是否超出仲裁協議範圍"
+    ]
+  },
+  "generation_status": "local_model_generated",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen3:4b-instruct",
+  "prompt_version": "day45_prompt_b_tch_norm",
+  "script_normalization_applied": false,
+  "output_script": "traditional_chinese",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli"
+  ]
+}
+
+=== sample_case_3 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "1033/2025",
+    "authoritative_decision_date": "12/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-0dd8fc95d98feda0.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42325",
+    "source_chunk_ids": [
+      "1033_2025_zh_c0000_911fcb0291e7",
+      "1033_2025_zh_c0001_7cbe87778900",
+      "1033_2025_zh_c0002_72d1cc1af6f0",
+      "1033_2025_zh_c0003_60273d24df13",
+      "1033_2025_zh_c0004_04bae5574206",
+      "1033_2025_zh_c0005_651f6699a425",
+      "1033_2025_zh_c0006_815cab4165ce",
+      "1033_2025_zh_c0007_8ad783eed4de",
+      "1033_2025_zh_c0008_0c754ea84829",
+      "1033_2025_zh_c0009_1b058363e232",
+      "1033_2025_zh_c0010_b632c702e80f",
+      "1033_2025_zh_c0011_f1c07c0fae89",
+      "1033_2025_zh_c0012_62ecac25a8b2",
+      "1033_2025_zh_c0013_b8b078db82c3",
+      "1033_2025_zh_c0014_6374b6a5e6c7",
+      "1033_2025_zh_c0015_3615e39ff889",
+      "1033_2025_zh_c0016_d6d29f6c6bdb",
+      "1033_2025_zh_c0017_4fb11b3de943",
+      "1033_2025_zh_c0018_5537da0fa490",
+      "1033_2025_zh_c0019_46b612f34917"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/1033_2025/full_text.txt",
+      "cases/zh/2026/1033_2025/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "上訴人A對初審法院認定其觸犯家庭暴力罪及加重傷害身體完整性罪提出上訴，主張原判決事實證據不足，尤其指第一被害人單一證言缺乏可信性，且第二被害人拒絕作證，導致無法客觀還原家庭關係與暴力行為。上訴法院審視後認為，家庭暴力罪需證明行為人透過暴力形成對被害人的強制壓制與控制，但卷宗無證據顯示上訴人有長期控制或虐待行為，且其曾提供學費支持第一被害人，顯示無強制壓制之實質。針對加重傷害身體完整性罪，上訴人主張行為屬過失而非故意，且無直接證據證明其故意攻擊第二被害人。法院最終改判上訴人僅觸犯加重傷害身體完整性罪（針對第一被害人），判處一年六個月徒刑，並維持對第二被害人的九個月徒刑，兩罪併罰合共二年徒刑，暫緩三年執行，並由社工局監督。",
+    "holding": "上訴人因缺乏證據證明長期虐待或強制控制，家庭暴力罪構成要件不成立，應廢止該罪名判決；針對加重傷害身體完整性罪，上訴人行為屬故意，但為過失性傷害，法院改判其觸犯該罪，並依《刑法典》第48條規定，綜合考慮其人格、生活狀況、犯罪情節及預防需求，判處二年徒刑暫緩三年執行。",
+    "legal_basis": [
+      "《刑事訴訟法典》第400條第2款a)項",
+      "《刑事訴訟法典》第400條第1款",
+      "《刑法典》第140條第2款結合第137條第1款",
+      "《刑法典》第48條第1款",
+      "《刑法典》第65條",
+      "《刑法典》第71條第1款和第2款"
+    ],
+    "disputed_issues": [
+      "家庭暴力罪是否成立，是否需證明行為人對被害人形成強制壓制與控制",
+      "第一被害人單一證言是否足以證明長期虐待事實",
+      "第二被害人拒絕作證是否導致證據不足",
+      "上訴人對第二被害人之傷害行為是否屬故意攻擊",
+      "緩刑是否符合《刑法典》第48條之實質要件"
+    ]
+  },
+  "generation_status": "local_model_generated",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen3:4b-instruct",
+  "prompt_version": "day45_prompt_b_tch_norm",
+  "script_normalization_applied": false,
+  "output_script": "traditional_chinese",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli"
+  ]
+}

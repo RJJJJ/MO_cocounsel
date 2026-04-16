@@ -1,0 +1,34 @@
+Upgraded Local Model Candidate Benchmark Report - Day 46
+report_path: data\eval\upgraded_local_model_candidate_benchmark_report.txt
+
+=== Benchmark Conditions (Constant) ===
+prompt_version: day45_prompt_b_tch_norm
+sample cases used: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A', '1092/2025', '117/2026', '118/2026', '119/2026', '120/2026']
+sample_case_count: 10
+same_input_batch: yes
+same_generation_script: connect_local_chinese_model_metadata_generation.py
+script normalization applied: traditional_chinese_normalization.py
+
+=== Current Model ===
+current_model_name: qwen2.5:3b-instruct
+generation success count: 10
+generation total count: 10
+field completeness: {'case_summary': 10, 'holding': 9, 'legal_basis': 10, 'disputed_issues': 10}
+script normalization applied count: 3
+runtime seconds: 424.29
+basic runtime practicality note: practical for local batch loop (avg 42.43s/case, success 100%)
+
+=== Candidate Model ===
+candidate_model_name: qwen3:4b-instruct
+generation success count: 10
+generation total count: 10
+field completeness: {'case_summary': 10, 'holding': 10, 'legal_basis': 10, 'disputed_issues': 10}
+script normalization applied count: 0
+runtime seconds: 1252.23
+basic runtime practicality note: needs tuning before default switch (avg 125.22s/case, success 100%)
+
+=== Comparison Readiness ===
+comparison-ready yes/no: yes
+
+=== Promotion Hint ===
+Only promote candidate if output stability/completeness improves without unacceptable runtime tradeoff.

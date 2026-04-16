@@ -1,0 +1,161 @@
+Local Model Metadata Generation Report - Day 45
+input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+output_jsonl_path: data\eval\upgraded_local_model_candidate_benchmark\candidate__qwen3.5_4b__day45_prompt_b_tch_norm.jsonl
+model_backend: ollama_cli
+model_name: qwen3.5:4b
+prompt_version: day45_prompt_b_tch_norm
+sample cases selected: 10
+sample case numbers: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A', '1092/2025', '117/2026', '118/2026', '119/2026', '120/2026']
+model-generated cases written: 10
+generation success count: 0
+generation failure count: 10
+script normalization applied count: 0
+script normalization applied yes/no: False
+generation fields attempted: ['case_summary', 'holding', 'legal_basis', 'disputed_issues']
+whether local model metadata generation appears successful: False
+
+Sample outputs:
+
+=== sample_case_1 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "100/2026",
+    "authoritative_decision_date": "26/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5bb24337c3797b0e.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42279",
+    "source_chunk_ids": [
+      "100_2026_zh_c0000_82cdcdb56831",
+      "100_2026_zh_c0001_f9c40d3c99f8",
+      "100_2026_zh_c0002_383f91369ba1",
+      "100_2026_zh_c0003_ef23a02b0792",
+      "100_2026_zh_c0004_f0561356a2f5",
+      "100_2026_zh_c0005_3f1a70b298c9",
+      "100_2026_zh_c0006_17f843fdeda8",
+      "100_2026_zh_c0007_4eaf46e783f5",
+      "100_2026_zh_c0008_bdc568066c4b"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/100_2026/full_text.txt",
+      "cases/zh/2026/100_2026/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "",
+    "holding": "",
+    "legal_basis": [],
+    "disputed_issues": []
+  },
+  "generation_status": "local_model_generation_failed",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen3.5:4b",
+  "prompt_version": "day45_prompt_b_tch_norm",
+  "script_normalization_applied": false,
+  "output_script": "unknown",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli",
+    "generation_error=Ollama API Error: timed out"
+  ]
+}
+
+=== sample_case_2 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "1026/2025",
+    "authoritative_decision_date": "26/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "澳門以外的法院或仲裁員作出的裁判的審查及確認",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5d3ba8dddfd2e769.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42365",
+    "source_chunk_ids": [
+      "1026_2025_zh_c0000_a9c126d85c8e",
+      "1026_2025_zh_c0001_c30435ec25ad",
+      "1026_2025_zh_c0002_1bcbbb28473d",
+      "1026_2025_zh_c0003_84ea7096f58a"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/1026_2025/full_text.txt",
+      "cases/zh/2026/1026_2025/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "",
+    "holding": "",
+    "legal_basis": [],
+    "disputed_issues": []
+  },
+  "generation_status": "local_model_generation_failed",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen3.5:4b",
+  "prompt_version": "day45_prompt_b_tch_norm",
+  "script_normalization_applied": false,
+  "output_script": "unknown",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli",
+    "generation_error=Ollama API Error: timed out"
+  ]
+}
+
+=== sample_case_3 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "1033/2025",
+    "authoritative_decision_date": "12/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-0dd8fc95d98feda0.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42325",
+    "source_chunk_ids": [
+      "1033_2025_zh_c0000_911fcb0291e7",
+      "1033_2025_zh_c0001_7cbe87778900",
+      "1033_2025_zh_c0002_72d1cc1af6f0",
+      "1033_2025_zh_c0003_60273d24df13",
+      "1033_2025_zh_c0004_04bae5574206",
+      "1033_2025_zh_c0005_651f6699a425",
+      "1033_2025_zh_c0006_815cab4165ce",
+      "1033_2025_zh_c0007_8ad783eed4de",
+      "1033_2025_zh_c0008_0c754ea84829",
+      "1033_2025_zh_c0009_1b058363e232",
+      "1033_2025_zh_c0010_b632c702e80f",
+      "1033_2025_zh_c0011_f1c07c0fae89",
+      "1033_2025_zh_c0012_62ecac25a8b2",
+      "1033_2025_zh_c0013_b8b078db82c3",
+      "1033_2025_zh_c0014_6374b6a5e6c7",
+      "1033_2025_zh_c0015_3615e39ff889",
+      "1033_2025_zh_c0016_d6d29f6c6bdb",
+      "1033_2025_zh_c0017_4fb11b3de943",
+      "1033_2025_zh_c0018_5537da0fa490",
+      "1033_2025_zh_c0019_46b612f34917"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/1033_2025/full_text.txt",
+      "cases/zh/2026/1033_2025/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "",
+    "holding": "",
+    "legal_basis": [],
+    "disputed_issues": []
+  },
+  "generation_status": "local_model_generation_failed",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen3.5:4b",
+  "prompt_version": "day45_prompt_b_tch_norm",
+  "script_normalization_applied": false,
+  "output_script": "unknown",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli",
+    "generation_error=Ollama API Error: timed out"
+  ]
+}
