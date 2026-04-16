@@ -1,0 +1,126 @@
+Integrated Metadata Research Pipeline Report - Day 50
+query_received: 假釋裁定的實質要件是什麼
+retrieved_cases_count: 5
+cases_enriched_with_metadata: 5
+model_generated_metadata_used_count: 0
+deterministic_fallback_used_count: 5
+metadata_integrated_research_pipeline_appears_successful: True
+
+research_sources:
+[
+  {
+    "authoritative_case_number": "24/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 原審法庭考慮到上訴人在服刑期間仍有三次違規的記錄，其總評價為“差”，可見其並未有從過往的刑罰當中吸取足夠的教訓，雖然上訴人自稱已知錯並會改正，但其所指的這種悔悟態度卻未有反映在其客觀的行為之中。 行為人的真誠悔悟不單止是嘴裡說說就算，還需要透過其行為表現來加以印...",
+    "holding": "判處上訴人繳付4個計算單位之司法費。",
+    "legal_basis": [
+      "第56條",
+      "第400條",
+      "第157條",
+      "第468條"
+    ],
+    "disputed_issues": [
+      "否決假釋",
+      "假釋的實質要件 摘要 除了法律所規定的客觀前提要件外",
+      "《刑法典》第56條第1款a項及b項還規定了當中的實質要件",
+      "即： — 行為人以往之生活及其人格",
+      "以及於執行徒刑期間在人格方面之演變情況",
+      "期待被判刑者一旦獲釋",
+      "將能以對社會負責之方式生活而不再犯罪屬有依據者",
+      "及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-198181ba100d00af.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42133"
+  },
+  {
+    "authoritative_case_number": "164/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "--- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) --- 日期：26/02/2025 ------------------------------------------------------------------------------------- --- 裁判書製作法官：周艷平法官 -------------------------------------------------------------------- 簡要裁判書 編號：第164/2026號（刑事上訴案） 上訴人: A 日期：2...",
+    "holding": "* 四、決定 綜上所述，裁判書製作人裁定上訴人A的上訴理由明顯不成立，駁回上訴，並維持被上訴之決定。",
+    "legal_basis": [
+      "第407條",
+      "第56條",
+      "第468條",
+      "第410條"
+    ],
+    "disputed_issues": [
+      "刑事訴訟程序的上訴"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-f9a8bc453cbfc6f5.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42261"
+  },
+  {
+    "authoritative_case_number": "253/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "案件編號: 第253/2026號（刑事上訴案） 日期: 2026年3月26日 重要法律問題：假釋 摘 要 假釋作為一項執行徒刑的機制，必須同時符合特別預防和一般預防犯罪兩方面的要求。假釋一般預防方面的要求是，假釋不能影響維護法律秩序及社會安寧，這是從整個社會的角度對假釋提出的一個前提要求。簡言之，服刑人即使符合了特別預防方面的要求，但是，如不能滿足一般預防方面的要求，亦不能批准假釋。 假釋制度是「針對個人」的徒刑執行制度，即便同案犯共同犯罪，其假釋申請與審核是獨立的，同案犯的假釋有利因素不會自動惠及其他同案共犯，亦不會因同案共犯獲假釋而自動享有假釋。",
+    "holding": "*** 四、 決定 綜上所述，本合議庭裁定上訴人A的上訴理由不成立，維持被上訴批示之決定。",
+    "legal_basis": [
+      "第56條",
+      "第468條",
+      "第469條",
+      "第40條",
+      "第14條",
+      "第8條",
+      "第21條",
+      "第22條"
+    ],
+    "disputed_issues": [
+      "刑事訴訟程序的上訴"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42357"
+  },
+  {
+    "authoritative_case_number": "165/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "案件編號:第165/2026號（刑事上訴案） 日期: 2026年3月5日 重要法律問題：假釋 摘 要 假釋作為一項執行徒刑的機制，不可偏離刑罰的目的，即：保護法益及使行為人重新納入社會，因此，要求在特別預防方面和一般預防方面均符合假釋的要求，缺一不可。 假釋一般預防方面的要求是，假釋不能影響維護法律秩序及社會安寧，這是從整個社會的角度對假釋提出的一個前提要求。",
+    "holding": "* 四、決定 綜上所述，本合議庭裁定上訴人A的上訴理由不成立，維持被上訴批示之決定。",
+    "legal_basis": [
+      "第56條",
+      "第468條",
+      "第469條",
+      "第40條"
+    ],
+    "disputed_issues": [
+      "刑事訴訟程序的上訴"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-51e6b73281989706.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42189"
+  },
+  {
+    "authoritative_case_number": "206/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "--- 簡要裁判 (按照經第9/2013號法律修改的<<刑事訴訟法典>>第407條第6款規定) - --- 日期：24/03/2026 -------------------------------------------------------------------------------------- --- 裁判書製作法官：周艷平法官 --------------------------------------------------------------------- 簡要裁判書 編號：第206/2026號 (刑事上訴案) 上訴人：A ...",
+    "holding": "* 四、決定 綜上所述，裁判書製作人裁定上訴人A的上訴理由明顯不成立， 駁回上訴並維持原審判決。",
+    "legal_basis": [
+      "第407條",
+      "第56條",
+      "第40條",
+      "第468條",
+      "第469條",
+      "第33條",
+      "第32條",
+      "第2條"
+    ],
+    "disputed_issues": [
+      "刑事訴訟程序的上訴"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-cedacb52acdf7fa2.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42351"
+  }
+]
