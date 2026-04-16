@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
-"""Day 24: add all-court crawling mode while preserving stable append-to-corpus pipeline."""
+"""Day 60 child crawler: sentence_id-first per-court crawl with optional convergence rescans.
+
+Day 60 authoritative harvesting logic:
+- single-pass is not assumed complete because page drift exists on the source site
+- authoritative coverage is approached by repeated per-court rescans
+- convergence means configured consecutive rounds with zero newly discovered sentence_id
+- convergence does NOT claim mathematical completeness of all hidden records
+- sentence_id remains authoritative identity
+- only sentence-id-backed records belong to the default authoritative corpus path
+"""
 
 from __future__ import annotations
 
@@ -47,9 +56,15 @@ class CrawlStats:
     cards_with_pt_pdf: int = 0
     cards_with_both_pdf_languages: int = 0
     new_corpus_records_added: int = 0
+    total_rounds_run: int = 0
+    total_unique_sentence_id_discovered: int = 0
+    consecutive_zero_new_rounds_reached: int = 0
+    convergence_stop_reason: str = ""
     run_status: str = "fatal_failure"
     stop_reason: str = ""
     page_audit_entries: list[dict[str, Any]] | None = None
+    round_summaries: list[dict[str, Any]] | None = None
+    detail_fetch_failures: list[dict[str, Any]] | None = None
 
 
 def load_playwright():
@@ -138,6 +153,38 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
         help="optional override for crawl report path",
+    )
+    parser.add_argument(
+        "--child-summary-path",
+        type=Path,
+        default=None,
+        help="optional JSON summary path for parent orchestration",
+    )
+    parser.add_argument(
+        "--audit-path",
+        type=Path,
+        default=None,
+        help="optional JSONL audit path (default: <corpus-root>/convergence_audit.jsonl)",
+    )
+    parser.add_argument("--until-converged", action="store_true", help="enable Day 60 convergence crawl mode")
+    parser.add_argument("--max-rounds", type=int, default=6, help="maximum rounds when --until-converged is enabled")
+    parser.add_argument(
+        "--zero-new-round-stop",
+        type=int,
+        default=2,
+        help="stop after N consecutive rounds with zero newly discovered sentence_id",
+    )
+    parser.add_argument(
+        "--max-pages-per-round",
+        type=int,
+        default=0,
+        help="optional page cap per round (0 uses configured --start-page/--end-page range)",
+    )
+    parser.add_argument(
+        "--max-consecutive-no-new-pages",
+        type=int,
+        default=0,
+        help="optional per-round early stop when consecutive pages have zero newly discovered sentence_id",
     )
     return parser.parse_args()
 
@@ -613,6 +660,10 @@ def write_report(stats: CrawlStats, *, exit_code: int) -> None:
         f"cards with pt pdf: {stats.cards_with_pt_pdf}",
         f"cards with both pdf languages: {stats.cards_with_both_pdf_languages}",
         f"new corpus records added: {stats.new_corpus_records_added}",
+        f"total rounds run: {stats.total_rounds_run}",
+        f"total unique sentence_id discovered: {stats.total_unique_sentence_id_discovered}",
+        f"consecutive zero-new rounds reached: {stats.consecutive_zero_new_rounds_reached}",
+        f"convergence stop reason: {stats.convergence_stop_reason or 'none'}",
         f"stop reason: {stats.stop_reason or 'none'}",
         "",
         "page audit (json lines):",
@@ -642,6 +693,10 @@ def print_summary(stats: CrawlStats, *, exit_code: int) -> None:
     print(f"cards with pt pdf: {stats.cards_with_pt_pdf}")
     print(f"cards with both pdf languages: {stats.cards_with_both_pdf_languages}")
     print(f"new corpus records added: {stats.new_corpus_records_added}")
+    print(f"total rounds run: {stats.total_rounds_run}")
+    print(f"total unique sentence_id discovered: {stats.total_unique_sentence_id_discovered}")
+    print(f"consecutive zero-new rounds reached: {stats.consecutive_zero_new_rounds_reached}")
+    print(f"convergence stop reason: {stats.convergence_stop_reason or 'none'}")
     print(f"stop reason: {stats.stop_reason or 'none'}")
 
 
@@ -667,9 +722,11 @@ def run() -> int:
     CASES_ROOT = CORPUS_ROOT / "cases"
     MANIFEST_PATH = CORPUS_ROOT / "manifest.jsonl"
     REPORT_PATH = args.report_path or (CORPUS_ROOT / "all_court_crawl_report.txt")
+    child_summary_path = args.child_summary_path or (CORPUS_ROOT / "child_run_summary.json")
+    audit_path = args.audit_path or (CORPUS_ROOT / "convergence_audit.jsonl")
 
     playwright_error, sync_playwright = load_playwright()
-    stats = CrawlStats(court_mode=args.court, page_audit_entries=[])
+    stats = CrawlStats(court_mode=args.court, page_audit_entries=[], round_summaries=[], detail_fetch_failures=[])
 
     if not sync_playwright:
         stats.run_status = "fatal_failure"
@@ -683,10 +740,13 @@ def run() -> int:
     CORPUS_ROOT.mkdir(parents=True, exist_ok=True)
     CASES_ROOT.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    child_summary_path.parent.mkdir(parents=True, exist_ok=True)
+    audit_path.parent.mkdir(parents=True, exist_ok=True)
 
     manifest_rows = read_manifest(MANIFEST_PATH)
     seen_sentence_ids = {get_sentence_id(r) for r in manifest_rows if get_sentence_id(r)}
     seen_page_signatures: set[tuple[tuple[str, ...], ...]] = set()
+    discovered_sentence_ids_this_run: set[str] = set()
 
     try:
         with sync_playwright() as p:
@@ -694,188 +754,315 @@ def run() -> int:
             context = browser.new_context(locale="zh-HK")
             page = context.new_page()
 
-            submitted_result_url = start_court_search_from_home(page, args.court)
-
             detail_page = context.new_page()
+            total_rounds_target = max(1, args.max_rounds) if args.until_converged else 1
+            zero_new_round_stop = max(1, args.zero_new_round_stop) if args.until_converged else 1
+            max_pages_per_round = (
+                max(1, args.max_pages_per_round) if args.max_pages_per_round > 0 else max(1, end_page - start_page + 1)
+            )
+            consecutive_zero_new_rounds = 0
 
             with MANIFEST_PATH.open("a", encoding="utf-8") as manifest_fh:
                 new_index = len(manifest_rows) + 1
+                with audit_path.open("a", encoding="utf-8") as audit_fh:
+                    for round_number in range(1, total_rounds_target + 1):
+                        submitted_result_url = start_court_search_from_home(page, args.court)
+                        stats.total_rounds_run += 1
+                        round_stats = {
+                            "court": args.court,
+                            "round_number": round_number,
+                            "pages_attempted": 0,
+                            "valid_pages_parsed": 0,
+                            "cards_discovered": 0,
+                            "sentence_id_candidates": 0,
+                            "new_sentence_id_found": 0,
+                            "duplicate_sentence_id_skipped": 0,
+                            "missing_sentence_id_skipped": 0,
+                            "detail_pages_attempted": 0,
+                            "detail_pages_succeeded": 0,
+                            "stop_reason": "",
+                        }
+                        consecutive_no_new_pages = 0
 
-                for page_number in range(start_page, end_page + 1):
-                    stats.pages_attempted += 1
-                    target_url = set_page_param_from_result_url(submitted_result_url, page_number)
-                    page_cards: list[dict[str, Any]] = []
-                    page_status = "ok"
-                    retry_count = 0
-                    page_exception: Exception | None = None
-                    for attempt in range(2):
-                        retry_count = attempt
-                        try:
-                            if page_number == 1 and attempt == 0:
-                                # page 1 must come from homepage form submission snapshot
-                                wait_for_cards_stable(page)
-                            else:
-                                page.goto(target_url, wait_until="domcontentloaded", timeout=45_000)
-                                wait_for_cards_stable(page)
-                            page_cards = parse_cards_from_current_page(page, page_number)
-                            break
-                        except Exception as exc:
-                            page_exception = exc
-                            page_status = f"retryable_error:{type(exc).__name__}"
-                            if attempt == 0:
-                                submitted_result_url = start_court_search_from_home(page, args.court)
-                                target_url = set_page_param_from_result_url(submitted_result_url, page_number)
-                                continue
-                    if page_exception and not page_cards:
-                        if has_useful_court_progress(stats):
-                            stats.run_status = "partial_success"
-                            stats.stop_reason = (
-                                f"late-page timeout/error treated as practical end-of-range at page {page_number}: "
-                                f"{type(page_exception).__name__}"
-                            )
-                            page_status = "late_page_timeout_non_fatal"
-                            stats.page_audit_entries.append(
-                                {
+                        for offset in range(max_pages_per_round):
+                            page_number = start_page + offset
+                            if page_number > end_page:
+                                round_stats["stop_reason"] = f"reached configured page range {start_page}..{end_page}"
+                                break
+
+                            stats.pages_attempted += 1
+                            round_stats["pages_attempted"] += 1
+                            target_url = set_page_param_from_result_url(submitted_result_url, page_number)
+                            page_cards: list[dict[str, Any]] = []
+                            page_status = "ok"
+                            retry_count = 0
+                            page_exception: Exception | None = None
+                            for attempt in range(2):
+                                retry_count = attempt
+                                try:
+                                    if page_number == 1 and attempt == 0:
+                                        wait_for_cards_stable(page)
+                                    else:
+                                        page.goto(target_url, wait_until="domcontentloaded", timeout=45_000)
+                                        wait_for_cards_stable(page)
+                                    page_cards = parse_cards_from_current_page(page, page_number)
+                                    break
+                                except Exception as exc:
+                                    page_exception = exc
+                                    page_status = f"retryable_error:{type(exc).__name__}"
+                                    if attempt == 0:
+                                        submitted_result_url = start_court_search_from_home(page, args.court)
+                                        target_url = set_page_param_from_result_url(submitted_result_url, page_number)
+                                        continue
+                            if page_exception and not page_cards:
+                                if has_useful_court_progress(stats):
+                                    stats.run_status = "partial_success"
+                                    round_stats["stop_reason"] = (
+                                        f"late-page timeout/error treated as practical end-of-range at page {page_number}: "
+                                        f"{type(page_exception).__name__}"
+                                    )
+                                    page_status = "late_page_timeout_non_fatal"
+                                else:
+                                    raise page_exception
+                            if not page_cards:
+                                if not round_stats["stop_reason"]:
+                                    round_stats["stop_reason"] = f"invalid/no-result page at page {page_number}"
+                                audit_item = {
+                                    "record_type": "page_audit",
                                     "court": args.court,
-                                    "page": page_number,
+                                    "round_number": round_number,
+                                    "page_number": page_number,
                                     "page_url": target_url,
                                     "cards_found": 0,
                                     "first_sentence_ids": [],
                                     "last_sentence_ids": [],
+                                    "new_sentence_ids_discovered_on_page": [],
                                     "retry_count": retry_count,
-                                    "page_status": page_status,
-                                    "error_type": type(page_exception).__name__,
+                                    "page_status": page_status if page_status != "ok" else "invalid_no_result_page",
                                 }
-                            )
-                            break
-                        raise page_exception
+                                stats.page_audit_entries.append(audit_item)
+                                audit_fh.write(json.dumps(audit_item, ensure_ascii=False) + "\n")
+                                break
 
-                    if not page_cards:
-                        stats.run_status = "success"
-                        stats.stop_reason = f"invalid/no-result page at page {page_number} (treated as practical page exhaustion)"
-                        page_status = "invalid_no_result_page"
-                        stats.page_audit_entries.append(
-                            {
-                                "court": args.court,
-                                "page": page_number,
-                                "page_url": target_url,
-                                "cards_found": 0,
-                                "first_sentence_ids": [],
-                                "last_sentence_ids": [],
-                                "retry_count": retry_count,
-                                "page_status": page_status,
-                            }
-                        )
-                        break
-
-                    signature = tuple(
-                        sorted(
-                            (
-                                normalize_space(c.get("source_list_case_number")),
-                                normalize_space(c.get("source_list_decision_date")),
-                                "|".join(collect_document_urls(c, kind="text")) or "|".join(collect_document_urls(c, kind="pdf")),
+                            signature = tuple(
+                                sorted(
+                                    (
+                                        normalize_space(c.get("source_list_case_number")),
+                                        normalize_space(c.get("source_list_decision_date")),
+                                        "|".join(collect_document_urls(c, kind="text"))
+                                        or "|".join(collect_document_urls(c, kind="pdf")),
+                                    )
+                                    for c in page_cards
+                                )
                             )
-                            for c in page_cards
-                        )
-                    )
-                    if signature in seen_page_signatures:
-                        stats.run_status = "success"
-                        stats.stop_reason = f"duplicate result page signature detected at page {page_number}"
-                        page_status = "duplicate_result_signature"
-                        ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
-                        stats.page_audit_entries.append(
-                            {
+                            if signature in seen_page_signatures:
+                                round_stats["stop_reason"] = f"duplicate result page signature detected at page {page_number}"
+                                ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
+                                audit_item = {
+                                    "record_type": "page_audit",
+                                    "court": args.court,
+                                    "round_number": round_number,
+                                    "page_number": page_number,
+                                    "page_url": target_url,
+                                    "cards_found": len(page_cards),
+                                    "first_sentence_ids": ids[:3],
+                                    "last_sentence_ids": ids[-3:],
+                                    "new_sentence_ids_discovered_on_page": [],
+                                    "retry_count": retry_count,
+                                    "page_status": "duplicate_result_signature",
+                                }
+                                stats.page_audit_entries.append(audit_item)
+                                audit_fh.write(json.dumps(audit_item, ensure_ascii=False) + "\n")
+                                break
+                            seen_page_signatures.add(signature)
+
+                            stats.valid_pages_parsed += 1
+                            round_stats["valid_pages_parsed"] += 1
+                            stats.cards_discovered += len(page_cards)
+                            round_stats["cards_discovered"] += len(page_cards)
+                            stats.cards_with_zh_text += sum(1 for c in page_cards if normalize_space(c.get("text_url_zh")))
+                            stats.cards_with_pt_text += sum(1 for c in page_cards if normalize_space(c.get("text_url_pt")))
+                            stats.cards_with_both_text_languages += sum(
+                                1
+                                for c in page_cards
+                                if normalize_space(c.get("text_url_zh")) and normalize_space(c.get("text_url_pt"))
+                            )
+                            stats.cards_with_zh_pdf += sum(1 for c in page_cards if normalize_space(c.get("pdf_url_zh")))
+                            stats.cards_with_pt_pdf += sum(1 for c in page_cards if normalize_space(c.get("pdf_url_pt")))
+                            stats.cards_with_both_pdf_languages += sum(
+                                1 for c in page_cards if normalize_space(c.get("pdf_url_zh")) and normalize_space(c.get("pdf_url_pt"))
+                            )
+                            ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
+                            new_sentence_ids_on_page: list[str] = []
+
+                            for card in page_cards:
+                                sentence_id = get_sentence_id(card)
+                                if not sentence_id:
+                                    stats.missing_sentence_id_skipped += 1
+                                    round_stats["missing_sentence_id_skipped"] += 1
+                                    continue
+                                stats.candidates_with_sentence_id += 1
+                                round_stats["sentence_id_candidates"] += 1
+                                if sentence_id in seen_sentence_ids:
+                                    stats.duplicate_sentence_id_skipped += 1
+                                    round_stats["duplicate_sentence_id_skipped"] += 1
+                                    continue
+
+                                seen_sentence_ids.add(sentence_id)
+                                discovered_sentence_ids_this_run.add(sentence_id)
+                                round_stats["new_sentence_id_found"] += 1
+                                new_sentence_ids_on_page.append(sentence_id)
+
+                                detail_url = normalize_space(card.get("text_url_primary") or card.get("text_url_or_action"))
+                                if not detail_url:
+                                    failure = {
+                                        "record_type": "detail_fetch_failure",
+                                        "court": args.court,
+                                        "round_number": round_number,
+                                        "page_number": page_number,
+                                        "sentence_id": sentence_id,
+                                        "detail_url": detail_url,
+                                        "error_type": "missing_detail_url",
+                                    }
+                                    stats.detail_fetch_failures.append(failure)
+                                    audit_fh.write(json.dumps(failure, ensure_ascii=False) + "\n")
+                                    continue
+
+                                stats.detail_pages_attempted += 1
+                                round_stats["detail_pages_attempted"] += 1
+                                cleaned_text = ""
+                                detail_error = ""
+                                for detail_attempt in range(2):
+                                    try:
+                                        detail_page.goto(detail_url, wait_until="domcontentloaded", timeout=45_000)
+                                        detail_page.wait_for_load_state("networkidle", timeout=20_000)
+                                        raw_text = extract_body_first_text(detail_page, playwright_error)
+                                        cleaned_text = normalize_multiline_text(remove_print_noise_from_text(raw_text))
+                                        detail_error = ""
+                                        break
+                                    except Exception as exc:
+                                        detail_error = type(exc).__name__
+                                        if detail_attempt == 0:
+                                            continue
+
+                                if detail_error:
+                                    failure = {
+                                        "record_type": "detail_fetch_failure",
+                                        "court": args.court,
+                                        "round_number": round_number,
+                                        "page_number": page_number,
+                                        "sentence_id": sentence_id,
+                                        "detail_url": detail_url,
+                                        "error_type": detail_error,
+                                    }
+                                    stats.detail_fetch_failures.append(failure)
+                                    audit_fh.write(json.dumps(failure, ensure_ascii=False) + "\n")
+                                    continue
+
+                                if not good_full_text(cleaned_text):
+                                    failure = {
+                                        "record_type": "detail_fetch_failure",
+                                        "court": args.court,
+                                        "round_number": round_number,
+                                        "page_number": page_number,
+                                        "sentence_id": sentence_id,
+                                        "detail_url": detail_url,
+                                        "error_type": "insufficient_full_text",
+                                    }
+                                    stats.detail_fetch_failures.append(failure)
+                                    audit_fh.write(json.dumps(failure, ensure_ascii=False) + "\n")
+                                    continue
+
+                                stats.detail_pages_succeeded += 1
+                                round_stats["detail_pages_succeeded"] += 1
+                                record = {
+                                    **card,
+                                    "sentence_id": sentence_id,
+                                    "language": detect_language_from_url(detail_url),
+                                    "full_text": cleaned_text,
+                                }
+                                append_record_to_corpus(record, manifest_fh, new_index=new_index)
+                                new_index += 1
+                                stats.new_corpus_records_added += 1
+
+                            if new_sentence_ids_on_page:
+                                consecutive_no_new_pages = 0
+                            else:
+                                consecutive_no_new_pages += 1
+                            audit_item = {
+                                "record_type": "page_audit",
                                 "court": args.court,
-                                "page": page_number,
+                                "round_number": round_number,
+                                "page_number": page_number,
                                 "page_url": target_url,
                                 "cards_found": len(page_cards),
                                 "first_sentence_ids": ids[:3],
                                 "last_sentence_ids": ids[-3:],
+                                "new_sentence_ids_discovered_on_page": new_sentence_ids_on_page,
                                 "retry_count": retry_count,
                                 "page_status": page_status,
                             }
-                        )
-                        break
-                    seen_page_signatures.add(signature)
+                            stats.page_audit_entries.append(audit_item)
+                            audit_fh.write(json.dumps(audit_item, ensure_ascii=False) + "\n")
 
-                    stats.valid_pages_parsed += 1
-                    stats.cards_discovered += len(page_cards)
-                    stats.cards_with_zh_text += sum(1 for c in page_cards if normalize_space(c.get("text_url_zh")))
-                    stats.cards_with_pt_text += sum(1 for c in page_cards if normalize_space(c.get("text_url_pt")))
-                    stats.cards_with_both_text_languages += sum(
-                        1 for c in page_cards if normalize_space(c.get("text_url_zh")) and normalize_space(c.get("text_url_pt"))
+                            if args.max_consecutive_no_new_pages > 0 and consecutive_no_new_pages >= args.max_consecutive_no_new_pages:
+                                round_stats["stop_reason"] = (
+                                    f"max_consecutive_no_new_pages reached ({args.max_consecutive_no_new_pages}) at page {page_number}"
+                                )
+                                break
+
+                        if not round_stats["stop_reason"]:
+                            round_stats["stop_reason"] = f"reached max_pages_per_round={max_pages_per_round}"
+                        stats.round_summaries.append(round_stats)
+                        audit_fh.write(json.dumps({"record_type": "round_summary", **round_stats}, ensure_ascii=False) + "\n")
+
+                        if round_stats["new_sentence_id_found"] > 0:
+                            consecutive_zero_new_rounds = 0
+                        else:
+                            consecutive_zero_new_rounds += 1
+                        if args.until_converged and consecutive_zero_new_rounds >= zero_new_round_stop:
+                            stats.convergence_stop_reason = (
+                                f"converged: {consecutive_zero_new_rounds} consecutive zero-new-sentence_id rounds"
+                            )
+                            break
+                if not stats.convergence_stop_reason:
+                    stats.convergence_stop_reason = (
+                        f"reached max_rounds={total_rounds_target}" if args.until_converged else "single_pass_completed"
                     )
-                    stats.cards_with_zh_pdf += sum(1 for c in page_cards if normalize_space(c.get("pdf_url_zh")))
-                    stats.cards_with_pt_pdf += sum(1 for c in page_cards if normalize_space(c.get("pdf_url_pt")))
-                    stats.cards_with_both_pdf_languages += sum(
-                        1 for c in page_cards if normalize_space(c.get("pdf_url_zh")) and normalize_space(c.get("pdf_url_pt"))
-                    )
-                    ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
-                    stats.page_audit_entries.append(
-                        {
-                            "court": args.court,
-                            "page": page_number,
-                            "page_url": target_url,
-                            "cards_found": len(page_cards),
-                            "first_sentence_ids": ids[:3],
-                            "last_sentence_ids": ids[-3:],
-                            "retry_count": retry_count,
-                            "page_status": page_status,
-                        }
-                    )
-
-                    for card in page_cards:
-                        sentence_id = get_sentence_id(card)
-                        if not sentence_id:
-                            stats.missing_sentence_id_skipped += 1
-                            continue
-                        stats.candidates_with_sentence_id += 1
-                        if sentence_id in seen_sentence_ids:
-                            stats.duplicate_sentence_id_skipped += 1
-                            continue
-
-                        detail_url = normalize_space(card.get("text_url_primary") or card.get("text_url_or_action"))
-                        if not detail_url:
-                            continue
-
-                        stats.detail_pages_attempted += 1
-                        try:
-                            detail_page.goto(detail_url, wait_until="domcontentloaded", timeout=45_000)
-                            detail_page.wait_for_load_state("networkidle", timeout=20_000)
-                            raw_text = extract_body_first_text(detail_page, playwright_error)
-                            cleaned_text = normalize_multiline_text(remove_print_noise_from_text(raw_text))
-                        except Exception:
-                            continue
-
-                        if not good_full_text(cleaned_text):
-                            continue
-
-                        stats.detail_pages_succeeded += 1
-
-                        record = {
-                            **card,
-                            "sentence_id": sentence_id,
-                            "language": detect_language_from_url(detail_url),
-                            "full_text": cleaned_text,
-                        }
-
-                        append_record_to_corpus(record, manifest_fh, new_index=new_index)
-                        new_index += 1
-                        stats.new_corpus_records_added += 1
-                        seen_sentence_ids.add(sentence_id)
-
-                if not stats.stop_reason and stats.pages_attempted >= (end_page - start_page + 1):
-                    stats.run_status = "success"
-                    stats.stop_reason = f"reached configured page range {start_page}..{end_page}"
 
             context.close()
             browser.close()
 
         if not stats.run_status or stats.run_status == "fatal_failure":
             stats.run_status = "success"
+        stats.total_unique_sentence_id_discovered = len(discovered_sentence_ids_this_run)
+        stats.consecutive_zero_new_rounds_reached = consecutive_zero_new_rounds
+        stats.stop_reason = stats.stop_reason or stats.convergence_stop_reason
         write_report(stats, exit_code=0)
+        child_summary_path.write_text(
+            json.dumps(
+                {
+                    "court": args.court,
+                    "run_status": stats.run_status,
+                    "stop_reason": stats.stop_reason,
+                    "convergence_stop_reason": stats.convergence_stop_reason,
+                    "total_rounds_run": stats.total_rounds_run,
+                    "total_unique_sentence_id_discovered": stats.total_unique_sentence_id_discovered,
+                    "consecutive_zero_new_rounds_reached": stats.consecutive_zero_new_rounds_reached,
+                    "new_corpus_records_added": stats.new_corpus_records_added,
+                    "round_summaries": stats.round_summaries or [],
+                    "audit_path": audit_path.as_posix(),
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
         print_summary(stats, exit_code=0)
         print(f"report path: {REPORT_PATH}")
+        print(f"child summary path: {child_summary_path}")
+        print(f"audit path: {audit_path}")
         return 0
 
     except Exception as exc:
@@ -883,8 +1070,30 @@ def run() -> int:
         stats.stop_reason = stats.stop_reason or f"fatal error: {type(exc).__name__}"
         print(f"[ERROR] {exc}", file=sys.stderr)
         write_report(stats, exit_code=1)
+        child_summary_path.write_text(
+            json.dumps(
+                {
+                    "court": args.court,
+                    "run_status": stats.run_status,
+                    "stop_reason": stats.stop_reason,
+                    "convergence_stop_reason": stats.convergence_stop_reason,
+                    "total_rounds_run": stats.total_rounds_run,
+                    "total_unique_sentence_id_discovered": stats.total_unique_sentence_id_discovered,
+                    "consecutive_zero_new_rounds_reached": stats.consecutive_zero_new_rounds_reached,
+                    "new_corpus_records_added": stats.new_corpus_records_added,
+                    "round_summaries": stats.round_summaries or [],
+                    "audit_path": audit_path.as_posix(),
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
         print_summary(stats, exit_code=1)
         print(f"report path: {REPORT_PATH}")
+        print(f"child summary path: {child_summary_path}")
+        print(f"audit path: {audit_path}")
         return 1
 
 

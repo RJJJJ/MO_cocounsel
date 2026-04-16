@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Day 59: build authoritative full corpus by per-court crawl -> merge -> dedupe.
+"""Day 60: build authoritative full corpus by per-court convergence crawl -> merge -> dedupe.
 
-Authoritative flow (Day 59):
+Authoritative flow (Day 60):
 1) crawl each court separately (tui/tsi/tjb/ta)
+   - Day 60: repeatedly rescan each court from homepage-form snapshot until convergence
+     (configured consecutive zero-new-sentence_id rounds), then move to next court.
 2) merge all court manifests into one candidate pool
 3) dedupe after merge with auditable reasons
 4) publish merged authoritative corpus for downstream retrieval/prep
@@ -52,6 +54,10 @@ class CourtRunSummary:
     candidates_with_sentence_id: int
     missing_sentence_id_skipped: int
     duplicate_sentence_id_skipped: int
+    rounds_run: int = 0
+    total_unique_sentence_id_discovered: int = 0
+    new_corpus_records_added: int = 0
+    convergence_stop_reason: str = ""
 
 
 @dataclass(frozen=True)
@@ -64,10 +70,20 @@ class MergeStats:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Build Day 59 authoritative merged corpus from per-court crawls")
+    parser = argparse.ArgumentParser(description="Build Day 60 authoritative merged corpus from per-court convergence crawls")
     parser.add_argument("--courts", nargs="+", default=list(COURTS), help="court modes to run")
     parser.add_argument("--start-page", type=int, default=1, help="crawl start page")
     parser.add_argument("--end-page", type=int, default=10, help="crawl end page")
+    parser.add_argument("--until-converged", action="store_true", help="enable Day 60 per-court convergence mode")
+    parser.add_argument("--max-rounds", type=int, default=6, help="max rounds per court in convergence mode")
+    parser.add_argument("--zero-new-round-stop", type=int, default=2, help="consecutive zero-new rounds before stop")
+    parser.add_argument("--max-pages-per-round", type=int, default=0, help="page cap per round passed to child")
+    parser.add_argument(
+        "--max-consecutive-no-new-pages",
+        type=int,
+        default=0,
+        help="optional per-round early stop when consecutive pages discover zero new sentence_id",
+    )
     parser.add_argument("--per-court-root", type=Path, default=DEFAULT_PER_COURT_ROOT)
     parser.add_argument("--merged-root", type=Path, default=DEFAULT_MERGED_ROOT)
     parser.add_argument("--crawl-script", type=Path, default=DEFAULT_CRAWL_SCRIPT)
@@ -104,7 +120,7 @@ def _parse_explicit_manifest_overrides(items: list[str]) -> dict[str, Path]:
     return overrides
 
 
-def _run_per_court_crawl(args: argparse.Namespace, court: str) -> Path:
+def _run_per_court_crawl(args: argparse.Namespace, court: str) -> tuple[Path, dict[str, Any]]:
     # Day 59A hotfix note:
     # Child crawl exit code semantics now distinguish run completion from harvest completeness.
     # exit=0 may be either "success" or "partial_success" (e.g., late-page timeout after useful pages),
@@ -112,6 +128,7 @@ def _run_per_court_crawl(args: argparse.Namespace, court: str) -> Path:
     # Parent still fail-fast on non-zero exit codes, which represent true fatal failures.
     court_root = args.per_court_root / court
     report_path = court_root / "all_court_crawl_report.txt"
+    child_summary_path = court_root / "child_run_summary.json"
     court_root.mkdir(parents=True, exist_ok=True)
 
     cmd = [
@@ -127,7 +144,23 @@ def _run_per_court_crawl(args: argparse.Namespace, court: str) -> Path:
         str(court_root),
         "--report-path",
         str(report_path),
+        "--child-summary-path",
+        str(child_summary_path),
     ]
+    if args.until_converged:
+        cmd.extend(
+            [
+                "--until-converged",
+                "--max-rounds",
+                str(max(1, args.max_rounds)),
+                "--zero-new-round-stop",
+                str(max(1, args.zero_new_round_stop)),
+                "--max-pages-per-round",
+                str(max(0, args.max_pages_per_round)),
+                "--max-consecutive-no-new-pages",
+                str(max(0, args.max_consecutive_no_new_pages)),
+            ]
+        )
     print(f"[day59] running per-court crawl: {' '.join(cmd)}")
     completed = subprocess.run(cmd, cwd=REPO_ROOT, check=False)
     if completed.returncode != 0:
@@ -137,7 +170,10 @@ def _run_per_court_crawl(args: argparse.Namespace, court: str) -> Path:
     manifest_path = court_root / "manifest.jsonl"
     if not manifest_path.exists():
         raise FileNotFoundError(f"Manifest not found after crawl for court={court}: {manifest_path}")
-    return manifest_path
+    summary: dict[str, Any] = {}
+    if child_summary_path.exists():
+        summary = json.loads(child_summary_path.read_text(encoding="utf-8"))
+    return manifest_path, summary
 
 
 def _load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -419,9 +455,9 @@ def _write_outputs(
     metadata_policy_summary: dict[str, Any],
 ) -> dict[str, Any]:
     output = {
-        "day": 59,
+        "day": 60,
         "authoritative_flow": [
-            "per_court_crawl",
+            "per_court_convergence_crawl",
             "merge_and_dedupe",
             "downstream_retrieval_consumption",
             "attach_preferred_metadata",
@@ -437,9 +473,9 @@ def _write_outputs(
     report_json.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     txt_lines = [
-        "Day 59 Full Corpus Assembly Report",
+        "Day 60 Full Corpus Assembly Report",
         "================================",
-        "authoritative flow: per-court crawl -> merge/dedupe -> retrieval -> metadata attach",
+        "authoritative flow: per-court convergence crawl -> merge/dedupe -> retrieval -> metadata attach",
         "",
         "per-court raw counts:",
     ]
@@ -447,7 +483,11 @@ def _write_outputs(
         txt_lines.append(
             f"- {item.court}: raw={item.raw_records}, with_sentence_id={item.candidates_with_sentence_id}, "
             f"missing_sentence_id_skipped={item.missing_sentence_id_skipped}, "
-            f"duplicate_sentence_id_skipped={item.duplicate_sentence_id_skipped} "
+            f"duplicate_sentence_id_skipped={item.duplicate_sentence_id_skipped}, "
+            f"rounds_run={item.rounds_run}, "
+            f"total_unique_sentence_id_discovered={item.total_unique_sentence_id_discovered}, "
+            f"new_corpus_records_added={item.new_corpus_records_added}, "
+            f"convergence_stop_reason={item.convergence_stop_reason or 'n/a'} "
             f"(manifest: {item.manifest_path})"
         )
 
@@ -482,6 +522,7 @@ def main() -> int:
     manifest_overrides = _parse_explicit_manifest_overrides(args.court_manifest)
 
     court_manifest_paths: dict[str, Path] = {}
+    child_run_summaries: dict[str, dict[str, Any]] = {}
     all_candidates: list[dict[str, Any]] = []
 
     for court in courts:
@@ -490,10 +531,12 @@ def main() -> int:
 
         if court in manifest_overrides:
             manifest_path = manifest_overrides[court]
+            child_run_summaries[court] = {}
         elif args.skip_crawl:
             raise ValueError(f"--skip-crawl requires --court-manifest for court={court}")
         else:
-            manifest_path = _run_per_court_crawl(args, court)
+            manifest_path, child_summary = _run_per_court_crawl(args, court)
+            child_run_summaries[court] = child_summary
 
         records = _collect_merge_candidates(manifest_path=manifest_path, court=court)
         court_manifest_paths[court] = manifest_path
@@ -503,6 +546,14 @@ def main() -> int:
         print(f"[day59] per-court raw candidate count {court}: {len(records)}")
         print(f"[day59] per-court candidates with sentence_id {court}: {with_sentence_id}")
         print(f"[day59] per-court missing_sentence_id skipped (pre-merge estimate) {court}: {missing_sentence_id}")
+        if child_run_summaries.get(court):
+            child = child_run_summaries[court]
+            print(
+                f"[day60] convergence summary {court}: rounds={child.get('total_rounds_run', 0)}, "
+                f"new_sentence_ids={child.get('total_unique_sentence_id_discovered', 0)}, "
+                f"new_corpus_records={child.get('new_corpus_records_added', 0)}, "
+                f"stop={child.get('convergence_stop_reason', 'n/a')}"
+            )
 
     merge_stats = _dedupe_and_write_authoritative_corpus(candidates=all_candidates, merged_root=args.merged_root)
     court_summaries: list[CourtRunSummary] = []
@@ -524,6 +575,12 @@ def main() -> int:
                 candidates_with_sentence_id=stats["candidates_with_sentence_id"],
                 missing_sentence_id_skipped=stats["missing_sentence_id_skipped"],
                 duplicate_sentence_id_skipped=stats["duplicate_sentence_id_skipped"],
+                rounds_run=int(child_run_summaries.get(court, {}).get("total_rounds_run", 0) or 0),
+                total_unique_sentence_id_discovered=int(
+                    child_run_summaries.get(court, {}).get("total_unique_sentence_id_discovered", 0) or 0
+                ),
+                new_corpus_records_added=int(child_run_summaries.get(court, {}).get("new_corpus_records_added", 0) or 0),
+                convergence_stop_reason=str(child_run_summaries.get(court, {}).get("convergence_stop_reason") or ""),
             )
         )
         print(f"[day59] per-court duplicate_sentence_id skipped {court}: {stats['duplicate_sentence_id_skipped']}")
