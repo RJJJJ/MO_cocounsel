@@ -268,11 +268,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-names", default=DEFAULT_MODEL_NAMES, help="Comma-separated model names.")
     parser.add_argument("--backend", choices=["ollama_cli", "command"], default="ollama_cli")
     parser.add_argument("--command-template", default="", help="Used when --backend command.")
-    parser.add_argument("--timeout-seconds", type=int, default=180)
+    parser.add_argument("--timeout-seconds", type=int, default=300)
     parser.add_argument("--sample-case-limit", type=int, default=5)
     parser.add_argument("--language", default="zh")
     parser.add_argument("--case-numbers", default="", help="Comma-separated authoritative case numbers.")
-    parser.add_argument("--max-input-chars", type=int, default=6000)
+    parser.add_argument("--max-input-chars", type=int, default=8000)
     return parser.parse_args()
 
 

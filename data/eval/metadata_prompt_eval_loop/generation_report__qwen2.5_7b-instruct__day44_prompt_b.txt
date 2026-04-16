@@ -1,0 +1,166 @@
+Local Model Metadata Generation Report - Day 43
+input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+output_jsonl_path: data\eval\metadata_prompt_eval_loop\model_output__qwen2.5_7b-instruct__day44_prompt_b.jsonl
+model_backend: ollama_cli
+model_name: qwen2.5:7b-instruct
+prompt_version: day44_prompt_b
+sample cases selected: 5
+sample case numbers: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A']
+model-generated cases written: 5
+generation success count: 5
+generation failure count: 0
+generation fields attempted: ['case_summary', 'holding', 'legal_basis', 'disputed_issues']
+whether local model metadata generation appears successful: True
+
+Sample outputs:
+
+=== sample_case_1 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "100/2026",
+    "authoritative_decision_date": "26/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5bb24337c3797b0e.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42279",
+    "source_chunk_ids": [
+      "100_2026_zh_c0000_82cdcdb56831",
+      "100_2026_zh_c0001_f9c40d3c99f8",
+      "100_2026_zh_c0002_383f91369ba1",
+      "100_2026_zh_c0003_ef23a02b0792",
+      "100_2026_zh_c0004_f0561356a2f5",
+      "100_2026_zh_c0005_3f1a70b298c9",
+      "100_2026_zh_c0006_17f843fdeda8",
+      "100_2026_zh_c0007_4eaf46e783f5",
+      "100_2026_zh_c0008_bdc568066c4b"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/100_2026/full_text.txt",
+      "cases/zh/2026/100_2026/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "案件涉及一名被判刑人A因贩毒罪行而被否决假释。上诉法院维持原判，认为A未满足《刑法典》第56条规定的实质要件。",
+    "holding": "合议庭裁定上诉理由不成立，维持原判。",
+    "legal_basis": [
+      "《刑法典》第56条"
+    ],
+    "disputed_issues": [
+      "行为人以往之生活及其人格，以及于执行徒刑期间在人格方面之演变情况",
+      "释放被判刑者显示不影响维护法律秩序及社会安宁"
+    ]
+  },
+  "generation_status": "local_model_generated",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen2.5:7b-instruct",
+  "prompt_version": "day44_prompt_b",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli"
+  ]
+}
+
+=== sample_case_2 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "1026/2025",
+    "authoritative_decision_date": "26/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "澳門以外的法院或仲裁員作出的裁判的審查及確認",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5d3ba8dddfd2e769.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42365",
+    "source_chunk_ids": [
+      "1026_2025_zh_c0000_a9c126d85c8e",
+      "1026_2025_zh_c0001_c30435ec25ad",
+      "1026_2025_zh_c0002_1bcbbb28473d",
+      "1026_2025_zh_c0003_84ea7096f58a"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/1026_2025/full_text.txt",
+      "cases/zh/2026/1026_2025/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "聲請人A請求確認香港國際仲裁中心於2024年11月1日所作之裁決。經審視，未見《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條規定不予認可的情況，裁定聲請人的請求成立。",
+    "holding": "涉案香港國際仲裁中心所作之仲裁裁決應予以確認。",
+    "legal_basis": [
+      "第19/2019號法律《仲裁法》第70條",
+      "《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條"
+    ],
+    "disputed_issues": []
+  },
+  "generation_status": "local_model_generated",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen2.5:7b-instruct",
+  "prompt_version": "day44_prompt_b",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli"
+  ]
+}
+
+=== sample_case_3 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "1033/2025",
+    "authoritative_decision_date": "12/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-0dd8fc95d98feda0.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42325",
+    "source_chunk_ids": [
+      "1033_2025_zh_c0000_911fcb0291e7",
+      "1033_2025_zh_c0001_7cbe87778900",
+      "1033_2025_zh_c0002_72d1cc1af6f0",
+      "1033_2025_zh_c0003_60273d24df13",
+      "1033_2025_zh_c0004_04bae5574206",
+      "1033_2025_zh_c0005_651f6699a425",
+      "1033_2025_zh_c0006_815cab4165ce",
+      "1033_2025_zh_c0007_8ad783eed4de",
+      "1033_2025_zh_c0008_0c754ea84829",
+      "1033_2025_zh_c0009_1b058363e232",
+      "1033_2025_zh_c0010_b632c702e80f",
+      "1033_2025_zh_c0011_f1c07c0fae89",
+      "1033_2025_zh_c0012_62ecac25a8b2",
+      "1033_2025_zh_c0013_b8b078db82c3",
+      "1033_2025_zh_c0014_6374b6a5e6c7",
+      "1033_2025_zh_c0015_3615e39ff889",
+      "1033_2025_zh_c0016_d6d29f6c6bdb",
+      "1033_2025_zh_c0017_4fb11b3de943",
+      "1033_2025_zh_c0018_5537da0fa490",
+      "1033_2025_zh_c0019_46b612f34917"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/1033_2025/full_text.txt",
+      "cases/zh/2026/1033_2025/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "上訴人A因觸犯家庭暴力罪及加重傷害身體完整性罪被判刑，但認為事實認定不足及法律適用錯誤。法院部分採納上訴理由，改判A以直接正犯、犯罪既遂方式觸犯加重傷害身體完整性罪，判處一年六個月徒刑；維持原審對另一項罪名的判決。最終判處A二年徒刑，緩刑三年執行。",
+    "holding": "部分上訴理由成立，改判被告以直接正犯、犯罪既遂方式觸犯加重傷害身體完整性罪，判處一年六個月徒刑；維持原審對另一項罪名的判決。最終判處被告二年徒刑，緩刑三年執行。",
+    "legal_basis": [
+      "《刑事訴訟法典》第400條第2款a)項",
+      "《刑法典》第140條第2款、第137條第1款",
+      "《刑法典》第48條"
+    ],
+    "disputed_issues": [
+      "獲證明之事實上之事宜不足以支持作出該裁判",
+      "適用及解釋法律上的錯誤",
+      "緩刑形式要件及實質要件的符合性"
+    ]
+  },
+  "generation_status": "local_model_generated",
+  "generation_method": "local_model_generated",
+  "model_name": "qwen2.5:7b-instruct",
+  "prompt_version": "day44_prompt_b",
+  "provenance_notes": [
+    "Local-only generation path.",
+    "No cloud API/database used.",
+    "backend=ollama_cli"
+  ]
+}
