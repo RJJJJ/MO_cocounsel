@@ -1,0 +1,295 @@
+Metadata Generation Target Schema Demo Report - Day 38
+input_chunks_path: data/corpus/prepared/macau_court_cases/bm25_chunks.jsonl
+sample_case_limit: 3
+sample cases processed: 3
+sample case numbers: ['1/2025', '100/2026', '1006/2025']
+target fields populated count: 47/48
+metadata-generation target schema build appears successful: True
+
+Schema shape notes:
+- core_case_metadata defines authoritative case-level fields and source traceability anchors.
+- generated_digest_metadata fields are deterministic placeholders in this round.
+- No claim of high-quality metadata generation in this round.
+
+Sample shaped outputs:
+
+=== sample_case_1 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "1/2025",
+    "authoritative_decision_date": "05/03/2026",
+    "court": "澳門法院",
+    "language": "pt",
+    "case_type": "司法上訴(中級法院作為第一審法院的行政訴訟案件)",
+    "pdf_url": "https://www.court.gov.mo/sentence/pt-f4973cb1bc1f32cf.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42315",
+    "source_chunk_ids": [
+      "1_2025_pt_c0000_9bd135844752",
+      "1_2025_pt_c0001_f7ce29b72a3e",
+      "1_2025_pt_c0002_f9ea5800feed",
+      "1_2025_pt_c0003_731e4cb423c4",
+      "1_2025_pt_c0004_4d78d925cf3a",
+      "1_2025_pt_c0005_69f9813f643c",
+      "1_2025_pt_c0006_8ea0066f803c",
+      "1_2025_pt_c0007_0c5c955584da",
+      "1_2025_pt_c0008_fa71a3e04826",
+      "1_2025_pt_c0009_e5ba1bdcab8f",
+      "1_2025_pt_c0010_cf8c19be41e0",
+      "1_2025_pt_c0011_62190b748d3d",
+      "1_2025_pt_c0012_5843188ad48d",
+      "1_2025_pt_c0013_c6aebbe167a1",
+      "1_2025_pt_c0014_2593170ffb48",
+      "1_2025_pt_c0015_4f1642a48bad",
+      "1_2025_pt_c0016_15dbc7cc0716",
+      "1_2025_pt_c0017_77d6e14f8994",
+      "1_2025_pt_c0018_f06411688ac7",
+      "1_2025_pt_c0019_396098371016",
+      "1_2025_pt_c0020_76726b282e34",
+      "1_2025_pt_c0021_f1227fb958b6",
+      "1_2025_pt_c0022_dd6706542679",
+      "1_2025_pt_c0023_9cc145616ee2",
+      "1_2025_pt_c0024_18023bf97767",
+      "1_2025_pt_c0025_35b0fc432a0b",
+      "1_2025_pt_c0026_e5e370d9d2b2",
+      "1_2025_pt_c0027_b8559a34a106",
+      "1_2025_pt_c0028_f3a0d49f617e",
+      "1_2025_pt_c0029_5dd3fa64247f",
+      "1_2025_pt_c0030_b52a17f2ada5",
+      "1_2025_pt_c0031_9a80d8a3c37b",
+      "1_2025_pt_c0032_2c57097ead0a",
+      "1_2025_pt_c0033_0c6bbe6d6954",
+      "1_2025_pt_c0034_36e56c96de32",
+      "1_2025_pt_c0035_8370b48bf935",
+      "1_2025_pt_c0036_79ca1abe6588",
+      "1_2025_pt_c0037_58c2d7a9f3e4",
+      "1_2025_pt_c0038_348fd9ed4394",
+      "1_2025_pt_c0039_accd67d7e2d8",
+      "1_2025_pt_c0040_0e88833d935a",
+      "1_2025_pt_c0041_1f495ab05938",
+      "1_2025_pt_c0042_79be37adac4c",
+      "1_2025_pt_c0043_e4aa3188a36e",
+      "1_2025_pt_c0044_a8e27c1dbbe4",
+      "1_2025_pt_c0045_6dd7a9186425",
+      "1_2025_pt_c0046_23304b8d1160",
+      "1_2025_pt_c0047_97d7d9d60a19",
+      "1_2025_pt_c0048_07728acc6e0d",
+      "1_2025_pt_c0049_8f02d8d45d3b",
+      "1_2025_pt_c0050_a8de19790812",
+      "1_2025_pt_c0051_b3b7e525f7e6",
+      "1_2025_pt_c0052_8ce3f4651090",
+      "1_2025_pt_c0053_9b0f1fc5f63f",
+      "1_2025_pt_c0054_69f64861973c",
+      "1_2025_pt_c0055_ffcaf16def0c",
+      "1_2025_pt_c0056_55d73adca27a",
+      "1_2025_pt_c0057_2ec85e4e987e",
+      "1_2025_pt_c0058_1091b8ea2c94",
+      "1_2025_pt_c0059_7e94ad59bd15",
+      "1_2025_pt_c0060_3c845a51d9b6",
+      "1_2025_pt_c0061_d5eb9d3e0f58",
+      "1_2025_pt_c0062_ad4231163738",
+      "1_2025_pt_c0063_17548be036e9",
+      "1_2025_pt_c0064_33f1a68941c2",
+      "1_2025_pt_c0065_dffdd2e7c2c3",
+      "1_2025_pt_c0066_0fd0682e8fdd",
+      "1_2025_pt_c0067_6fdf6eeaec55",
+      "1_2025_pt_c0068_e181aae735a1",
+      "1_2025_pt_c0069_78bae24b0546",
+      "1_2025_pt_c0070_6a86c8abbe08",
+      "1_2025_pt_c0071_ba81929025fd",
+      "1_2025_pt_c0072_5efb5a4841cc",
+      "1_2025_pt_c0073_f5e3a5b4268c",
+      "1_2025_pt_c0074_97a169475a1d",
+      "1_2025_pt_c0075_f2be0035d352",
+      "1_2025_pt_c0076_12dbed12526b",
+      "1_2025_pt_c0077_4c57335a0c85"
+    ],
+    "source_case_paths": [
+      "cases/pt/2026/1_2025/full_text.txt",
+      "cases/pt/2026/1_2025/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "Processo n.º 1/2025 (Autos de recurso contencioso) Relator: Fong Man Chong Data : 05 de Março de 2026 Assuntos: - Prorrogação de prazos para conclusão de obras fixadas nos contratos de empreitada e diligências legalmente impostas ao empreiteiro para esta fi...",
+    "holding": "司法上訴人為要求撤銷被訴行為，在起訴狀中提出被訴行為存有的瑕疵，以及主張工程延誤問題上不可歸責的言論，我們均不認同，透過在爭執部分均已反駁，司法上訴人須要為工程延誤負上責任。",
+    "legal_basis": [
+      "第174條",
+      "第192條",
+      "第193條",
+      "第159條",
+      "第171條"
+    ],
+    "disputed_issues": [
+      "司法上訴(中級法院作為第一審法院的行政訴訟案件)"
+    ]
+  },
+  "generation_status": "draft_schema_shaped_sample",
+  "generation_method": "deterministic_local_extraction_placeholder",
+  "provenance_notes": [
+    "No LLM used.",
+    "No external API/database used.",
+    "Content is schema-shape demo for future metadata generation only."
+  ]
+}
+
+=== sample_case_2 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "100/2026",
+    "authoritative_decision_date": "26/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5bb24337c3797b0e.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42279",
+    "source_chunk_ids": [
+      "100_2026_zh_c0000_82cdcdb56831",
+      "100_2026_zh_c0001_f9c40d3c99f8",
+      "100_2026_zh_c0002_383f91369ba1",
+      "100_2026_zh_c0003_ef23a02b0792",
+      "100_2026_zh_c0004_f0561356a2f5",
+      "100_2026_zh_c0005_3f1a70b298c9",
+      "100_2026_zh_c0006_17f843fdeda8",
+      "100_2026_zh_c0007_4eaf46e783f5",
+      "100_2026_zh_c0008_bdc568066c4b"
+    ],
+    "source_case_paths": [
+      "cases/zh/2026/100_2026/full_text.txt",
+      "cases/zh/2026/100_2026/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "編號：第100/2026號刑事上訴案 上訴人：（被判刑人）A 日期：2026年2月26日 主要問題：否決假釋、假釋的實質要件 摘要 除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 假釋並不具有自動性，它除了需要符合啟動假釋程序的客觀要件外，還需要考慮面對被判刑人所犯下的...",
+    "holding": "編號：第100/2026號刑事上訴案 上訴人：（被判刑人）A 日期：2026年2月26日 主要問題：否決假釋、假釋的實質要件 摘要 除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯...",
+    "legal_basis": [
+      "第56條",
+      "第14條",
+      "第8條",
+      "第18條",
+      "第66條"
+    ],
+    "disputed_issues": [
+      "否決假釋",
+      "假釋的實質要件 摘要 除了法律所規定的客觀前提要件外",
+      "《刑法典》第56條第1款a項及b項還規定了當中的實質要件",
+      "即： — 行為人以往之生活及其人格",
+      "以及於執行徒刑期間在人格方面之演變情況",
+      "期待被判刑者一旦獲釋",
+      "將能以對社會負責之方式生活而不再犯罪屬有依據者",
+      "及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧"
+    ]
+  },
+  "generation_status": "draft_schema_shaped_sample",
+  "generation_method": "deterministic_local_extraction_placeholder",
+  "provenance_notes": [
+    "No LLM used.",
+    "No external API/database used.",
+    "Content is schema-shape demo for future metadata generation only."
+  ]
+}
+
+=== sample_case_3 ===
+{
+  "core_case_metadata": {
+    "authoritative_case_number": "1006/2025",
+    "authoritative_decision_date": "12/03/2026",
+    "court": "澳門法院",
+    "language": "pt",
+    "case_type": "民事及勞動訴訟程序的上訴",
+    "pdf_url": "https://www.court.gov.mo/sentence/pt-2a57de5ac981a168.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42323",
+    "source_chunk_ids": [
+      "1006_2025_pt_c0000_ad2130a7c3bd",
+      "1006_2025_pt_c0001_a5fe51540887",
+      "1006_2025_pt_c0002_97ad5a4bc1a9",
+      "1006_2025_pt_c0003_ae0a62af3fde",
+      "1006_2025_pt_c0004_6f383ec761a8",
+      "1006_2025_pt_c0005_6eb6da778357",
+      "1006_2025_pt_c0006_8f18c2e48e64",
+      "1006_2025_pt_c0007_757807294c30",
+      "1006_2025_pt_c0008_b2add09a8b47",
+      "1006_2025_pt_c0009_75d02f1476e1",
+      "1006_2025_pt_c0010_b06274051b1e",
+      "1006_2025_pt_c0011_946eb73b2c54",
+      "1006_2025_pt_c0012_face5bde969f",
+      "1006_2025_pt_c0013_a137ce984274",
+      "1006_2025_pt_c0014_d3731b1c627d",
+      "1006_2025_pt_c0015_46002c32bad7",
+      "1006_2025_pt_c0016_a290032b8cb8",
+      "1006_2025_pt_c0017_47aedea5d713",
+      "1006_2025_pt_c0018_21ef2637b89f",
+      "1006_2025_pt_c0019_011e4a3b4f19",
+      "1006_2025_pt_c0020_fd151b24fe91",
+      "1006_2025_pt_c0021_a7c007675c90",
+      "1006_2025_pt_c0022_2ce2230f2657",
+      "1006_2025_pt_c0023_88d7359f5462",
+      "1006_2025_pt_c0024_acc662f1385b",
+      "1006_2025_pt_c0025_f400d1f66cae",
+      "1006_2025_pt_c0026_a1f19484a039",
+      "1006_2025_pt_c0027_446ff7bf1e09",
+      "1006_2025_pt_c0028_53680a6ae091",
+      "1006_2025_pt_c0029_5fdeae936cfb",
+      "1006_2025_pt_c0030_b02db3105df6",
+      "1006_2025_pt_c0031_421c483719b3",
+      "1006_2025_pt_c0032_9fd3200f15be",
+      "1006_2025_pt_c0033_256ac5ce3b6d",
+      "1006_2025_pt_c0034_129dc35b246e",
+      "1006_2025_pt_c0035_e4edde38a4ab",
+      "1006_2025_pt_c0036_9a96d22a8798",
+      "1006_2025_pt_c0037_acc3d076e6c3",
+      "1006_2025_pt_c0038_a4600ce598f0",
+      "1006_2025_pt_c0039_ecfd4f139970",
+      "1006_2025_pt_c0040_aaf07f2c5b5a",
+      "1006_2025_pt_c0041_9b688cbc6ece",
+      "1006_2025_pt_c0042_422b49ecb650",
+      "1006_2025_pt_c0043_428a8bebd95a",
+      "1006_2025_pt_c0044_d2b7d46483d3",
+      "1006_2025_pt_c0045_df8ca9a211d6",
+      "1006_2025_pt_c0046_3118b4fcd889",
+      "1006_2025_pt_c0047_c93f5bf0013c",
+      "1006_2025_pt_c0048_1ae85b25a2d8",
+      "1006_2025_pt_c0049_a2b0b44a1977",
+      "1006_2025_pt_c0050_1f42a0501f96",
+      "1006_2025_pt_c0051_f39de50aa22a",
+      "1006_2025_pt_c0052_358c189c1ff3",
+      "1006_2025_pt_c0053_508d1dc062cd",
+      "1006_2025_pt_c0054_064fdad124f2",
+      "1006_2025_pt_c0055_73b786dd9593",
+      "1006_2025_pt_c0056_ce4c597fe815",
+      "1006_2025_pt_c0057_7044fa2b2a2e",
+      "1006_2025_pt_c0058_b79d8f8e3d56",
+      "1006_2025_pt_c0059_5fe8eb06984c",
+      "1006_2025_pt_c0060_2deace1f6d91",
+      "1006_2025_pt_c0061_7a63b9612f97",
+      "1006_2025_pt_c0062_525e7e2d348b",
+      "1006_2025_pt_c0063_c88c7a3dbed1",
+      "1006_2025_pt_c0064_52af120e7605",
+      "1006_2025_pt_c0065_27275f6f0a0c",
+      "1006_2025_pt_c0066_2179dd7bb6c2",
+      "1006_2025_pt_c0067_544901b1ca8a",
+      "1006_2025_pt_c0068_fc818da2f6ae",
+      "1006_2025_pt_c0069_e9d56d5bc430",
+      "1006_2025_pt_c0070_0a047ae946c0",
+      "1006_2025_pt_c0071_5f5782c59ef1",
+      "1006_2025_pt_c0072_ecf0ba8bf2ee"
+    ],
+    "source_case_paths": [
+      "cases/pt/2026/1006_2025/full_text.txt",
+      "cases/pt/2026/1006_2025/metadata.json"
+    ]
+  },
+  "generated_digest_metadata": {
+    "case_summary": "Processo n.º 1006/2025 (Autos de recurso em matéria cível) Relator: Fong Man Chong Data: 12 de Março de 2026 ASSUNTOS: - Presença obrigatória (e rotineira) dos trabalhadores no local de trabalho com antecedência de 15 minutos para “briefing” e suas repercus...",
+    "holding": "Processo n.º 1006/2025 (Autos de recurso em matéria cível) Relator: Fong Man Chong Data: 12 de Março de 2026 ASSUNTOS: - Presença obrigatória (e rotineira) dos trabalhadores no ...",
+    "legal_basis": [],
+    "disputed_issues": [
+      "民事及勞動訴訟程序的上訴"
+    ]
+  },
+  "generation_status": "draft_schema_shaped_sample",
+  "generation_method": "deterministic_local_extraction_placeholder",
+  "provenance_notes": [
+    "No LLM used.",
+    "No external API/database used.",
+    "Content is schema-shape demo for future metadata generation only."
+  ]
+}
