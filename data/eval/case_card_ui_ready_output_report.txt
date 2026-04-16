@@ -1,0 +1,162 @@
+Case Card UI-Ready Output Report - Day 51
+query_received: 量刑過重
+retrieved_cases_count: 4
+case_cards_built: 4
+model_generated_metadata_used_count: 0
+deterministic_fallback_used_count: 4
+case_card_ui_ready_output_appears_successful: True
+
+case_cards:
+[
+  {
+    "authoritative_case_number": "757/2025",
+    "authoritative_decision_date": "26/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "在侵犯財產罪的事件中，行為人向被害人／被害實體償還涉案款項的情節具有重要性。 即使在2018年1月1日至2019年12月31日期間，上訴人僅向被害實體返還了434,806.90澳門元而不屬於《刑法典》第201條第1款所指全數賠償的情節，但不能否認的是，部分還款對於量刑而言仍然是有重要性的。 因此，對於上訴人已償還款項的部分，原審法院理應在量刑時作出考慮。 另一方面，根據已證的",
+    "holding": "5 例如中級法院第 259/2018號合議庭裁判，針對詐騙80萬人民幣判處3年9個月徒刑，詐騙40萬人民幣判處3年徒刑 例如中級法院第386/2025號合議庭裁判，針對詐騙47.7萬澳門幣判處3年徒刑 6 中級法院第 323/2025號合議庭裁判的司法見解中－「但是，上訴人缺席第一審的庭審，而其積極賠償的行為，即使不符合《刑法典》第201 條以及第221 條所規定的刑罰的特別減輕，也並不妨礙上訴法院對此在上訴階段作出適當的衡量。」...",
+    "legal_basis": [
+      "第201條",
+      "第40條",
+      "第65條",
+      "第211條",
+      "第196條",
+      "第244條",
+      "第400條",
+      "第48條"
+    ],
+    "disputed_issues": [
+      "加重詐騙罪",
+      "量刑過重",
+      "緩刑 摘要 在侵犯財產罪的事件中",
+      "行為人向被害人／被害實體償還涉案款項的情節具有重要性"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42383",
+    "card_title": "757/2025｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 26/03/2026 · metadata:deterministic_baseline",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "deterministic_baseline",
+      "basis:第201條",
+      "basis:第40條"
+    ]
+  },
+  {
+    "authoritative_case_number": "728/2025",
+    "authoritative_decision_date": "12/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "編號：第728/2025號 (刑事上訴案) 上訴人：A 日期：2026年2月12日 主要法律問題： - 在說明理由方面出現不可補救之矛盾 - 審查證據方面明顯有錯誤 摘 要 1. 在本案中，原審法院在說明理由部分已說明其形成心證的過程，並清楚、客觀及合理地說明了不採納上訴人的陳述的理由。其後，分析原審法院所認定的事實、未經法院認定的事實以及相關的判決及理由說明，原審法院在説明理由方面並未出現不可補救之矛盾。",
+    "holding": "判處上訴人繳付3個計算單位之司法費，以及二分之一上訴的訴訟費用。",
+    "legal_basis": [
+      "第177條",
+      "第174條",
+      "第176條",
+      "第12條",
+      "第400條",
+      "第40條",
+      "第44條",
+      "第64條"
+    ],
+    "disputed_issues": [
+      "刑事訴訟程序的上訴"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5f6919955a8094cf.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42163",
+    "card_title": "728/2025｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 12/02/2026 · metadata:deterministic_baseline",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "deterministic_baseline",
+      "basis:第177條",
+      "basis:第174條"
+    ]
+  },
+  {
+    "authoritative_case_number": "721/2025",
+    "authoritative_decision_date": "05/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "立法者針對「加重侮辱罪」，採取了“選擇刑”（pena alternativa）的罰則，也就是說，審判者可先在徒刑或罰金之間選擇所適用的主刑類別。 但《刑法典》第44條的規定並不適用於“選擇刑”的制度，而是適用於“替代刑”（pena substituída）的罰則。 例如：在「醉酒駕駛罪」中，根據第3/2007號法律第90條第1款的規定： “一、任何人在公共道路上駕駛車輛而其每公升血液中的酒精含量等於或超過1.2克，如其他法律規定無訂定較重處罰，則科處最高一年徒刑及禁止駕駛一年至三年。” 針對「醉酒駕駛罪」，立法者在一開始訂出罰則時，已沒有給予徒刑或...",
+    "holding": "＊ 2026年3月5日於澳門特別行政區 ____________________ 盧映霞（裁判書製作人） ____________________ 譚曉華（第一助審法官） ____________________ 周艷平（第二助審法官） 1 雖然控訴書及被上訴的判決均沒有提到犯罪的主觀方式，但根據控訴及判決邏輯，這裡應該理解為以故意方式實施的犯罪。",
+    "legal_basis": [
+      "第44條",
+      "第90條",
+      "第64條",
+      "第40條",
+      "第65條",
+      "第175條",
+      "第178條",
+      "第48條"
+    ],
+    "disputed_issues": [
+      "選擇刑",
+      "緩刑",
+      "加重悔辱罪 摘要 立法者針對「加重侮辱罪」",
+      "採取了“選擇刑”（pena alternativa）的罰則",
+      "也就是說",
+      "審判者可先在徒刑或罰金之間選擇所適用的主刑類別"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-77e596eefc61504f.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42345",
+    "card_title": "721/2025｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 05/03/2026 · metadata:deterministic_baseline",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "deterministic_baseline",
+      "basis:第44條",
+      "basis:第90條"
+    ]
+  },
+  {
+    "authoritative_case_number": "34/2026",
+    "authoritative_decision_date": "12/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "對於量刑時需考慮的情節，只要不存在對法定限制規範，如刑罰幅度或經驗法則的違反，也不存在所確定的具體刑罰顯示出完全不適度的話，上訴法院不應介入具體刑罰的確定。 ____________________ 盧映霞（",
+    "holding": "針對本上訴程序，判處上訴人支付8個計算單位的司法費。",
+    "legal_basis": [
+      "第147條",
+      "第116條",
+      "第40條",
+      "第64條",
+      "第5條",
+      "第10條",
+      "第11條",
+      "第114條"
+    ],
+    "disputed_issues": [
+      "禁用證據",
+      "疑罪從無",
+      "適用法律錯誤",
+      "量刑過重",
+      "恐嚇罪 摘要 對於量刑時需考慮的情節",
+      "只要不存在對法定限制規範",
+      "如刑罰幅度或經驗法則的違反",
+      "也不存在所確定的具體刑罰顯示出完全不適度的話"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-e7d54797a9c6d897.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42275",
+    "card_title": "34/2026｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 12/03/2026 · metadata:deterministic_baseline",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "deterministic_baseline",
+      "basis:第147條",
+      "basis:第116條"
+    ]
+  }
+]
