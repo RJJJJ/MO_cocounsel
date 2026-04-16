@@ -1,0 +1,493 @@
+#!/usr/bin/env python3
+"""Day 59: build authoritative full corpus by per-court crawl -> merge -> dedupe.
+
+Authoritative flow (Day 59):
+1) crawl each court separately (tui/tsi/tjb/ta)
+2) merge all court manifests into one candidate pool
+3) dedupe after merge with auditable reasons
+4) publish merged authoritative corpus for downstream retrieval/prep
+5) attach metadata *after* merged corpus selection (model-preferred, deterministic fallback)
+
+This script intentionally does not use `court=all` as the authoritative source.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import subprocess
+import sys
+from dataclasses import asdict, dataclass
+from pathlib import Path
+from typing import Any
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from crawler.metadata.metadata_artifact_selection import resolve_model_metadata_path
+from crawler.pipeline.add_all_court_crawling_mode import (
+    build_duplicate_key,
+    ensure_unique_case_dir,
+    extract_year,
+    read_manifest,
+    slugify_case_number,
+)
+
+COURTS = ("tui", "tsi", "tjb", "ta")
+DEFAULT_PER_COURT_ROOT = Path("data/corpus/raw/per_court_runs")
+DEFAULT_MERGED_ROOT = Path("data/corpus/raw/macau_court_cases_full")
+DEFAULT_CRAWL_SCRIPT = Path("crawler/pipeline/add_all_court_crawling_mode.py")
+DEFAULT_MODEL_METADATA_PATH = Path("data/eval/model_generated_metadata_output.jsonl")
+DEFAULT_BASELINE_METADATA_PATH = Path("data/eval/deterministic_metadata_extraction_baseline_output.jsonl")
+
+
+@dataclass(frozen=True)
+class CourtRunSummary:
+    court: str
+    manifest_path: str
+    raw_records: int
+
+
+@dataclass(frozen=True)
+class MergeStats:
+    per_court_counts: dict[str, int]
+    merged_candidate_total: int
+    merged_after_dedupe_total: int
+    duplicates_total: int
+    duplicates_by_reason: dict[str, int]
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Build Day 59 authoritative merged corpus from per-court crawls")
+    parser.add_argument("--courts", nargs="+", default=list(COURTS), help="court modes to run")
+    parser.add_argument("--start-page", type=int, default=1, help="crawl start page")
+    parser.add_argument("--end-page", type=int, default=10, help="crawl end page")
+    parser.add_argument("--per-court-root", type=Path, default=DEFAULT_PER_COURT_ROOT)
+    parser.add_argument("--merged-root", type=Path, default=DEFAULT_MERGED_ROOT)
+    parser.add_argument("--crawl-script", type=Path, default=DEFAULT_CRAWL_SCRIPT)
+    parser.add_argument(
+        "--skip-crawl",
+        action="store_true",
+        help="skip crawl subprocesses and consume manifests from --court-manifest",
+    )
+    parser.add_argument(
+        "--court-manifest",
+        action="append",
+        default=[],
+        help="explicit input override: format court=path/to/manifest.jsonl (repeatable)",
+    )
+    parser.add_argument("--model-metadata", type=Path, default=DEFAULT_MODEL_METADATA_PATH)
+    parser.add_argument("--baseline-metadata", type=Path, default=DEFAULT_BASELINE_METADATA_PATH)
+    parser.add_argument("--json", action="store_true", help="print full JSON summary")
+    return parser.parse_args()
+
+
+def _normalize_space(value: Any) -> str:
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def _parse_explicit_manifest_overrides(items: list[str]) -> dict[str, Path]:
+    overrides: dict[str, Path] = {}
+    for raw in items:
+        if "=" not in raw:
+            raise ValueError(f"Invalid --court-manifest entry: {raw}; expected court=path")
+        court, raw_path = raw.split("=", 1)
+        court = court.strip().lower()
+        path = Path(raw_path).expanduser()
+        overrides[court] = path
+    return overrides
+
+
+def _run_per_court_crawl(args: argparse.Namespace, court: str) -> Path:
+    court_root = args.per_court_root / court
+    report_path = court_root / "all_court_crawl_report.txt"
+    court_root.mkdir(parents=True, exist_ok=True)
+
+    cmd = [
+        sys.executable,
+        str(args.crawl_script),
+        "--court",
+        court,
+        "--start-page",
+        str(max(args.start_page, 1)),
+        "--end-page",
+        str(max(args.end_page, max(args.start_page, 1))),
+        "--corpus-root",
+        str(court_root),
+        "--report-path",
+        str(report_path),
+    ]
+    print(f"[day59] running per-court crawl: {' '.join(cmd)}")
+    completed = subprocess.run(cmd, cwd=REPO_ROOT, check=False)
+    if completed.returncode != 0:
+        raise RuntimeError(f"Per-court crawl failed for {court} with exit code {completed.returncode}")
+
+    manifest_path = court_root / "manifest.jsonl"
+    if not manifest_path.exists():
+        raise FileNotFoundError(f"Manifest not found after crawl for court={court}: {manifest_path}")
+    return manifest_path
+
+
+def _load_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    if not path.exists():
+        return rows
+    with path.open("r", encoding="utf-8") as fh:
+        for line_no, line in enumerate(fh, start=1):
+            raw = line.strip()
+            if not raw:
+                continue
+            try:
+                payload = json.loads(raw)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"Invalid JSONL row in {path} line {line_no}: {exc}") from exc
+            if isinstance(payload, dict):
+                rows.append(payload)
+    return rows
+
+
+def _build_metadata_index(path: Path) -> dict[str, dict[str, Any]]:
+    index: dict[str, dict[str, Any]] = {}
+    for payload in _load_jsonl(path):
+        core = payload.get("core_case_metadata") or {}
+        generated = payload.get("generated_digest_metadata") or {}
+        case_number = _normalize_space(
+            core.get("authoritative_case_number")
+            or payload.get("authoritative_case_number")
+            or payload.get("case_number")
+        )
+        if not case_number:
+            continue
+        index[case_number] = {
+            "case_summary": _normalize_space(generated.get("case_summary") or payload.get("case_summary")),
+            "holding": _normalize_space(generated.get("holding") or payload.get("holding")),
+            "legal_basis": generated.get("legal_basis") or payload.get("legal_basis") or [],
+            "disputed_issues": generated.get("disputed_issues") or payload.get("disputed_issues") or [],
+        }
+    return index
+
+
+def _copy_record_to_authoritative_corpus(
+    *,
+    merged_root: Path,
+    manifest_fh,
+    record: dict[str, Any],
+    full_text: str,
+    index: int,
+) -> tuple[str, str]:
+    cases_root = merged_root / "cases"
+    language = _normalize_space(record.get("language")) or "unknown"
+    authoritative_case_number = _normalize_space(record.get("authoritative_case_number"))
+    authoritative_decision_date = _normalize_space(record.get("authoritative_decision_date"))
+
+    case_slug = slugify_case_number(authoritative_case_number, index=index)
+    year = extract_year(authoritative_decision_date)
+    case_dir = ensure_unique_case_dir(cases_root / language / year / case_slug)
+    case_dir.mkdir(parents=True, exist_ok=True)
+
+    metadata_path = case_dir / "metadata.json"
+    full_text_path = case_dir / "full_text.txt"
+    full_text_path.write_text(full_text, encoding="utf-8")
+
+    rel_metadata = metadata_path.relative_to(merged_root).as_posix()
+    rel_full_text = full_text_path.relative_to(merged_root).as_posix()
+
+    metadata_payload = {
+        "court": _normalize_space(record.get("court")),
+        "source_list_case_number": authoritative_case_number,
+        "source_list_decision_date": authoritative_decision_date,
+        "source_list_case_type": _normalize_space(record.get("source_list_case_type")),
+        "language": language,
+        "pdf_url": _normalize_space(record.get("pdf_url")),
+        "pdf_url_primary": _normalize_space(record.get("pdf_url_primary") or record.get("pdf_url")),
+        "pdf_url_zh": _normalize_space(record.get("pdf_url_zh")),
+        "pdf_url_pt": _normalize_space(record.get("pdf_url_pt")),
+        "text_url_or_action": _normalize_space(record.get("text_url_or_action")),
+        "text_url_primary": _normalize_space(record.get("text_url_primary") or record.get("text_url_or_action")),
+        "text_url_zh": _normalize_space(record.get("text_url_zh")),
+        "text_url_pt": _normalize_space(record.get("text_url_pt")),
+        "document_links": record.get("document_links") or [],
+        "extraction_source": "day59_per_court_merge_dedupe",
+        "provenance": record.get("provenance") or {},
+        "full_text_path": rel_full_text,
+    }
+    metadata_path.write_text(json.dumps(metadata_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    manifest_row = {
+        "language": language,
+        "authoritative_case_number": authoritative_case_number,
+        "authoritative_decision_date": authoritative_decision_date,
+        "court": metadata_payload["court"],
+        "pdf_url": metadata_payload["pdf_url"],
+        "pdf_url_primary": metadata_payload["pdf_url_primary"],
+        "pdf_url_zh": metadata_payload["pdf_url_zh"],
+        "pdf_url_pt": metadata_payload["pdf_url_pt"],
+        "text_url_or_action": metadata_payload["text_url_or_action"],
+        "text_url_primary": metadata_payload["text_url_primary"],
+        "text_url_zh": metadata_payload["text_url_zh"],
+        "text_url_pt": metadata_payload["text_url_pt"],
+        "document_links": metadata_payload["document_links"],
+        "metadata_path": rel_metadata,
+        "full_text_path": rel_full_text,
+        "provenance": metadata_payload["provenance"],
+    }
+    manifest_fh.write(json.dumps(manifest_row, ensure_ascii=False) + "\n")
+    return rel_metadata, rel_full_text
+
+
+def _collect_merge_candidates(manifest_path: Path, court: str) -> list[dict[str, Any]]:
+    court_root = manifest_path.parent
+    candidates: list[dict[str, Any]] = []
+    for line_no, row in enumerate(read_manifest(manifest_path), start=1):
+        metadata_rel = _normalize_space(row.get("metadata_path"))
+        full_text_rel = _normalize_space(row.get("full_text_path"))
+        if not metadata_rel or not full_text_rel:
+            continue
+
+        metadata_path = court_root / metadata_rel
+        full_text_path = court_root / full_text_rel
+        if not metadata_path.exists() or not full_text_path.exists():
+            continue
+
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        full_text = full_text_path.read_text(encoding="utf-8")
+        candidate = {
+            **row,
+            "source_list_case_type": metadata.get("source_list_case_type"),
+            "language": _normalize_space(row.get("language") or metadata.get("language")),
+            "full_text": full_text,
+            "provenance": {
+                "origin_court_mode": court,
+                "source_manifest_path": manifest_path.as_posix(),
+                "source_manifest_line": line_no,
+                "source_metadata_path": metadata_path.as_posix(),
+                "source_full_text_path": full_text_path.as_posix(),
+            },
+        }
+        candidates.append(candidate)
+    return candidates
+
+
+def _dedupe_and_write_authoritative_corpus(
+    *,
+    candidates: list[dict[str, Any]],
+    merged_root: Path,
+) -> MergeStats:
+    merged_root.mkdir(parents=True, exist_ok=True)
+    (merged_root / "cases").mkdir(parents=True, exist_ok=True)
+
+    per_court_counts: dict[str, int] = {}
+    unique_candidates: list[dict[str, Any]] = []
+    seen_keys: set[tuple[str, str]] = set()
+    duplicate_breakdown = {"text_url": 0, "pdf_url": 0, "fallback_metadata": 0}
+
+    for candidate in candidates:
+        origin_court = _normalize_space(candidate.get("provenance", {}).get("origin_court_mode")) or "unknown"
+        per_court_counts[origin_court] = per_court_counts.get(origin_court, 0) + 1
+
+        key = build_duplicate_key(candidate)
+        if key in seen_keys:
+            duplicate_breakdown[key[0]] = duplicate_breakdown.get(key[0], 0) + 1
+            continue
+        seen_keys.add(key)
+        unique_candidates.append(candidate)
+
+    manifest_path = merged_root / "manifest.jsonl"
+    with manifest_path.open("w", encoding="utf-8") as manifest_fh:
+        for idx, record in enumerate(unique_candidates, start=1):
+            _copy_record_to_authoritative_corpus(
+                merged_root=merged_root,
+                manifest_fh=manifest_fh,
+                record=record,
+                full_text=_normalize_space(record.get("full_text")),
+                index=idx,
+            )
+
+    duplicates_total = sum(duplicate_breakdown.values())
+    return MergeStats(
+        per_court_counts=per_court_counts,
+        merged_candidate_total=len(candidates),
+        merged_after_dedupe_total=len(unique_candidates),
+        duplicates_total=duplicates_total,
+        duplicates_by_reason=duplicate_breakdown,
+    )
+
+
+def _build_metadata_attachment_policy_summary(
+    *,
+    merged_manifest_path: Path,
+    model_metadata_path: Path,
+    baseline_metadata_path: Path,
+) -> dict[str, Any]:
+    """Define authoritative post-merge metadata attachment policy.
+
+    Policy is evaluated on the merged/deduped manifest instead of per-court raw runs:
+    - prefer model-generated metadata when available
+    - fallback to deterministic baseline when model metadata is unavailable
+    - do not remove deterministic baseline because it also acts as regression guard
+    """
+
+    merged_rows = read_manifest(merged_manifest_path)
+    selected_model = resolve_model_metadata_path(
+        model_metadata_path,
+        default_path=DEFAULT_MODEL_METADATA_PATH,
+        explicit_override=(model_metadata_path != DEFAULT_MODEL_METADATA_PATH),
+    )
+    model_index = _build_metadata_index(selected_model.path)
+    baseline_index = _build_metadata_index(baseline_metadata_path)
+
+    model_preferred = 0
+    baseline_fallback = 0
+    unresolved = 0
+
+    for row in merged_rows:
+        case_number = _normalize_space(row.get("authoritative_case_number"))
+        if not case_number:
+            unresolved += 1
+            continue
+        if case_number in model_index:
+            model_preferred += 1
+        elif case_number in baseline_index:
+            baseline_fallback += 1
+        else:
+            unresolved += 1
+
+    return {
+        "attachment_stage": "post_merge_authoritative_corpus",
+        "selected_model_metadata_path": selected_model.path.as_posix(),
+        "selected_model_metadata_case_count": selected_model.case_count,
+        "baseline_metadata_path": baseline_metadata_path.as_posix(),
+        "baseline_metadata_case_count": len(baseline_index),
+        "policy": {
+            "preferred_source": "model_generated",
+            "fallback_source": "deterministic_baseline",
+            "deterministic_baseline_retained": True,
+            "metadata_generation_in_day59": "not_regenerated",
+            "default_local_model_policy": "unchanged (qwen2.5:3b-instruct)",
+        },
+        "coverage_estimate_on_merged_manifest": {
+            "merged_cases": len(merged_rows),
+            "model_preferred_cases": model_preferred,
+            "deterministic_fallback_cases": baseline_fallback,
+            "unresolved_cases": unresolved,
+        },
+    }
+
+
+def _write_outputs(
+    *,
+    merged_root: Path,
+    court_summaries: list[CourtRunSummary],
+    merge_stats: MergeStats,
+    metadata_policy_summary: dict[str, Any],
+) -> dict[str, Any]:
+    output = {
+        "day": 59,
+        "authoritative_flow": [
+            "per_court_crawl",
+            "merge_and_dedupe",
+            "downstream_retrieval_consumption",
+            "attach_preferred_metadata",
+            "deterministic_fallback_when_needed",
+        ],
+        "court_runs": [asdict(item) for item in court_summaries],
+        "merge_stats": asdict(merge_stats),
+        "metadata_attachment_policy_summary": metadata_policy_summary,
+    }
+
+    report_json = merged_root / "full_corpus_merge_report.json"
+    report_txt = merged_root / "full_corpus_merge_report.txt"
+    report_json.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    txt_lines = [
+        "Day 59 Full Corpus Assembly Report",
+        "================================",
+        "authoritative flow: per-court crawl -> merge/dedupe -> retrieval -> metadata attach",
+        "",
+        "per-court raw counts:",
+    ]
+    for item in court_summaries:
+        txt_lines.append(f"- {item.court}: {item.raw_records} (manifest: {item.manifest_path})")
+
+    txt_lines.extend(
+        [
+            "",
+            f"merged candidate total: {merge_stats.merged_candidate_total}",
+            f"merged after dedupe total: {merge_stats.merged_after_dedupe_total}",
+            f"duplicates total: {merge_stats.duplicates_total}",
+            "duplicate reason breakdown:",
+            f"- text_url: {merge_stats.duplicates_by_reason.get('text_url', 0)}",
+            f"- pdf_url: {merge_stats.duplicates_by_reason.get('pdf_url', 0)}",
+            f"- fallback_metadata: {merge_stats.duplicates_by_reason.get('fallback_metadata', 0)}",
+            "",
+            "metadata attachment stage policy:",
+            "- attach after authoritative merge/dedupe (not per-court crawl)",
+            "- prefer model-generated metadata; fallback to deterministic baseline",
+            "- deterministic baseline retained for fallback/benchmark/regression guard",
+            "- default local model policy unchanged (qwen2.5:3b-instruct)",
+        ]
+    )
+    report_txt.write_text("\n".join(txt_lines) + "\n", encoding="utf-8")
+
+    return output
+
+
+def main() -> int:
+    args = parse_args()
+    courts = [c.strip().lower() for c in args.courts if c.strip()]
+    if not courts:
+        raise ValueError("At least one court must be provided via --courts")
+
+    manifest_overrides = _parse_explicit_manifest_overrides(args.court_manifest)
+
+    court_summaries: list[CourtRunSummary] = []
+    all_candidates: list[dict[str, Any]] = []
+
+    for court in courts:
+        if court not in COURTS:
+            raise ValueError(f"Unsupported court mode: {court}; supported: {', '.join(COURTS)}")
+
+        if court in manifest_overrides:
+            manifest_path = manifest_overrides[court]
+        elif args.skip_crawl:
+            raise ValueError(f"--skip-crawl requires --court-manifest for court={court}")
+        else:
+            manifest_path = _run_per_court_crawl(args, court)
+
+        records = _collect_merge_candidates(manifest_path=manifest_path, court=court)
+        court_summaries.append(
+            CourtRunSummary(court=court, manifest_path=manifest_path.as_posix(), raw_records=len(records))
+        )
+        all_candidates.extend(records)
+        print(f"[day59] per-court count {court}: {len(records)}")
+
+    merge_stats = _dedupe_and_write_authoritative_corpus(candidates=all_candidates, merged_root=args.merged_root)
+
+    metadata_summary = _build_metadata_attachment_policy_summary(
+        merged_manifest_path=args.merged_root / "manifest.jsonl",
+        model_metadata_path=args.model_metadata,
+        baseline_metadata_path=args.baseline_metadata,
+    )
+    result = _write_outputs(
+        merged_root=args.merged_root,
+        court_summaries=court_summaries,
+        merge_stats=merge_stats,
+        metadata_policy_summary=metadata_summary,
+    )
+
+    print(f"[day59] merged candidate total: {merge_stats.merged_candidate_total}")
+    print(f"[day59] merged authoritative total: {merge_stats.merged_after_dedupe_total}")
+    print(f"[day59] duplicates total: {merge_stats.duplicates_total}")
+    print(f"[day59] duplicate breakdown: {merge_stats.duplicates_by_reason}")
+    print(f"[day59] merged manifest: {(args.merged_root / 'manifest.jsonl').as_posix()}")
+    print(f"[day59] report json: {(args.merged_root / 'full_corpus_merge_report.json').as_posix()}")
+
+    if args.json:
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
