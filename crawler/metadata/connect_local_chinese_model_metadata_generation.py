@@ -38,7 +38,7 @@ DEFAULT_LANGUAGE = "zh"
 DEFAULT_MODEL_NAME = os.getenv("LOCAL_METADATA_MODEL_NAME", "qwen2.5:7b-instruct")
 DEFAULT_PROMPT_VERSION = os.getenv("LOCAL_METADATA_PROMPT_VERSION", "day43_local_model_metadata_v1")
 DEFAULT_BACKEND = os.getenv("LOCAL_MODEL_BACKEND", "ollama_cli")
-DEFAULT_TIMEOUT_SECONDS = int(os.getenv("LOCAL_MODEL_TIMEOUT_SECONDS", "180"))
+DEFAULT_TIMEOUT_SECONDS = int(os.getenv("LOCAL_MODEL_TIMEOUT_SECONDS", "300"))
 
 GENERATION_FIELDS = ["case_summary", "holding", "legal_basis", "disputed_issues"]
 
@@ -391,7 +391,7 @@ def parse_args() -> argparse.Namespace:
         help="Used when --backend command. Template vars: {model}, {prompt_file}",
     )
     parser.add_argument("--timeout-seconds", type=int, default=DEFAULT_TIMEOUT_SECONDS)
-    parser.add_argument("--max-input-chars", type=int, default=6000)
+    parser.add_argument("--max-input-chars", type=int, default=8000)
     return parser.parse_args()
 
 
