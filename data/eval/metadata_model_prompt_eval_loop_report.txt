@@ -1,0 +1,35 @@
+Metadata Model Prompt/Eval Loop Report - Day 44
+report_path: data/eval/metadata_model_prompt_eval_loop_report.txt
+
+=== run_1 ===
+model_name: qwen2.5:7b-instruct
+prompt_version: day44_prompt_a
+sample cases used: ['100/2026']
+generation success count: 0
+generation total count: 1
+fields generated: {'case_summary': 0, 'holding': 0, 'legal_basis': 0, 'disputed_issues': 0}
+evaluation-ready: no
+comparison-ready: no
+eval run completed: yes
+comparison run completed: yes
+model_output_path: data/eval/metadata_prompt_eval_loop/model_output__qwen2.5_7b-instruct__day44_prompt_a.jsonl
+
+=== run_2 ===
+model_name: qwen2.5:7b-instruct
+prompt_version: day44_prompt_b
+sample cases used: ['100/2026']
+generation success count: 0
+generation total count: 1
+fields generated: {'case_summary': 0, 'holding': 0, 'legal_basis': 0, 'disputed_issues': 0}
+evaluation-ready: no
+comparison-ready: no
+eval run completed: yes
+comparison run completed: yes
+model_output_path: data/eval/metadata_prompt_eval_loop/model_output__qwen2.5_7b-instruct__day44_prompt_b.jsonl
+
+=== Aggregated Summary ===
+prompt versions evaluated: ['day44_prompt_a', 'day44_prompt_b']
+sample cases processed: 2
+successful generations: 0
+comparison runs completed: 2
+whether metadata model prompt/eval loop appears successful: False
