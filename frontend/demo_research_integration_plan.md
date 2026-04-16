@@ -1,4 +1,4 @@
-# Day 56 Frontend Demo Research Integration Plan
+# Day 57 Frontend Demo Research Integration Plan
 
 ## Demo flow
 1. Developer opens `frontend/demo_research_integration.html` in a browser while FastAPI service is running.
@@ -8,9 +8,15 @@
 3. Frontend sends `POST /api/research/query` with JSON payload.
 4. On success, UI renders:
    - envelope summary (schema version, query, top_k, result_count)
-   - diagnostics block
-   - case cards list
+   - diagnostics block (collapse/expand)
+   - case controls (filter + sort)
+   - case cards list (based on current controls)
 5. On failure, UI shows error status with HTTP code and response body snippet.
+6. User can refine current result set client-side without re-calling API:
+   - filter by `metadata_source`
+   - filter by `language`
+   - sort by `authoritative_decision_date` or `authoritative_case_number`
+   - choose ascending/descending order
 
 ## Request/response mapping
 
@@ -32,6 +38,17 @@
 - `result_count` -> summary metric
 - `diagnostics` -> pretty JSON diagnostics panel
 - `results[]` -> case card collection
+
+## Supported controls
+- Filter controls:
+  - `metadata_source` (All + values discovered from current response)
+  - `language` (All + values discovered from current response)
+- Sort controls:
+  - `authoritative_decision_date`
+  - `authoritative_case_number`
+  - `sort_order` toggle: ascending / descending
+- Diagnostics visibility:
+  - native collapse/expand behavior via `<details>` in diagnostics panel
 
 ## Displayed fields
 Each case card currently renders:
@@ -55,10 +72,11 @@ Each case card currently renders:
 - Static HTML + inline JavaScript only (no production app shell).
 - No persisted query history.
 - No pagination or infinite scrolling.
-- No client-side sorting/filtering controls.
 - Error display is plain-text status only.
 - Assumes same-origin API path for `/api/research/query`.
+- Filtering/sorting is in-memory for current response only (no URL-state shareability).
+- Sort semantics are string/date heuristic based; no server-side collation guarantees.
 
 ## Recommended next step
 - Add transport observability fields in future contract extension (e.g., request id / tracing / pagination fields) once backend roadmap allows.
-- Refine frontend UX with filtering/sorting controls for case cards and diagnostics visibility toggles.
+- Improve case-card density/layout for demo review at larger result counts (e.g., compact rows, two-column metrics, and progressive disclosure).

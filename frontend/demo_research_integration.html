@@ -78,6 +78,15 @@
         display: grid;
         gap: 12px;
       }
+      .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        align-items: end;
+      }
+      .controls-grid label {
+        margin: 0;
+      }
       .case-card {
         border: 1px solid #dce3f2;
         border-radius: 10px;
@@ -116,7 +125,7 @@
   <body>
     <main>
       <section class="panel">
-        <h1>Day 56 Demo: FastAPI Research Endpoint Integration</h1>
+        <h1>Day 57 Demo: FastAPI Research Endpoint Integration</h1>
         <p class="muted">
           Minimal front-end demo for <code>POST /api/research/query</code>.
         </p>
@@ -140,7 +149,39 @@
 
       <section class="panel" id="diagnostics-panel" hidden>
         <h2>Diagnostics</h2>
-        <pre id="diagnostics"></pre>
+        <details id="diagnostics-details" open>
+          <summary class="muted">Collapse / Expand diagnostics payload</summary>
+          <pre id="diagnostics"></pre>
+        </details>
+      </section>
+
+      <section class="panel" id="controls-panel" hidden>
+        <h2>Case Controls</h2>
+        <div class="controls-grid">
+          <label>
+            Filter: metadata_source
+            <select id="filter-metadata-source"></select>
+          </label>
+          <label>
+            Filter: language
+            <select id="filter-language"></select>
+          </label>
+          <label>
+            Sort by
+            <select id="sort-field">
+              <option value="authoritative_decision_date">authoritative_decision_date</option>
+              <option value="authoritative_case_number">authoritative_case_number</option>
+            </select>
+          </label>
+          <label>
+            Sort order
+            <select id="sort-order">
+              <option value="desc">Descending</option>
+              <option value="asc">Ascending</option>
+            </select>
+          </label>
+        </div>
+        <p id="controls-status" class="muted"></p>
       </section>
 
       <section class="panel" id="cases-panel" hidden>
@@ -164,9 +205,16 @@
 
       const diagnosticsPanel = document.getElementById('diagnostics-panel');
       const diagnosticsNode = document.getElementById('diagnostics');
+      const controlsPanel = document.getElementById('controls-panel');
+      const controlsStatusNode = document.getElementById('controls-status');
+      const filterMetadataSourceNode = document.getElementById('filter-metadata-source');
+      const filterLanguageNode = document.getElementById('filter-language');
+      const sortFieldNode = document.getElementById('sort-field');
+      const sortOrderNode = document.getElementById('sort-order');
 
       const casesPanel = document.getElementById('cases-panel');
       const casesNode = document.getElementById('cases');
+      let latestResults = [];
 
       function metricBlock(label, value) {
         return `
@@ -215,6 +263,76 @@
         });
       }
 
+      function normalizeOptionValue(value) {
+        return value ? String(value) : '-';
+      }
+
+      function updateFilterOptions(results) {
+        const sourceValues = new Set(['ALL']);
+        const languageValues = new Set(['ALL']);
+
+        results.forEach((item) => {
+          sourceValues.add(normalizeOptionValue(item.metadata_source));
+          languageValues.add(normalizeOptionValue(item.language));
+        });
+
+        const sourceOptions = Array.from(sourceValues);
+        const languageOptions = Array.from(languageValues);
+
+        filterMetadataSourceNode.innerHTML = sourceOptions
+          .map((value) => `<option value="${value}">${value === 'ALL' ? 'All' : value}</option>`)
+          .join('');
+
+        filterLanguageNode.innerHTML = languageOptions
+          .map((value) => `<option value="${value}">${value === 'ALL' ? 'All' : value}</option>`)
+          .join('');
+
+        filterMetadataSourceNode.value = 'ALL';
+        filterLanguageNode.value = 'ALL';
+      }
+
+      function compareByField(left, right, field) {
+        if (field === 'authoritative_decision_date') {
+          const leftDate = Date.parse(left.authoritative_decision_date || '');
+          const rightDate = Date.parse(right.authoritative_decision_date || '');
+          const leftComparable = Number.isNaN(leftDate) ? Number.NEGATIVE_INFINITY : leftDate;
+          const rightComparable = Number.isNaN(rightDate) ? Number.NEGATIVE_INFINITY : rightDate;
+          return leftComparable - rightComparable;
+        }
+
+        return String(left[field] || '').localeCompare(String(right[field] || ''), undefined, {
+          numeric: true,
+          sensitivity: 'base',
+        });
+      }
+
+      function applyControls() {
+        const sourceFilter = filterMetadataSourceNode.value;
+        const languageFilter = filterLanguageNode.value;
+        const sortField = sortFieldNode.value;
+        const sortOrder = sortOrderNode.value;
+
+        const filtered = latestResults.filter((item) => {
+          const sourceMatch =
+            sourceFilter === 'ALL' || normalizeOptionValue(item.metadata_source) === sourceFilter;
+          const languageMatch =
+            languageFilter === 'ALL' || normalizeOptionValue(item.language) === languageFilter;
+          return sourceMatch && languageMatch;
+        });
+
+        const sorted = [...filtered].sort((left, right) => compareByField(left, right, sortField));
+        if (sortOrder === 'desc') {
+          sorted.reverse();
+        }
+
+        controlsStatusNode.textContent = `Showing ${sorted.length} / ${latestResults.length} case cards.`;
+        renderCards(sorted);
+      }
+
+      [filterMetadataSourceNode, filterLanguageNode, sortFieldNode, sortOrderNode].forEach((node) => {
+        node.addEventListener('change', applyControls);
+      });
+
       function setLoading(loading) {
         submitButton.disabled = loading;
         submitButton.textContent = loading ? 'Loading...' : 'Run Query';
@@ -256,7 +374,10 @@
           diagnosticsNode.textContent = JSON.stringify(data.diagnostics ?? {}, null, 2);
           diagnosticsPanel.hidden = false;
 
-          renderCards(data.results ?? []);
+          latestResults = Array.isArray(data.results) ? data.results : [];
+          updateFilterOptions(latestResults);
+          applyControls();
+          controlsPanel.hidden = false;
           casesPanel.hidden = false;
 
           statusNode.textContent = 'Done.';
