@@ -23,6 +23,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import Any
+import urllib.request  # <--- 加入這行
 
 DEFAULT_INPUT_PATH = Path("data/corpus/prepared/macau_court_cases/bm25_chunks.jsonl")
 DEFAULT_OUTPUT_PATH = Path("data/eval/model_generated_metadata_output.jsonl")
@@ -67,21 +68,26 @@ class LocalModelRunner:
         raise ValueError(f"Unsupported backend: {self.backend}")
 
     def _run_ollama_cli(self, prompt: str) -> str:
-        env = os.environ.copy()
-        env["PYTHONIOENCODING"] = "utf-8"
-        completed = subprocess.run(
-            ["ollama", "run", self.model_name, prompt],
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            timeout=self.timeout_seconds,
-            check=False,
-            env=env,
-        )
-        if completed.returncode != 0:
-            raise RuntimeError(f"ollama run failed: {completed.stderr.strip() or completed.stdout.strip()}")
-        return completed.stdout.strip()
+            """改用 Ollama 本機 API 取代 subprocess，徹底解決 Windows 指令長度限制"""
+            url = "http://localhost:11434/api/generate"
+            payload = {
+                "model": self.model_name,
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "num_ctx": 16384,  # 強制開啟足夠的上下文視窗
+                    "temperature": 0.1  # 降低隨機性，有助於穩定輸出 JSON
+                }
+            }
+            data = json.dumps(payload).encode('utf-8')
+            req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
+            
+            try:
+                with urllib.request.urlopen(req, timeout=self.timeout_seconds) as response:
+                    result = json.loads(response.read().decode('utf-8'))
+                    return result.get("response", "").strip()
+            except Exception as exc:
+                raise RuntimeError(f"Ollama API Error: {exc}")
 
     def _run_command_template(self, prompt: str) -> str:
         if not self.command_template:
@@ -174,7 +180,20 @@ def select_cases(
 def build_prompt(case_chunks: list[CaseChunk], prompt_version: str, max_input_chars: int) -> str:
     head = case_chunks[0]
     chunk_text = normalize_whitespace(" ".join(chunk.chunk_text for chunk in case_chunks))
-    clipped_text = chunk_text[:max_input_chars]
+    
+    # === 新增：頭尾截斷法 (Head & Tail Truncation) ===
+    # 如果文本總字數超過我們設定的上限，就切一半抓頭、切一半抓尾
+    if len(chunk_text) > max_input_chars:
+        half_len = max_input_chars // 2
+        clipped_text = (
+            chunk_text[:half_len] + 
+            "\n\n...[因硬體限制與效率考量，中間部分過程已省略]...\n\n" + 
+            chunk_text[-half_len:]
+        )
+    else:
+        # 如果文本很短沒有超標，就保留全部
+        clipped_text = chunk_text
+    # ===============================================
 
     return (
         "你是法律判決摘要與結構化資訊抽取助手。"
@@ -183,7 +202,7 @@ def build_prompt(case_chunks: list[CaseChunk], prompt_version: str, max_input_ch
         "JSON 結構必須包含這四個欄位："
         "case_summary (string), holding (string), legal_basis (string array), disputed_issues (string array)。\\n"
         "要求：\\n"
-        "1) 使用繁體中文；\\n"
+        "1) 絕對必須使用繁體中文（Traditional Chinese, zh-TW/zh-HK）輸出，嚴禁使用簡體字；\\n"  # 順便把強制繁體中文的防呆機制加進去
         "2) 內容要精簡但忠於文本；\\n"
         "3) legal_basis 只填在文本中可辨識的法條或法律依據；\\n"
         "4) 如果資訊不足，請使用空字串或空陣列。\\n"
