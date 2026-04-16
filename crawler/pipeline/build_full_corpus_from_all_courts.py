@@ -105,6 +105,11 @@ def _parse_explicit_manifest_overrides(items: list[str]) -> dict[str, Path]:
 
 
 def _run_per_court_crawl(args: argparse.Namespace, court: str) -> Path:
+    # Day 59A hotfix note:
+    # Child crawl exit code semantics now distinguish run completion from harvest completeness.
+    # exit=0 may be either "success" or "partial_success" (e.g., late-page timeout after useful pages),
+    # which is acceptable for parent full-corpus assembly in this round.
+    # Parent still fail-fast on non-zero exit codes, which represent true fatal failures.
     court_root = args.per_court_root / court
     report_path = court_root / "all_court_crawl_report.txt"
     court_root.mkdir(parents=True, exist_ok=True)
@@ -127,6 +132,7 @@ def _run_per_court_crawl(args: argparse.Namespace, court: str) -> Path:
     completed = subprocess.run(cmd, cwd=REPO_ROOT, check=False)
     if completed.returncode != 0:
         raise RuntimeError(f"Per-court crawl failed for {court} with exit code {completed.returncode}")
+    print(f"[day59] per-court crawl completed for {court} (exit=0; success or partial_success accepted)")
 
     manifest_path = court_root / "manifest.jsonl"
     if not manifest_path.exists():
