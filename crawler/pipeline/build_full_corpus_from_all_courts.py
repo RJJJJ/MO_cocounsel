@@ -28,9 +28,10 @@ if str(REPO_ROOT) not in sys.path:
 
 from crawler.metadata.metadata_artifact_selection import resolve_model_metadata_path
 from crawler.pipeline.add_all_court_crawling_mode import (
-    build_duplicate_key,
     ensure_unique_case_dir,
+    extract_sentence_id_from_url,
     extract_year,
+    get_sentence_id,
     read_manifest,
     slugify_case_number,
 )
@@ -48,11 +49,14 @@ class CourtRunSummary:
     court: str
     manifest_path: str
     raw_records: int
+    candidates_with_sentence_id: int
+    missing_sentence_id_skipped: int
+    duplicate_sentence_id_skipped: int
 
 
 @dataclass(frozen=True)
 class MergeStats:
-    per_court_counts: dict[str, int]
+    per_court_counts: dict[str, dict[str, int]]
     merged_candidate_total: int
     merged_after_dedupe_total: int
     duplicates_total: int
@@ -209,6 +213,7 @@ def _copy_record_to_authoritative_corpus(
         "text_url_zh": _normalize_space(record.get("text_url_zh")),
         "text_url_pt": _normalize_space(record.get("text_url_pt")),
         "document_links": record.get("document_links") or [],
+        "sentence_id": _normalize_space(record.get("sentence_id")),
         "extraction_source": "day59_per_court_merge_dedupe",
         "provenance": record.get("provenance") or {},
         "full_text_path": rel_full_text,
@@ -229,6 +234,7 @@ def _copy_record_to_authoritative_corpus(
         "text_url_zh": metadata_payload["text_url_zh"],
         "text_url_pt": metadata_payload["text_url_pt"],
         "document_links": metadata_payload["document_links"],
+        "sentence_id": metadata_payload["sentence_id"],
         "metadata_path": rel_metadata,
         "full_text_path": rel_full_text,
         "provenance": metadata_payload["provenance"],
@@ -253,8 +259,18 @@ def _collect_merge_candidates(manifest_path: Path, court: str) -> list[dict[str,
 
         metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
         full_text = full_text_path.read_text(encoding="utf-8")
+        sentence_id = _normalize_space(row.get("sentence_id") or metadata.get("sentence_id"))
+        if not sentence_id:
+            sentence_id = (
+                extract_sentence_id_from_url(row.get("text_url_primary"))
+                or extract_sentence_id_from_url(row.get("text_url_zh"))
+                or extract_sentence_id_from_url(row.get("text_url_pt"))
+                or extract_sentence_id_from_url(row.get("text_url_or_action"))
+                or get_sentence_id(row)
+            )
         candidate = {
             **row,
+            "sentence_id": sentence_id,
             "source_list_case_type": metadata.get("source_list_case_type"),
             "language": _normalize_space(row.get("language") or metadata.get("language")),
             "full_text": full_text,
@@ -278,20 +294,33 @@ def _dedupe_and_write_authoritative_corpus(
     merged_root.mkdir(parents=True, exist_ok=True)
     (merged_root / "cases").mkdir(parents=True, exist_ok=True)
 
-    per_court_counts: dict[str, int] = {}
+    per_court_counts: dict[str, dict[str, int]] = {}
     unique_candidates: list[dict[str, Any]] = []
-    seen_keys: set[tuple[str, str]] = set()
-    duplicate_breakdown = {"text_url": 0, "pdf_url": 0, "fallback_metadata": 0}
+    seen_sentence_ids: set[str] = set()
+    duplicate_breakdown = {"duplicate_sentence_id": 0, "missing_sentence_id_skipped": 0}
 
     for candidate in candidates:
         origin_court = _normalize_space(candidate.get("provenance", {}).get("origin_court_mode")) or "unknown"
-        per_court_counts[origin_court] = per_court_counts.get(origin_court, 0) + 1
+        if origin_court not in per_court_counts:
+            per_court_counts[origin_court] = {
+                "raw_candidates": 0,
+                "candidates_with_sentence_id": 0,
+                "missing_sentence_id_skipped": 0,
+                "duplicate_sentence_id_skipped": 0,
+            }
+        per_court_counts[origin_court]["raw_candidates"] += 1
 
-        key = build_duplicate_key(candidate)
-        if key in seen_keys:
-            duplicate_breakdown[key[0]] = duplicate_breakdown.get(key[0], 0) + 1
+        sentence_id = _normalize_space(candidate.get("sentence_id"))
+        if not sentence_id:
+            per_court_counts[origin_court]["missing_sentence_id_skipped"] += 1
+            duplicate_breakdown["missing_sentence_id_skipped"] += 1
             continue
-        seen_keys.add(key)
+        per_court_counts[origin_court]["candidates_with_sentence_id"] += 1
+        if sentence_id in seen_sentence_ids:
+            per_court_counts[origin_court]["duplicate_sentence_id_skipped"] += 1
+            duplicate_breakdown["duplicate_sentence_id"] += 1
+            continue
+        seen_sentence_ids.add(sentence_id)
         unique_candidates.append(candidate)
 
     manifest_path = merged_root / "manifest.jsonl"
@@ -305,7 +334,7 @@ def _dedupe_and_write_authoritative_corpus(
                 index=idx,
             )
 
-    duplicates_total = sum(duplicate_breakdown.values())
+    duplicates_total = duplicate_breakdown.get("duplicate_sentence_id", 0)
     return MergeStats(
         per_court_counts=per_court_counts,
         merged_candidate_total=len(candidates),
@@ -409,7 +438,12 @@ def _write_outputs(
         "per-court raw counts:",
     ]
     for item in court_summaries:
-        txt_lines.append(f"- {item.court}: {item.raw_records} (manifest: {item.manifest_path})")
+        txt_lines.append(
+            f"- {item.court}: raw={item.raw_records}, with_sentence_id={item.candidates_with_sentence_id}, "
+            f"missing_sentence_id_skipped={item.missing_sentence_id_skipped}, "
+            f"duplicate_sentence_id_skipped={item.duplicate_sentence_id_skipped} "
+            f"(manifest: {item.manifest_path})"
+        )
 
     txt_lines.extend(
         [
@@ -418,9 +452,8 @@ def _write_outputs(
             f"merged after dedupe total: {merge_stats.merged_after_dedupe_total}",
             f"duplicates total: {merge_stats.duplicates_total}",
             "duplicate reason breakdown:",
-            f"- text_url: {merge_stats.duplicates_by_reason.get('text_url', 0)}",
-            f"- pdf_url: {merge_stats.duplicates_by_reason.get('pdf_url', 0)}",
-            f"- fallback_metadata: {merge_stats.duplicates_by_reason.get('fallback_metadata', 0)}",
+            f"- duplicate_sentence_id: {merge_stats.duplicates_by_reason.get('duplicate_sentence_id', 0)}",
+            f"- missing_sentence_id_skipped: {merge_stats.duplicates_by_reason.get('missing_sentence_id_skipped', 0)}",
             "",
             "metadata attachment stage policy:",
             "- attach after authoritative merge/dedupe (not per-court crawl)",
@@ -442,7 +475,7 @@ def main() -> int:
 
     manifest_overrides = _parse_explicit_manifest_overrides(args.court_manifest)
 
-    court_summaries: list[CourtRunSummary] = []
+    court_manifest_paths: dict[str, Path] = {}
     all_candidates: list[dict[str, Any]] = []
 
     for court in courts:
@@ -457,13 +490,37 @@ def main() -> int:
             manifest_path = _run_per_court_crawl(args, court)
 
         records = _collect_merge_candidates(manifest_path=manifest_path, court=court)
-        court_summaries.append(
-            CourtRunSummary(court=court, manifest_path=manifest_path.as_posix(), raw_records=len(records))
-        )
+        court_manifest_paths[court] = manifest_path
         all_candidates.extend(records)
-        print(f"[day59] per-court count {court}: {len(records)}")
+        with_sentence_id = sum(1 for row in records if _normalize_space(row.get("sentence_id")))
+        missing_sentence_id = len(records) - with_sentence_id
+        print(f"[day59] per-court raw candidate count {court}: {len(records)}")
+        print(f"[day59] per-court candidates with sentence_id {court}: {with_sentence_id}")
+        print(f"[day59] per-court missing_sentence_id skipped (pre-merge estimate) {court}: {missing_sentence_id}")
 
     merge_stats = _dedupe_and_write_authoritative_corpus(candidates=all_candidates, merged_root=args.merged_root)
+    court_summaries: list[CourtRunSummary] = []
+    for court in courts:
+        stats = merge_stats.per_court_counts.get(
+            court,
+            {
+                "raw_candidates": 0,
+                "candidates_with_sentence_id": 0,
+                "missing_sentence_id_skipped": 0,
+                "duplicate_sentence_id_skipped": 0,
+            },
+        )
+        court_summaries.append(
+            CourtRunSummary(
+                court=court,
+                manifest_path=court_manifest_paths[court].as_posix(),
+                raw_records=stats["raw_candidates"],
+                candidates_with_sentence_id=stats["candidates_with_sentence_id"],
+                missing_sentence_id_skipped=stats["missing_sentence_id_skipped"],
+                duplicate_sentence_id_skipped=stats["duplicate_sentence_id_skipped"],
+            )
+        )
+        print(f"[day59] per-court duplicate_sentence_id skipped {court}: {stats['duplicate_sentence_id_skipped']}")
 
     metadata_summary = _build_metadata_attachment_policy_summary(
         merged_manifest_path=args.merged_root / "manifest.jsonl",

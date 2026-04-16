@@ -35,12 +35,11 @@ class CrawlStats:
     pages_attempted: int = 0
     valid_pages_parsed: int = 0
     cards_discovered: int = 0
+    candidates_with_sentence_id: int = 0
+    missing_sentence_id_skipped: int = 0
+    duplicate_sentence_id_skipped: int = 0
     detail_pages_attempted: int = 0
     detail_pages_succeeded: int = 0
-    duplicates_skipped: int = 0
-    duplicates_skipped_by_text_url: int = 0
-    duplicates_skipped_by_pdf_url: int = 0
-    duplicates_skipped_by_fallback_metadata: int = 0
     cards_with_zh_text: int = 0
     cards_with_pt_text: int = 0
     cards_with_both_text_languages: int = 0
@@ -49,6 +48,7 @@ class CrawlStats:
     cards_with_both_pdf_languages: int = 0
     new_corpus_records_added: int = 0
     stop_reason: str = ""
+    page_audit_entries: list[dict[str, Any]] | None = None
 
 
 def load_playwright():
@@ -141,13 +141,21 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def set_page_and_court_params_from_result_url(result_url: str, page_number: int, court_mode: str) -> str:
+def extract_sentence_id_from_url(url: str | None) -> str:
+    raw = normalize_space(url)
+    if not raw:
+        return ""
+    parsed = urlparse(raw)
+    m = re.search(r"/sentence/(?:zh|pt)/([^/?#]+)", parsed.path or "", flags=re.IGNORECASE)
+    return normalize_space(m.group(1)) if m else ""
+
+
+def set_page_param_from_result_url(result_url: str, page_number: int) -> str:
     parsed = urlparse(result_url)
     pairs = parse_qsl(parsed.query, keep_blank_values=True)
 
     out: list[tuple[str, str]] = []
     seen_page = False
-    seen_court = False
     for key, val in pairs:
         if key == "page":
             if not seen_page:
@@ -155,19 +163,71 @@ def set_page_and_court_params_from_result_url(result_url: str, page_number: int,
                 if page_number > 1:
                     out.append(("page", str(page_number)))
             continue
-        if key == "court":
-            if not seen_court:
-                out.append(("court", court_mode))
-                seen_court = True
-            continue
         out.append((key, val))
 
-    if not seen_court:
-        out.append(("court", court_mode))
     if page_number > 1 and not seen_page:
         out.append(("page", str(page_number)))
 
     return urlunparse((parsed.scheme, parsed.netloc, parsed.path, parsed.params, urlencode(out), parsed.fragment))
+
+
+def _cards_fingerprint(page: "Page") -> dict[str, Any]:
+    return page.evaluate(
+        r"""
+    () => {
+      const cards = Array.from(document.querySelectorAll('div#zh-language-case.case_list > li'))
+        .map((li) => (li.innerText || '').replace(/\s+/g, ' ').trim())
+        .filter(Boolean);
+      return {
+        count: cards.length,
+        first: cards[0] || '',
+        last: cards[cards.length - 1] || '',
+      };
+    }
+    """
+    )
+
+
+def wait_for_cards_stable(page: "Page", *, max_rounds: int = 6, sleep_ms: int = 350) -> dict[str, Any]:
+    page.wait_for_selector(RESULT_ROOT_SELECTOR, timeout=15_000)
+    previous: dict[str, Any] | None = None
+    stable_hits = 0
+    latest: dict[str, Any] = {"count": 0, "first": "", "last": ""}
+    for _ in range(max_rounds):
+        latest = _cards_fingerprint(page)
+        if previous and previous == latest:
+            stable_hits += 1
+            if stable_hits >= 1:
+                return latest
+        else:
+            stable_hits = 0
+        previous = latest
+        page.wait_for_timeout(sleep_ms)
+    return latest
+
+
+def start_court_search_from_home(page: "Page", court_mode: str) -> str:
+    page.goto(SEARCH_URL, wait_until="domcontentloaded", timeout=45_000)
+    page.wait_for_selector("#wizcasesearch_sentence_filter_type_court", timeout=15_000)
+    page.select_option("#wizcasesearch_sentence_filter_type_court", value=court_mode)
+
+    clicked = False
+    for selector in [
+        "form[action*='researchjudgments'] button[type='submit']",
+        "form[action*='researchjudgments'] input[type='submit']",
+        "form[action*='researchjudgments'] button:has-text('搜尋')",
+    ]:
+        target = page.locator(selector)
+        if target.count() > 0:
+            target.first.click(timeout=10_000)
+            clicked = True
+            break
+    if not clicked:
+        page.locator("form[action*='researchjudgments']").last.evaluate("f => f.submit()")
+
+    page.wait_for_load_state("domcontentloaded", timeout=20_000)
+    wait_for_cards_stable(page)
+    return page.url
 
 
 def classify_document_links(links: list[dict[str, str]]) -> dict[str, Any]:
@@ -265,6 +325,11 @@ def parse_cards_from_current_page(page: "Page", page_number: int) -> list[dict[s
             continue
 
         link_fields = classify_document_links(raw.get("links", []))
+        sentence_id = (
+            extract_sentence_id_from_url(link_fields.get("text_url_primary"))
+            or extract_sentence_id_from_url(link_fields.get("text_url_zh"))
+            or extract_sentence_id_from_url(link_fields.get("text_url_pt"))
+        )
         parsed.append(
             {
                 "court": "澳門法院",
@@ -280,6 +345,7 @@ def parse_cards_from_current_page(page: "Page", page_number: int) -> list[dict[s
                 "text_url_pt": link_fields["text_url_pt"],
                 "text_url_or_action": link_fields["text_url_or_action"],
                 "document_links": link_fields["document_links"],
+                "sentence_id": sentence_id or None,
                 "page_number": page_number,
             }
         )
@@ -417,6 +483,30 @@ def get_authoritative_decision_date(record: dict[str, Any]) -> str:
     return normalize_space(record.get("authoritative_decision_date") or record.get("source_list_decision_date"))
 
 
+def get_sentence_id(record: dict[str, Any]) -> str:
+    direct = normalize_space(record.get("sentence_id"))
+    if direct:
+        return direct
+    for candidate in [
+        record.get("text_url_primary"),
+        record.get("text_url_zh"),
+        record.get("text_url_pt"),
+        record.get("text_url_or_action"),
+    ]:
+        sid = extract_sentence_id_from_url(candidate)
+        if sid:
+            return sid
+    for item in record.get("document_links") or []:
+        if not isinstance(item, dict):
+            continue
+        if normalize_space(item.get("kind")).lower() != "text":
+            continue
+        sid = extract_sentence_id_from_url(item.get("url"))
+        if sid:
+            return sid
+    return ""
+
+
 def build_fallback_metadata_key(record: dict[str, Any]) -> tuple[str, str, str, str]:
     return (
         normalize_space(record.get("court")).lower(),
@@ -469,6 +559,7 @@ def append_record_to_corpus(record: dict[str, Any], manifest_fh, new_index: int)
         "text_url_zh": normalize_space(record.get("text_url_zh")),
         "text_url_pt": normalize_space(record.get("text_url_pt")),
         "document_links": record.get("document_links") or [],
+        "sentence_id": get_sentence_id(record),
         "page_number": record.get("page_number"),
         "extraction_source": "day24_all_court_crawling_mode",
         "full_text_path": relative_full_text_path,
@@ -489,28 +580,31 @@ def append_record_to_corpus(record: dict[str, Any], manifest_fh, new_index: int)
         "text_url_zh": metadata["text_url_zh"],
         "text_url_pt": metadata["text_url_pt"],
         "document_links": metadata["document_links"],
+        "sentence_id": metadata["sentence_id"],
         "metadata_path": relative_metadata_path,
         "full_text_path": relative_full_text_path,
     }
     manifest_fh.write(json.dumps(manifest_record, ensure_ascii=False) + "\n")
 
 
-def write_report(stats: CrawlStats) -> None:
-    appears_successful = stats.new_corpus_records_added > 0 or stats.duplicates_skipped > 0
+def write_report(stats: CrawlStats, *, exit_code: int) -> None:
+    run_status = "success" if exit_code == 0 else "failed"
+    page_audit_entries = stats.page_audit_entries or []
     lines = [
-        "Day 24 all-court crawling mode report",
-        "====================================",
+        "Day 59A child crawl report",
+        "==========================",
         f"court mode used: {stats.court_mode}",
+        f"run status: {run_status}",
+        f"exit code: {exit_code}",
         f"pages attempted: {stats.pages_attempted}",
         f"valid pages parsed: {stats.valid_pages_parsed}",
         f"cards discovered: {stats.cards_discovered}",
+        f"candidates with sentence_id: {stats.candidates_with_sentence_id}",
+        f"missing_sentence_id skipped: {stats.missing_sentence_id_skipped}",
+        f"duplicate_sentence_id skipped: {stats.duplicate_sentence_id_skipped}",
         f"detail pages attempted: {stats.detail_pages_attempted}",
         f"detail pages succeeded: {stats.detail_pages_succeeded}",
-        "duplicate strategy used: sorted all text URLs -> sorted all pdf URLs -> (court, authoritative_case_number, authoritative_decision_date, language)",
-        f"duplicates skipped: {stats.duplicates_skipped}",
-        f"duplicates skipped by text_url: {stats.duplicates_skipped_by_text_url}",
-        f"duplicates skipped by pdf_url: {stats.duplicates_skipped_by_pdf_url}",
-        f"duplicates skipped by fallback metadata key: {stats.duplicates_skipped_by_fallback_metadata}",
+        "duplicate strategy used: sentence_id-first authoritative identity",
         f"cards with zh text: {stats.cards_with_zh_text}",
         f"cards with pt text: {stats.cards_with_pt_text}",
         f"cards with both text languages: {stats.cards_with_both_text_languages}",
@@ -519,24 +613,27 @@ def write_report(stats: CrawlStats) -> None:
         f"cards with both pdf languages: {stats.cards_with_both_pdf_languages}",
         f"new corpus records added: {stats.new_corpus_records_added}",
         f"stop reason: {stats.stop_reason or 'none'}",
-        f"whether all-court crawling appears successful: {'yes' if appears_successful else 'no'}",
+        "",
+        "page audit (json lines):",
     ]
+    lines.extend(json.dumps(item, ensure_ascii=False) for item in page_audit_entries)
     REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def print_summary(stats: CrawlStats) -> None:
-    appears_successful = stats.new_corpus_records_added > 0 or stats.duplicates_skipped > 0
+def print_summary(stats: CrawlStats, *, exit_code: int) -> None:
+    run_status = "success" if exit_code == 0 else "failed"
     print(f"court mode used: {stats.court_mode}")
+    print(f"run status: {run_status}")
+    print(f"exit code: {exit_code}")
     print(f"pages attempted: {stats.pages_attempted}")
     print(f"valid pages parsed: {stats.valid_pages_parsed}")
     print(f"cards discovered: {stats.cards_discovered}")
+    print(f"candidates with sentence_id: {stats.candidates_with_sentence_id}")
+    print(f"missing_sentence_id skipped: {stats.missing_sentence_id_skipped}")
+    print(f"duplicate_sentence_id skipped: {stats.duplicate_sentence_id_skipped}")
     print(f"detail pages attempted: {stats.detail_pages_attempted}")
     print(f"detail pages succeeded: {stats.detail_pages_succeeded}")
-    print("duplicate strategy used: sorted all text URLs -> sorted all pdf URLs -> fallback metadata key")
-    print(f"duplicates skipped: {stats.duplicates_skipped}")
-    print(f"duplicates skipped by text_url: {stats.duplicates_skipped_by_text_url}")
-    print(f"duplicates skipped by pdf_url: {stats.duplicates_skipped_by_pdf_url}")
-    print(f"duplicates skipped by fallback metadata key: {stats.duplicates_skipped_by_fallback_metadata}")
+    print("duplicate strategy used: sentence_id-first authoritative identity")
     print(f"cards with zh text: {stats.cards_with_zh_text}")
     print(f"cards with pt text: {stats.cards_with_pt_text}")
     print(f"cards with both text languages: {stats.cards_with_both_text_languages}")
@@ -544,7 +641,6 @@ def print_summary(stats: CrawlStats) -> None:
     print(f"cards with pt pdf: {stats.cards_with_pt_pdf}")
     print(f"cards with both pdf languages: {stats.cards_with_both_pdf_languages}")
     print(f"new corpus records added: {stats.new_corpus_records_added}")
-    print(f"whether all-court crawling appears successful: {'yes' if appears_successful else 'no'}")
 
 
 def run() -> int:
@@ -560,13 +656,13 @@ def run() -> int:
     REPORT_PATH = args.report_path or (CORPUS_ROOT / "all_court_crawl_report.txt")
 
     playwright_error, sync_playwright = load_playwright()
-    stats = CrawlStats(court_mode=args.court)
+    stats = CrawlStats(court_mode=args.court, page_audit_entries=[])
 
     if not sync_playwright:
         stats.stop_reason = "playwright is not installed"
-        write_report(stats)
+        write_report(stats, exit_code=2)
         print("[ERROR] playwright is not installed")
-        print_summary(stats)
+        print_summary(stats, exit_code=2)
         print(f"report path: {REPORT_PATH}")
         return 2
 
@@ -575,7 +671,7 @@ def run() -> int:
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     manifest_rows = read_manifest(MANIFEST_PATH)
-    seen_keys = {build_duplicate_key(r) for r in manifest_rows}
+    seen_sentence_ids = {get_sentence_id(r) for r in manifest_rows if get_sentence_id(r)}
     seen_page_signatures: set[tuple[tuple[str, ...], ...]] = set()
 
     try:
@@ -584,27 +680,7 @@ def run() -> int:
             context = browser.new_context(locale="zh-HK")
             page = context.new_page()
 
-            page.goto(SEARCH_URL, wait_until="domcontentloaded", timeout=45_000)
-            page.wait_for_selector("#wizcasesearch_sentence_filter_type_court", timeout=15_000)
-            page.select_option("#wizcasesearch_sentence_filter_type_court", value=args.court)
-
-            clicked = False
-            for selector in [
-                "form[action*='researchjudgments'] button[type='submit']",
-                "form[action*='researchjudgments'] input[type='submit']",
-                "form[action*='researchjudgments'] button:has-text('搜尋')",
-            ]:
-                target = page.locator(selector)
-                if target.count() > 0:
-                    target.first.click(timeout=10_000)
-                    clicked = True
-                    break
-            if not clicked:
-                page.locator("form[action*='researchjudgments']").last.evaluate("f => f.submit()")
-
-            page.wait_for_load_state("networkidle", timeout=20_000)
-            page.wait_for_selector(RESULT_ROOT_SELECTOR, timeout=15_000)
-            submitted_result_url = page.url
+            submitted_result_url = start_court_search_from_home(page, args.court)
 
             detail_page = context.new_page()
 
@@ -613,17 +689,44 @@ def run() -> int:
 
                 for page_number in range(start_page, end_page + 1):
                     stats.pages_attempted += 1
+                    target_url = set_page_param_from_result_url(submitted_result_url, page_number)
+                    page_cards: list[dict[str, Any]] = []
+                    page_status = "ok"
+                    retry_count = 0
+                    for attempt in range(2):
+                        retry_count = attempt
+                        try:
+                            if page_number == 1 and attempt == 0:
+                                # page 1 must come from homepage form submission snapshot
+                                wait_for_cards_stable(page)
+                            else:
+                                page.goto(target_url, wait_until="domcontentloaded", timeout=45_000)
+                                wait_for_cards_stable(page)
+                            page_cards = parse_cards_from_current_page(page, page_number)
+                            break
+                        except Exception as exc:
+                            page_status = f"retryable_error:{type(exc).__name__}"
+                            if attempt == 0:
+                                submitted_result_url = start_court_search_from_home(page, args.court)
+                                target_url = set_page_param_from_result_url(submitted_result_url, page_number)
+                                continue
+                            raise
 
-                    if page_number == start_page:
-                        target_url = set_page_and_court_params_from_result_url(submitted_result_url, page_number, args.court)
-                    else:
-                        target_url = set_page_and_court_params_from_result_url(submitted_result_url, page_number, args.court)
-                    page.goto(target_url, wait_until="domcontentloaded", timeout=45_000)
-                    page.wait_for_load_state("networkidle", timeout=20_000)
-
-                    page_cards = parse_cards_from_current_page(page, page_number)
                     if not page_cards:
                         stats.stop_reason = f"invalid/no-result page at page {page_number}"
+                        page_status = "invalid_no_result_page"
+                        stats.page_audit_entries.append(
+                            {
+                                "court": args.court,
+                                "page": page_number,
+                                "page_url": target_url,
+                                "cards_found": 0,
+                                "first_sentence_ids": [],
+                                "last_sentence_ids": [],
+                                "retry_count": retry_count,
+                                "page_status": page_status,
+                            }
+                        )
                         break
 
                     signature = tuple(
@@ -638,6 +741,20 @@ def run() -> int:
                     )
                     if signature in seen_page_signatures:
                         stats.stop_reason = f"duplicate result page signature detected at page {page_number}"
+                        page_status = "duplicate_result_signature"
+                        ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
+                        stats.page_audit_entries.append(
+                            {
+                                "court": args.court,
+                                "page": page_number,
+                                "page_url": target_url,
+                                "cards_found": len(page_cards),
+                                "first_sentence_ids": ids[:3],
+                                "last_sentence_ids": ids[-3:],
+                                "retry_count": retry_count,
+                                "page_status": page_status,
+                            }
+                        )
                         break
                     seen_page_signatures.add(signature)
 
@@ -653,8 +770,30 @@ def run() -> int:
                     stats.cards_with_both_pdf_languages += sum(
                         1 for c in page_cards if normalize_space(c.get("pdf_url_zh")) and normalize_space(c.get("pdf_url_pt"))
                     )
+                    ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
+                    stats.page_audit_entries.append(
+                        {
+                            "court": args.court,
+                            "page": page_number,
+                            "page_url": target_url,
+                            "cards_found": len(page_cards),
+                            "first_sentence_ids": ids[:3],
+                            "last_sentence_ids": ids[-3:],
+                            "retry_count": retry_count,
+                            "page_status": page_status,
+                        }
+                    )
 
                     for card in page_cards:
+                        sentence_id = get_sentence_id(card)
+                        if not sentence_id:
+                            stats.missing_sentence_id_skipped += 1
+                            continue
+                        stats.candidates_with_sentence_id += 1
+                        if sentence_id in seen_sentence_ids:
+                            stats.duplicate_sentence_id_skipped += 1
+                            continue
+
                         detail_url = normalize_space(card.get("text_url_primary") or card.get("text_url_or_action"))
                         if not detail_url:
                             continue
@@ -675,26 +814,15 @@ def run() -> int:
 
                         record = {
                             **card,
+                            "sentence_id": sentence_id,
                             "language": detect_language_from_url(detail_url),
                             "full_text": cleaned_text,
                         }
 
-                        duplicate_key = build_duplicate_key(record)
-
-                        if duplicate_key in seen_keys:
-                            stats.duplicates_skipped += 1
-                            if duplicate_key[0] == "text_url":
-                                stats.duplicates_skipped_by_text_url += 1
-                            elif duplicate_key[0] == "pdf_url":
-                                stats.duplicates_skipped_by_pdf_url += 1
-                            else:
-                                stats.duplicates_skipped_by_fallback_metadata += 1
-                            continue
-
                         append_record_to_corpus(record, manifest_fh, new_index=new_index)
                         new_index += 1
                         stats.new_corpus_records_added += 1
-                        seen_keys.add(duplicate_key)
+                        seen_sentence_ids.add(sentence_id)
 
                 if not stats.stop_reason and stats.pages_attempted >= (end_page - start_page + 1):
                     stats.stop_reason = f"reached configured page range {start_page}..{end_page}"
@@ -702,15 +830,16 @@ def run() -> int:
             context.close()
             browser.close()
 
-        write_report(stats)
-        print_summary(stats)
+        write_report(stats, exit_code=0)
+        print_summary(stats, exit_code=0)
         print(f"report path: {REPORT_PATH}")
         return 0
 
     except Exception as exc:
+        stats.stop_reason = stats.stop_reason or f"fatal error: {type(exc).__name__}"
         print(f"[ERROR] {exc}", file=sys.stderr)
-        write_report(stats)
-        print_summary(stats)
+        write_report(stats, exit_code=1)
+        print_summary(stats, exit_code=1)
         print(f"report path: {REPORT_PATH}")
         return 1
 
