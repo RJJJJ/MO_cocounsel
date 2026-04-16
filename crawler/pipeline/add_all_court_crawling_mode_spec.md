@@ -1,5 +1,8 @@
 # Day 24 Spec: Add All-Court Crawling Mode
 
+> Day 59A note: this file records historical Day 24 behavior and now includes a refinement note.
+> Day 59A is an incremental update on top of Day 59 authoritative flow, not a redesign.
+
 ## Why coverage expansion is now more valuable than architecture expansion
 
 At Day 23, the selector-driven parsing, detail extraction, pagination extension, corpus append pipeline, and local BM25 prototype are already stable enough for iterative use. The current bottleneck is not crawler architecture, but recall coverage:
@@ -105,3 +108,11 @@ Choose one next increment:
 
 1. build a **hybrid retrieval layer skeleton** (BM25 + future semantic hook points), or
 2. add an **evaluation/query test set** for recall/precision tracking and regression checks.
+
+## Day 59A incremental refinement summary
+
+- Old child crawler helper rewrote both `page` and `court` params from result URL.
+- New Day 59A behavior keeps court entry authoritative through homepage form submission.
+- Pagination is page-only after page-1 snapshot is established.
+- Child dedupe/admission shifts to sentence-id-first, and missing sentence-id rows are skipped from authoritative path.
+- This is a focused hardening pass for court-entry correctness and authoritative identity clarity.

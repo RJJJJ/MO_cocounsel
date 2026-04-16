@@ -28,7 +28,7 @@ Day 59 establishes a concrete, auditable authoritative flow:
 1. Crawl each court independently (`tui`, `tsi`, `tjb`, `ta`).
 2. Collect each court-run manifest as explicit source input.
 3. Merge all court outputs into one candidate pool.
-4. Deduplicate **after merge** with reason breakdown (`text_url`, `pdf_url`, fallback metadata key).
+4. Deduplicate **after merge** with auditable reason breakdown.
 5. Preserve provenance fields for every merged record.
 6. Publish merged corpus manifest/report as the authoritative downstream source.
 
@@ -43,9 +43,34 @@ Per-court runs improve control over:
 
 This is safer than inferring completeness from a single aggregated query mode.
 
-## Merge/dedupe rationale
+## Merge/dedupe rationale (refined in Day 59A)
 
-Deduplication belongs at merged-corpus assembly time so cross-court duplicates are visible and auditable in one place. Day 59 keeps duplicate handling conservative and transparent via reason counters.
+Deduplication belongs at merged-corpus assembly time so cross-court duplicates are visible and auditable in one place.
+
+Day 59A refines authoritative identity to **sentence-id-first**:
+
+- authoritative duplicate key: `sentence_id` extracted from sentence detail URLs;
+- missing sentence id: skipped by default in authoritative merged corpus;
+- duplicate reason counters centered on:
+  - `duplicate_sentence_id`
+  - `missing_sentence_id_skipped`
+- legacy URL/metadata identity logic remains compatibility-only, not primary authority.
+
+## Day 59A child court-entry and pagination refinement
+
+Old child behavior mixed:
+
+- homepage form entry,
+- URL-level court param rewriting,
+- URL-driven page navigation.
+
+Day 59A now requires:
+
+1. establish page-1 result snapshot by homepage form submission per court;
+2. only then allow pagination via href or page-only URL derivation;
+3. do not treat URL court rewriting as authoritative court switching.
+
+This improves court-context correctness and reduces court-switch ambiguity.
 
 ## Metadata attachment stage rationale
 
@@ -72,10 +97,12 @@ Deterministic baseline remains required as fallback + benchmark/regression guard
 - Merge policy currently keeps first-seen records by duplicate key priority.
 - Metadata attachment remains case-level source preference; no per-field blending policy yet.
 - Retrieval/eval regression pack for the new authoritative corpus is not yet bundled.
+- Child crawler still depends on upstream site stability and selector continuity.
+- Completeness proof remains bounded by configured page windows.
 
 ## Day 60 recommended next step
 
-Build a **full-corpus retrieval eval/regression pack** against the Day 59 authoritative merged corpus, including baseline comparisons and duplicate-policy regression checks.
+Build a **retrieval eval/regression pack** against the sentence-id-authoritative merged corpus (post-Day 59A), including duplicate-policy regression checks.
 
 ### Engineering note
 
