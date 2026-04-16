@@ -1,1002 +1,388 @@
 # MO_cocounsel
 
-Macau CoCounsel / Macau Legal Copilot
+**Macau Legal Copilot / 澳門版 CoCounsel（retrieval-first portfolio prototype）**
 
-A Macau-focused legal research and document analysis system inspired by CoCounsel, designed for legal retrieval, document review, drafting support, and future agentic legal workflows.
+MO_cocounsel is a **Macau legal research system prototype** built on top of **public Macau court judgments**.  
+The project direction is explicit:
 
----
+> **Build the retrieval engine first. Add agent workflows later.**
 
-## Overview
-
-**MO_cocounsel** is a Macau legal AI project that aims to build a **Macau version of CoCounsel**.
-
-Its long-term goal is not just to answer legal questions, but to provide a structured legal workbench for:
-
-- legal research
-- document review
-- contract / notice analysis
-- case and statute comparison
-- memo and checklist generation
-- workflow orchestration through legal agents
-
-The core principle of this project is:
-
-> **First build the legal retrieval engine, then build the agents.**
-
-Without strong retrieval, citation grounding, and evidence binding, higher-level agents are only a thin interface over unstable outputs.
+This repository is no longer just a concept note. It already contains a working research pipeline surface, API-facing response envelope, endpoint tests, and a frontend demo integration layer.
 
 ---
 
-## Product Positioning
+## 1. Project Positioning
 
 MO_cocounsel is positioned as a:
 
 - **Macau Legal Copilot**
-- **Macau CoCounsel**
-- **Macau legal research and review assistant**
+- **Macau CoCounsel-style research prototype**
+- **retrieval-first legal AI portfolio project**
 
-It is designed primarily for:
+Current focus:
 
-- legal research
-- issue spotting
-- document analysis
-- structured legal outputs
-- future multi-step legal workflows
+- legal research over Macau public judgments
+- metadata-aware case presentation
+- provenance-preserving research output
+- API/demo productization
 
----
+Current non-focus:
 
-## Core Design Principle
-
-This project is built around one foundational layer:
-
-# **Macau Legal Retrieval Engine**
-
-This engine is the shared legal intelligence layer used by all upper-level features and agents.
-
-It must support:
-
-- Macau statute retrieval
-- Macau public case law retrieval
-- statute-case linkage
-- citation and evidence binding
-- structured research summaries
-- multi-step retrieval for deep research
-- source-aware and court-aware search modes
+- premature multi-agent orchestration
+- broad drafting automation as the main delivery layer
+- “chatbot first” packaging without retrieval rigor
 
 ---
 
-# Core Capabilities
+## 2. What Is Already Built
 
-## A. Legal Research
+### Crawling / Corpus
+Completed work includes:
 
-### 1. Natural-language legal search
-Users can input ordinary legal questions in natural language, and the system will retrieve:
+- court result-page probing
+- selector-driven result parsing
+- text detail extraction
+- raw corpus layout
+- pagination extension
+- all-court crawling mode
+- duplicate-strategy fixes
+- zh / pt / pdf / txt link handling
 
-- Macau statutes
-- Macau case law
-- explanatory materials where available
+### Retrieval / Research Pipeline
+Completed work includes:
 
-Example queries:
-- “僱主拖糧，員工可否即時解除合同？”
-- “澳門解僱通知未寫明理由，法律上有何風險？”
-- “買賣合同中的違約金條款是否可能過高？”
-- “交通事故後可否同時主張哪些損害賠償？”
+- chunking prep
+- BM25 prep
+- local BM25 query prototype
+- issue decomposition layer
+- hybrid retrieval skeleton
+- citation binding layer
+- answer synthesis skeleton
+- structured research output schema
+- search router
+- exact case-number lookup refinement
+- Portuguese / mixed-query routing refinement
+- route-specific evaluation slices
 
-### 2. Deep Research / multi-step legal research
-The system does not stop at one retrieval step. It can:
+### Metadata
+Completed work includes:
 
-- decompose a complex legal question
-- perform multi-step search
-- refine sub-issues
-- aggregate legal findings into a structured result
+- metadata target schema
+- deterministic metadata baseline
+- metadata field evaluation
+- model-generated metadata comparison harness
+- local metadata generation connection
+- Traditional Chinese normalization
+- latest valid artifact selection fix
+- metadata integration into the research pipeline
 
-### 3. Issue decomposition
-A complex legal question can be broken into:
+### Product / API / Demo
+Completed work includes:
 
-- main issue
-- sub-issues
-- procedural questions
-- remedies / compensation
-- limitation / burden of proof / evidence gaps
-
-### 4. Case-oriented research summary
-The output is not just a paragraph answer. It should include:
-
-- conclusion summary
-- core cases
-- supporting cases
-- relevant reasoning snippets
-- adverse / limiting cases where relevant
-
-### 5. Statute-oriented research summary
-The system can produce a statute-first analysis, including:
-
-- applicable provisions
-- statutory elements
-- how statutes and cases support each other
-
-### 6. Research mode control
-Users can choose the research mode:
-
-- statute-only
-- case-only
-- hybrid analysis
-
-### 7. Court / source-specific search
-Users can control search scope, such as:
-
-- only Court of Final Appeal
-- only Intermediate Court
-- only certain subject areas
-- only specific sources
-
-### 8. Timeline / legal evolution search
-The system can track how a legal issue evolves across years and cases.
-
-### 9. Adverse case retrieval
-The system should not only find favorable authorities, but also:
-
-- adverse cases
-- restrictive cases
-- contrary positions
-- exceptions and limitations
+- case-card / UI-ready output layer
+- API-ready response envelope
+- FastAPI integration surface
+- endpoint validation tests
+- frontend demo integration
+- filter / sort / compact case-card layout refinement
 
 ---
 
-## B. Document Review / Analysis
+## 3. Data Source
 
-### 1. Upload-and-analyze legal documents
-Supported formats may include:
+Primary source:
 
-- PDF
-- DOCX
-- images
-- scanned documents
+- Macau Courts public judgment search page  
+  https://www.court.gov.mo/zh/subpage/researchjudgments
 
-The system analyzes the content and links it to Macau law and cases.
+Known source characteristics already accounted for in the project:
 
-### 2. Contract review
-The system can:
-
-- identify clauses
-- highlight legal risks
-- detect missing terms
-- mark sections requiring human review
-
-### 3. Clause summarization
-Long legal clauses can be rewritten into plain language.
-
-### 4. Contract data extraction
-The system can extract structured information such as:
-
-- parties
-- term
-- termination
-- breach
-- confidentiality
-- indemnity
-- governing law / jurisdiction
-
-### 5. Document comparison
-Compare two versions of a document and identify:
-
-- clause changes
-- added / removed terms
-- changed risk profile
-
-### 6. Benchmark against standard
-Compare a document against a standard template to identify:
-
-- missing clauses
-- extra clauses
-- deviations from standard practice
-
-### 7. Batch review
-Support reviewing multiple documents together, such as:
-
-- contracts
-- notices
-- case materials
-- legal correspondence
-
-### 8. Case material organization
-From a bundle of case materials, the system can extract:
-
-- parties
-- timeline
-- facts
-- issues
-- evidence
-- likely legal questions
-
-### 9. Legal sufficiency checks
-For example:
-
-- whether a dismissal notice states sufficient reasons
-- whether required elements are missing
-- whether procedural defects may exist
+- `court` parameters: `tui` / `tsi` / `tjb` / `ta` / `all`
+- page turning via `&page=`
+- `court=all` is useful for broad coverage and demo use, but not ideal as the final full-harvest strategy
+- a more complete long-term harvest strategy should be **per-court crawling + merge/dedupe**
+- sentence / TXT pages are important authoritative text sources
+- records may be zh-only, pt-only, or mixed-language
 
 ---
 
-## C. Drafting / Work Product Generation
+## 4. Core Technical Decisions
 
-### 1. Research memo generation
-Generate a structured memo including:
+### Metadata source preference
+For retrieved cases:
 
-- issue
-- rule
-- authorities
-- analysis
-- risks
-- conclusion
+- prefer **model-generated metadata** when available
+- otherwise fallback to **deterministic baseline**
+- always preserve `metadata_source`
+- keep provenance visible through pipeline, case cards, and API output
 
-### 2. Case brief generation
-Produce a case brief with:
+### Deterministic baseline stays
+The deterministic baseline is **not** legacy dead code. It remains valuable as:
 
-- case number
-- facts
-- issue
-- reasoning
+- fallback
+- benchmark
+- regression guard
+
+### Current local metadata model
+Current default local model:
+
+- `qwen2.5:3b-instruct`
+
+This repo currently treats that as the fixed default, not something to casually swap on feel.
+
+### Artifact selection consistency
+Metadata-consuming components should share one latest-valid-artifact selection rule:
+
+- explicit override path first
+- otherwise auto-select latest valid output
+
+### Traditional Chinese normalization
+Model-generated Chinese metadata is normalized to Traditional Chinese, without breaking structured fields such as:
+
+- case numbers
+- URLs
+- source chunk ids
+
+---
+
+## 5. Current API Surface
+
+### `POST /api/research/query`
+
+The current minimal FastAPI integration surface is implemented in:
+
+- `app/api/research.py`
+
+It exposes the existing research pipeline through a response envelope built from the case-card layer.
+
+### Request shape
+
+```json
+{
+  "query": "假釋",
+  "top_k": 5
+}
+```
+
+### Response envelope
+
+The response model includes:
+
+- `schema_version`
+- `query`
+- `top_k`
+- `result_count`
+- `diagnostics`
+- `results`
+
+Diagnostics include:
+
+- `retrieved_cases_count`
+- `case_cards_built`
+- `model_generated_metadata_used_count`
+- `deterministic_fallback_used_count`
+- `success_flag`
+- `selected_model_metadata_path`
+- `selected_model_metadata_case_count`
+
+This design makes the output inspectable and demo-friendly, instead of returning only a bare answer paragraph.
+
+---
+
+## 6. Frontend Demo
+
+The repository includes a browser demo file:
+
+- `frontend/demo_research_integration.html`
+
+The current demo supports:
+
+- query input
+- `top_k` input
+- result summary panel
+- diagnostics panel
+- compact case-card rendering
+- filtering by:
+  - `metadata_source`
+  - `language`
+- sorting by:
+  - `authoritative_decision_date`
+  - `authoritative_case_number`
+- progressive disclosure for long fields
+
+Suggested demo queries currently used in the project:
+
+- `假釋`
+- `量刑過重`
+- `253/2026`
+
+These cover:
+
+- legal-concept retrieval
+- issue/argument-style retrieval
+- exact case-number lookup
+
+---
+
+## 7. Validated Repository Files
+
+This README is aligned to repository files that already exist in the codebase, including:
+
+- `app/api/research.py`
+- `app/schemas/research.py`
+- `crawler/pipeline/build_api_ready_response_envelope.py`
+- `frontend/demo_research_integration.html`
+- `tests/test_research_endpoint.py`
+- `docs/day52_acceptance.md`
+- `docs/day54_acceptance.md`
+- `docs/day55_acceptance.md`
+- `docs/day56_acceptance.md`
+- `docs/day57_acceptance.md`
+- `docs/day58_acceptance.md`
+
+So the current repo state is best understood as:
+
+> **a working retrieval/product prototype with documented milestone delivery, not just a future architecture proposal.**
+
+---
+
+## 8. Minimal Local Usage
+
+### A. Build an API-ready research envelope from the pipeline
+
+Confirmed CLI entrypoint:
+
+```bash
+python crawler/pipeline/build_api_ready_response_envelope.py --query "假釋" --top_k 5 --json
+```
+
+This produces an API-ready response envelope over the existing UI-ready case-card layer.
+
+### B. Run endpoint tests
+
+Confirmed test file:
+
+```bash
+pytest tests/test_research_endpoint.py
+```
+
+The test coverage includes:
+
+- happy-path request validation
+- missing query validation
+- invalid `top_k` validation
+- blank-query validation
+
+---
+
+## 9. Research Output Shape
+
+At the current stage, the project is moving toward a structured legal research package rather than a flat list of search hits.
+
+The response layer is already designed around:
+
+- case cards
+- authoritative case number
+- decision date
+- court
+- language
+- case type
+- case summary
 - holding
-- usable citations
+- legal basis
+- disputed issues
+- metadata source
+- source links
+- card title / subtitle / tags
 
-### 3. Plain-language rewrite
-Translate legal analysis into plain language for non-lawyers.
+This is a better product foundation than a plain text answer because it preserves:
 
-### 4. Client-style explanation draft
-Generate a non-formal explanation draft with clear caution that it is not formal legal advice.
-
-### 5. Pre-litigation issue checklist
-Based on facts and materials, generate a checklist of:
-
-- missing facts
-- missing evidence
-- unresolved legal questions
-- issues requiring confirmation
-
-### 6. Risk checklist
-Output risk checklists for:
-
-- contracts
-- labor notices
-- procedural actions
-- legal arrangements
-
-### 7. Comparison tables
-Generate structured tables such as:
-
-- contract A vs contract B
-- statute vs case comparison
-- favorable vs adverse authority comparison
-
-### 8. Draft-first legal work product
-Potential outputs include:
-
-- legal research draft
-- complaint draft
-- internal legal analysis draft
-- notice draft
+- inspection
+- filtering
+- sorting
+- provenance
+- UI productization
 
 ---
 
-## D. Workflow / Agent Capabilities
+## 10. Current Strengths
 
-The project also plans future agentic workflows.
+What this repository already shows well:
 
-### 1. Research Agent
-Responsible for:
+- retrieval-first product discipline
+- pipeline thinking instead of UI-first thinking
+- legal-source grounding awareness
+- metadata provenance design
+- explicit fallback logic
+- multilingual routing awareness
+- API surface design
+- frontend demo packaging
+- milestone-based delivery progression
 
-- multi-step research
-- sub-issue search
-- result consolidation
-
-### 2. Citation Agent
-Responsible for:
-
-- linking conclusions to source chunks
-- generating citation cards
-- preserving grounding
-
-### 3. Document Analysis Agent
-Responsible for:
-
-- extracting facts / clauses / issues from uploaded documents
-- turning them into legal research queries
-
-### 4. Comparison Agent
-Responsible for:
-
-- comparing versions
-- identifying legal significance of changes
-- surfacing risk delta
-
-### 5. Memo Drafting Agent
-Responsible for transforming research outputs into work products.
-
-### 6. Issue Spotting Agent
-Responsible for identifying legal issues from long factual narratives.
-
-### 7. Evidence Gap Agent
-Responsible for identifying:
-
-- missing facts
-- missing evidence
-- unsupported conclusions
-
-### 8. Task Planner / Workflow Orchestrator
-Responsible for:
-
-- classifying task type
-- deciding which tools / agents to call
-- determining retrieval order
-- stopping or continuing the research loop
+For portfolio purposes, this is materially stronger than a generic “LLM + chat UI” demo.
 
 ---
 
-# System Architecture
+## 11. Current Limitations
 
-## Global Architecture
+This prototype still has real limitations:
 
-```text
-Frontend UI
-    |
-Backend API (FastAPI)
-    |
-Task Planner / Workflow Orchestrator
-    |
-+-----------------------------+
-|  Legal Retrieval Layer      |
-|  - Query Normalizer         |
-|  - Issue Decomposer         |
-|  - Search Router            |
-|  - Hybrid Retriever         |
-|  - Re-ranker                |
-|  - Citation Binder          |
-+-----------------------------+
-    |
-+-----------------------------+
-|  Knowledge Layer            |
-|  - Macau statutes DB        |
-|  - Macau cases DB           |
-|  - Metadata DB              |
-|  - Vector index             |
-|  - Keyword/full-text index  |
-+-----------------------------+
-    |
-+-----------------------------+
-|  Agent Layer                |
-|  - Research Agent           |
-|  - Citation Agent           |
-|  - Document Analysis Agent  |
-|  - Comparison Agent         |
-|  - Memo Drafting Agent      |
-|  - Issue Spotting Agent     |
-|  - Evidence Gap Agent       |
-+-----------------------------+
-    |
-Output Layer
-- Answer
-- Cases
-- Statutes
-- Citations
-- Memo
-- Checklist
-- Compare Table
-```
+1. **RAG quality is not fully hardened yet**  
+   Retrieval quality, citation quality, and synthesis quality still need tightening.
+
+2. **Model-generated metadata does not yet cover the full corpus**  
+   Coverage is still partial rather than complete.
+
+3. **Portuguese / mixed-query routing remains weaker than the strongest slices**  
+   This is a known improvement path, not an unknown failure.
+
+4. **`court=all` is useful but not the final corpus strategy**  
+   Long-term harvesting should move toward per-court crawl + merge/dedupe.
+
+5. **Agent workflows are intentionally not the main line yet**  
+   The project is still prioritizing a reliable research substrate.
 
 ---
 
-## Retrieval Layer Responsibilities
+## 12. Why This Project Matters
 
-The retrieval layer is the foundation of the entire system.
+MO_cocounsel is valuable because it is trying to solve the hard part first:
 
-It is responsible for:
+- source ingestion
+- retrieval structure
+- metadata quality strategy
+- evidence-linked presentation
+- API/demo integration
 
-- query normalization
-- issue decomposition
-- statute retrieval
-- case retrieval
-- statute-case linkage
-- ranking core / supporting / adverse authorities
-- citation binding
-- structured evidence for upper-layer agents
+That makes it a portfolio project about:
 
----
+- retrieval engineering
+- legal AI product design
+- metadata systems
+- pipeline hardening
+- backend integration
+- demo-oriented productization
 
-## Core Retrieval Modules
-
-### 1. Query Normalizer
-Converts ordinary user language into legal retrieval language.
-
-Important note:
-The README examples under this section are **illustrative only**. They are not hardcoded constraints and do not imply that the system is limited to labor-law issues such as wage disputes. The same normalization layer should support many legal domains and many issue families.
-
-Example:
-- 拖糧 / 欠薪 / 不出糧 / 延遲支付工資
-- can be normalized into one issue representation in a labor-law context
-
-Responsibilities:
-- legal synonym normalization
-- issue code mapping
-- jurisdiction-specific term mapping
-- domain-aware query rewriting
-
-### 2. Issue Decomposer
-Breaks one complex legal problem into sub-issues.
-
-Example:
-- main issue
-- procedural issue
-- remedy issue
-- evidence issue
-- limitation issue
-
-### 3. Search Router
-Chooses search strategy dynamically:
-
-- statute-only
-- case-only
-- hybrid
-- specific court
-- timeline
-- adverse-case search
-
-### 4. Hybrid Retriever
-Combines:
-
-- keyword / full-text retrieval
-- vector retrieval
-- metadata filtering
-- issue-aware retrieval
-
-### 5. Re-ranker
-Re-ranks candidate authorities using factors such as:
-
-- relevance to main issue
-- relevance to sub-issues
-- court level
-- recency
-- procedural importance
-- compensation / remedy relevance
-- burden-of-proof relevance
-
-### 6. Citation Binder
-Binds each conclusion to:
-
-- case number
-- article number
-- source chunk
-- snippet
-- source URL
-
-This is one of the most important components in the project.
+—not just about putting a language model behind a text box.
 
 ---
 
-## Issue Taxonomy and Legal Term Map
+## 13. Near-Term Roadmap
 
-MO_cocounsel should not depend on a single fixed list of hardcoded legal phrases. Instead, it should use an extensible **issue taxonomy** and **alias map**.
+Current next-stage priorities are:
 
-This means the system should support:
+- pipeline quality hardening
+- metadata coverage expansion
+- stronger integration consistency
+- demo/API/frontend polish for presentation
 
-- issue taxonomy
-- issue aliases
-- Macau legal term map
-- procedural vs substantive issue map
-- remedy taxonomy
+Not the current priority:
 
-Example taxonomy entry:
-
-```json
-{
-  "issue_code": "late_wage_payment",
-  "aliases": [
-    "拖糧",
-    "欠薪",
-    "不出糧",
-    "延遲支付工資",
-    "未按時支付工資"
-  ],
-  "related_issues": [
-    "employee_termination_with_just_cause",
-    "compensation_claim",
-    "burden_of_proof",
-    "interest_claim"
-  ]
-}
-```
-
-This is only one example issue family. The same structure should later cover many other categories, such as:
-
-- dismissal validity
-- contract breach
-- damages
-- prescription / limitation
-- procedural defects
-- tenancy disputes
-- tort liability
-- criminal procedure issues
-
-The point of writing this in the README is to document an **extensible architecture**, not a closed rule list.
+- jumping early into large multi-agent orchestration
+- changing the default metadata model without benchmark-driven reason
 
 ---
 
-## Authority Roles
+## 14. One-Line Summary
 
-Retrieved authorities should not be treated as one flat list. MO_cocounsel should distinguish between different legal roles, such as:
-
-- core authority
-- supporting authority
-- adverse authority
-- limiting authority
-- procedural authority
-- remedy authority
-
-This helps the system produce better research summaries, compare tables, and memo outputs.
-
----
-
-## Retrieval System Design Notes
-
-The retrieval engine is not designed in a vacuum. Its design should be informed by benchmark testing, reverse engineering of working legal retrieval tools, and repeated query evaluation.
-
-A production-like Macau legal retrieval system likely behaves as:
-
-```text
-User legal question
--> query normalization
--> issue tagging / issue decomposition
--> retrieve large candidate set of cases
--> hybrid ranking (keyword + semantic + metadata)
--> select representative authorities
--> generate structured legal summary
--> bind summary points to cited authorities
--> return expandable case cards / snippets
-```
-
-This suggests that the retrieval system is not just a search box, but a layered legal intelligence pipeline.
-
-### Observed strengths to preserve
-
-- not pure keyword search
-- likely hybrid retrieval behavior
-- recurring representative precedent anchors
-- structured, template-guided research summaries
-
-### Observed weaknesses to improve
-
-- synonym stability can drift
-- mixed issues can blur together
-- citation grounding may not be granular enough
-- recall may be high while precision is uneven
-
-MO_cocounsel should explicitly improve these areas through stronger normalization, finer issue decomposition, stricter evidence binding, and better re-ranking.
-
----
-
-## Recommended Retrieval Output Schema
-
-The retrieval engine should not return only raw search hits. It should return a structured legal retrieval package:
-
-```json
-{
-  "raw_query": "...",
-  "normalized_query": "...",
-  "research_mode": "hybrid",
-  "main_issue": "...",
-  "sub_issues": ["...", "..."],
-  "core_cases": [
-    {
-      "case_number": "...",
-      "court_level": "...",
-      "decision_date": "...",
-      "reasoning_snippet": "...",
-      "source_url": "...",
-      "score": 0.92
-    }
-  ],
-  "supporting_cases": [],
-  "adverse_cases": [],
-  "applicable_statutes": [],
-  "structured_summary": [
-    {
-      "point_title": "...",
-      "point_text": "...",
-      "citations": ["..."]
-    }
-  ],
-  "evidence_gaps": [],
-  "caution_notes": []
-}
-```
-
----
-
-# Knowledge Layer
-
-## Initial Data Sources
-
-Priority order:
-
-1. **Macau public judgments / case law**
-2. **Macau statutes / regulations**
-3. **Official explanatory materials and public legal documents**
-4. **Internal benchmark notes / manually curated issue maps**
-
----
-
-## Suggested Data Pipeline
-
-```text
-Source discovery
--> crawler / downloader
--> raw html/pdf storage
--> parser
--> metadata extraction
--> structured database
--> chunking
--> embeddings
--> search indexes
-```
-
----
-
-## Suggested Core Tables
-
-### cases
-- id
-- case_number
-- court_name
-- court_level
-- decision_date
-- case_type
-- title
-- source_url
-- language
-- full_text
-- summary_text
-- reasoning_text
-- holding_text
-- issue_tags
-- cited_statutes
-- raw_html_path
-- raw_pdf_path
-- created_at
-- updated_at
-
-### case_chunks
-- id
-- case_id
-- chunk_index
-- section_type
-- chunk_text
-- token_count
-- embedding_vector
-- bm25_text
-- citation_anchor
-
-### statutes
-- id
-- law_name
-- law_code
-- article_number
-- title
-- article_text
-- language
-- effective_date
-- repealed_date
-- source_url
-- created_at
-- updated_at
-
-### statute_chunks
-- id
-- statute_id
-- chunk_index
-- chunk_text
-- embedding_vector
-- bm25_text
-
----
-
-# Recommended Development Order
-
-## Phase 1 — Legal Retrieval Engine MVP
-Build the minimum viable retrieval system first.
-
-Must-have:
-- case and statute ingestion
-- keyword search
-- vector search
-- hybrid retrieval
-- citation-ready result schema
-- structured research summary
-
-Output target:
-- issue breakdown
-- core cases
-- supporting cases
-- applicable statutes
-- grounded legal summary
-
-## Phase 2 — Document Analysis Layer
-Build upload and analysis capability.
-
-Must-have:
-- PDF / DOCX / image parsing
-- clause extraction
-- issue spotting
-- document-to-query generation
-- retrieval linkage
-
-## Phase 3 — Work Product Layer
-Turn research into usable outputs.
-
-Must-have:
-- research memo
-- case brief
-- plain-language rewrite
-- risk checklist
-- comparison table
-
-## Phase 4 — Workflow / Agent Orchestration
-Add multi-step automation.
-
-Must-have:
-- task planner
-- agent routing
-- multi-step retrieval loops
-- evidence gap detection
-- batch review flow
-
----
-
-# Suggested Tech Stack
-
-## Backend
-- Python 3.11+
-- FastAPI
-- SQLAlchemy
-- Alembic
-- Pydantic
-- httpx
-
-## Database / Search
-- PostgreSQL
-- pgvector
-- PostgreSQL full-text search
-
-## Parsing / Ingestion
-- Playwright
-- BeautifulSoup / lxml
-- PyMuPDF / pdfplumber
-- python-docx
-- OCR fallback when necessary
-
-## Frontend
-- Vue 3 or Next.js
-- Tailwind CSS
-- Pinia / TanStack Query
-- PDF viewer
-- diff viewer
-- citation viewer
-
-## Infra
-- Docker Compose
-- local-first development
-- local object storage / MinIO for raw files
-
----
-
-# Proposed API Design
-
-## Research
-- `POST /research/query`
-- `POST /research/deep-query`
-- `POST /research/similar-cases`
-- `POST /research/timeline`
-- `POST /research/adverse-cases`
-
-## Documents
-- `POST /documents/upload`
-- `POST /documents/analyze`
-- `POST /documents/compare`
-- `POST /documents/batch-review`
-
-## Drafting / Work Products
-- `POST /drafts/memo`
-- `POST /drafts/case-brief`
-- `POST /drafts/plain-language`
-- `POST /drafts/checklist`
-
-## Internal Tools
-- `POST /internal/normalize-query`
-- `POST /internal/decompose-issues`
-- `POST /internal/retrieve`
-- `POST /internal/rerank`
-- `POST /internal/bind-citations`
-
----
-
-# MVP Scope
-
-The first real MVP should stay narrow while remaining product-accurate.
-
-## Recommended MVP
-Focus on:
-
-- Macau public judgments
-- Macau statutes (laws and regulations)
-- hybrid retrieval
-- statute-case linkage
-- citation cards
-- structured research summary
-
-Clarifications:
-
-- MVP first focuses on Macau public judgments and Macau statutes.
-- The architecture is cross-domain and not labor-law-limited.
-- Early iterations may use a small subset of cases for faster retrieval testing, but that subset does not define product scope.
-- Day 1 delivery is retrieval foundation only; it does **not** include agent orchestration implementation.
-- Direction remains: **Macau Legal Retrieval Engine first, agents second.**
-
-## MVP Input
-- natural language legal question
-- long factual narrative
-
-## MVP Output
-- issue decomposition
-- 3–5 core cases
-- 3–5 supporting cases
-- applicable statutes
-- structured summary
-- citation-backed findings
-
----
-
-# Evaluation Plan
-
-To avoid building an impressive but unreliable demo, evaluation is required.
-
-Recommended evaluation setup:
-
-- 50 benchmark legal queries
-- expected core cases
-- expected statutes
-- issue coverage rubric
-- citation grounding rubric
-- hallucination checks
-- regression evaluation after each major update
-
-## Search Evaluation Dimensions
-
-The retrieval engine should be evaluated across dimensions such as:
-
-- query normalization stability
-- issue decomposition quality
-- core authority precision
-- adverse authority recall
-- citation grounding quality
-- evidence-role labeling accuracy
-- source-mode compliance
-- long-fact narrative issue extraction quality
-
----
-
-# Common Failure Modes
-
-This project should avoid:
-
-- building multi-agent orchestration too early
-- building chat UI too early
-- failing to preserve raw source documents
-- relying only on vector search
-- skipping metadata filtering
-- skipping benchmark evaluation
-- skipping citation binding
-- trying to cover all legal domains too early
-- not building issue taxonomy
-
-## Retrieval-specific observed failure patterns
-
-- paraphrase drift
-- remedy-dominant drift
-- procedure/substance blending
-- over-broad retrieval
-- insufficient adverse-case surfacing
-- citation not granular enough
-- anchor case over-dependence
-- weak exact-passage grounding
-
----
-
-# Suggested Repo Structure
-
-```text
-MO_cocounsel/
-├─ README.md
-├─ .env.example
-├─ docker-compose.yml
-├─ backend/
-│  ├─ app/
-│  │  ├─ main.py
-│  │  ├─ core/
-│  │  ├─ api/
-│  │  ├─ models/
-│  │  ├─ schemas/
-│  │  ├─ services/
-│  │  │  ├─ retrieval/
-│  │  │  ├─ research/
-│  │  │  ├─ documents/
-│  │  │  ├─ drafting/
-│  │  │  └─ agents/
-│  │  ├─ db/
-│  │  └─ utils/
-│  ├─ alembic/
-│  └─ requirements.txt
-├─ frontend/
-│  ├─ src/
-│  ├─ public/
-│  └─ package.json
-├─ crawler/
-│  ├─ source_discovery/
-│  ├─ downloaders/
-│  ├─ parsers/
-│  └─ logs/
-├─ data/
-│  ├─ raw/
-│  ├─ parsed/
-│  ├─ cleaned/
-│  └─ indexed/
-├─ scripts/
-├─ tests/
-└─ docs/
-```
-
----
-
-# Current Project Status
-
-At the moment, this repository is at the project-definition stage. The immediate next step is to establish the **Macau Legal Retrieval Engine** as the foundation before implementing higher-level agents or advanced workflows.
-
----
-
-# Roadmap
-
-## Near-term
-- initialize backend and database
-- design schema for cases and statutes
-- build small-scale ingestion pipeline
-- test on 100–300 Macau judgments
-- implement hybrid retrieval
-- implement citation-ready output schema
-
-## Mid-term
-- add document upload and analysis
-- add memo generation
-- add comparison workflows
-- add risk checklists
-
-## Long-term
-- add orchestration layer
-- add multi-agent workflows
-- add batch review
-- add legal research workspace UI
-
----
-
-# Vision
-
-MO_cocounsel is not intended to be only a chatbot.
-
-The long-term goal is to build a **Macau legal workbench** with:
-
-- grounded legal retrieval
-- evidence-linked outputs
-- structured legal reasoning support
-- document intelligence
-- reusable legal workflows
-
-The foundation of everything is:
-
-> **Macau Legal Retrieval Engine first. Agents second.**
+**MO_cocounsel is a retrieval-first Macau legal research prototype built on public court judgments, with metadata-aware case cards, an API-ready response envelope, endpoint tests, and a frontend demo integration layer.**
