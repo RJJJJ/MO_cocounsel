@@ -1,0 +1,77 @@
+Portuguese / Mixed Query Routing Demo Report - Day 36
+
+=== demo case 1 ===
+query received: erro ostensivo, legis artis
+normalized query: erro ostensivo, legis artis
+detected language signals: pt_lexicon_hits=2[erro ostensivo, legis artis]; latin_words=4; cjk_chars=0; case_number=False; pt_case_style=False; mixed_language=False; multi_issue_hint=False
+query_type: portuguese_or_mixed
+routing_strategy: language_aware_bm25_path
+retrieval_mode: bm25_language_aware_pt_or_mixed
+whether portuguese/mixed query routing refinement appears successful: True
+router_result_json:
+{
+  "original_query": "erro ostensivo, legis artis",
+  "normalized_query": "erro ostensivo, legis artis",
+  "query_type": "portuguese_or_mixed",
+  "routing_strategy": "language_aware_bm25_path",
+  "decomposition_recommended": false,
+  "retrieval_mode": "bm25_language_aware_pt_or_mixed",
+  "language_signal_summary": "pt_lexicon_hits=2[erro ostensivo, legis artis]; latin_words=4; cjk_chars=0; case_number=False; pt_case_style=False; mixed_language=False; multi_issue_hint=False"
+}
+
+=== demo case 2 ===
+query received: processo n o 578/2025 recurso em matéria cível
+normalized query: processo nº 578/2025 recurso em matéria cível
+detected language signals: pt_lexicon_hits=3[matéria cível, processo, recurso]; latin_words=6; cjk_chars=0; case_number=True; pt_case_style=True; mixed_language=False; multi_issue_hint=False
+query_type: case_number_lookup_pt_mixed
+routing_strategy: exact_case_number_heavy_with_pt_context_retention
+retrieval_mode: exact_case_number_heavy_bm25_pt_context
+whether portuguese/mixed query routing refinement appears successful: True
+router_result_json:
+{
+  "original_query": "processo n o 578/2025 recurso em matéria cível",
+  "normalized_query": "processo nº 578/2025 recurso em matéria cível",
+  "query_type": "case_number_lookup_pt_mixed",
+  "routing_strategy": "exact_case_number_heavy_with_pt_context_retention",
+  "decomposition_recommended": false,
+  "retrieval_mode": "exact_case_number_heavy_bm25_pt_context",
+  "language_signal_summary": "pt_lexicon_hits=3[matéria cível, processo, recurso]; latin_words=6; cjk_chars=0; case_number=True; pt_case_style=True; mixed_language=False; multi_issue_hint=False"
+}
+
+=== demo case 3 ===
+query received: 假釋 liberdade condicional
+normalized query: 假釋 liberdade condicional
+detected language signals: pt_lexicon_hits=1[liberdade condicional]; latin_words=2; cjk_chars=2; case_number=False; pt_case_style=False; mixed_language=True; multi_issue_hint=False
+query_type: portuguese_or_mixed
+routing_strategy: language_aware_bm25_path
+retrieval_mode: bm25_language_aware_pt_or_mixed
+whether portuguese/mixed query routing refinement appears successful: True
+router_result_json:
+{
+  "original_query": "假釋 liberdade condicional",
+  "normalized_query": "假釋 liberdade condicional",
+  "query_type": "portuguese_or_mixed",
+  "routing_strategy": "language_aware_bm25_path",
+  "decomposition_recommended": false,
+  "retrieval_mode": "bm25_language_aware_pt_or_mixed",
+  "language_signal_summary": "pt_lexicon_hits=1[liberdade condicional]; latin_words=2; cjk_chars=2; case_number=False; pt_case_style=False; mixed_language=True; multi_issue_hint=False"
+}
+
+=== demo case 4 ===
+query received: processo 253/2026 liberdade condicional 假釋
+normalized query: processo 253/2026 liberdade condicional 假釋
+detected language signals: pt_lexicon_hits=2[liberdade condicional, processo]; latin_words=3; cjk_chars=2; case_number=True; pt_case_style=False; mixed_language=True; multi_issue_hint=False
+query_type: case_number_lookup_pt_mixed
+routing_strategy: exact_case_number_heavy_with_pt_context_retention
+retrieval_mode: exact_case_number_heavy_bm25_pt_context
+whether portuguese/mixed query routing refinement appears successful: True
+router_result_json:
+{
+  "original_query": "processo 253/2026 liberdade condicional 假釋",
+  "normalized_query": "processo 253/2026 liberdade condicional 假釋",
+  "query_type": "case_number_lookup_pt_mixed",
+  "routing_strategy": "exact_case_number_heavy_with_pt_context_retention",
+  "decomposition_recommended": false,
+  "retrieval_mode": "exact_case_number_heavy_bm25_pt_context",
+  "language_signal_summary": "pt_lexicon_hits=2[liberdade condicional, processo]; latin_words=3; cjk_chars=2; case_number=True; pt_case_style=False; mixed_language=True; multi_issue_hint=False"
+}

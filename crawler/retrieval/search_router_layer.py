@@ -29,22 +29,14 @@ from crawler.retrieval.hybrid_retrieval_with_decomposition import (
     DecompositionAwareHybridRetriever,
     DecompositionAwareRetrievalResult,
 )
+from crawler.retrieval.portuguese_mixed_query_normalization import (
+    PortugueseMixedNormalizationResult,
+    PortugueseMixedQueryNormalizer,
+)
 
 DEMO_REPORT_PATH = Path("data/eval/search_router_demo_report.txt")
 
 CASE_NUMBER_PATTERN = re.compile(r"\b\d{1,5}/\d{4}\b")
-PORTUGUESE_HINTS = (
-    "acórdão",
-    "acordao",
-    "tribunal",
-    "processo",
-    "decisão",
-    "recurso",
-    "arguido",
-    "autor",
-    "réu",
-    "juiz",
-)
 LEGAL_CONCEPT_HINTS = (
     "假釋",
     "假释",
@@ -97,6 +89,7 @@ class SearchRouterResult:
     routing_strategy: str
     decomposition_recommended: bool
     retrieval_mode: str
+    language_signal_summary: str
 
 
 @dataclass(frozen=True)
@@ -111,30 +104,39 @@ class SearchRouterDemoResult:
 class DeterministicSearchRouter:
     """Rule-based query classifier + routing decision layer."""
 
+    def __init__(self) -> None:
+        self.pt_mixed_normalizer = PortugueseMixedQueryNormalizer()
+
     def normalize_query(self, raw_query: str) -> str:
-        normalized = raw_query.strip()
-        normalized = normalized.replace("（", "(").replace("）", ")")
-        normalized = normalized.replace("　", " ")
-        normalized = re.sub(r"\s+", " ", normalized)
-        return normalized.strip()
+        return self.pt_mixed_normalizer.normalize_and_detect(raw_query).normalized_query
 
     def route(self, raw_query: str) -> SearchRouterResult:
-        normalized_query = self.normalize_query(raw_query)
-        query_type = self._classify_query_type(normalized_query)
-        return self._build_routing_result(raw_query=raw_query, normalized_query=normalized_query, query_type=query_type)
+        pt_signal = self.pt_mixed_normalizer.normalize_and_detect(raw_query)
+        query_type = self._classify_query_type(pt_signal.normalized_query, pt_signal)
+        return self._build_routing_result(
+            raw_query=raw_query,
+            normalized_query=pt_signal.normalized_query,
+            query_type=query_type,
+            language_signal_summary=pt_signal.language_signal_summary,
+            pt_multi_issue=pt_signal.multi_issue_hint,
+        )
 
-    def _classify_query_type(self, query: str) -> str:
+    def _classify_query_type(self, query: str, pt_signal: PortugueseMixedNormalizationResult) -> str:
         lowered = query.lower()
         legal_count = self._keyword_count(query, LEGAL_CONCEPT_HINTS)
         fact_count = self._keyword_count(query, FACT_HINTS)
         connector_count = sum(query.count(token) for token in MULTI_ISSUE_CONNECTORS)
 
+        if pt_signal.has_case_number and (pt_signal.pt_lexicon_hits or pt_signal.mixed_language):
+            return "case_number_lookup_pt_mixed"
         if self._contains_case_number(query):
             return "case_number_lookup"
-        if self._looks_portuguese_or_mixed(query, lowered):
+        if self._looks_portuguese_or_mixed(query, lowered, pt_signal):
             return "portuguese_or_mixed"
         if self._is_ambiguous_or_noisy(query):
             return "ambiguous_or_noisy"
+        if pt_signal.multi_issue_hint and (pt_signal.mixed_language or pt_signal.pt_lexicon_hits):
+            return "portuguese_or_mixed_multi_issue"
         if legal_count >= 1 and fact_count >= 1:
             return "mixed_fact_legal_query"
         if legal_count >= 2 or (legal_count >= 1 and connector_count >= 2):
@@ -153,12 +155,14 @@ class DeterministicSearchRouter:
         return sum(1 for keyword in keywords if keyword in query)
 
     @staticmethod
-    def _looks_portuguese_or_mixed(query: str, lowered: str) -> bool:
+    def _looks_portuguese_or_mixed(
+        query: str, lowered: str, pt_signal: PortugueseMixedNormalizationResult
+    ) -> bool:
         ascii_letters = sum(1 for char in query if char.isascii() and char.isalpha())
         cjk_chars = sum(1 for char in query if "\u4e00" <= char <= "\u9fff")
-        portuguese_hit = any(token in lowered for token in PORTUGUESE_HINTS)
+        portuguese_hit = bool(pt_signal.pt_lexicon_hits)
         mixed_language = ascii_letters >= 6 and cjk_chars >= 2
-        return portuguese_hit or mixed_language
+        return portuguese_hit or mixed_language or pt_signal.mixed_language
 
     @staticmethod
     def _is_ambiguous_or_noisy(query: str) -> bool:
@@ -177,7 +181,24 @@ class DeterministicSearchRouter:
         return query.lower() in meaningless_tokens
 
     @staticmethod
-    def _build_routing_result(raw_query: str, normalized_query: str, query_type: str) -> SearchRouterResult:
+    def _build_routing_result(
+        raw_query: str,
+        normalized_query: str,
+        query_type: str,
+        language_signal_summary: str,
+        pt_multi_issue: bool,
+    ) -> SearchRouterResult:
+        if query_type == "case_number_lookup_pt_mixed":
+            return SearchRouterResult(
+                original_query=raw_query,
+                normalized_query=normalized_query,
+                query_type=query_type,
+                routing_strategy="exact_case_number_heavy_with_pt_context_retention",
+                decomposition_recommended=False,
+                retrieval_mode="exact_case_number_heavy_bm25_pt_context",
+                language_signal_summary=language_signal_summary,
+            )
+
         if query_type == "case_number_lookup":
             return SearchRouterResult(
                 original_query=raw_query,
@@ -186,6 +207,7 @@ class DeterministicSearchRouter:
                 routing_strategy="prefer_exact_case_number_path_then_hybrid_fallback",
                 decomposition_recommended=False,
                 retrieval_mode="exact_case_number_heavy_bm25",
+                language_signal_summary=language_signal_summary,
             )
 
         if query_type == "single_legal_concept":
@@ -196,6 +218,7 @@ class DeterministicSearchRouter:
                 routing_strategy="direct_hybrid_skeleton_bm25_first",
                 decomposition_recommended=False,
                 retrieval_mode="direct_bm25_or_hybrid_skeleton",
+                language_signal_summary=language_signal_summary,
             )
 
         if query_type == "multi_issue_legal_query":
@@ -206,6 +229,7 @@ class DeterministicSearchRouter:
                 routing_strategy="decomposition_aware_hybrid_retrieval",
                 decomposition_recommended=True,
                 retrieval_mode="decomposition_aware_bm25_hybrid",
+                language_signal_summary=language_signal_summary,
             )
 
         if query_type == "mixed_fact_legal_query":
@@ -216,16 +240,18 @@ class DeterministicSearchRouter:
                 routing_strategy="decomposition_aware_hybrid_retrieval",
                 decomposition_recommended=True,
                 retrieval_mode="decomposition_aware_bm25_hybrid",
+                language_signal_summary=language_signal_summary,
             )
 
-        if query_type == "portuguese_or_mixed":
+        if query_type in {"portuguese_or_mixed", "portuguese_or_mixed_multi_issue"}:
             return SearchRouterResult(
                 original_query=raw_query,
                 normalized_query=normalized_query,
                 query_type=query_type,
                 routing_strategy="language_aware_bm25_path",
-                decomposition_recommended=False,
-                retrieval_mode="bm25_language_aware",
+                decomposition_recommended=pt_multi_issue,
+                retrieval_mode="bm25_language_aware_pt_or_mixed",
+                language_signal_summary=language_signal_summary,
             )
 
         return SearchRouterResult(
@@ -235,6 +261,7 @@ class DeterministicSearchRouter:
             routing_strategy="conservative_direct_retrieval",
             decomposition_recommended=False,
             retrieval_mode="conservative_direct_bm25",
+            language_signal_summary=language_signal_summary,
         )
 
 
@@ -284,6 +311,8 @@ def write_demo_report(result: SearchRouterDemoResult, output_path: Path) -> None
     lines = [
         "Search Router Layer Demo Report - Macau Court Cases",
         f"query received: {result.query_received}",
+        f"normalized query: {result.router_result.normalized_query}",
+        f"detected language signals: {result.router_result.language_signal_summary}",
         f"query_type: {result.router_result.query_type}",
         f"routing_strategy: {result.router_result.routing_strategy}",
         f"decomposition recommended: {result.router_result.decomposition_recommended}",
@@ -316,6 +345,8 @@ def main() -> None:
     write_demo_report(result=result, output_path=args.output)
 
     print(f"query received: {result.query_received}")
+    print(f"normalized query: {result.router_result.normalized_query}")
+    print(f"detected language signals: {result.router_result.language_signal_summary}")
     print(f"query_type: {result.router_result.query_type}")
     print(f"routing_strategy: {result.router_result.routing_strategy}")
     print(f"decomposition recommended: {result.router_result.decomposition_recommended}")
