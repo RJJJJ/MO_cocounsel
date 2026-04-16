@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Research Endpoint Demo Integration</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      body {
+        margin: 0;
+        background: #f6f8fb;
+        color: #172033;
+      }
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #d9dfeb;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      h1,
+      h2,
+      h3 {
+        margin-top: 0;
+      }
+      form {
+        display: grid;
+        grid-template-columns: 2fr 1fr auto;
+        gap: 12px;
+        align-items: end;
+      }
+      label {
+        display: grid;
+        gap: 6px;
+        font-size: 14px;
+      }
+      input,
+      button,
+      textarea {
+        font: inherit;
+        border-radius: 8px;
+        border: 1px solid #b8c3d6;
+        padding: 10px;
+      }
+      button {
+        cursor: pointer;
+        background: #2046ce;
+        color: #fff;
+        border: none;
+      }
+      button:disabled {
+        cursor: progress;
+        opacity: 0.75;
+      }
+      .muted {
+        color: #65708b;
+      }
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+      }
+      .metric {
+        background: #f8faff;
+        border: 1px solid #d9dfeb;
+        border-radius: 10px;
+        padding: 10px;
+      }
+      .cases {
+        display: grid;
+        gap: 12px;
+      }
+      .case-card {
+        border: 1px solid #dce3f2;
+        border-radius: 10px;
+        padding: 12px;
+        background: #fff;
+      }
+      .tag {
+        display: inline-block;
+        margin-right: 6px;
+        margin-top: 6px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: #ebefff;
+        color: #263c93;
+        font-size: 12px;
+      }
+      .links a {
+        margin-right: 12px;
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        background: #f8faff;
+        border: 1px solid #d9dfeb;
+        border-radius: 8px;
+        padding: 10px;
+      }
+      @media (max-width: 840px) {
+        form {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="panel">
+        <h1>Day 56 Demo: FastAPI Research Endpoint Integration</h1>
+        <p class="muted">
+          Minimal front-end demo for <code>POST /api/research/query</code>.
+        </p>
+        <form id="query-form">
+          <label>
+            Query
+            <input id="query" name="query" placeholder="Enter legal research query" required />
+          </label>
+          <label>
+            Top K
+            <input id="top_k" name="top_k" type="number" min="1" value="5" required />
+          </label>
+          <button id="submit-btn" type="submit">Run Query</button>
+        </form>
+      </section>
+
+      <section class="panel" id="summary-panel" hidden>
+        <h2>Result Summary</h2>
+        <div id="summary" class="meta-grid"></div>
+      </section>
+
+      <section class="panel" id="diagnostics-panel" hidden>
+        <h2>Diagnostics</h2>
+        <pre id="diagnostics"></pre>
+      </section>
+
+      <section class="panel" id="cases-panel" hidden>
+        <h2>Case Cards</h2>
+        <div id="cases" class="cases"></div>
+      </section>
+
+      <section class="panel" id="status-panel">
+        <h3>Status</h3>
+        <p id="status" class="muted">Ready.</p>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById('query-form');
+      const submitButton = document.getElementById('submit-btn');
+      const statusNode = document.getElementById('status');
+
+      const summaryPanel = document.getElementById('summary-panel');
+      const summaryNode = document.getElementById('summary');
+
+      const diagnosticsPanel = document.getElementById('diagnostics-panel');
+      const diagnosticsNode = document.getElementById('diagnostics');
+
+      const casesPanel = document.getElementById('cases-panel');
+      const casesNode = document.getElementById('cases');
+
+      function metricBlock(label, value) {
+        return `
+          <div class="metric">
+            <div class="muted">${label}</div>
+            <strong>${value}</strong>
+          </div>
+        `;
+      }
+
+      function renderCards(results) {
+        casesNode.innerHTML = '';
+
+        if (!Array.isArray(results) || results.length === 0) {
+          casesNode.innerHTML = '<p class="muted">No case cards were returned.</p>';
+          return;
+        }
+
+        results.forEach((item, index) => {
+          const card = document.createElement('article');
+          card.className = 'case-card';
+          const tags = (item.card_tags || []).map((tag) => `<span class="tag">${tag}</span>`).join('');
+          const legalBasis = (item.legal_basis || []).join('、') || '-';
+          const disputedIssues = (item.disputed_issues || []).join('、') || '-';
+
+          card.innerHTML = `
+            <h3>${index + 1}. ${item.card_title || '(Untitled case card)'}</h3>
+            <p class="muted">${item.card_subtitle || '-'}</p>
+            <p><strong>Case Number:</strong> ${item.authoritative_case_number || '-'}</p>
+            <p><strong>Decision Date:</strong> ${item.authoritative_decision_date || '-'}</p>
+            <p><strong>Court:</strong> ${item.court || '-'}</p>
+            <p><strong>Case Type:</strong> ${item.case_type || '-'}</p>
+            <p><strong>Language:</strong> ${item.language || '-'}</p>
+            <p><strong>Metadata Source:</strong> ${item.metadata_source || '-'}</p>
+            <p><strong>Summary:</strong> ${item.case_summary || '-'}</p>
+            <p><strong>Holding:</strong> ${item.holding || '-'}</p>
+            <p><strong>Legal Basis:</strong> ${legalBasis}</p>
+            <p><strong>Disputed Issues:</strong> ${disputedIssues}</p>
+            <p class="links">
+              <a href="${item.pdf_url || '#'}" target="_blank" rel="noopener noreferrer">pdf_url</a>
+              <a href="${item.text_url_or_action || '#'}" target="_blank" rel="noopener noreferrer">text_url_or_action</a>
+            </p>
+            <div>${tags}</div>
+          `;
+          casesNode.appendChild(card);
+        });
+      }
+
+      function setLoading(loading) {
+        submitButton.disabled = loading;
+        submitButton.textContent = loading ? 'Loading...' : 'Run Query';
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        const payload = {
+          query: document.getElementById('query').value,
+          top_k: Number(document.getElementById('top_k').value),
+        };
+
+        statusNode.textContent = 'Calling /api/research/query...';
+
+        try {
+          const response = await fetch('/api/research/query', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) {
+            const errBody = await response.text();
+            throw new Error(`HTTP ${response.status}: ${errBody}`);
+          }
+
+          const data = await response.json();
+
+          summaryNode.innerHTML = [
+            metricBlock('schema_version', data.schema_version ?? '-'),
+            metricBlock('query', data.query ?? '-'),
+            metricBlock('top_k', data.top_k ?? '-'),
+            metricBlock('result_count', data.result_count ?? 0),
+          ].join('');
+          summaryPanel.hidden = false;
+
+          diagnosticsNode.textContent = JSON.stringify(data.diagnostics ?? {}, null, 2);
+          diagnosticsPanel.hidden = false;
+
+          renderCards(data.results ?? []);
+          casesPanel.hidden = false;
+
+          statusNode.textContent = 'Done.';
+        } catch (error) {
+          statusNode.textContent = `Request failed: ${error.message}`;
+        } finally {
+          setLoading(false);
+        }
+      });
+    </script>
+  </body>
+</html>
