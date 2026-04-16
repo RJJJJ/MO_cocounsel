@@ -2,12 +2,20 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class ResearchQueryRequest(BaseModel):
     query: str = Field(..., min_length=1, description="Raw legal research query")
     top_k: int = Field(5, ge=1, description="Top-k retrieval results")
+
+    @field_validator("query")
+    @classmethod
+    def validate_query_not_blank(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("query must not be blank")
+        return normalized
 
 
 class ResearchResultItem(BaseModel):
