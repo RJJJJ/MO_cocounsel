@@ -126,6 +126,18 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--start-page", type=int, default=MIN_PAGE)
     parser.add_argument("--end-page", type=int, default=MAX_PAGE)
+    parser.add_argument(
+        "--corpus-root",
+        type=Path,
+        default=CORPUS_ROOT,
+        help="override raw corpus root (default: data/corpus/raw/macau_court_cases)",
+    )
+    parser.add_argument(
+        "--report-path",
+        type=Path,
+        default=None,
+        help="optional override for crawl report path",
+    )
     return parser.parse_args()
 
 
@@ -536,9 +548,16 @@ def print_summary(stats: CrawlStats) -> None:
 
 
 def run() -> int:
+    global CORPUS_ROOT, CASES_ROOT, MANIFEST_PATH, REPORT_PATH
+
     args = parse_args()
     start_page = max(MIN_PAGE, args.start_page)
     end_page = max(start_page, args.end_page)
+
+    CORPUS_ROOT = args.corpus_root
+    CASES_ROOT = CORPUS_ROOT / "cases"
+    MANIFEST_PATH = CORPUS_ROOT / "manifest.jsonl"
+    REPORT_PATH = args.report_path or (CORPUS_ROOT / "all_court_crawl_report.txt")
 
     playwright_error, sync_playwright = load_playwright()
     stats = CrawlStats(court_mode=args.court)
@@ -553,6 +572,7 @@ def run() -> int:
 
     CORPUS_ROOT.mkdir(parents=True, exist_ok=True)
     CASES_ROOT.mkdir(parents=True, exist_ok=True)
+    REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     manifest_rows = read_manifest(MANIFEST_PATH)
     seen_keys = {build_duplicate_key(r) for r in manifest_rows}

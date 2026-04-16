@@ -1,14 +1,23 @@
-# Integrate Metadata into Research Pipeline Spec (Day 50)
+# Integrate Metadata into Research Pipeline Spec (Day 50 + Day 59 policy alignment)
 
-## Why metadata integration is now the next stage
+## Why metadata integration is a post-merge stage
 
-The retrieval path, citation binding, and answer synthesis skeleton are already connected and stable in local deterministic mode. Metadata generation assets are also available (target schema, deterministic baseline, and local model outputs).
+Retrieval path, citation binding, answer synthesis skeleton, and metadata artifacts are already available. After Day 59, authoritative corpus assembly is explicitly defined as per-court crawl -> merge/dedupe. Therefore metadata attachment should target this authoritative merged corpus stage instead of per-court crawl-time attachment.
 
-The next practical product step is to connect those generated metadata records back into the end-to-end research output so each case card is immediately useful for analyst review and UI assembly, while keeping retrieval behavior unchanged.
+## Authoritative timing rule
+
+```text
+per-court crawl
+-> merge/dedupe authoritative corpus
+-> downstream retrieval/prep consumption
+-> metadata attachment
+```
+
+This ordering reduces ambiguity and prevents per-court partial metadata state from being mistaken as final authority.
 
 ## Metadata source preference rule
 
-For each retrieved case number:
+For each retrieved case number from authoritative merged corpus:
 
 1. Prefer `model_generated` metadata record when present.
 2. Treat model-generated metadata as the primary enrichment source in this stage.
@@ -19,6 +28,13 @@ When model-generated metadata is unavailable for a retrieved case:
 
 1. Fallback to deterministic baseline metadata (`deterministic_baseline`).
 2. If both metadata sources are missing, keep retrieval core fields and emit empty digest fields while still tagging `metadata_source` as `deterministic_baseline` for explicit fallback traceability.
+
+Deterministic baseline must remain available as fallback/benchmark/regression guard.
+
+## Model policy guardrail
+
+- Default local model policy remains unchanged in this stage (`qwen2.5:3b-instruct`).
+- No model experimentation/promotion is part of Day 59 corpus assembly.
 
 ## Enriched output schema
 
@@ -49,13 +65,11 @@ Top-level run summary includes:
 
 ## Current limitations
 
-- Metadata integration currently enriches retrieval outputs only; no UI rendering layer is added in this round.
+- Metadata integration enriches retrieval outputs only; no UI rendering layer is added here.
 - Fallback provenance is binary (`model_generated` vs `deterministic_baseline`) and does not expose per-field source mixing.
 - No cloud model, DB, vector retrieval, or candidate-model promotion changes are included.
+- A dedicated full-corpus retrieval regression pack for Day 59 authoritative corpus is still pending.
 
-## Recommended next step
+## Recommended Day 60 next step
 
-Choose one immediate follow-up:
-
-1. Build a case-card / UI-ready output layer that renders metadata-enriched sources directly.
-2. Fix comparison harness latest-output selection logic to reduce manual input-path maintenance during eval loops.
+Build full-corpus retrieval eval + regression pack on top of the Day 59 authoritative merged corpus artifacts.

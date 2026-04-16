@@ -4,6 +4,11 @@
 Pipeline shape:
 query -> existing retrieval flow -> case-level metadata resolution -> enriched research output
 
+Day 59 policy alignment:
+- metadata attachment is treated as a post-merge stage over the authoritative merged corpus
+- model-generated metadata remains preferred
+- deterministic baseline remains fallback/benchmark/regression guard
+
 Scope constraints:
 - local-only
 - no database integration

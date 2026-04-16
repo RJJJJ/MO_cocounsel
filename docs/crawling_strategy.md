@@ -4,11 +4,11 @@ This document records crawling strategy decisions for Macau court source acquisi
 
 ## Court coverage strategy
 
-The court=all mode should be treated as a useful discovery and validation mode, but it should not automatically be assumed to be the final full-ingestion path.
+The `court=all` mode should be treated as a useful discovery and validation mode, but it should not automatically be assumed to be the final full-ingestion path.
 
 ### Why
 
-Observed behavior suggests that court=all may behave like a fixed search window or aggregated result view rather than a truly exhaustive cross-court export surface.
+Observed behavior suggests that `court=all` may behave like a fixed search window or aggregated result view rather than a truly exhaustive cross-court export surface.
 
 It can still be useful for:
 
@@ -21,22 +21,62 @@ But it may be unreliable as the only long-run source for complete corpus acquisi
 
 Additional observation: when using `court=all`, result windows may repeat across pages, which can inflate apparent coverage without increasing unique judgments.
 
-### Practical implication
+## Day 59 authoritative full-corpus assembly stance
 
-If the project later needs stronger global coverage, the safer default strategy is:
+Day 59 establishes a concrete, auditable authoritative flow:
 
-1. Crawl per-court result sets separately.
-2. Preserve court-specific source metadata.
-3. Merge outputs into one normalized corpus.
-4. Deduplicate at corpus-build time.
+1. Crawl each court independently (`tui`, `tsi`, `tjb`, `ta`).
+2. Collect each court-run manifest as explicit source input.
+3. Merge all court outputs into one candidate pool.
+4. Deduplicate **after merge** with reason breakdown (`text_url`, `pdf_url`, fallback metadata key).
+5. Preserve provenance fields for every merged record.
+6. Publish merged corpus manifest/report as the authoritative downstream source.
 
-### Recommended operating stance
+## Per-court harvest rationale
 
-- Keep court=all available as a fast path and comparison mode.
-- Do not assume court=all equals full recall.
-- Validate coverage by comparing court=all against per-court runs.
-- Prefer per-court crawling plus merge when completeness matters more than convenience.
+Per-court runs improve control over:
+
+- recall tracking by court
+- reproducibility/debuggability of crawl windows
+- source-specific diagnostics
+- explicit merge/dedupe accountability
+
+This is safer than inferring completeness from a single aggregated query mode.
+
+## Merge/dedupe rationale
+
+Deduplication belongs at merged-corpus assembly time so cross-court duplicates are visible and auditable in one place. Day 59 keeps duplicate handling conservative and transparent via reason counters.
+
+## Metadata attachment stage rationale
+
+Metadata is no longer treated as per-crawl default behavior. The authoritative sequence is:
+
+- build authoritative merged corpus first
+- let retrieval/prep consume that corpus
+- attach metadata after merge with source preference:
+  - prefer model-generated metadata when available
+  - deterministic baseline fallback otherwise
+
+Deterministic baseline remains required as fallback + benchmark/regression guard.
+
+## Recommended operating stance
+
+- Keep `court=all` available as a fast path and comparison mode.
+- Do not assume `court=all` equals full recall.
+- Validate coverage by comparing `court=all` against per-court runs.
+- Prefer per-court crawling + merge/dedupe when completeness matters.
+
+## Current limitations after Day 59
+
+- Coverage quality still depends on page-window configuration (no automatic completeness proof).
+- Merge policy currently keeps first-seen records by duplicate key priority.
+- Metadata attachment remains case-level source preference; no per-field blending policy yet.
+- Retrieval/eval regression pack for the new authoritative corpus is not yet bundled.
+
+## Day 60 recommended next step
+
+Build a **full-corpus retrieval eval/regression pack** against the Day 59 authoritative merged corpus, including baseline comparisons and duplicate-policy regression checks.
 
 ### Engineering note
 
-This is mainly a source-acquisition and coverage-control decision, not just a parser detail. Even if court=all appears to work for some pages, ingestion design should still be driven by recall, reproducibility, and duplicate control.
+This remains primarily a source-acquisition and coverage-control decision, not just a parser detail. Ingestion authority should be driven by recall, reproducibility, provenance, and duplicate control.
