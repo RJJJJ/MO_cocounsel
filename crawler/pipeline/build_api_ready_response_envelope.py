@@ -45,6 +45,8 @@ class ResponseDiagnostics:
     model_generated_metadata_used_count: int
     deterministic_fallback_used_count: int
     success_flag: bool
+    selected_model_metadata_path: str
+    selected_model_metadata_case_count: int
 
 
 @dataclass(frozen=True)
@@ -62,12 +64,15 @@ def build_api_ready_response_envelope(
     top_k: int,
     model_metadata_path: Path,
     baseline_metadata_path: Path,
+    *,
+    model_metadata_explicit_override: bool = False,
 ) -> APIReadyResponseEnvelope:
     case_card_output = build_case_card_ui_ready_output(
         query=query,
         top_k=top_k,
         model_metadata_path=model_metadata_path,
         baseline_metadata_path=baseline_metadata_path,
+        model_metadata_explicit_override=model_metadata_explicit_override,
     )
 
     diagnostics = ResponseDiagnostics(
@@ -76,6 +81,8 @@ def build_api_ready_response_envelope(
         model_generated_metadata_used_count=case_card_output.model_generated_metadata_used_count,
         deterministic_fallback_used_count=case_card_output.deterministic_fallback_used_count,
         success_flag=case_card_output.case_card_ui_ready_output_appears_successful,
+        selected_model_metadata_path=case_card_output.selected_model_metadata_path,
+        selected_model_metadata_case_count=case_card_output.selected_model_metadata_case_count,
     )
 
     return APIReadyResponseEnvelope(
@@ -107,6 +114,11 @@ def write_report(envelope: APIReadyResponseEnvelope, output_path: Path) -> None:
             f"{envelope.diagnostics.deterministic_fallback_used_count}"
         ),
         f"  success_flag: {envelope.diagnostics.success_flag}",
+        f"  selected_model_metadata_path: {envelope.diagnostics.selected_model_metadata_path}",
+        (
+            "  selected_model_metadata_case_count: "
+            f"{envelope.diagnostics.selected_model_metadata_case_count}"
+        ),
         "",
         "results:",
         json.dumps([asdict(item) for item in envelope.results], ensure_ascii=False, indent=2),
@@ -141,6 +153,7 @@ def main() -> int:
         top_k=normalized_top_k,
         model_metadata_path=args.model_metadata,
         baseline_metadata_path=args.baseline_metadata,
+        model_metadata_explicit_override="--model-metadata" in sys.argv,
     )
     write_report(envelope=envelope, output_path=args.output)
 
@@ -150,6 +163,7 @@ def main() -> int:
             top_k=normalized_top_k,
             model_metadata_path=args.model_metadata,
             baseline_metadata_path=args.baseline_metadata,
+            model_metadata_explicit_override="--model-metadata" in sys.argv,
         )
         from crawler.pipeline.build_case_card_ui_ready_output import write_report as write_case_card_report
 
@@ -162,6 +176,8 @@ def main() -> int:
         "whether API-ready response envelope appears successful: "
         f"{envelope.diagnostics.success_flag}"
     )
+    print(f"selected model metadata output path: {envelope.diagnostics.selected_model_metadata_path}")
+    print(f"selected model metadata case count: {envelope.diagnostics.selected_model_metadata_case_count}")
 
     if args.json:
         print(json.dumps(asdict(envelope), ensure_ascii=False, indent=2))

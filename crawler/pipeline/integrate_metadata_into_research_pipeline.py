@@ -25,6 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from crawler.metadata.metadata_artifact_selection import resolve_model_metadata_path
 from crawler.retrieval.hybrid_retrieval_with_decomposition import DecompositionAwareHybridRetriever
 
 DEFAULT_MODEL_METADATA_PATH = Path("data/eval/model_generated_metadata_output.jsonl")
@@ -54,6 +55,8 @@ class IntegratedResearchPipelineResult:
     model_generated_metadata_used_count: int
     deterministic_fallback_used_count: int
     metadata_integrated_research_pipeline_appears_successful: bool
+    selected_model_metadata_path: str
+    selected_model_metadata_case_count: int
     research_sources: list[CaseMetadata]
 
 
@@ -148,9 +151,24 @@ def _fallback_from_hit(hit: object) -> dict[str, Any]:
 
 
 class MetadataIntegratedResearchPipeline:
-    def __init__(self, model_metadata_path: Path, baseline_metadata_path: Path) -> None:
+    def __init__(
+        self,
+        model_metadata_path: Path,
+        baseline_metadata_path: Path,
+        *,
+        model_metadata_explicit_override: bool = False,
+    ) -> None:
         self._retriever = DecompositionAwareHybridRetriever()
-        self._model_index = _build_metadata_index(model_metadata_path)
+        selected = resolve_model_metadata_path(
+            model_metadata_path,
+            default_path=DEFAULT_MODEL_METADATA_PATH,
+            explicit_override=model_metadata_explicit_override,
+        )
+        self.selected_model_metadata_path = selected.path
+        self.selected_model_metadata_case_count = selected.case_count
+        self.selected_model_metadata_source = selected.source
+
+        self._model_index = _build_metadata_index(self.selected_model_metadata_path)
         self._baseline_index = _build_metadata_index(baseline_metadata_path)
 
     def run(self, query: str, top_k: int) -> IntegratedResearchPipelineResult:
@@ -225,6 +243,8 @@ class MetadataIntegratedResearchPipeline:
             model_generated_metadata_used_count=model_count,
             deterministic_fallback_used_count=baseline_count,
             metadata_integrated_research_pipeline_appears_successful=appears_successful,
+            selected_model_metadata_path=str(self.selected_model_metadata_path),
+            selected_model_metadata_case_count=self.selected_model_metadata_case_count,
             research_sources=enriched,
         )
 
@@ -241,6 +261,8 @@ def write_report(result: IntegratedResearchPipelineResult, output_path: Path) ->
             "metadata_integrated_research_pipeline_appears_successful: "
             f"{result.metadata_integrated_research_pipeline_appears_successful}"
         ),
+        f"selected_model_metadata_path: {result.selected_model_metadata_path}",
+        f"selected_model_metadata_case_count: {result.selected_model_metadata_case_count}",
         "",
         "research_sources:",
         json.dumps([asdict(item) for item in result.research_sources], ensure_ascii=False, indent=2),
@@ -267,6 +289,7 @@ def main() -> int:
     pipeline = MetadataIntegratedResearchPipeline(
         model_metadata_path=args.model_metadata,
         baseline_metadata_path=args.baseline_metadata,
+        model_metadata_explicit_override="--model-metadata" in sys.argv,
     )
     result = pipeline.run(query=args.query, top_k=max(args.top_k, 1))
     write_report(result=result, output_path=args.output)
@@ -280,6 +303,8 @@ def main() -> int:
         "whether metadata-integrated research pipeline appears successful: "
         f"{result.metadata_integrated_research_pipeline_appears_successful}"
     )
+    print(f"selected model metadata output path: {result.selected_model_metadata_path}")
+    print(f"selected model metadata case count: {result.selected_model_metadata_case_count}")
 
     if args.json:
         print(json.dumps(asdict(result), ensure_ascii=False, indent=2))
