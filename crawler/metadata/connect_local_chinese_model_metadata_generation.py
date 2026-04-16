@@ -18,6 +18,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -25,10 +26,12 @@ from tempfile import NamedTemporaryFile
 from typing import Any
 import urllib.request
 
-try:
-    from crawler.metadata.traditional_chinese_normalization import normalize_text_to_traditional
-except ModuleNotFoundError:
-    from traditional_chinese_normalization import normalize_text_to_traditional
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from crawler.metadata.metadata_prompt_templates import PromptContext, render_metadata_prompt
+from crawler.metadata.traditional_chinese_normalization import normalize_text_to_traditional
 
 DEFAULT_INPUT_PATH = Path("data/corpus/prepared/macau_court_cases/bm25_chunks.jsonl")
 DEFAULT_OUTPUT_PATH = Path("data/eval/model_generated_metadata_output.jsonl")
@@ -200,22 +203,14 @@ def build_prompt(case_chunks: list[CaseChunk], prompt_version: str, max_input_ch
         clipped_text = chunk_text
     # ===============================================
 
-    return (
-        "你是法律判決摘要與結構化資訊抽取助手。"
-        "請根據以下案件文本，僅輸出 JSON，不要輸出其他文字。\\n"
-        f"prompt_version: {prompt_version}\\n"
-        "JSON 結構必須包含這四個欄位："
-        "case_summary (string), holding (string), legal_basis (string array), disputed_issues (string array)。\\n"
-        "要求：\\n"
-        "1) 絕對必須使用繁體中文（Traditional Chinese, zh-TW/zh-HK）輸出，嚴禁使用簡體字；\\n"  # 順便把強制繁體中文的防呆機制加進去
-        "2) 內容要精簡但忠於文本；\\n"
-        "3) legal_basis 只填在文本中可辨識的法條或法律依據；\\n"
-        "4) 如果資訊不足，請使用空字串或空陣列。\\n"
-        f"案件編號: {head.authoritative_case_number}\\n"
-        f"案件語言: {head.language}\\n"
-        f"案件類型: {head.case_type}\\n"
-        "案件文本：\\n"
-        f"{clipped_text}"
+    return render_metadata_prompt(
+        PromptContext(
+            prompt_version=prompt_version,
+            authoritative_case_number=head.authoritative_case_number,
+            language=head.language,
+            case_type=head.case_type,
+            clipped_text=clipped_text,
+        )
     )
 
 
