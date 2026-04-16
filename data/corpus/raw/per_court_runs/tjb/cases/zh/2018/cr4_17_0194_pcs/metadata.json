@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "CR4-17-0194-PCS",
+  "source_list_decision_date": "29/05/2018",
+  "source_list_case_type": "獨任庭普通刑事案",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-6401a37f7a9b6d61.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-6401a37f7a9b6d61.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-6401a37f7a9b6d61.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/23977",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/23977",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/23977",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/23977"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-6401a37f7a9b6d61.pdf"
+    }
+  ],
+  "page_number": 5,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2018/cr4_17_0194_pcs/full_text.txt"
+}

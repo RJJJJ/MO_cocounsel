@@ -1,0 +1,22 @@
+Day 24 all-court crawling mode report
+====================================
+court mode used: tjb
+pages attempted: 10
+valid pages parsed: 10
+cards discovered: 100
+detail pages attempted: 100
+detail pages succeeded: 88
+duplicate strategy used: sorted all text URLs -> sorted all pdf URLs -> (court, authoritative_case_number, authoritative_decision_date, language)
+duplicates skipped: 0
+duplicates skipped by text_url: 0
+duplicates skipped by pdf_url: 0
+duplicates skipped by fallback metadata key: 0
+cards with zh text: 90
+cards with pt text: 12
+cards with both text languages: 2
+cards with zh pdf: 90
+cards with pt pdf: 12
+cards with both pdf languages: 2
+new corpus records added: 88
+stop reason: reached configured page range 1..10
+whether all-court crawling appears successful: yes

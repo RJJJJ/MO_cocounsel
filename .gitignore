@@ -2,3 +2,9 @@
 /crawler/parsers/__pycache__
 /crawler/retrieval/__pycache__
 /crawler/retrieval/__pycache__
+/app/__pycache__
+/app/api/__pycache__
+/app/schemas/__pycache__
+/crawler/metadata/__pycache__
+/crawler/pipeline/__pycache__
+/tests/__pycache__

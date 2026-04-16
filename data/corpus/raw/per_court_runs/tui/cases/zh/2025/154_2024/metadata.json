@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "154/2024",
+  "source_list_decision_date": "09/04/2025",
+  "source_list_case_type": "民事訴訟程序上訴",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-6b8cfdd6c0a859a0.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-6b8cfdd6c0a859a0.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-6b8cfdd6c0a859a0.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/40823",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/40823",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/40823",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/40823"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-6b8cfdd6c0a859a0.pdf"
+    }
+  ],
+  "page_number": 6,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2025/154_2024/full_text.txt"
+}

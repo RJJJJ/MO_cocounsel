@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "CR1-20-0107-PCS",
+  "source_list_decision_date": "16/07/2020",
+  "source_list_case_type": "獨任庭普通刑事案",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-ce8bd58f19fa6121.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-ce8bd58f19fa6121.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-ce8bd58f19fa6121.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/30525",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/30525",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/30525",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/30525"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-ce8bd58f19fa6121.pdf"
+    }
+  ],
+  "page_number": 3,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2020/cr1_20_0107_pcs/full_text.txt"
+}

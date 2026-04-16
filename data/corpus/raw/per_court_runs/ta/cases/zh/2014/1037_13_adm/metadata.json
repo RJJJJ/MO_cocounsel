@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "1037/13-ADM",
+  "source_list_decision_date": "29/05/2014",
+  "source_list_case_type": "行政司法上訴",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-5999b1af2c0cb.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-5999b1af2c0cb.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-5999b1af2c0cb.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/18271",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/18271",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/18271",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/18271"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-5999b1af2c0cb.pdf"
+    }
+  ],
+  "page_number": 5,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2014/1037_13_adm/full_text.txt"
+}

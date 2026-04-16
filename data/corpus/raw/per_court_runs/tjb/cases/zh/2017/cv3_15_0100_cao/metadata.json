@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "CV3-15-0100-CAO",
+  "source_list_decision_date": "31/07/2017",
+  "source_list_case_type": "通常宣告案",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-29ab1cad6a1d7.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-29ab1cad6a1d7.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-29ab1cad6a1d7.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/23671",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/23671",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/23671",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/23671"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-29ab1cad6a1d7.pdf"
+    }
+  ],
+  "page_number": 6,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2017/cv3_15_0100_cao/full_text.txt"
+}

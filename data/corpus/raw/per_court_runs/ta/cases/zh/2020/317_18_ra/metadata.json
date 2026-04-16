@@ -1,0 +1,40 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "317/18-RA",
+  "source_list_decision_date": "30/03/2020",
+  "source_list_case_type": "實際履行非合同民事責任之訴",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-2a3ebc160717276a.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-2a3ebc160717276a.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-2a3ebc160717276a.pdf",
+  "pdf_url_pt": "https://www.court.gov.mo/sentence/pt-2a3ebc160717276a.pdf",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/29073",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/29073",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/29073",
+  "text_url_pt": "https://www.court.gov.mo/sentence/pt/29073",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/29073"
+    },
+    {
+      "kind": "text",
+      "language": "pt",
+      "url": "https://www.court.gov.mo/sentence/pt/29073"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-2a3ebc160717276a.pdf"
+    },
+    {
+      "kind": "pdf",
+      "language": "pt",
+      "url": "https://www.court.gov.mo/sentence/pt-2a3ebc160717276a.pdf"
+    }
+  ],
+  "page_number": 1,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2020/317_18_ra/full_text.txt"
+}

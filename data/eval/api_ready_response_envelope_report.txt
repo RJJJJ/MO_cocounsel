@@ -1,0 +1,159 @@
+API-Ready Response Envelope Report - Day 52
+schema_version: v1
+query: 假釋
+top_k: 5
+result_count: 5
+diagnostics:
+  retrieved_cases_count: 5
+  case_cards_built: 5
+  model_generated_metadata_used_count: 4
+  deterministic_fallback_used_count: 1
+  success_flag: True
+  selected_model_metadata_path: data\eval\expanded_current_default_model_generation_batch_output.jsonl
+  selected_model_metadata_case_count: 24
+
+results:
+[
+  {
+    "authoritative_case_number": "24/2026",
+    "authoritative_decision_date": "12/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 原審法庭考慮到上訴人在服刑期間仍有三次違規的記錄，其總評價為“差”，可見其並未有從過往的刑罰當中吸取足夠的教訓，雖然上訴人自稱已知錯並會改正，但其所指的這種悔悟態度卻未有反映在其客觀的行為之中。 行為人的真誠悔悟不單止是嘴裡說說就算，還需要透過其行為表現來加以印...",
+    "holding": "判處上訴人繳付4個計算單位之司法費。",
+    "legal_basis": [
+      "第56條",
+      "第400條",
+      "第157條",
+      "第468條"
+    ],
+    "disputed_issues": [
+      "否決假釋",
+      "假釋的實質要件 摘要 除了法律所規定的客觀前提要件外",
+      "《刑法典》第56條第1款a項及b項還規定了當中的實質要件",
+      "即： — 行為人以往之生活及其人格",
+      "以及於執行徒刑期間在人格方面之演變情況",
+      "期待被判刑者一旦獲釋",
+      "將能以對社會負責之方式生活而不再犯罪屬有依據者",
+      "及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧"
+    ],
+    "metadata_source": "deterministic_baseline",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-198181ba100d00af.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42133",
+    "card_title": "24/2026｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 12/02/2026 · metadata:deterministic_baseline",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "deterministic_baseline",
+      "basis:第56條",
+      "basis:第400條"
+    ]
+  },
+  {
+    "authoritative_case_number": "203/2026",
+    "authoritative_decision_date": "12/03/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "上訴人A因行賄罪被判刑，服刑期已達三分之二且超過六個月。上訴人提出假釋申請，但被初級法院刑事起訴法庭駁回，理由是不符合《刑法典》第56條第1款的條件。本院審理後認為上訴人的上訴理由不成立，維持原判。",
+    "holding": "裁判書製作人裁定上訴人的上訴理由明顯不成立，予以駁回。判處上訴人繳付3個計算單位之司法費以及上訴的訴訟費用。",
+    "legal_basis": [
+      "《刑法典》第56條第1款"
+    ],
+    "disputed_issues": [
+      "假釋條件是否符合"
+    ],
+    "metadata_source": "model_generated",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-862934f66e94c882.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42369",
+    "card_title": "203/2026｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 12/03/2026 · metadata:model_generated",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "model_generated",
+      "basis:《刑法典》第56條第1款"
+    ]
+  },
+  {
+    "authoritative_case_number": "100/2026",
+    "authoritative_decision_date": "26/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "澳門特別行政區中級法院合議庭裁定上訴人A的刑事上訴理由不成立，維持原判。主要問題集中在假釋的實質要件上，包括行為人在執行徒刑期間的人格轉變情況及提早釋放被判刑者對社會安寧的影響。",
+    "holding": "合議庭認為上訴人並未滿足《刑法典》第56條第1款a項和b項規定的假釋實質要件，因此否決了其假釋申請。",
+    "legal_basis": [
+      "《刑法典》第56條第1款"
+    ],
+    "disputed_issues": [
+      "行為人在執行徒刑期間的人格轉變情況",
+      "提早釋放被判刑者對社會安寧的影響"
+    ],
+    "metadata_source": "model_generated",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-5bb24337c3797b0e.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42279",
+    "card_title": "100/2026｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 26/02/2026 · metadata:model_generated",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "model_generated",
+      "basis:《刑法典》第56條第1款"
+    ]
+  },
+  {
+    "authoritative_case_number": "157/2026",
+    "authoritative_decision_date": "26/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "上訴人A因多次犯罪被判刑，包括販毒、搶劫等嚴重罪行。在服刑期間表現良好，但仍有違規紀錄。法院認為其人格尚未完全改過自新，不符合假釋條件。",
+    "holding": "裁定：否決被判刑人A假釋申請，但不妨礙根據《刑事訴訟法典》第469條第1款的規定再次展開假釋程序。",
+    "legal_basis": [
+      "刑法典第56條"
+    ],
+    "disputed_issues": [
+      "是否符合假釋條件"
+    ],
+    "metadata_source": "model_generated",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-b77c755a844ba130.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42247",
+    "card_title": "157/2026｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 26/02/2026 · metadata:model_generated",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "model_generated",
+      "basis:刑法典第56條"
+    ]
+  },
+  {
+    "authoritative_case_number": "120/2026",
+    "authoritative_decision_date": "26/02/2026",
+    "court": "澳門法院",
+    "language": "zh",
+    "case_type": "刑事訴訟程序的上訴",
+    "case_summary": "上訴人A因犯‘巨額詐騙罪’和‘相當巨額詐騙罪’被判刑三年三個月，並被要求賠償兩名被害人共計人民幣279,300元。在案件審理期間，上訴人未支付訴訟費用及賠償金，但已申請分期付款並獲得批准。上訴人表現出良好的行爲表現和積極的悔改態度，包括參加職業培訓、與家人保持聯繫等。",
+    "holding": "合議庭否決了上訴人的假釋請求，認爲其不符合《刑法典》第56條規定的實質要件。具體來說，合議庭認爲上訴人雖然表現出良好的行爲表現和悔改態度，但未支付賠償金的行爲不利於一般預防和社會安寧的維護。",
+    "legal_basis": [
+      "刑法典 第56條"
+    ],
+    "disputed_issues": [
+      "假釋的實質要件"
+    ],
+    "metadata_source": "model_generated",
+    "pdf_url": "https://www.court.gov.mo/sentence/zh-2583593f6cf11801.pdf",
+    "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42281",
+    "card_title": "120/2026｜刑事訴訟程序的上訴｜澳門法院",
+    "card_subtitle": "zh · 26/02/2026 · metadata:model_generated",
+    "card_tags": [
+      "刑事訴訟程序的上訴",
+      "zh",
+      "model_generated",
+      "basis:刑法典 第56條"
+    ]
+  }
+]

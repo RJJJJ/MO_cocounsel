@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "PC1-13-0376-COP",
+  "source_list_decision_date": "03/12/2013",
+  "source_list_case_type": "履行金錢債務案",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-4ccad7936b7b4.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-4ccad7936b7b4.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-4ccad7936b7b4.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/85",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/85",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/85",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/85"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-4ccad7936b7b4.pdf"
+    }
+  ],
+  "page_number": 8,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2013/pc1_13_0376_cop/full_text.txt"
+}

@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "LB1-15-0057-LAC",
+  "source_list_decision_date": "21/01/2021",
+  "source_list_case_type": "普通勞動訴訟程序",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-1801df9adf737ee7.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-1801df9adf737ee7.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-1801df9adf737ee7.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/31371",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/31371",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/31371",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/31371"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-1801df9adf737ee7.pdf"
+    }
+  ],
+  "page_number": 1,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2021/lb1_15_0057_lac/full_text.txt"
+}

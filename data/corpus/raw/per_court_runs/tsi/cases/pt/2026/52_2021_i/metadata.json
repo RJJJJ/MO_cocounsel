@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "52/2021-I",
+  "source_list_decision_date": "19/03/2026",
+  "source_list_case_type": "民事及勞動訴訟程序的上訴",
+  "language": "pt",
+  "pdf_url": "https://www.court.gov.mo/sentence/pt-bea83f53b009aed3.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/pt-bea83f53b009aed3.pdf",
+  "pdf_url_zh": "",
+  "pdf_url_pt": "https://www.court.gov.mo/sentence/pt-bea83f53b009aed3.pdf",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42401",
+  "text_url_primary": "https://www.court.gov.mo/sentence/pt/42401",
+  "text_url_zh": "",
+  "text_url_pt": "https://www.court.gov.mo/sentence/pt/42401",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "pt",
+      "url": "https://www.court.gov.mo/sentence/pt/42401"
+    },
+    {
+      "kind": "pdf",
+      "language": "pt",
+      "url": "https://www.court.gov.mo/sentence/pt-bea83f53b009aed3.pdf"
+    }
+  ],
+  "page_number": 2,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/pt/2026/52_2021_i/full_text.txt"
+}

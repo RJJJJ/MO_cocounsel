@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "CR2-18-0329-PCS",
+  "source_list_decision_date": "26/02/2019",
+  "source_list_case_type": "獨任庭普通刑事案",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-e5c807bb90a5e649.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-e5c807bb90a5e649.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-e5c807bb90a5e649.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/25909",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/25909",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/25909",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/25909"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-e5c807bb90a5e649.pdf"
+    }
+  ],
+  "page_number": 4,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2019/cr2_18_0329_pcs/full_text.txt"
+}

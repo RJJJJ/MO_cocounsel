@@ -1,0 +1,22 @@
+Day 24 all-court crawling mode report
+====================================
+court mode used: tsi
+pages attempted: 8
+valid pages parsed: 7
+cards discovered: 70
+detail pages attempted: 70
+detail pages succeeded: 70
+duplicate strategy used: sorted all text URLs -> sorted all pdf URLs -> (court, authoritative_case_number, authoritative_decision_date, language)
+duplicates skipped: 11
+duplicates skipped by text_url: 11
+duplicates skipped by pdf_url: 0
+duplicates skipped by fallback metadata key: 0
+cards with zh text: 48
+cards with pt text: 22
+cards with both text languages: 0
+cards with zh pdf: 48
+cards with pt pdf: 22
+cards with both pdf languages: 0
+new corpus records added: 59
+stop reason: duplicate result page signature detected at page 8
+whether all-court crawling appears successful: yes

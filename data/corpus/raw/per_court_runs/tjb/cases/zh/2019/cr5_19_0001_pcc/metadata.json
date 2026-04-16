@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "CR5-19-0001-PCC",
+  "source_list_decision_date": "10/10/2019",
+  "source_list_case_type": "合議庭普通刑事案",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-313eef947f109421.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-313eef947f109421.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-313eef947f109421.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/27754",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/27754",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/27754",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/27754"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-313eef947f109421.pdf"
+    }
+  ],
+  "page_number": 4,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2019/cr5_19_0001_pcc/full_text.txt"
+}

@@ -1,0 +1,13 @@
+Fixed Metadata Latest Output Selection Report - Day 53
+selected model metadata output path: data\eval\expanded_current_default_model_generation_batch_output.jsonl
+selected model metadata case count: 24
+selected source: auto_latest
+previous stale path detected: yes
+default path case count: 10
+comparison harness cases loaded: 24
+comparison harness report path: data\eval\metadata_generation_comparison_harness_report.txt
+pipeline selected path: data\eval\expanded_current_default_model_generation_batch_output.jsonl
+case-card selected path: data\eval\expanded_current_default_model_generation_batch_output.jsonl
+api-envelope selected path: data\eval\expanded_current_default_model_generation_batch_output.jsonl
+downstream selection consistent: yes
+whether latest-output selection fix appears successful: yes

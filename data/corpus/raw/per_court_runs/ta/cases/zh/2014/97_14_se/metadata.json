@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "97/14-SE",
+  "source_list_decision_date": "24/11/2014",
+  "source_list_case_type": "效力之中止",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-26806550f0d67.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-26806550f0d67.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-26806550f0d67.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/18851",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/18851",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/18851",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/18851"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-26806550f0d67.pdf"
+    }
+  ],
+  "page_number": 4,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2014/97_14_se/full_text.txt"
+}

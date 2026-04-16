@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "95/2022",
+  "source_list_decision_date": "26/03/2025",
+  "source_list_case_type": "刑事訴訟程序上訴",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-e31d848366eee098.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-e31d848366eee098.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-e31d848366eee098.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/40723",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/40723",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/40723",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/40723"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-e31d848366eee098.pdf"
+    }
+  ],
+  "page_number": 6,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2025/95_2022/full_text.txt"
+}

@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "1087/14-CF",
+  "source_list_decision_date": "30/01/2015",
+  "source_list_case_type": "稅務司法上訴",
+  "language": "pt",
+  "pdf_url": "https://www.court.gov.mo/sentence/pt-4ff751e6b1d1a.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/pt-4ff751e6b1d1a.pdf",
+  "pdf_url_zh": "",
+  "pdf_url_pt": "https://www.court.gov.mo/sentence/pt-4ff751e6b1d1a.pdf",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/pt/17467",
+  "text_url_primary": "https://www.court.gov.mo/sentence/pt/17467",
+  "text_url_zh": "",
+  "text_url_pt": "https://www.court.gov.mo/sentence/pt/17467",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "pt",
+      "url": "https://www.court.gov.mo/sentence/pt/17467"
+    },
+    {
+      "kind": "pdf",
+      "language": "pt",
+      "url": "https://www.court.gov.mo/sentence/pt-4ff751e6b1d1a.pdf"
+    }
+  ],
+  "page_number": 2,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/pt/2015/1087_14_cf/full_text.txt"
+}

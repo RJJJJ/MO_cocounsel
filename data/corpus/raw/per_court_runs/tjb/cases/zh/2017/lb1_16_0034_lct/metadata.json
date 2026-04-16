@@ -1,0 +1,30 @@
+{
+  "court": "澳門法院",
+  "source_list_case_number": "LB1-16-0034-LCT",
+  "source_list_decision_date": "26/10/2017",
+  "source_list_case_type": "勞動輕微違反訴訟案",
+  "language": "zh",
+  "pdf_url": "https://www.court.gov.mo/sentence/zh-d8b4388c1739a.pdf",
+  "pdf_url_primary": "https://www.court.gov.mo/sentence/zh-d8b4388c1739a.pdf",
+  "pdf_url_zh": "https://www.court.gov.mo/sentence/zh-d8b4388c1739a.pdf",
+  "pdf_url_pt": "",
+  "text_url_or_action": "https://www.court.gov.mo/sentence/zh/23145",
+  "text_url_primary": "https://www.court.gov.mo/sentence/zh/23145",
+  "text_url_zh": "https://www.court.gov.mo/sentence/zh/23145",
+  "text_url_pt": "",
+  "document_links": [
+    {
+      "kind": "text",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh/23145"
+    },
+    {
+      "kind": "pdf",
+      "language": "zh",
+      "url": "https://www.court.gov.mo/sentence/zh-d8b4388c1739a.pdf"
+    }
+  ],
+  "page_number": 5,
+  "extraction_source": "day24_all_court_crawling_mode",
+  "full_text_path": "cases/zh/2017/lb1_16_0034_lct/full_text.txt"
+}
