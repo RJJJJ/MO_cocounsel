@@ -23,12 +23,17 @@ from dataclasses import dataclass
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import Any
-import urllib.request  # <--- 加入這行
+import urllib.request
+
+try:
+    from crawler.metadata.traditional_chinese_normalization import normalize_text_to_traditional
+except ModuleNotFoundError:
+    from traditional_chinese_normalization import normalize_text_to_traditional
 
 DEFAULT_INPUT_PATH = Path("data/corpus/prepared/macau_court_cases/bm25_chunks.jsonl")
 DEFAULT_OUTPUT_PATH = Path("data/eval/model_generated_metadata_output.jsonl")
 DEFAULT_REPORT_PATH = Path("data/eval/local_model_metadata_generation_report.txt")
-DEFAULT_SAMPLE_CASE_LIMIT = 5
+DEFAULT_SAMPLE_CASE_LIMIT = 10
 DEFAULT_LANGUAGE = "zh"
 DEFAULT_MODEL_NAME = os.getenv("LOCAL_METADATA_MODEL_NAME", "qwen2.5:7b-instruct")
 DEFAULT_PROMPT_VERSION = os.getenv("LOCAL_METADATA_PROMPT_VERSION", "day43_local_model_metadata_v1")
@@ -240,6 +245,47 @@ def sanitize_generated_fields(raw_payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def normalize_generated_fields_to_traditional(
+    generated_fields: dict[str, Any],
+) -> tuple[dict[str, Any], bool, str]:
+    normalized = dict(generated_fields)
+    changed = False
+    script_markers: list[str] = []
+
+    case_summary_result = normalize_text_to_traditional(str(normalized.get("case_summary", "")))
+    normalized["case_summary"] = case_summary_result.text
+    changed = changed or case_summary_result.changed
+    script_markers.append(case_summary_result.output_script)
+
+    holding_result = normalize_text_to_traditional(str(normalized.get("holding", "")))
+    normalized["holding"] = holding_result.text
+    changed = changed or holding_result.changed
+    script_markers.append(holding_result.output_script)
+
+    disputed_issues_out: list[str] = []
+    for issue in _ensure_string_list(normalized.get("disputed_issues", [])):
+        issue_result = normalize_text_to_traditional(issue)
+        disputed_issues_out.append(issue_result.text)
+        changed = changed or issue_result.changed
+        script_markers.append(issue_result.output_script)
+    normalized["disputed_issues"] = disputed_issues_out
+
+    legal_basis_out: list[str] = []
+    for basis_item in _ensure_string_list(normalized.get("legal_basis", [])):
+        basis_result = normalize_text_to_traditional(basis_item)
+        legal_basis_out.append(basis_result.text)
+        changed = changed or basis_result.changed
+        script_markers.append(basis_result.output_script)
+    normalized["legal_basis"] = legal_basis_out
+
+    output_script = (
+        "traditional_chinese"
+        if any(marker == "traditional_chinese" for marker in script_markers)
+        else "not_applicable"
+    )
+    return normalized, changed, output_script
+
+
 def build_output_record(
     case_chunks: list[CaseChunk],
     generated_fields: dict[str, Any],
@@ -247,6 +293,8 @@ def build_output_record(
     model_name: str,
     prompt_version: str,
     notes: list[str],
+    script_normalization_applied: bool,
+    output_script: str,
 ) -> dict[str, Any]:
     head = case_chunks[0]
     return {
@@ -268,6 +316,8 @@ def build_output_record(
         "generation_method": "local_model_generated",
         "model_name": model_name,
         "prompt_version": prompt_version,
+        "script_normalization_applied": script_normalization_applied,
+        "output_script": output_script,
         "provenance_notes": notes,
     }
 
@@ -291,10 +341,11 @@ def build_report(
     model_name: str,
     prompt_version: str,
     backend: str,
+    normalization_applied_count: int,
 ) -> str:
     overall_success = len(records) > 0 and success_count > 0
     lines = [
-        "Local Model Metadata Generation Report - Day 43",
+        "Local Model Metadata Generation Report - Day 45",
         f"input_chunks_path: {input_path}",
         f"output_jsonl_path: {output_path}",
         f"model_backend: {backend}",
@@ -305,6 +356,8 @@ def build_report(
         f"model-generated cases written: {len(records)}",
         f"generation success count: {success_count}",
         f"generation failure count: {fail_count}",
+        f"script normalization applied count: {normalization_applied_count}",
+        f"script normalization applied yes/no: {normalization_applied_count > 0}",
         f"generation fields attempted: {generation_fields}",
         "whether local model metadata generation appears successful: "
         f"{overall_success}",
@@ -318,7 +371,7 @@ def build_report(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Connect local Chinese model metadata generation (Day 43).")
+    parser = argparse.ArgumentParser(description="Connect local Chinese model metadata generation (Day 45).")
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT_PATH)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT_PATH)
@@ -368,6 +421,7 @@ def main() -> int:
     records: list[dict[str, Any]] = []
     success_count = 0
     fail_count = 0
+    normalization_applied_count = 0
 
     for _, case_chunks in selected:
         prompt = build_prompt(case_chunks, prompt_version=args.prompt_version, max_input_chars=args.max_input_chars)
@@ -388,11 +442,18 @@ def main() -> int:
             raw_output = runner.run(prompt)
             parsed = _extract_first_json_block(raw_output)
             generated_fields = sanitize_generated_fields(parsed)
+            generated_fields, normalization_applied, output_script = normalize_generated_fields_to_traditional(
+                generated_fields
+            )
+            if normalization_applied:
+                normalization_applied_count += 1
             generation_status = "local_model_generated"
             success_count += 1
         except Exception as exc:
             fail_count += 1
             notes.append(f"generation_error={exc}")
+            normalization_applied = False
+            output_script = "unknown"
 
         record = build_output_record(
             case_chunks=case_chunks,
@@ -401,6 +462,8 @@ def main() -> int:
             model_name=args.model_name,
             prompt_version=args.prompt_version,
             notes=notes,
+            script_normalization_applied=normalization_applied,
+            output_script=output_script,
         )
         records.append(record)
 
@@ -417,6 +480,7 @@ def main() -> int:
         model_name=args.model_name,
         prompt_version=args.prompt_version,
         backend=args.backend,
+        normalization_applied_count=normalization_applied_count,
     )
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(report_text, encoding="utf-8")
@@ -425,9 +489,11 @@ def main() -> int:
     print(f"sample cases selected: {len(selected)}")
     print(f"sample case numbers: {[case_number for case_number, _ in selected]}")
     print(f"model-generated cases written: {len(records)}")
+    print(f"generation success count: {success_count}")
     print(f"generation fields attempted: {GENERATION_FIELDS}")
+    print(f"script normalization applied yes/no: {normalization_applied_count > 0}")
     print(
-        "whether local model metadata generation appears successful: "
+        "whether expanded local model metadata generation batch appears successful: "
         f"{len(records) > 0 and success_count > 0}"
     )
     print(f"output written: {args.output}")

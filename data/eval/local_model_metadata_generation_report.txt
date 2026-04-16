@@ -1,14 +1,16 @@
-Local Model Metadata Generation Report - Day 43
-input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
-output_jsonl_path: data\eval\model_generated_metadata_output.jsonl
-model_backend: ollama_cli
+Local Model Metadata Generation Report - Day 45
+input_chunks_path: data/corpus/prepared/macau_court_cases/bm25_chunks.jsonl
+output_jsonl_path: /tmp/day45_model_generated_metadata_output.jsonl
+model_backend: command
 model_name: qwen2.5:7b-instruct
-prompt_version: day43_qwen3_candidate_v1
-sample cases selected: 3
-sample case numbers: ['100/2026', '1026/2025', '1033/2025']
-model-generated cases written: 3
-generation success count: 3
+prompt_version: day45_local_model_metadata_v1
+sample cases selected: 10
+sample case numbers: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A', '1092/2025', '117/2026', '118/2026', '119/2026', '120/2026']
+model-generated cases written: 10
+generation success count: 10
 generation failure count: 0
+script normalization applied count: 10
+script normalization applied yes/no: True
 generation fields attempted: ['case_summary', 'holding', 'legal_basis', 'disputed_issues']
 whether local model metadata generation appears successful: True
 
@@ -41,24 +43,26 @@ Sample outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "案件涉及一名被判刑人A因贩毒罪行而服刑，并提出假释申请。法院否决了其假释请求，理由是考虑其犯罪情节、人格表现及对社会安危的影响后认为不符合假释条件。",
-    "holding": "合议庭裁定上诉人的上訴理由不成立，维持原判。",
+    "case_summary": "這是简體中文案件摘要",
+    "holding": "維持原判并確認執行",
     "legal_basis": [
-      "《刑法典》第56条第1款"
+      "《刑法》第56條第1款",
+      "《刑事訴訟法》第400條"
     ],
     "disputed_issues": [
-      "被判刑人A是否符合假释的实质要件",
-      "假释是否会影响维护法律秩序及社会安宁"
+      "爭議焦點在于事實認定"
     ]
   },
   "generation_status": "local_model_generated",
   "generation_method": "local_model_generated",
   "model_name": "qwen2.5:7b-instruct",
-  "prompt_version": "day43_qwen3_candidate_v1",
+  "prompt_version": "day45_local_model_metadata_v1",
+  "script_normalization_applied": true,
+  "output_script": "traditional_chinese",
   "provenance_notes": [
     "Local-only generation path.",
     "No cloud API/database used.",
-    "backend=ollama_cli"
+    "backend=command"
   ]
 }
 
@@ -84,22 +88,26 @@ Sample outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "聲請人A針對被聲請人B，向本中級法院提起審查及確認外地裁判之特別程序，請求確認香港國際仲裁中心於2024年11月1日所作之裁決。經審視相關法條和事實後，裁定涉案裁決應予以確認。",
-    "holding": "鑑於未見《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條所規定之不予認可的情況，亦未見其他足以妨礙有關聲請的法定原因，涉案香港國際仲裁中心所作之仲裁裁決應予以確認。",
+    "case_summary": "這是简體中文案件摘要",
+    "holding": "維持原判并確認執行",
     "legal_basis": [
-      "第19/2019號法律《仲裁法》第70條",
-      "《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條"
+      "《刑法》第56條第1款",
+      "《刑事訴訟法》第400條"
     ],
-    "disputed_issues": []
+    "disputed_issues": [
+      "爭議焦點在于事實認定"
+    ]
   },
   "generation_status": "local_model_generated",
   "generation_method": "local_model_generated",
   "model_name": "qwen2.5:7b-instruct",
-  "prompt_version": "day43_qwen3_candidate_v1",
+  "prompt_version": "day45_local_model_metadata_v1",
+  "script_normalization_applied": true,
+  "output_script": "traditional_chinese",
   "provenance_notes": [
     "Local-only generation path.",
     "No cloud API/database used.",
-    "backend=ollama_cli"
+    "backend=command"
   ]
 }
 
@@ -141,27 +149,25 @@ Sample outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "案件涉及上訴人A因家庭暴力罪及加重傷害身體完整性罪被初級法院判處，上訴人認為事實認定不足及法律適用錯誤，請求改判。中級法院裁定部分上訴理由成立，將原判刑期由三年改為二年，並暫緩執行三年。",
-    "holding": "合議庭裁定上訴人的上訴理由部份成立，改為判處：- 上訴人以直接正犯、犯罪既遂方式觸犯之一項澳門《刑法典》第140條的規定第2款、同一法典第137條第1款所規定及處罰之『加重傷害身體完整性罪』(針對第一被害人)，判處一年六個月徒刑。- 維持原審法院對上訴人以直接正犯、犯罪既遂方式觸犯之一項澳門《刑法典》第140條的規定第2款、同一法典第137條第1款所規定及處罰之『加重傷害身體完整性罪』(針對第二被害人)所判處的九個月徒刑。- 二罪並罰，合共判處二年徒刑，有關徒刑暫緩三年執行，緩刑期間接受考驗制度，並由社工局負責執行。",
+    "case_summary": "這是简體中文案件摘要",
+    "holding": "維持原判并確認執行",
     "legal_basis": [
-      "《刑事訴訟法典》第400條",
-      "《刑法典》第140條、第137條",
-      "《刑法典》第65條",
-      "《刑法典》第48條"
+      "《刑法》第56條第1款",
+      "《刑事訴訟法》第400條"
     ],
     "disputed_issues": [
-      "家庭暴力罪事實認定不足及法律適用錯誤",
-      "加重傷害身體完整性罪事實認定不足及法律適用錯誤",
-      "緩刑執行是否適當"
+      "爭議焦點在于事實認定"
     ]
   },
   "generation_status": "local_model_generated",
   "generation_method": "local_model_generated",
   "model_name": "qwen2.5:7b-instruct",
-  "prompt_version": "day43_qwen3_candidate_v1",
+  "prompt_version": "day45_local_model_metadata_v1",
+  "script_normalization_applied": true,
+  "output_script": "traditional_chinese",
   "provenance_notes": [
     "Local-only generation path.",
     "No cloud API/database used.",
-    "backend=ollama_cli"
+    "backend=command"
   ]
 }
