@@ -744,8 +744,11 @@ def run() -> int:
     audit_path.parent.mkdir(parents=True, exist_ok=True)
 
     manifest_rows = read_manifest(MANIFEST_PATH)
+    # Day 60 policy:
+    # - sentence_id dedupe is authoritative and must remain cross-round within one court run
+    # - page-signature dedupe is only for within-round loop detection
+    #   (later rounds are expected to revisit early pages because page drift exists)
     seen_sentence_ids = {get_sentence_id(r) for r in manifest_rows if get_sentence_id(r)}
-    seen_page_signatures: set[tuple[tuple[str, ...], ...]] = set()
     discovered_sentence_ids_this_run: set[str] = set()
 
     try:
@@ -768,6 +771,9 @@ def run() -> int:
                     for round_number in range(1, total_rounds_target + 1):
                         submitted_result_url = start_court_search_from_home(page, args.court)
                         stats.total_rounds_run += 1
+                        # Round-local loop detection only:
+                        # revisiting page 1/2/3... in round 2+ is normal and should NOT be treated as duplicate.
+                        seen_page_signatures_this_round: set[tuple[tuple[str, ...], ...]] = set()
                         round_stats = {
                             "court": args.court,
                             "round_number": round_number,
@@ -855,7 +861,7 @@ def run() -> int:
                                     for c in page_cards
                                 )
                             )
-                            if signature in seen_page_signatures:
+                            if signature in seen_page_signatures_this_round:
                                 round_stats["stop_reason"] = f"duplicate result page signature detected at page {page_number}"
                                 ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
                                 audit_item = {
@@ -874,7 +880,7 @@ def run() -> int:
                                 stats.page_audit_entries.append(audit_item)
                                 audit_fh.write(json.dumps(audit_item, ensure_ascii=False) + "\n")
                                 break
-                            seen_page_signatures.add(signature)
+                            seen_page_signatures_this_round.add(signature)
 
                             stats.valid_pages_parsed += 1
                             round_stats["valid_pages_parsed"] += 1
