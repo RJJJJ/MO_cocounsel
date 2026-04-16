@@ -61,6 +61,8 @@ class CaseCardUIReadyOutput:
     model_generated_metadata_used_count: int
     deterministic_fallback_used_count: int
     case_card_ui_ready_output_appears_successful: bool
+    selected_model_metadata_path: str
+    selected_model_metadata_case_count: int
     case_cards: list[CaseCardUIReadyRecord]
 
 
@@ -109,10 +111,13 @@ def build_case_card_ui_ready_output(
     top_k: int,
     model_metadata_path: Path,
     baseline_metadata_path: Path,
+    *,
+    model_metadata_explicit_override: bool = False,
 ) -> CaseCardUIReadyOutput:
     pipeline = MetadataIntegratedResearchPipeline(
         model_metadata_path=model_metadata_path,
         baseline_metadata_path=baseline_metadata_path,
+        model_metadata_explicit_override=model_metadata_explicit_override,
     )
     pipeline_result = pipeline.run(query=query, top_k=top_k)
     case_number_to_date = _build_case_number_to_date_map(query=query, top_k=top_k)
@@ -172,6 +177,8 @@ def build_case_card_ui_ready_output(
         model_generated_metadata_used_count=pipeline_result.model_generated_metadata_used_count,
         deterministic_fallback_used_count=pipeline_result.deterministic_fallback_used_count,
         case_card_ui_ready_output_appears_successful=appears_successful,
+        selected_model_metadata_path=pipeline_result.selected_model_metadata_path,
+        selected_model_metadata_case_count=pipeline_result.selected_model_metadata_case_count,
         case_cards=cards,
     )
 
@@ -188,6 +195,8 @@ def write_report(output: CaseCardUIReadyOutput, output_path: Path) -> None:
             "case_card_ui_ready_output_appears_successful: "
             f"{output.case_card_ui_ready_output_appears_successful}"
         ),
+        f"selected_model_metadata_path: {output.selected_model_metadata_path}",
+        f"selected_model_metadata_case_count: {output.selected_model_metadata_case_count}",
         "",
         "case_cards:",
         json.dumps([asdict(item) for item in output.case_cards], ensure_ascii=False, indent=2),
@@ -215,6 +224,7 @@ def main() -> int:
         top_k=max(args.top_k, 1),
         model_metadata_path=args.model_metadata,
         baseline_metadata_path=args.baseline_metadata,
+        model_metadata_explicit_override="--model-metadata" in sys.argv,
     )
     write_report(output=output, output_path=args.output)
 
@@ -227,6 +237,8 @@ def main() -> int:
         "whether case-card UI-ready output appears successful: "
         f"{output.case_card_ui_ready_output_appears_successful}"
     )
+    print(f"selected model metadata output path: {output.selected_model_metadata_path}")
+    print(f"selected model metadata case count: {output.selected_model_metadata_case_count}")
 
     if args.json:
         print(json.dumps(asdict(output), ensure_ascii=False, indent=2))
