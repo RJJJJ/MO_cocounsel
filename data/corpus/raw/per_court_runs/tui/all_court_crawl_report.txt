@@ -1,22 +1,34 @@
-Day 24 all-court crawling mode report
-====================================
+Day 59A child crawl report
+==========================
 court mode used: tui
+run status: success
+exit code: 0
 pages attempted: 10
 valid pages parsed: 10
 cards discovered: 100
-detail pages attempted: 100
-detail pages succeeded: 98
-duplicate strategy used: sorted all text URLs -> sorted all pdf URLs -> (court, authoritative_case_number, authoritative_decision_date, language)
-duplicates skipped: 3
-duplicates skipped by text_url: 3
-duplicates skipped by pdf_url: 0
-duplicates skipped by fallback metadata key: 0
-cards with zh text: 65
+candidates with sentence_id: 100
+missing_sentence_id skipped: 0
+duplicate_sentence_id skipped: 3
+detail pages attempted: 97
+detail pages succeeded: 95
+duplicate strategy used: sentence_id-first authoritative identity
+cards with zh text: 64
 cards with pt text: 71
-cards with both text languages: 36
-cards with zh pdf: 65
+cards with both text languages: 35
+cards with zh pdf: 64
 cards with pt pdf: 71
-cards with both pdf languages: 36
+cards with both pdf languages: 35
 new corpus records added: 95
 stop reason: reached configured page range 1..10
-whether all-court crawling appears successful: yes
+
+page audit (json lines):
+{"court": "tui", "page": 1, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui", "cards_found": 10, "first_sentence_ids": ["42061", "42079", "42129"], "last_sentence_ids": ["42025", "41771", "41789"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 2, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=2", "cards_found": 10, "first_sentence_ids": ["41765", "41763", "41767"], "last_sentence_ids": ["41519", "41521", "41523"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 3, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=3", "cards_found": 10, "first_sentence_ids": ["41517", "41513", "41515"], "last_sentence_ids": ["41121", "41129", "41109"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 4, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=4", "cards_found": 10, "first_sentence_ids": ["41547", "41617", "41109"], "last_sentence_ids": ["41093", "41091", "41697"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 5, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=5", "cards_found": 10, "first_sentence_ids": ["41091", "41031", "41033"], "last_sentence_ids": ["41537", "40729", "40855"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 6, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=6", "cards_found": 10, "first_sentence_ids": ["40727", "40809", "40823"], "last_sentence_ids": ["40723", "40515", "40627"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 7, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=7", "cards_found": 10, "first_sentence_ids": ["40449", "40467", "40469"], "last_sentence_ids": ["40439", "40495", "41267"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 8, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=8", "cards_found": 10, "first_sentence_ids": ["41267", "40513", "40223"], "last_sentence_ids": ["40405", "40119", "40221"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 9, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=9", "cards_found": 10, "first_sentence_ids": ["40389", "40195", "40227"], "last_sentence_ids": ["40077", "40079", "40105"], "retry_count": 0, "page_status": "ok"}
+{"court": "tui", "page": 10, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=tui&page=10", "cards_found": 10, "first_sentence_ids": ["39715", "40121", "40157"], "last_sentence_ids": ["39963", "40107", "39375"], "retry_count": 0, "page_status": "ok"}

@@ -24,7 +24,8 @@
       "url": "https://www.court.gov.mo/sentence/pt-0fcd1e0e4c7d3145.pdf"
     }
   ],
-  "page_number": 3,
+  "sentence_id": "42417",
+  "page_number": 2,
   "extraction_source": "day24_all_court_crawling_mode",
   "full_text_path": "cases/pt/2026/501_2025_i/full_text.txt"
 }

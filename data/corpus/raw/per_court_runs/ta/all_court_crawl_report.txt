@@ -1,22 +1,32 @@
-Day 24 all-court crawling mode report
-====================================
+Day 59A child crawl report
+==========================
 court mode used: ta
+run status: failed
+exit code: 1
 pages attempted: 9
 valid pages parsed: 8
 cards discovered: 80
+candidates with sentence_id: 80
+missing_sentence_id skipped: 0
+duplicate_sentence_id skipped: 0
 detail pages attempted: 80
 detail pages succeeded: 80
-duplicate strategy used: sorted all text URLs -> sorted all pdf URLs -> (court, authoritative_case_number, authoritative_decision_date, language)
-duplicates skipped: 4
-duplicates skipped by text_url: 4
-duplicates skipped by pdf_url: 0
-duplicates skipped by fallback metadata key: 0
+duplicate strategy used: sentence_id-first authoritative identity
 cards with zh text: 56
 cards with pt text: 28
 cards with both text languages: 4
 cards with zh pdf: 56
 cards with pt pdf: 27
 cards with both pdf languages: 4
-new corpus records added: 76
-stop reason: none
-whether all-court crawling appears successful: yes
+new corpus records added: 80
+stop reason: fatal error: TimeoutError
+
+page audit (json lines):
+{"court": "ta", "page": 1, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=ta", "cards_found": 10, "first_sentence_ids": ["38891", "38893", "38895"], "last_sentence_ids": ["27061", "26149", "23075"], "retry_count": 0, "page_status": "ok"}
+{"court": "ta", "page": 2, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=ta&page=2", "cards_found": 10, "first_sentence_ids": ["23073", "23071", "19315"], "last_sentence_ids": ["17467", "17469", "17471"], "retry_count": 0, "page_status": "ok"}
+{"court": "ta", "page": 3, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=ta&page=3", "cards_found": 10, "first_sentence_ids": ["17473", "17475", "17477"], "last_sentence_ids": ["19123", "17337", "18703"], "retry_count": 0, "page_status": "ok"}
+{"court": "ta", "page": 4, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=ta&page=4", "cards_found": 10, "first_sentence_ids": ["17343", "17339", "17341"], "last_sentence_ids": ["17151", "19627", "17153"], "retry_count": 0, "page_status": "ok"}
+{"court": "ta", "page": 5, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=ta&page=5", "cards_found": 10, "first_sentence_ids": ["17991", "17253", "17961"], "last_sentence_ids": ["18271", "19017", "17255"], "retry_count": 0, "page_status": "ok"}
+{"court": "ta", "page": 6, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=ta&page=6", "cards_found": 10, "first_sentence_ids": ["19055", "18737", "16443"], "last_sentence_ids": ["15865", "109", "15551"], "retry_count": 0, "page_status": "ok"}
+{"court": "ta", "page": 7, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=ta&page=7", "cards_found": 10, "first_sentence_ids": ["15553", "99", "101"], "last_sentence_ids": ["95", "33", "35"], "retry_count": 0, "page_status": "ok"}
+{"court": "ta", "page": 8, "page_url": "https://www.court.gov.mo/zh/subpage/researchjudgments?court=ta&page=8", "cards_found": 10, "first_sentence_ids": ["63", "23", "25"], "last_sentence_ids": ["17", "19", "5"], "retry_count": 0, "page_status": "ok"}

@@ -24,7 +24,8 @@
       "url": "https://www.court.gov.mo/sentence/zh-ba710d546a6de1e1.pdf"
     }
   ],
-  "page_number": 5,
+  "sentence_id": "42267",
+  "page_number": 4,
   "extraction_source": "day24_all_court_crawling_mode",
   "full_text_path": "cases/zh/2026/168_2026/full_text.txt"
 }
