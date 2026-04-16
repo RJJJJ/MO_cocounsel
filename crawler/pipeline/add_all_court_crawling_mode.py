@@ -47,6 +47,7 @@ class CrawlStats:
     cards_with_pt_pdf: int = 0
     cards_with_both_pdf_languages: int = 0
     new_corpus_records_added: int = 0
+    run_status: str = "fatal_failure"
     stop_reason: str = ""
     page_audit_entries: list[dict[str, Any]] | None = None
 
@@ -588,7 +589,7 @@ def append_record_to_corpus(record: dict[str, Any], manifest_fh, new_index: int)
 
 
 def write_report(stats: CrawlStats, *, exit_code: int) -> None:
-    run_status = "success" if exit_code == 0 else "failed"
+    run_status = stats.run_status if stats.run_status else ("success" if exit_code == 0 else "fatal_failure")
     page_audit_entries = stats.page_audit_entries or []
     lines = [
         "Day 59A child crawl report",
@@ -621,7 +622,7 @@ def write_report(stats: CrawlStats, *, exit_code: int) -> None:
 
 
 def print_summary(stats: CrawlStats, *, exit_code: int) -> None:
-    run_status = "success" if exit_code == 0 else "failed"
+    run_status = stats.run_status if stats.run_status else ("success" if exit_code == 0 else "fatal_failure")
     print(f"court mode used: {stats.court_mode}")
     print(f"run status: {run_status}")
     print(f"exit code: {exit_code}")
@@ -641,6 +642,18 @@ def print_summary(stats: CrawlStats, *, exit_code: int) -> None:
     print(f"cards with pt pdf: {stats.cards_with_pt_pdf}")
     print(f"cards with both pdf languages: {stats.cards_with_both_pdf_languages}")
     print(f"new corpus records added: {stats.new_corpus_records_added}")
+    print(f"stop reason: {stats.stop_reason or 'none'}")
+
+
+def has_useful_court_progress(stats: CrawlStats) -> bool:
+    """Day 59A hotfix semantics: useful progress requires parsed pages and emitted records.
+
+    This hotfix is about run-completion semantics only:
+    - late-page timeout after useful earlier parsing is treated as practical end-of-range
+    - true fatal failure means crawl failed before useful extraction happened
+    """
+
+    return stats.valid_pages_parsed > 0 and stats.new_corpus_records_added > 0
 
 
 def run() -> int:
@@ -659,6 +672,7 @@ def run() -> int:
     stats = CrawlStats(court_mode=args.court, page_audit_entries=[])
 
     if not sync_playwright:
+        stats.run_status = "fatal_failure"
         stats.stop_reason = "playwright is not installed"
         write_report(stats, exit_code=2)
         print("[ERROR] playwright is not installed")
@@ -693,6 +707,7 @@ def run() -> int:
                     page_cards: list[dict[str, Any]] = []
                     page_status = "ok"
                     retry_count = 0
+                    page_exception: Exception | None = None
                     for attempt in range(2):
                         retry_count = attempt
                         try:
@@ -705,15 +720,39 @@ def run() -> int:
                             page_cards = parse_cards_from_current_page(page, page_number)
                             break
                         except Exception as exc:
+                            page_exception = exc
                             page_status = f"retryable_error:{type(exc).__name__}"
                             if attempt == 0:
                                 submitted_result_url = start_court_search_from_home(page, args.court)
                                 target_url = set_page_param_from_result_url(submitted_result_url, page_number)
                                 continue
-                            raise
+                    if page_exception and not page_cards:
+                        if has_useful_court_progress(stats):
+                            stats.run_status = "partial_success"
+                            stats.stop_reason = (
+                                f"late-page timeout/error treated as practical end-of-range at page {page_number}: "
+                                f"{type(page_exception).__name__}"
+                            )
+                            page_status = "late_page_timeout_non_fatal"
+                            stats.page_audit_entries.append(
+                                {
+                                    "court": args.court,
+                                    "page": page_number,
+                                    "page_url": target_url,
+                                    "cards_found": 0,
+                                    "first_sentence_ids": [],
+                                    "last_sentence_ids": [],
+                                    "retry_count": retry_count,
+                                    "page_status": page_status,
+                                    "error_type": type(page_exception).__name__,
+                                }
+                            )
+                            break
+                        raise page_exception
 
                     if not page_cards:
-                        stats.stop_reason = f"invalid/no-result page at page {page_number}"
+                        stats.run_status = "success"
+                        stats.stop_reason = f"invalid/no-result page at page {page_number} (treated as practical page exhaustion)"
                         page_status = "invalid_no_result_page"
                         stats.page_audit_entries.append(
                             {
@@ -740,6 +779,7 @@ def run() -> int:
                         )
                     )
                     if signature in seen_page_signatures:
+                        stats.run_status = "success"
                         stats.stop_reason = f"duplicate result page signature detected at page {page_number}"
                         page_status = "duplicate_result_signature"
                         ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
@@ -825,17 +865,21 @@ def run() -> int:
                         seen_sentence_ids.add(sentence_id)
 
                 if not stats.stop_reason and stats.pages_attempted >= (end_page - start_page + 1):
+                    stats.run_status = "success"
                     stats.stop_reason = f"reached configured page range {start_page}..{end_page}"
 
             context.close()
             browser.close()
 
+        if not stats.run_status or stats.run_status == "fatal_failure":
+            stats.run_status = "success"
         write_report(stats, exit_code=0)
         print_summary(stats, exit_code=0)
         print(f"report path: {REPORT_PATH}")
         return 0
 
     except Exception as exc:
+        stats.run_status = "fatal_failure"
         stats.stop_reason = stats.stop_reason or f"fatal error: {type(exc).__name__}"
         print(f"[ERROR] {exc}", file=sys.stderr)
         write_report(stats, exit_code=1)
