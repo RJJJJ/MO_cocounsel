@@ -1,7 +1,7 @@
 Metadata Generation Comparison Harness Report - Day 42
 
 baseline cases loaded: 77
-model-generated cases loaded: 3
+model-generated cases loaded: 10
 
 case: 1/2025
 language: pt
@@ -26,20 +26,20 @@ case: 100/2026
 language: zh
 - field: case_summary
   baseline_value: 除了法律所規定的客觀前提要件外，《刑法典》第56條第1款a項及b項還規定了當中的實質要件，即： — 行為人以往之生活及其人格，以及於執行徒刑期間在人格方面之演變情況，期待被判刑者一旦獲釋，將能以對社會負責之方式生活而不再犯罪屬有依據者；及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧。 假釋並不具有自動性，它除了需要符合啟動假釋程序的客觀要件外，還需要考慮面對被判刑人所犯下的罪行，以及被判刑人的人格表現，一旦提早釋放被判刑人，是否會對社會安寧造成衝擊、讓人認為刑罰的力度未足以達到阻嚇犯罪的作用；此外，更重要的是，還需要考慮到被判刑人在服刑期間的...
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 案件涉及一名被判刑人A因販毒罪被判處4年徒刑，在服刑期滿三分之二後申請假釋。法院否決了其假釋請求，理由是考慮其犯罪情節、人格表現及對社會安危的影響，認爲其不具備假釋的實質要件。
+  comparison_status: different
 - field: holding
   baseline_value: 判處上訴人繳付4個計算單位之司法費。
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 合議庭裁定上訴人A的上訴理由不成立，並維持原判。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第56條 | 第14條 | 第8條 | 第18條 | 第66條 | 第21條 | 第468條
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 《刑法典》第56條第1款
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 否決假釋 | 假釋的實質要件 摘要 除了法律所規定的客觀前提要件外 | 《刑法典》第56條第1款a項及b項還規定了當中的實質要件 | 即： — 行為人以往之生活及其人格 | 以及於執行徒刑期間在人格方面之演變情況 | 期待被判刑者一旦獲釋 | 將能以對社會負責之方式生活而不再犯罪屬有依據者 | 及 — 釋放被判刑者顯示不影響維護法律秩序及社會安寧
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 被判刑人A是否符合假釋的實質要件 | 考慮其犯罪情節、人格表現及對社會安危的影響，法院認爲其不具備假釋條件
+  comparison_status: different
 
 case: 1006/2025
 language: pt
@@ -64,39 +64,39 @@ case: 1026/2025
 language: zh
 - field: case_summary
   baseline_value: 鑑於未見《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條所規定之不予認可的情況，亦未見其他足以妨礙有關聲請的法定原因，涉案香港特別行政區國際仲裁中心所作之仲裁裁決應予以確認。
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 聲請人A請求確認香港國際仲裁中心於2024年11月1日所作之裁決，該裁決涉及借款合約爭議。法院審視後認為無不予認可的情況，裁定確認該裁決。
+  comparison_status: different
 - field: holding
   baseline_value: *** 五、 決定 綜上所述，本院合議庭決定確認香港國際仲裁中心於2024年11月1日作出的第HKIAC/24140號卷宗的除訟費外的裁決書。
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 涉案香港特別行政區國際仲裁中心所作之仲裁裁決應予以確認。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第7條 | 第1201條 | 第70條 | 第1條 | 第1200條
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 第19/2019號法律《仲裁法》第70條 | 《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 澳門以外的法院或仲裁員作出的裁判的審查及確認
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 無
+  comparison_status: different
 
 case: 1033/2025
 language: zh
 - field: case_summary
   baseline_value: 編號：第1033/2025號 (刑事上訴案) 上訴人：A 日期：2026年3月12日 主要法律問題：家庭暴力罪、適用法律錯誤、獲證明之事實上之事宜不足以支持作出該裁判 摘 要 * 《刑事訴訟法典》第400條第2款a)項所指的獲認定的事實不足以支持裁判之瑕疵為：所謂的事實不充分的瑕疵僅存在於法院沒有證實必要的可資作出適當法律適用以及決定案件實體問題的事實；法院在審判過程中必須在該刑事訴訟案件的標的包括控訴書或辯護詞所界定的範圍內，對這些事實作譴責。1 在適用《刑法典》第48條第1款之規定時，必須考慮是否滿足了緩刑的形式前提及實質前提。形式前提是指不超...
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 案件涉及上訴人A因家庭暴力罪及加重傷害身體完整性罪被判刑，上訴人認為判決存在事實認定不足和法律適用錯誤的瑕疵。中級法院改判A以直接正犯、犯罪既遂方式觸犯一項《刑法典》第140條的規定第2款結合第137條第1款所規定及處罰的「加重傷害身體完整性罪」，並暫緩執行二年徒刑。
+  comparison_status: different
 - field: holding
   baseline_value: 9 於原審判決第3頁，原審法院對嫌犯的控罪改為：嫌犯A為直接正犯，其既遂行為觸犯了：一項第2/2016號法律《預防及打擊家庭暴力法》第18條第1款結合第4條第1款及第2款(一)項所規定及處罰的『家庭暴力罪』，卻於判決部份未有指明，應屬明顯筆誤，因此依職權將之更正。
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 上訴人A的部分上訴理由成立。中級法院改判A以直接正犯、犯罪既遂方式觸犯一項《刑法典》第140條的規定第2款結合第137條第1款所規定及處罰的「加重傷害身體完整性罪」，並暫緩執行二年徒刑。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第400條 | 第48條 | 第4條 | 第18條 | 第140條 | 第137條 | 第142條 | 第40條
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 《刑事訴訟法典》第400條 | 《刑法典》第65條 | 《刑法典》第48條
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 刑事訴訟程序的上訴
-  model_value: <empty>
-  comparison_status: model_missing_field
+  model_value: 家庭暴力罪的構成要件是否成立 | 加重傷害身體完整性罪的證據是否充分 | 判決是否存在法律適用錯誤
+  comparison_status: different
 
 case: 1035/2025
 language: pt
@@ -121,134 +121,134 @@ case: 1073/2025
 language: zh
 - field: case_summary
   baseline_value: 上訴法院在過往多個上訴
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 案件涉及嫌犯A因逃避責任罪被判罰金及禁止駕駛的刑罰。上訴人認為原審法院在認定事實和量刑方面存在錯誤。法院審理後部分接受上訴人的上訴理由，將罰金日數由102日改為75日。
+  comparison_status: different
 - field: holding
   baseline_value: 維持被上訴判決中的其他決定。
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 維持原審法院對上訴人所科處的禁止駕駛為期7個月的附加刑。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第114條 | 第400條 | 第40條 | 第65條 | 第89條 | 第94條 | 第47條 | 第121條
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 《刑事訴訟法典》第114條 | 《刑法典》第40條、第65條 | 《刑法典》第47條第1款 | 《刑法典》第45條第2款
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 審查證據錯誤 | 量刑過重 | 逃避責任罪 摘要 上訴法院在過往多個上訴裁判中均指出（其中 | 參見中級法院第741/2025號合議庭裁判）： “在審查證據方面 | 《刑事訴訟法典》第114條規定：‘評價證據係按經驗法則及有權限實體之自由心證為之 | 但法律另有規定者除外’ | 即法院在認定事實所運用的自由心證證實不能質疑的 | 一方面法律賦予法官自由審理證據的權力
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 審查證據錯誤 | 量刑過重
+  comparison_status: different
 
 case: 1087/2025/A
 language: zh
 - field: case_summary
   baseline_value: 1. 根據《行政訴訟法典》第120條及第121條第1款規定，批准中止行政行為之效力取決於下列要件之同時成立：1) 被針對的行政行為具有積極內容(或有關行為有消極內容，但亦有部份積極內容，而中止效力僅限於有積極內容之部份)；2) 預料執行有關行政行為，將對聲請人或其在司法上訴中所維護或將在司法上訴中維護之利益造成難以彌補之損失；3) 中止行政行為之效力不會嚴重侵害該行為在具體情況下所謀求之公共利益，以及4) 卷宗內無強烈跡象顯示司法上訴屬違法。 2. 本案中，由於聲請人未能提供足夠證據以支持立即執行行政行為將對其做成難以彌補的損害，因此，在上述各項要...
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 本案涉及聲請人A請求中止保安司司長宣告其居留許可無效的行政行為之效力，但因未能提供足夠證據證明立即執行該行政行為將對其造成難以彌補之損失，法院未批准聲請。
+  comparison_status: different
 - field: holding
   baseline_value: *** 五、 決定 綜上所述，本院合議庭不批准是次中止行政行為效力的聲請。
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 法院認為聲請人未能提供充分證據支持其主張，因此不批准中止行政行為的聲請。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第120條 | 第121條 | 第129條 | 第122條
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 《行政訴訟法典》第120條 | 《行政訴訟法典》第121條第1款a)項
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 效力之中止
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 立即執行行政行為是否會對聲請人造成難以彌補之損失 | 中止行政行為是否嚴重侵害公共利益 | 卷宗內是否有強烈跡象顯示司法上訴屬違法
+  comparison_status: different
 
 case: 1092/2025
 language: zh
 - field: case_summary
   baseline_value: 編號：第1092/2025號 (刑事上訴案) 上訴人：(A) 日期：2026年2月26日 主要法律問題：審查證據方面明顯有錯誤 疑罪從無原則 遺留審查/或說明理由不足 摘 要 一、審查證據方面明顯有錯誤，是指法院認定事實時，明顯有違經驗法則和常理，或明顯違反法定證據價值法則，或違反職業準則。錯誤必須是顯而易見的，明顯到一般留意的人也不可能不發現。 二、疑罪從無原則，也稱作疑點利益歸於被告原則，是指法院在認定事實的審查證據過程中，對所審查的證據所需要證明的事實的真偽存有合理懷疑，在這種情況下，法院就應該以對嫌犯最有利為依歸，作出有利於嫌犯的事實的決定...
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 案件涉及一起涉嫌相當鉅額詐騙罪的上訴，上訴人認爲原審法院在審查證據方面存在明顯錯誤，並違反疑罪從無原則。上訴人提出被害人佩戴的手錶重量差異及交易過程中的可疑行爲作爲主要論據。然而，合議庭認爲原審法院的事實認定合理且依據充分。
+  comparison_status: different
 - field: holding
   baseline_value: 判處上訴人繳付6個計算單位之司法費，上訴的訴訟費用。
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 合議庭裁定上訴人的上訴理由不成立，維持原審裁決。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第355條 | 第360條 | 第211條 | 第196條 | 第400條 | 第114條 | 第10條 | 第418條
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 《刑事訴訟法典》第355條第2款 | 《刑事訴訟法典》第360條第1款a)項
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 刑事訴訟程序的上訴
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 審查證據方面明顯有錯誤 | 疑罪從無原則的適用
+  comparison_status: different
 
 case: 117/2026
 language: zh
 - field: case_summary
   baseline_value: 第3/2007號法律《道路交通法》第108條第1款規定： “一、如駕駛員自首次判罰其禁止駕駛的判決轉為確定之日起計五年內已兩次被判罰禁止駕駛，而又實施另一可科處禁止駕駛的違法行為，法院應裁定吊銷其駕駛執照或第八十條第一款（四）項所指文件，且不影響第九十二條的適用。”（粗體及底線是我們加上的）。 從中所見，立法者對於上訴人這種重複違反交通規定的情況，採用了“應”裁定吊銷其駕駛執照的表述方式，意味著立法者認為在此情況下，違例者未有在之前的刑罰當中吸取足夠的教訓，因而原則上需要吊銷違例者的駕駛執照，以便加強行為人的守法意識，並體現立法者對其他道路使用者的...
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 案件涉及一名職業司機A因違反交通紅燈管制被判處禁止駕駛五個月及吊銷駕駛執照。上訴人認為應獲暫緩執行吊銷駕駛執照的機會，但法院認定其多次違規且未吸取教訓，決定實際執行吊銷駕駛執照附加刑。
+  comparison_status: different
 - field: holding
   baseline_value: 針對本上訴程序，判處上訴人支付4個計算單位的司法費。
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 本院裁定上訴人A的上訴理由不成立，維持原判。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第108條 | 第109條 | 第99條 | 第12條 | 第106條 | 第125條 | 第46條
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 第3/2007號法律《道路交通法》第108條第1款 | 第3/2007號法律《道路交通法》第109條第1款
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 實際執行吊銷駕駛執照的附加刑 | 不遵守交通紅燈管制的輕微違反 摘要 第3/2007號法律《道路交通法》第108條第1款規定： “一 | 如駕駛員自首次判罰其禁止駕駛的判決轉為確定之日起計五年內已兩次被判罰禁止駕駛 | 而又實施另一可科處禁止駕駛的違法行為 | 法院應裁定吊銷其駕駛執照或第八十條第一款（四）項所指文件 | 且不影響第九十二條的適用
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 是否應暫緩執行吊銷駕駛執照的附加刑 | 上訴人多次違規的情況及其對公共安全的影響
+  comparison_status: different
 
 case: 118/2026
 language: zh
 - field: case_summary
   baseline_value: 案件編號: 第118/2026號（刑事上訴案） 日期: 2026年3月12日 重要法律問題： - 審查證據方面明顯有錯誤 摘 要 審查證據方面明顯有錯誤，是指法院在審查證據並認定事實時，明顯有違經驗法則和常理，或明顯違反法定證據價值法則，或明顯違反職業準則。錯誤必須是顯而易見的，明顯到一般留意的人也不可能不發現。 疑罪從無原則，是指法院在認定事實的審查證據過程中，對所審查的證據所需要證明的事實的真偽存有合理懷疑，在這種情況下，法院就應該以對嫌犯最有利為依歸，作出有利於嫌犯的事實的決定。
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 審查證據方面明顯有錯誤，是指法院在審查證據並認定事實時，明顯違反經驗法則和常理。本案中，原審法院對第二嫌犯的聲明及上訴人所使用的電話號碼及通訊記錄之調查資料作出了錯誤審查結果。
+  comparison_status: different
 - field: holding
   baseline_value: *** 四、決定 綜上所述，本院裁定上訴人A的上訴理由均不成立，維持原審判決。
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 本院裁定上訴人A的上訴理由均不成立，維持原審判決。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第11條 | 第9條 | 第12條 | 第25條 | 第114條 | 第400條 | 第418條 | 第410條
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 《刑事訴訟法典》第114條 | 《刑事訴訟法典》第400條第2款c項 | 《刑事訴訟法典》第418條
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 刑事訴訟程序的上訴
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 原審法院對第二嫌犯所作之聲明及卷宗第260頁至第267頁背頁所載的有關上訴人所使用的電話號碼及通訊記錄之調查資料作出了錯誤審查結果。 | 存疑從無原則
+  comparison_status: different
 
 case: 119/2026
 language: zh
 - field: case_summary
   baseline_value: 編號：第119/2026號（刑事上訴案） 日期：2026年2月26日 主要問題： 假釋 摘 要 假釋作為一項執行徒刑的機制，不可偏離刑罰的目的，即：保護法益及使行為人重新納入社會，因此，要求在特別預防方面和一般預防方面均符合假釋的要求，缺一不可。 裁判書製作人 ________________ 周艷平 澳門特別行政區中級法院 合議庭裁判書 編號：第119/2026號（刑事上訴案） 上訴人：A 日期：2026年2月26日 一、 案情敘述 澳門初級法院刑事起訴法庭於PLC-034-17-2-A案審理上訴人A的假釋個案，於2025年12月19日作出批示，...
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 案件涉及一名曾犯有多宗嚴重犯罪的囚犯A，其因不服初級法院不準假釋的批示而向上訴法院提出上訴。合議庭認為A雖在獄中的表現有所改善，但考慮到其入獄前的人格偏差及多次違法行為，特別是殺人罪和禁用武器罪對社會的危害性極高，決定不批准假釋。
+  comparison_status: different
 - field: holding
   baseline_value: * 四、決定 綜上所述，合議庭裁定上訴人A的上訴理由不成立，維持被上訴批示之決定。
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 維持被上訴批示之決定，不上訴人的假釋申請。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第56條 | 第468條 | 第469條 | 第18條 | 第21條 | 第48條 | 第129條 | 第128條
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 《刑法典》第56條
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 假釋 摘 要 假釋作為一項執行徒刑的機制 | 不可偏離刑罰的目的 | 即：保護法益及使行為人重新納入社會 | 因此 | 要求在特別預防方面和一般預防方面均符合假釋的要求 | 缺一不可
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 特別預防方面：考慮到A入獄前的人格偏差及多次違法行為，認為需要更長時間確定其是否具備重返社會的條件。 | 一般預防方面：認為提前釋放A會影響公眾對法律制度的信心，不利於維護澳門的法律秩序和社會安寧。
+  comparison_status: different
 
 case: 120/2026
 language: zh
 - field: case_summary
   baseline_value: 對於侵犯財產性質的犯罪，行為人是否有彌補其對被害人所造成的損害是一項重要的考慮因素，倘若上訴人有意對被害人作出賠償，理應在案件被揭發時起，便採取積極的彌補態度。 然而，上訴人自案件被揭發至今已兩年多的時間，仍未有向兩名被害人作出任何賠償，考慮到涉案的金額，倘若在此情況下仍提早釋放上訴人，將有可能令社會大眾誤以為可以透過低成本的方式侵犯他人的財產，這樣將不利於本澳刑罰在一般預防層面的阻嚇作用。 ____________________ 盧映霞（
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 案件涉及一名被判刑人A因詐騙罪被否決假釋，上訴法院維持原判。
+  comparison_status: different
 - field: holding
   baseline_value: 判處上訴人繳付4個計算單位的司法費。
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 合議庭裁定上訴理由不成立，維持被上訴之決定。
+  comparison_status: different
 - field: legal_basis
   baseline_value: 第56條 | 第211條 | 第196條 | 第468條
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 《刑法典》第56條
+  comparison_status: different
 - field: disputed_issues
   baseline_value: 否決假釋 | 假釋的實質要件 摘要 對於侵犯財產性質的犯罪 | 行為人是否有彌補其對被害人所造成的損害是一項重要的考慮因素 | 倘若上訴人有意對被害人作出賠償 | 理應在案件被揭發時起 | 便採取積極的彌補態度
-  model_value: <empty>
-  comparison_status: model_pending
+  model_value: 假釋的實質要件
+  comparison_status: different
 
 case: 123/2026
 language: zh
@@ -1467,8 +1467,8 @@ language: zh
   comparison_status: model_pending
 
 === Aggregated Summary ===
-cases compared: 3
+cases compared: 10
 fields compared: 308
-fields where model is missing: 308
-model-missing case count: 74
-comparison-ready: no
+fields where model is missing: 268
+model-missing case count: 67
+comparison-ready: yes

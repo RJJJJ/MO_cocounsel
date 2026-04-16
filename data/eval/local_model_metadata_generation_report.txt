@@ -1,15 +1,15 @@
 Local Model Metadata Generation Report - Day 45
-input_chunks_path: data/corpus/prepared/macau_court_cases/bm25_chunks.jsonl
-output_jsonl_path: /tmp/day45_model_generated_metadata_output.jsonl
-model_backend: command
+input_chunks_path: data\corpus\prepared\macau_court_cases\bm25_chunks.jsonl
+output_jsonl_path: data\eval\model_generated_metadata_output.jsonl
+model_backend: ollama_cli
 model_name: qwen2.5:7b-instruct
-prompt_version: day45_local_model_metadata_v1
+prompt_version: day45_prompt_a
 sample cases selected: 10
 sample case numbers: ['100/2026', '1026/2025', '1033/2025', '1073/2025', '1087/2025/A', '1092/2025', '117/2026', '118/2026', '119/2026', '120/2026']
 model-generated cases written: 10
 generation success count: 10
 generation failure count: 0
-script normalization applied count: 10
+script normalization applied count: 4
 script normalization applied yes/no: True
 generation fields attempted: ['case_summary', 'holding', 'legal_basis', 'disputed_issues']
 whether local model metadata generation appears successful: True
@@ -43,26 +43,26 @@ Sample outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "這是简體中文案件摘要",
-    "holding": "維持原判并確認執行",
+    "case_summary": "案件涉及一名被判刑人A因販毒罪被判處4年徒刑，在服刑期滿三分之二後申請假釋。法院否決了其假釋請求，理由是考慮其犯罪情節、人格表現及對社會安危的影響，認爲其不具備假釋的實質要件。",
+    "holding": "合議庭裁定上訴人A的上訴理由不成立，並維持原判。",
     "legal_basis": [
-      "《刑法》第56條第1款",
-      "《刑事訴訟法》第400條"
+      "《刑法典》第56條第1款"
     ],
     "disputed_issues": [
-      "爭議焦點在于事實認定"
+      "被判刑人A是否符合假釋的實質要件",
+      "考慮其犯罪情節、人格表現及對社會安危的影響，法院認爲其不具備假釋條件"
     ]
   },
   "generation_status": "local_model_generated",
   "generation_method": "local_model_generated",
   "model_name": "qwen2.5:7b-instruct",
-  "prompt_version": "day45_local_model_metadata_v1",
+  "prompt_version": "day45_prompt_a",
   "script_normalization_applied": true,
   "output_script": "traditional_chinese",
   "provenance_notes": [
     "Local-only generation path.",
     "No cloud API/database used.",
-    "backend=command"
+    "backend=ollama_cli"
   ]
 }
 
@@ -88,26 +88,26 @@ Sample outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "這是简體中文案件摘要",
-    "holding": "維持原判并確認執行",
+    "case_summary": "聲請人A請求確認香港國際仲裁中心於2024年11月1日所作之裁決，該裁決涉及借款合約爭議。法院審視後認為無不予認可的情況，裁定確認該裁決。",
+    "holding": "涉案香港特別行政區國際仲裁中心所作之仲裁裁決應予以確認。",
     "legal_basis": [
-      "《刑法》第56條第1款",
-      "《刑事訴訟法》第400條"
+      "第19/2019號法律《仲裁法》第70條",
+      "《關於澳門特別行政區與香港特別行政區相互認可和執行仲裁裁決的安排》第7條"
     ],
     "disputed_issues": [
-      "爭議焦點在于事實認定"
+      "無"
     ]
   },
   "generation_status": "local_model_generated",
   "generation_method": "local_model_generated",
   "model_name": "qwen2.5:7b-instruct",
-  "prompt_version": "day45_local_model_metadata_v1",
+  "prompt_version": "day45_prompt_a",
   "script_normalization_applied": true,
   "output_script": "traditional_chinese",
   "provenance_notes": [
     "Local-only generation path.",
     "No cloud API/database used.",
-    "backend=command"
+    "backend=ollama_cli"
   ]
 }
 
@@ -149,25 +149,28 @@ Sample outputs:
     ]
   },
   "generated_digest_metadata": {
-    "case_summary": "這是简體中文案件摘要",
-    "holding": "維持原判并確認執行",
+    "case_summary": "案件涉及上訴人A因家庭暴力罪及加重傷害身體完整性罪被判刑，上訴人認為判決存在事實認定不足和法律適用錯誤的瑕疵。中級法院改判A以直接正犯、犯罪既遂方式觸犯一項《刑法典》第140條的規定第2款結合第137條第1款所規定及處罰的「加重傷害身體完整性罪」，並暫緩執行二年徒刑。",
+    "holding": "上訴人A的部分上訴理由成立。中級法院改判A以直接正犯、犯罪既遂方式觸犯一項《刑法典》第140條的規定第2款結合第137條第1款所規定及處罰的「加重傷害身體完整性罪」，並暫緩執行二年徒刑。",
     "legal_basis": [
-      "《刑法》第56條第1款",
-      "《刑事訴訟法》第400條"
+      "《刑事訴訟法典》第400條",
+      "《刑法典》第65條",
+      "《刑法典》第48條"
     ],
     "disputed_issues": [
-      "爭議焦點在于事實認定"
+      "家庭暴力罪的構成要件是否成立",
+      "加重傷害身體完整性罪的證據是否充分",
+      "判決是否存在法律適用錯誤"
     ]
   },
   "generation_status": "local_model_generated",
   "generation_method": "local_model_generated",
   "model_name": "qwen2.5:7b-instruct",
-  "prompt_version": "day45_local_model_metadata_v1",
-  "script_normalization_applied": true,
+  "prompt_version": "day45_prompt_a",
+  "script_normalization_applied": false,
   "output_script": "traditional_chinese",
   "provenance_notes": [
     "Local-only generation path.",
     "No cloud API/database used.",
-    "backend=command"
+    "backend=ollama_cli"
   ]
 }
