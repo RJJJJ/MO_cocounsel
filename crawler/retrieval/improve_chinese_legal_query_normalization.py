@@ -7,6 +7,8 @@ import re
 import unicodedata
 from dataclasses import dataclass
 
+from crawler.retrieval.legal_lexical_mappings import HIGH_VALUE_EXPANSION, VARIANT_TO_CANONICAL
+
 CASE_NUMBER_PATTERN = re.compile(
     r"(?:第\s*)?(\d{1,5})\s*[/／]\s*(\d{2,4})(?:\s*[/／]\s*([A-Za-z]))?\s*(?:號)?",
     re.IGNORECASE,
@@ -32,31 +34,6 @@ PUNCT_TRANSLATION = str.maketrans(
         "‧": ".",
     }
 )
-
-VARIANT_TO_CANONICAL = {
-    "提前釋放": "假釋",
-    "提前释放": "假釋",
-    "保釋": "假釋",
-    "量刑明顯過重": "量刑過重",
-    "刑罰過重": "量刑過重",
-    "判刑過重": "量刑過重",
-    "合約不能履行": "合同不能履行",
-    "合同之不能履行": "合同不能履行",
-    "不能履行合同": "合同不能履行",
-    "損失賠償": "損害賠償",
-    "賠償損失": "損害賠償",
-    "诽谤": "誹謗",
-    "损害赔偿": "損害賠償",
-}
-
-HIGH_VALUE_EXPANSION = {
-    "假釋": ["提前釋放", "刑法典第56條", "釋放被判刑者"],
-    "量刑過重": ["量刑明顯過重", "刑罰過重", "改判"],
-    "合同不能履行": ["合約不能履行", "履行不能", "債務不履行"],
-    "損害賠償": ["賠償損失", "損失賠償", "民事賠償"],
-    "誹謗": ["名譽", "侮辱", "侵犯名譽"],
-    "違令": ["違反法庭命令", "不遵令", "拒不履行命令"],
-}
 
 
 @dataclass(frozen=True)
@@ -141,6 +118,7 @@ class ChineseLegalQueryNormalizer:
         for canonical, terms in HIGH_VALUE_EXPANSION.items():
             if canonical in text:
                 for term in terms:
-                    if term not in text and term not in expansions:
-                        expansions.append(term)
+                    lowered_term = term.lower()
+                    if lowered_term not in text and lowered_term not in expansions:
+                        expansions.append(lowered_term)
         return expansions

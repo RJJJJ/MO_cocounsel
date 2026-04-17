@@ -22,6 +22,7 @@ from crawler.retrieval.improve_chinese_legal_query_normalization import (
     ChineseLegalQueryNormalizer,
     NormalizedQuery,
 )
+from crawler.retrieval.legal_lexical_mappings import ZH_LEGAL_MULTI_CHAR_HINTS
 
 PREPARED_ROOT = Path("data/corpus/prepared/macau_court_cases")
 BM25_CHUNKS_PATH = PREPARED_ROOT / "bm25_chunks.jsonl"
@@ -32,6 +33,13 @@ ALNUM_REF_PATTERN = re.compile(r"[a-z0-9]+(?:[./_-][a-z0-9]+)+", re.IGNORECASE)
 CASE_NUMBER_PATTERN = re.compile(r"\b(?:proc\.?\s*)?[a-z]{0,6}\s*\d{1,5}\s*/\s*\d{2,4}\b", re.IGNORECASE)
 CJK_CHAR_PATTERN = re.compile(r"[\u4e00-\u9fff]")
 CJK_SEQUENCE_PATTERN = re.compile(r"[\u4e00-\u9fff]+")
+
+FIELD_WEIGHTS: dict[str, float] = {
+    "authoritative_case_number": 4.0,
+    "case_type": 2.0,
+    "bm25_text": 1.5,
+    "chunk_text": 1.0,
+}
 
 
 @dataclass(frozen=True)
@@ -81,6 +89,11 @@ class MixedTokenizer:
         collapsed = re.sub(r"\s+", "", case_ref.lower())
         return collapsed.replace("proc.", "proc").replace("proc", "proc")
 
+    @staticmethod
+    def _latin_fold(token: str) -> str:
+        folded = "".join(ch for ch in unicodedata.normalize("NFKD", token) if not unicodedata.combining(ch))
+        return folded.lower()
+
     def _deterministic_tokens(self, text: str) -> list[str]:
         normalized = self.normalize(text)
         if not normalized:
@@ -96,13 +109,22 @@ class MixedTokenizer:
 
         for latin in LATIN_TOKEN_PATTERN.findall(normalized):
             tokens.append(latin)
+            folded = self._latin_fold(latin)
+            if folded != latin:
+                tokens.append(folded)
 
         for cjk_seq in CJK_SEQUENCE_PATTERN.findall(normalized):
             if len(cjk_seq) == 1:
                 tokens.append(cjk_seq)
                 continue
+
+            tokens.append(cjk_seq)
             for idx in range(len(cjk_seq) - 1):
                 tokens.append(cjk_seq[idx : idx + 2])
+
+            for hint in ZH_LEGAL_MULTI_CHAR_HINTS:
+                if hint in cjk_seq:
+                    tokens.append(hint)
 
         return [token for token in tokens if token]
 
@@ -110,7 +132,7 @@ class MixedTokenizer:
         det_tokens = self._deterministic_tokens(text)
 
         if self.mode == "deterministic" or self._jieba is None:
-            return TokenizerResult(tokens=det_tokens, strategy_name="deterministic_regex_plus_cjk_bigrams")
+            return TokenizerResult(tokens=det_tokens, strategy_name="deterministic_regex_plus_cjk_bigrams_plus_lexical_hints")
 
         normalized = self.normalize(text)
         jieba_tokens = [tok.strip() for tok in self._jieba.cut(normalized) if tok.strip()]
@@ -140,6 +162,7 @@ class LocalBM25Index:
         self.b = b
         self.doc_tokens: list[list[str]] = []
         self.doc_term_freqs: list[Counter[str]] = []
+        self.doc_field_term_freqs: list[dict[str, Counter[str]]] = []
         self.doc_lengths: list[int] = []
         self.doc_freqs: Counter[str] = Counter()
         self.avg_doc_length: float = 0.0
@@ -148,29 +171,40 @@ class LocalBM25Index:
 
     def _build(self) -> None:
         for record in self.records:
-            base_text = " ".join(
-                [
-                    str(record.get("bm25_text", "")),
-                    str(record.get("chunk_text", "")),
-                    str(record.get("authoritative_case_number", "")),
-                ]
-            )
-            tokenized = self.tokenizer.tokenize(base_text)
-            if not self.tokenizer_strategy_used:
-                self.tokenizer_strategy_used = tokenized.strategy_name
+            field_texts = self._field_texts(record)
+            merged_tokens: list[str] = []
+            field_term_freqs: dict[str, Counter[str]] = {}
 
-            tokens = tokenized.tokens
-            term_freq = Counter(tokens)
+            for field_name, field_text in field_texts.items():
+                tokenized = self.tokenizer.tokenize(field_text)
+                if not self.tokenizer_strategy_used:
+                    self.tokenizer_strategy_used = tokenized.strategy_name
 
-            self.doc_tokens.append(tokens)
+                field_counter = Counter(tokenized.tokens)
+                field_term_freqs[field_name] = field_counter
+                merged_tokens.extend(tokenized.tokens)
+
+            term_freq = Counter(merged_tokens)
+
+            self.doc_tokens.append(merged_tokens)
             self.doc_term_freqs.append(term_freq)
-            self.doc_lengths.append(len(tokens))
+            self.doc_field_term_freqs.append(field_term_freqs)
+            self.doc_lengths.append(len(merged_tokens))
 
             for term in term_freq:
                 self.doc_freqs[term] += 1
 
         if self.doc_lengths:
             self.avg_doc_length = sum(self.doc_lengths) / len(self.doc_lengths)
+
+    @staticmethod
+    def _field_texts(record: dict[str, Any]) -> dict[str, str]:
+        return {
+            "authoritative_case_number": str(record.get("authoritative_case_number", "")),
+            "case_type": str(record.get("case_type", "")),
+            "bm25_text": str(record.get("bm25_text", "")),
+            "chunk_text": str(record.get("chunk_text", "")),
+        }
 
     def _idf(self, term: str) -> float:
         n_docs = len(self.records)
@@ -200,24 +234,30 @@ class LocalBM25Index:
 
         scored_hits: list[RankedHit] = []
         for idx, record in enumerate(self.records):
-            tf = self.doc_term_freqs[idx]
+            field_tfs = self.doc_field_term_freqs[idx]
             doc_len = self.doc_lengths[idx]
             score = 0.0
 
             for term in query_tokens.tokens:
-                freq = tf.get(term, 0)
-                if freq == 0:
+                idf = self._idf(term)
+                if idf <= 0:
                     continue
 
-                idf = self._idf(term)
-                numerator = freq * (self.k1 + 1)
-                denominator = freq + self.k1 * (1 - self.b + self.b * doc_len / max(self.avg_doc_length, 1.0))
-                score += idf * (numerator / denominator)
+                field_score = 0.0
+                for field_name, field_weight in FIELD_WEIGHTS.items():
+                    freq = field_tfs.get(field_name, Counter()).get(term, 0)
+                    if freq == 0:
+                        continue
+                    numerator = freq * (self.k1 + 1)
+                    denominator = freq + self.k1 * (1 - self.b + self.b * doc_len / max(self.avg_doc_length, 1.0))
+                    field_score += field_weight * (numerator / denominator)
+
+                score += idf * field_score
 
             authoritative_case_number = str(record.get("authoritative_case_number", ""))
             normalized_doc_case = self._normalize_case_for_match(authoritative_case_number)
             if query_case_refs and any(case_ref in normalized_doc_case for case_ref in query_case_refs):
-                score += 2.0
+                score += 4.0
 
             if score <= 0:
                 continue
@@ -319,46 +359,33 @@ def main() -> None:
         if not BM25_CHUNKS_PATH.exists():
             raise FileNotFoundError(f"BM25 chunks file not found: {BM25_CHUNKS_PATH}")
 
-        bm25_records = read_jsonl(BM25_CHUNKS_PATH)
-        tokenizer = MixedTokenizer(mode=args.tokenizer)
-        query_normalizer = ChineseLegalQueryNormalizer() if args.enable_query_normalization else None
-        bm25_index = LocalBM25Index(records=bm25_records, tokenizer=tokenizer, query_normalizer=query_normalizer)
-        hits, query_tokens, normalized_query = bm25_index.search(query=args.query, top_k=args.top_k)
+        records = read_jsonl(BM25_CHUNKS_PATH)
+        if not records:
+            raise ValueError(f"No records found in BM25 chunks file: {BM25_CHUNKS_PATH}")
 
-        success = bool(bm25_records) and bool(query_tokens.tokens) and len(hits) > 0
+        normalizer = ChineseLegalQueryNormalizer() if args.enable_query_normalization else None
+        index = LocalBM25Index(records=records, tokenizer=MixedTokenizer(mode=args.tokenizer), query_normalizer=normalizer)
+        hits, query_tokens, _ = index.search(query=args.query, top_k=args.top_k)
+
         write_demo_report(
-            total_records=len(bm25_records),
-            tokenizer_strategy=bm25_index.tokenizer_strategy_used,
+            total_records=len(records),
+            tokenizer_strategy=query_tokens.strategy_name,
             query=args.query,
             top_k=args.top_k,
             hits=hits,
-            success=success,
+            success=bool(hits),
         )
 
-        print(f"total bm25 records loaded: {len(bm25_records)}")
-        print(f"tokenizer strategy used: {bm25_index.tokenizer_strategy_used}")
-        print(f"query received: {args.query}")
-        print(f"query normalization enabled: {args.enable_query_normalization}")
-        if normalized_query is not None:
-            print(f"normalized query: {normalized_query.normalized_query}")
-            print(f"expanded query: {normalized_query.expanded_query}")
-            print(f"normalization rules applied: {normalized_query.applied_rules}")
+        print(f"loaded records: {len(records)}")
+        print(f"tokenizer strategy used: {query_tokens.strategy_name}")
         print(f"top_k returned: {len(hits)}")
-        print(f"bm25 query prototype appears successful: {success}")
+        print(f"bm25 query prototype successful: {bool(hits)}")
 
-        for rank, hit in enumerate(hits, start=1):
-            print(f"[{rank}] score={hit.score:.6f} chunk_id={hit.chunk_id} case={hit.authoritative_case_number}")
-            print(
-                f"      date={hit.authoritative_decision_date} court={hit.court} "
-                f"language={hit.language} case_type={hit.case_type}"
-            )
-            print(f"      preview={hit.chunk_text_preview}")
-            print(f"      pdf_url={hit.pdf_url}")
-            print(f"      text_url_or_action={hit.text_url_or_action}")
+        print(json.dumps([hit.__dict__ for hit in hits], ensure_ascii=False, indent=2))
 
-    except Exception as exc:  # basic top-level error handling
-        print(f"local bm25 query prototype failed: {exc}")
-        raise
+    except Exception as exc:  # pragma: no cover
+        print(f"error: {exc}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

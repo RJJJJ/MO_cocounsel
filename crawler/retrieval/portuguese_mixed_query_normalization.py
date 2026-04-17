@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import re
 import unicodedata
+
+from crawler.retrieval.legal_lexical_mappings import VARIANT_TO_CANONICAL
 from dataclasses import dataclass
 
 CASE_NUMBER_PATTERN = re.compile(r"\b\d{1,6}\s*/\s*\d{4}(?:\s*/\s*[a-zA-Z]{1,3})?\b")
@@ -37,6 +39,14 @@ PT_LEGAL_LEXICON = {
     "responsabilidade civil",
     "dano moral",
     "habeas corpus",
+    "suspensão da execução da pena",
+    "suspensao da execucao da pena",
+    "pena suspensa",
+    "liberdade condicional",
+    "difamação",
+    "difamacao",
+    "indemnização",
+    "indemnizacao",
 }
 
 PT_CASE_STYLE_HINTS = (
@@ -81,6 +91,7 @@ class PortugueseMixedQueryNormalizer:
     def normalize_and_detect(self, raw_query: str) -> PortugueseMixedNormalizationResult:
         normalized = self._normalize_text(raw_query)
         lowered = normalized.lower()
+        lowered = self._apply_cross_lingual_variant_mapping(lowered)
 
         pt_hits = [token for token in sorted(PT_LEGAL_LEXICON, key=len, reverse=True) if token in lowered]
         cjk_chars = sum(1 for char in normalized if "\u4e00" <= char <= "\u9fff")
@@ -122,3 +133,12 @@ class PortugueseMixedQueryNormalizer:
         normalized = re.sub(r"\s*/\s*", "/", normalized)
         normalized = re.sub(r"\s+", " ", normalized)
         return normalized.strip()
+
+    @staticmethod
+    def _apply_cross_lingual_variant_mapping(text: str) -> str:
+        normalized = text
+        for variant in sorted(VARIANT_TO_CANONICAL, key=len, reverse=True):
+            canonical = VARIANT_TO_CANONICAL[variant].lower()
+            if variant in normalized:
+                normalized = normalized.replace(variant, canonical)
+        return normalized

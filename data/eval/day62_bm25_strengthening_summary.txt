@@ -1,0 +1,21 @@
+Day 62 BM25+ Strengthening Summary
+objective: strengthen lexical retrieval (BM25 path) while preserving Day 61 full pass.
+
+implemented_strengthening:
+- query normalization refinement: expanded canonical variant mapping and high-value legal expansions in auditable mapping config.
+- legal synonym expansion: Chinese colloquial/legal variants + practical Portuguese alignment for key legal terms.
+- chinese tokenization refinement: added CJK full-sequence token + legal concept hint token extraction + preserved bigrams.
+- portuguese/mixed handling refinement: accent-folded Latin token variants and cross-lingual variant normalization hooks.
+- field-aware weighting refinement: weighted BM25 aggregation across authoritative_case_number, case_type, bm25_text, chunk_text.
+- case-number safety: retained explicit case-reference bonus to avoid exact lookup degradation.
+
+regression_verification:
+- command: python retrieval/eval/run_day61_regression_pack.py
+- total queries: 10
+- passed: 10
+- failed: 0
+- pass rate: 100.00%
+
+notes:
+- Day 61 pass rate remains 100%.
+- Most visible uplift: probation concept query now returns expected family cases in top ranks.

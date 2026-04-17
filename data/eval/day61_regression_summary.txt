@@ -1,6 +1,6 @@
 Day 61 Retrieval Regression Summary
-run_started_at_utc: 2026-04-17T10:30:19.590088+00:00
-query_pack_path: retrieval\eval\day61_regression_queries.json
+run_started_at_utc: 2026-04-17T10:37:13.404763+00:00
+query_pack_path: retrieval/eval/day61_regression_queries.json
 total queries: 10
 passed: 10
 failed: 0
@@ -9,94 +9,94 @@ pass rate: 100.00%
 Per-query top results summary:
 - day61_q01_parole_core | passed=True | query=假釋
   route_hint=single_legal_concept_or_ambiguous | retrieval_mode_used=conservative_direct_bm25|direct
-  [1] case=24/2026 score=53.482671 chunk_id=24_2026_zh_c0007_3461805eb3f6
-  [2] case=203/2026 score=51.562043 chunk_id=203_2026_zh_c0002_df4e79dae8bc
-  [3] case=100/2026 score=50.625471 chunk_id=100_2026_zh_c0006_17f843fdeda8
-  [4] case=157/2026 score=50.063324 chunk_id=157_2026_zh_c0004_9f42b6d55f7a
-  [5] case=120/2026 score=49.772040 chunk_id=120_2026_zh_c0007_5cf85b301992
-  [6] case=123/2026 score=49.560298 chunk_id=123_2026_zh_c0003_ab90b8acbea1
-  [7] case=165/2026 score=49.407735 chunk_id=165_2026_zh_c0005_4b90807241b9
+  [1] case=203/2026 score=104.869005 chunk_id=203_2026_zh_c0002_df4e79dae8bc
+  [2] case=253/2026 score=101.600410 chunk_id=253_2026_zh_c0006_ad8d4b2f293e
+  [3] case=254/2026 score=100.728758 chunk_id=254_2026_zh_c0004_c53d4952f78c
+  [4] case=157/2026 score=100.033676 chunk_id=157_2026_zh_c0004_9f42b6d55f7a
+  [5] case=123/2026 score=98.949227 chunk_id=123_2026_zh_c0003_ab90b8acbea1
+  [6] case=254/2026 score=98.280150 chunk_id=254_2026_zh_c0002_36f7a78cf470
+  [7] case=24/2026 score=98.143404 chunk_id=24_2026_zh_c0007_3461805eb3f6
 - day61_q02_sentence_too_heavy | passed=True | query=量刑過重
   route_hint=single_legal_concept | retrieval_mode_used=direct_bm25_or_hybrid_skeleton|direct
-  [1] case=757/2025 score=48.393581 chunk_id=757_2025_zh_c0002_0b42b7eee509
-  [2] case=728/2025 score=40.907856 chunk_id=728_2025_zh_c0010_d2c36fa77f6f
-  [3] case=721/2025 score=40.589371 chunk_id=721_2025_zh_c0003_f11d8588f999
-  [4] case=34/2026 score=38.855422 chunk_id=34_2026_zh_c0000_de36cad31850
-  [5] case=34/2026 score=38.515250 chunk_id=34_2026_zh_c0004_fcc08b9277bf
-  [6] case=76/2026 score=37.147998 chunk_id=76_2026_zh_c0016_92e118b2f55a
-  [7] case=1073/2025 score=37.092211 chunk_id=1073_2025_zh_c0007_b313052be73f
+  [1] case=757/2025 score=103.476418 chunk_id=757_2025_zh_c0000_6415798e445c
+  [2] case=34/2026 score=102.484334 chunk_id=34_2026_zh_c0000_de36cad31850
+  [3] case=757/2025 score=94.409875 chunk_id=757_2025_zh_c0006_ca82a296ef31
+  [4] case=76/2026 score=92.565487 chunk_id=76_2026_zh_c0022_01f9e0d8ba19
+  [5] case=757/2025 score=90.207562 chunk_id=757_2025_zh_c0002_0b42b7eee509
+  [6] case=310/2025 score=89.643458 chunk_id=310_2025_zh_c0010_42ad07d9e3c6
+  [7] case=85/2026 score=89.310929 chunk_id=85_2026_zh_c0000_8b96f127377f
 - day61_q03_exact_253_2026 | passed=True | query=253/2026
   route_hint=case_number_lookup | retrieval_mode_used=exact_case_number_heavy_bm25|direct
-  [1] case=253/2026 score=22.866640 chunk_id=253_2026_zh_c0011_5fc202bb8d72
-  [2] case=253/2026 score=16.605796 chunk_id=253_2026_zh_c0000_c92a90b81a77
-  [3] case=253/2026 score=13.433257 chunk_id=253_2026_zh_c0007_2cd309deb464
-  [4] case=253/2026 score=13.038596 chunk_id=253_2026_zh_c0002_36e57743f89f
-  [5] case=253/2026 score=12.814612 chunk_id=253_2026_zh_c0006_ad8d4b2f293e
-  [6] case=253/2026 score=12.621202 chunk_id=253_2026_zh_c0004_3809392baef4
-  [7] case=253/2026 score=12.591436 chunk_id=253_2026_zh_c0001_3223beab4f20
+  [1] case=253/2026 score=98.589441 chunk_id=253_2026_zh_c0011_5fc202bb8d72
+  [2] case=253/2026 score=57.130406 chunk_id=253_2026_zh_c0000_c92a90b81a77
+  [3] case=253/2026 score=48.638349 chunk_id=253_2026_zh_c0007_2cd309deb464
+  [4] case=253/2026 score=48.100330 chunk_id=253_2026_zh_c0002_36e57743f89f
+  [5] case=253/2026 score=46.984455 chunk_id=253_2026_zh_c0006_ad8d4b2f293e
+  [6] case=253/2026 score=46.504325 chunk_id=253_2026_zh_c0004_3809392baef4
+  [7] case=253/2026 score=46.324676 chunk_id=253_2026_zh_c0001_3223beab4f20
 - day61_q04_case_number_with_prefix | passed=True | query=案件編號 187/2026
   route_hint=case_number_lookup | retrieval_mode_used=exact_case_number_heavy_bm25|direct
-  [1] case=187/2026 score=22.340834 chunk_id=187_2026_pt_c0011_612938d7128d
-  [2] case=187/2026 score=20.290546 chunk_id=187_2026_pt_c0000_228dbc59b9ca
-  [3] case=187/2026 score=18.628373 chunk_id=187_2026_pt_c0005_cf3b57354cec
-  [4] case=187/2026 score=18.621725 chunk_id=187_2026_pt_c0010_891c79a1fcad
-  [5] case=187/2026 score=18.431205 chunk_id=187_2026_pt_c0004_6494d74c5f01
-  [6] case=187/2026 score=18.418226 chunk_id=187_2026_pt_c0008_4d3f6879e4a8
-  [7] case=956/2025 score=17.388105 chunk_id=956_2025_pt_c0033_efbc6e1c8e82
+  [1] case=187/2026 score=94.763027 chunk_id=187_2026_pt_c0011_612938d7128d
+  [2] case=187/2026 score=82.316689 chunk_id=187_2026_pt_c0000_228dbc59b9ca
+  [3] case=187/2026 score=70.471473 chunk_id=187_2026_pt_c0003_87e97c040263
+  [4] case=187/2026 score=70.217000 chunk_id=187_2026_pt_c0002_5bf70662cf99
+  [5] case=187/2026 score=70.079016 chunk_id=187_2026_pt_c0001_07232cd01a5b
+  [6] case=187/2026 score=70.079016 chunk_id=187_2026_pt_c0009_ab2ea69c4dfa
+  [7] case=187/2026 score=69.827533 chunk_id=187_2026_pt_c0010_891c79a1fcad
 - day61_q05_probation_core | passed=True | query=緩刑
   route_hint=single_legal_concept_or_ambiguous | retrieval_mode_used=conservative_direct_bm25|direct
-  [1] case=998/2025 score=6.042365 chunk_id=998_2025_zh_c0007_0c6ad039e3ea
-  [2] case=147/2025 score=5.985232 chunk_id=147_2025_zh_c0009_ddbab538c767
-  [3] case=721/2025 score=5.960699 chunk_id=721_2025_zh_c0010_ce127ab3341e
-  [4] case=998/2025 score=5.923237 chunk_id=998_2025_zh_c0000_670380337e16
-  [5] case=147/2025 score=5.895127 chunk_id=147_2025_zh_c0010_f300d8fcacfc
-  [6] case=147/2025 score=5.867308 chunk_id=147_2025_zh_c0013_4a471d1c6604
-  [7] case=998/2025 score=5.846446 chunk_id=998_2025_zh_c0006_b5bf73a3ea6c
+  [1] case=147/2025 score=84.508130 chunk_id=147_2025_zh_c0010_f300d8fcacfc
+  [2] case=785/2025 score=81.014038 chunk_id=785_2025_zh_c0018_fa65ae5f8dde
+  [3] case=721/2025 score=80.577471 chunk_id=721_2025_zh_c0005_bbf5eb60af59
+  [4] case=757/2025 score=77.960678 chunk_id=757_2025_zh_c0008_95761a12a9c5
+  [5] case=721/2025 score=77.538418 chunk_id=721_2025_zh_c0009_3e30ce9bb01d
+  [6] case=998/2025 score=76.850772 chunk_id=998_2025_zh_c0003_2b2f48245c30
+  [7] case=998/2025 score=75.426084 chunk_id=998_2025_zh_c0000_670380337e16
 - day61_q06_multi_issue_fraud_sentencing | passed=True | query=詐騙 集團 量刑
   route_hint=multi_issue_legal_query | retrieval_mode_used=decomposition_aware_bm25_hybrid|decomposition_fanout
-  [1] case=757/2025 score=11.177626 chunk_id=757_2025_zh_c0000_6415798e445c
-  [2] case=757/2025 score=10.931714 chunk_id=757_2025_zh_c0007_90424d0e5389
-  [3] case=76/2026 score=10.878662 chunk_id=76_2026_zh_c0011_7eb97bab2560
-  [4] case=36/2026 score=10.795833 chunk_id=36_2026_zh_c0013_793e2f1e1c1f
-  [5] case=76/2026 score=10.321289 chunk_id=76_2026_zh_c0016_92e118b2f55a
-  [6] case=76/2026 score=10.260451 chunk_id=76_2026_zh_c0006_b37f487c27a9
-  [7] case=76/2026 score=9.893609 chunk_id=76_2026_zh_c0035_ee69fdf058ba
+  [1] case=757/2025 score=83.426307 chunk_id=757_2025_zh_c0000_6415798e445c
+  [2] case=757/2025 score=81.742213 chunk_id=757_2025_zh_c0007_90424d0e5389
+  [3] case=36/2026 score=80.803183 chunk_id=36_2026_zh_c0013_793e2f1e1c1f
+  [4] case=76/2026 score=77.474788 chunk_id=76_2026_zh_c0016_92e118b2f55a
+  [5] case=76/2026 score=76.799087 chunk_id=76_2026_zh_c0006_b37f487c27a9
+  [6] case=76/2026 score=74.249188 chunk_id=76_2026_zh_c0035_ee69fdf058ba
+  [7] case=76/2026 score=73.238516 chunk_id=76_2026_zh_c0037_bc5268cf061b
 - day61_q07_zh_concept_with_portuguese_signal | passed=True | query=葡文 判決 上訴 期間
   route_hint=single_legal_concept_or_portuguese_mixed | retrieval_mode_used=direct_bm25_or_hybrid_skeleton|direct
-  [1] case=956/2025 score=14.759721 chunk_id=956_2025_pt_c0001_c693a4f1af9f
-  [2] case=401/2025 score=13.710339 chunk_id=401_2025_zh_c0000_ef1919bdc306
-  [3] case=401/2025 score=12.499951 chunk_id=401_2025_zh_c0001_0ca720bc79c2
-  [4] case=401/2025 score=12.436617 chunk_id=401_2025_zh_c0013_a27a43115dc8
-  [5] case=956/2025 score=11.515407 chunk_id=956_2025_pt_c0002_09a7112c77f6
-  [6] case=136/2025 score=10.414880 chunk_id=136_2025_zh_c0010_92a05774eab5
-  [7] case=998/2025 score=8.557588 chunk_id=998_2025_zh_c0003_2b2f48245c30
+  [1] case=956/2025 score=75.970442 chunk_id=956_2025_pt_c0001_c693a4f1af9f
+  [2] case=401/2025 score=55.930191 chunk_id=401_2025_zh_c0000_ef1919bdc306
+  [3] case=401/2025 score=49.664777 chunk_id=401_2025_zh_c0001_0ca720bc79c2
+  [4] case=998/2025 score=46.774063 chunk_id=998_2025_zh_c0004_8fb06b6a56b9
+  [5] case=136/2025 score=45.294219 chunk_id=136_2025_zh_c0010_92a05774eab5
+  [6] case=253/2026 score=42.992758 chunk_id=253_2026_zh_c0007_2cd309deb464
+  [7] case=165/2026 score=42.830724 chunk_id=165_2026_zh_c0002_f52fb0c7ab33
 - day61_q08_portuguese_execution_suspension | passed=True | query=recurso suspensão da execução da pena
   route_hint=portuguese_or_mixed | retrieval_mode_used=bm25_language_aware_pt_or_mixed|direct
-  [1] case=187/2026 score=19.530192 chunk_id=187_2026_pt_c0005_cf3b57354cec
-  [2] case=388/2025 score=18.755051 chunk_id=388_2025_pt_c0013_f791e49c1963
-  [3] case=124/2026 score=18.235899 chunk_id=124_2026_pt_c0018_a4140ac4fe42
-  [4] case=124/2026 score=17.794228 chunk_id=124_2026_pt_c0035_40a9ddc097b8
-  [5] case=124/2026 score=17.731238 chunk_id=124_2026_pt_c0016_bcd949943ffa
-  [6] case=124/2026 score=17.566166 chunk_id=124_2026_pt_c0028_f40edd7120a4
-  [7] case=187/2026 score=17.342049 chunk_id=187_2026_pt_c0001_07232cd01a5b
+  [1] case=187/2026 score=73.007184 chunk_id=187_2026_pt_c0005_cf3b57354cec
+  [2] case=124/2026 score=64.046124 chunk_id=124_2026_pt_c0018_a4140ac4fe42
+  [3] case=84/2025 score=63.202766 chunk_id=84_2025_pt_c0048_4a79cb3be263
+  [4] case=124/2026 score=62.892904 chunk_id=124_2026_pt_c0016_bcd949943ffa
+  [5] case=124/2026 score=61.956258 chunk_id=124_2026_pt_c0035_40a9ddc097b8
+  [6] case=124/2026 score=61.346829 chunk_id=124_2026_pt_c0028_f40edd7120a4
+  [7] case=187/2026 score=59.813201 chunk_id=187_2026_pt_c0001_07232cd01a5b
 - day61_q09_mixed_portuguese_chinese_damage | passed=True | query=indemnização dano moral 澳門
   route_hint=portuguese_or_mixed | retrieval_mode_used=bm25_language_aware_pt_or_mixed|direct
-  [1] case=187/2026 score=18.525626 chunk_id=187_2026_pt_c0008_4d3f6879e4a8
-  [2] case=187/2026 score=11.739813 chunk_id=187_2026_pt_c0007_0b152c08c76e
-  [3] case=1006/2025 score=11.127302 chunk_id=1006_2025_pt_c0048_1ae85b25a2d8
-  [4] case=1006/2025 score=11.087689 chunk_id=1006_2025_pt_c0039_ecfd4f139970
-  [5] case=124/2026 score=10.021321 chunk_id=124_2026_pt_c0012_2a596fd565b6
-  [6] case=956/2025 score=9.404547 chunk_id=956_2025_pt_c0006_1a0100b603b9
-  [7] case=871/2024 score=9.110227 chunk_id=871_2024_zh_c0017_c2a60249cc87
+  [1] case=187/2026 score=50.747652 chunk_id=187_2026_pt_c0008_4d3f6879e4a8
+  [2] case=871/2024 score=43.385909 chunk_id=871_2024_zh_c0017_c2a60249cc87
+  [3] case=871/2024 score=40.880619 chunk_id=871_2024_zh_c0016_43a8a82b7346
+  [4] case=956/2025 score=38.133570 chunk_id=956_2025_pt_c0006_1a0100b603b9
+  [5] case=871/2024 score=34.058678 chunk_id=871_2024_zh_c0018_5a93d9386ac3
+  [6] case=871/2024 score=33.999963 chunk_id=871_2024_zh_c0030_c52ebcefcc73
+  [7] case=384/2025 score=33.999963 chunk_id=384_2025_pt_c0003_61ce6c6a9cfc
 - day61_q10_harder_fact_legal_phrase | passed=True | query=無罪推定 證據不足
   route_hint=mixed_fact_legal_or_ambiguous | retrieval_mode_used=conservative_direct_bm25|direct
-  [1] case=214/2025 score=27.669909 chunk_id=214_2025_zh_c0009_46fd394cffba
-  [2] case=214/2025 score=19.333583 chunk_id=214_2025_zh_c0010_5a623e137f85
-  [3] case=871/2024 score=13.179860 chunk_id=871_2024_zh_c0046_f6d7c7662afc
-  [4] case=1033/2025 score=12.940373 chunk_id=1033_2025_zh_c0003_60273d24df13
-  [5] case=871/2024 score=12.611879 chunk_id=871_2024_zh_c0038_b4c646cf8ceb
-  [6] case=1033/2025 score=12.565550 chunk_id=1033_2025_zh_c0002_72d1cc1af6f0
-  [7] case=214/2025 score=12.465846 chunk_id=214_2025_zh_c0011_2be25c6a6789
+  [1] case=214/2025 score=49.981382 chunk_id=214_2025_zh_c0009_46fd394cffba
+  [2] case=1033/2025 score=33.225599 chunk_id=1033_2025_zh_c0013_b8b078db82c3
+  [3] case=214/2025 score=32.747888 chunk_id=214_2025_zh_c0010_5a623e137f85
+  [4] case=871/2024 score=24.549375 chunk_id=871_2024_zh_c0046_f6d7c7662afc
+  [5] case=1033/2025 score=24.308784 chunk_id=1033_2025_zh_c0003_60273d24df13
+  [6] case=871/2024 score=23.686407 chunk_id=871_2024_zh_c0038_b4c646cf8ceb
+  [7] case=1033/2025 score=23.253041 chunk_id=1033_2025_zh_c0002_72d1cc1af6f0
 
 Failure reasons:
 - None
