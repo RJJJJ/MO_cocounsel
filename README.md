@@ -487,6 +487,113 @@ Not the current priority:
 
 ---
 
-## 15. One-Line Summary
+## 15. Post-Day-66 Architecture Decision Memo: Domain Model Strategy
+
+This note is intentionally positioned **after Day 66**. It is a forward-looking architecture decision memo, not the current implementation priority.
+
+### Current decision
+
+MO_cocounsel remains **retrieval-first, agent later**.
+
+Before considering domain-model fine-tuning, the project must first complete and validate the retrieval stack hardening sequence:
+
+- Day 61: retrieval regression pack
+- Day 62: BM25+ strengthening
+- Day 63: dense retrieval baseline
+- Day 64: score fusion
+- Day 65: reranking baseline
+- Day 66: retrieval stack eval round 2
+
+Until that sequence is completed, **domain-model fine-tuning is not a priority workstream**.
+
+### Why this matters
+
+A dedicated Macau legal model may become a meaningful product moat, but it should **not** be treated as a universal “god model”.
+
+The project direction is to keep strong general-purpose models responsible for higher-level orchestration, while reserving domain-specialized capability for tasks where Macau-specific legal language matters most.
+
+### Expected high-value uses of a domain-specialized Macau legal model
+
+#### 1. Legal Research: query reformulation and issue decomposition
+A domain-specialized model could help translate user phrasing into Macau-law-aligned terminology and concepts.
+
+Example:
+- user wording: colloquial or cross-jurisdiction phrasing
+- model output: Macau-specific legal terminology, issue framing, and retrieval-oriented reformulation
+
+This is especially relevant because general models may produce **cross-jurisdiction drift** (for example, mapping a Macau issue into Mainland China or Taiwan legal terminology).
+
+Likely high-value functions:
+- query reformulation
+- issue decomposition
+- synonym/legal term normalization
+- Macau-specific concept mapping
+
+#### 2. Drafting / Work Product: local legal writing style adaptation
+This is a likely long-term high-impact area.
+
+A domain-specialized model may help generate outputs that better match Macau legal language, terminology, tone, and drafting conventions, especially for:
+- research memos
+- case briefs
+- plain-language explanations
+- legal risk summaries
+- client-facing summaries
+
+The main value here is not just legal correctness, but also **local legal writing style fidelity**.
+
+### Lower-priority uses
+
+#### Document Review / Analysis
+A domain-specialized model may help in tasks involving Macau-law-specific legal sufficiency checks, but this is not currently the first place to invest.
+
+Nearer-term gains are more likely to come from:
+- better retrieval
+- better metadata
+- better citation grounding
+- stronger comparison / review pipelines
+
+#### Workflow / Agent orchestration
+This is **not** the primary target for a specialized Macau legal model.
+
+Task planning, orchestration, and tool-use should continue to rely on stronger general-purpose models or orchestration logic, rather than a smaller domain-specialized model.
+
+### Strategic principle
+
+If a domain-specialized Macau legal model is pursued in the future, it should be treated as a **specialist component**, not the system’s single universal brain.
+
+Recommended future role split:
+
+- **Orchestrator / Planner**: strong general-purpose model
+- **Retrieval specialist**: Macau-law query reformulation / concept mapping
+- **Drafting specialist**: Macau-law writing style adaptation
+- **Core evidence layer**: authoritative corpus + retrieval + citation grounding
+
+### Preconditions before revisiting fine-tuning
+
+This topic should only be reopened after Day 66 and after the project can answer the following clearly:
+
+- Which regression queries still fail?
+- Are the failures caused by retrieval, routing, reranking, or legal-language mapping?
+- Is query reformulation a proven bottleneck?
+- Is drafting becoming the next real product priority?
+- Is metadata quality and coverage strong enough to support future supervised adaptation?
+
+### Working conclusion
+
+A dedicated Macau legal model is considered a **promising long-term differentiator**, especially for:
+
+- Legal Research query reformulation
+- issue decomposition
+- Drafting / Work Product style adaptation
+
+However, it is **not** the current implementation priority.
+
+The current priority remains:
+
+**stabilize retrieval, evaluate rigorously, then decide whether domain adaptation is justified by measured bottlenecks.**
+
+---
+
+## 16. One-Line Summary
 
 **MO_cocounsel is a retrieval-first Macau legal research prototype built on public court judgments, with a broader CoCounsel-style roadmap covering legal research, document review, drafting, and workflow agents; the currently delivered layers are metadata-aware case cards, an API-ready response envelope, endpoint tests, and a frontend demo integration layer.**
