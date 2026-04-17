@@ -1,0 +1,13 @@
+{
+  "run_started_at_utc": "2026-04-17T11:20:12.787591+00:00",
+  "query_pack_path": "retrieval/eval/day61_regression_queries.json",
+  "artifact_path": "data/corpus/prepared/macau_court_cases/dense_baseline/day63b_bge_m3_index.json",
+  "model_key": "day63b_bge_m3",
+  "top_k": 7,
+  "total_queries": 0,
+  "passed": 0,
+  "failed": 0,
+  "pass_rate": 0.0,
+  "results": [],
+  "runtime_error": "FlagEmbedding is required for Day63B bge-m3 baseline. Install dependencies locally (e.g., FlagEmbedding + torch + transformers) before building/searching this index."
+}

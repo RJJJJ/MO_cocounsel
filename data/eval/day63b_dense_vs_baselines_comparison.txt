@@ -1,0 +1,26 @@
+Day63B Dense vs Baselines Comparison
+day63b_results_path: data/eval/day63b_dense_retrieval_results.json
+day63_results_path: data/eval/day63_dense_retrieval_results.json
+bm25_results_path: data/eval/day61_regression_results.json
+
+Pass rate comparison:
+- Day63B dense (bge-m3): N/A (runtime blocked)
+- Day63 dense (chargram): 50.00%
+- BM25+: 100.00%
+
+Exact case-number lookup behavior:
+- Day63B run not available in current environment; exact-lookup behavior cannot be measured yet.
+
+zh concept query behavior:
+- Focus slice: day61_q01/day61_q02/day61_q05/day61_q10.
+
+pt/mixed query behavior:
+- Focus slice: day61_q07/day61_q08/day61_q09.
+
+Day63B runtime status: blocked by dependency error: FlagEmbedding is required for Day63B bge-m3 baseline. Install dependencies locally (e.g., FlagEmbedding + torch + transformers) before building/searching this index.
+Which queries improved most:
+- Pending Day63B run output.
+Which queries still fail:
+- Pending Day63B run output.
+Is Day63B good enough for Day64 fusion dense signal?
+- Pending Day63B run output; likely yes only as auxiliary signal with BM25 exact-match guardrail.
