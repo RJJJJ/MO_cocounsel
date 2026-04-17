@@ -1,6 +1,6 @@
 Day 61 Retrieval Regression Summary
-run_started_at_utc: 2026-04-17T10:28:15.691392+00:00
-query_pack_path: retrieval/eval/day61_regression_queries.json
+run_started_at_utc: 2026-04-17T10:30:19.590088+00:00
+query_pack_path: retrieval\eval\day61_regression_queries.json
 total queries: 10
 passed: 10
 failed: 0
