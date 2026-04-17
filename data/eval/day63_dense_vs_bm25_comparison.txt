@@ -1,0 +1,36 @@
+Day 63 Dense vs BM25+ Comparison
+dense_results_file: data/eval/day63_dense_retrieval_results.json
+bm25_results_file: data/eval/day61_regression_results.json
+dense_pass_rate: 50.00% (5/10)
+bm25_pass_rate: 100.00% (10/10)
+
+Interpretation baseline statement:
+- Day 63 dense is a baseline-only semantic path for comparison; it is not a fused retrieval result.
+- Exact case-number lookup remains a BM25 strength zone in current evidence.
+
+Queries where dense is clearly better:
+- None on Day 61 pack under current baseline settings.
+
+Queries where BM25 remains better:
+- day61_q01_parole_core: BM25 passed; dense failed. dense_failure_reason=Expected any of ['100/2026', '120/2026', '157/2026', '203/2026', '24/2026'] in top 5, got ['253/2026', '165/2026', '164/2026', '206/2026', '207/2026'].
+- day61_q03_exact_253_2026: BM25 passed; dense failed. dense_failure_reason=Expected rank 1 case 253/2026, got 184/2026.
+- day61_q04_case_number_with_prefix: BM25 passed; dense failed. dense_failure_reason=Expected case 187/2026 in top 3, got ['151/2026', '184/2026', '151/2026'].
+- day61_q07_zh_concept_with_portuguese_signal: BM25 passed; dense failed. dense_failure_reason=Expected any of ['401/2025', '956/2025'] in top 5, got ['164/2026', '728/2025', '76/2026', '123/2026', '964/2025'].
+- day61_q09_mixed_portuguese_chinese_damage: BM25 passed; dense failed. dense_failure_reason=Expected any of ['1006/2025', '124/2026', '187/2026'] in top 5, got ['871/2024', '871/2024', '84/2025', '1035/2025', '84/2025'].
+
+Exact case-number lookup behavior under dense:
+- day61_q03_exact_253_2026: passed=False top3=['184/2026', '203/2026', '705/2025']
+- day61_q04_case_number_with_prefix: passed=False top3=['151/2026', '184/2026', '151/2026']
+
+Concept / harder phrasing / pt-mixed behavior:
+- day61_q02_sentence_too_heavy: passed=True top3=['145/2026', '721/2025', '184/2026']
+- day61_q06_multi_issue_fraud_sentencing: passed=True top3=['757/2025', '85/2026', '76/2026']
+- day61_q08_portuguese_execution_suspension: passed=True top3=['84/2025', '84/2025', '1/2025']
+- day61_q10_harder_fact_legal_phrase: passed=True top3=['871/2024', '214/2025', '686/2025']
+- day61_q07_zh_concept_with_portuguese_signal: passed=False top3=['164/2026', '728/2025', '76/2026']
+- day61_q09_mixed_portuguese_chinese_damage: passed=False top3=['871/2024', '871/2024', '84/2025']
+
+Known limitations observed in Day 63 baseline:
+- Dense baseline currently lacks explicit case-number lexical guardrails.
+- No BM25+dense fusion yet (scheduled for Day 64).
+- Hash-chargram embeddings are feasible and multilingual, but weaker than trained multilingual encoders.
