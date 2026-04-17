@@ -773,7 +773,8 @@ def run() -> int:
                         stats.total_rounds_run += 1
                         # Round-local loop detection only:
                         # revisiting page 1/2/3... in round 2+ is normal and should NOT be treated as duplicate.
-                        seen_page_signatures_this_round: set[tuple[tuple[str, ...], ...]] = set()
+                        seen_page_signatures_this_round: dict[tuple[tuple[str, ...], ...], dict[str, Any]] = {}
+                        consecutive_duplicate_pages_count = 0
                         round_stats = {
                             "court": args.court,
                             "round_number": round_number,
@@ -861,9 +862,13 @@ def run() -> int:
                                     for c in page_cards
                                 )
                             )
+                            
+                            ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
+                            
                             if signature in seen_page_signatures_this_round:
-                                round_stats["stop_reason"] = f"duplicate result page signature detected at page {page_number}"
-                                ids = [normalize_space(c.get("sentence_id")) for c in page_cards if normalize_space(c.get("sentence_id"))]
+                                consecutive_duplicate_pages_count += 1
+                                prev_match = seen_page_signatures_this_round[signature]
+                                
                                 audit_item = {
                                     "record_type": "page_audit",
                                     "court": args.court,
@@ -873,14 +878,29 @@ def run() -> int:
                                     "cards_found": len(page_cards),
                                     "first_sentence_ids": ids[:3],
                                     "last_sentence_ids": ids[-3:],
+                                    "matched_previous_page_number": prev_match["page_number"],
+                                    "matched_previous_first_sentence_ids": prev_match["first_sentence_ids"],
+                                    "matched_previous_last_sentence_ids": prev_match["last_sentence_ids"],
                                     "new_sentence_ids_discovered_on_page": [],
                                     "retry_count": retry_count,
-                                    "page_status": "duplicate_result_signature",
+                                    "page_status": f"duplicate_result_signature_streak_{consecutive_duplicate_pages_count}",
                                 }
                                 stats.page_audit_entries.append(audit_item)
                                 audit_fh.write(json.dumps(audit_item, ensure_ascii=False) + "\n")
-                                break
-                            seen_page_signatures_this_round.add(signature)
+                                
+                                if consecutive_duplicate_pages_count >= 3:
+                                    round_stats["stop_reason"] = f"duplicate result page signature detected 3 times consecutively at page {page_number}"
+                                    break
+                                else:
+                                    # 容錯範圍內，跳過此頁解析，嘗試爬下一頁看是否能恢復正常
+                                    continue
+                            else:
+                                consecutive_duplicate_pages_count = 0
+                                seen_page_signatures_this_round[signature] = {
+                                    "page_number": page_number,
+                                    "first_sentence_ids": ids[:3],
+                                    "last_sentence_ids": ids[-3:],
+                                }
 
                             stats.valid_pages_parsed += 1
                             round_stats["valid_pages_parsed"] += 1

@@ -8,3 +8,5 @@
 /crawler/metadata/__pycache__
 /crawler/pipeline/__pycache__
 /tests/__pycache__
+/data/corpus/raw/macau_court_cases_full/cases
+/data/corpus/raw/per_court_runs
