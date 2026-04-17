@@ -8,7 +8,9 @@
 /crawler/metadata/__pycache__
 /crawler/pipeline/__pycache__
 /tests/__pycache__
+/retrieval/eval/__pycache__
 /data/corpus/raw/macau_court_cases_full/cases
 /data/corpus/raw/per_court_runs
 data/corpus/raw/macau_court_cases_full/manifest.jsonl
 data/corpus/raw/macau_court_cases_full/manifest.jsonl
+data/corpus/prepared/macau_court_cases/dense_baseline/

@@ -1,0 +1,113 @@
+Day 63 Dense Retrieval Regression Summary
+run_started_at_utc: 2026-04-17T10:58:54.373794+00:00
+query_pack_path: retrieval/eval/day61_regression_queries.json
+artifact_path: data/corpus/prepared/macau_court_cases/dense_baseline/day63_dense_index.json
+model_key: chargram_hash_v1
+total queries: 10
+passed: 5
+failed: 5
+pass rate: 50.00%
+
+Per-query top results summary:
+- day61_q01_parole_core | passed=False | query=假釋
+  route_hint=single_legal_concept_or_ambiguous | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=253/2026 score=0.342754 chunk_id=253_2026_zh_c0008_8fc0272a25aa
+  [2] case=165/2026 score=0.341636 chunk_id=165_2026_zh_c0003_03369033bd26
+  [3] case=164/2026 score=0.333070 chunk_id=164_2026_zh_c0004_5d9130c79e2c
+  [4] case=206/2026 score=0.312125 chunk_id=206_2026_zh_c0006_57bdfc3f8667
+  [5] case=207/2026 score=0.294320 chunk_id=207_2026_zh_c0005_0737b604a6c7
+  [6] case=100/2026 score=0.256448 chunk_id=100_2026_zh_c0002_383f91369ba1
+  [7] case=120/2026 score=0.254652 chunk_id=120_2026_zh_c0007_5cf85b301992
+  failure_reason=Expected any of ['100/2026', '120/2026', '157/2026', '203/2026', '24/2026'] in top 5, got ['253/2026', '165/2026', '164/2026', '206/2026', '207/2026'].
+- day61_q02_sentence_too_heavy | passed=True | query=量刑過重
+  route_hint=single_legal_concept | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=145/2026 score=0.202474 chunk_id=145_2026_zh_c0002_cb199e663da7
+  [2] case=721/2025 score=0.199867 chunk_id=721_2025_zh_c0003_f11d8588f999
+  [3] case=184/2026 score=0.195536 chunk_id=184_2026_zh_c0003_a1cef9b4f48e
+  [4] case=1073/2025 score=0.184277 chunk_id=1073_2025_zh_c0007_b313052be73f
+  [5] case=85/2026 score=0.183402 chunk_id=85_2026_zh_c0001_44c78c7410fe
+  [6] case=203/2026 score=0.174425 chunk_id=203_2026_zh_c0001_acbcf83c1192
+  [7] case=34/2026 score=0.172102 chunk_id=34_2026_zh_c0000_de36cad31850
+- day61_q03_exact_253_2026 | passed=False | query=253/2026
+  route_hint=case_number_lookup | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=184/2026 score=0.375442 chunk_id=184_2026_zh_c0006_c3c7ac5514cc
+  [2] case=203/2026 score=0.278017 chunk_id=203_2026_zh_c0004_29af77567b64
+  [3] case=705/2025 score=0.238975 chunk_id=705_2025_pt_c0025_0b54b035b3e8
+  [4] case=207/2026 score=0.210723 chunk_id=207_2026_zh_c0007_7c819b852129
+  [5] case=151/2026 score=0.209781 chunk_id=151_2026_zh_c0001_a8ebafba164b
+  [6] case=145/2026 score=0.201557 chunk_id=145_2026_zh_c0000_f9e82a7592e0
+  [7] case=151/2026 score=0.201153 chunk_id=151_2026_zh_c0000_e1bb7733c024
+  failure_reason=Expected rank 1 case 253/2026, got 184/2026.
+- day61_q04_case_number_with_prefix | passed=False | query=案件編號 187/2026
+  route_hint=case_number_lookup | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=151/2026 score=0.199163 chunk_id=151_2026_zh_c0001_a8ebafba164b
+  [2] case=184/2026 score=0.199108 chunk_id=184_2026_zh_c0006_c3c7ac5514cc
+  [3] case=151/2026 score=0.194832 chunk_id=151_2026_zh_c0000_e1bb7733c024
+  [4] case=203/2026 score=0.176596 chunk_id=203_2026_zh_c0004_29af77567b64
+  [5] case=254/2026 score=0.165503 chunk_id=254_2026_zh_c0000_3313ba38e3ec
+  [6] case=157/2026 score=0.160767 chunk_id=157_2026_zh_c0000_adf8c8221263
+  [7] case=151/2026 score=0.159432 chunk_id=151_2026_zh_c0002_e92fc3b94090
+  failure_reason=Expected case 187/2026 in top 3, got ['151/2026', '184/2026', '151/2026'].
+- day61_q05_probation_core | passed=True | query=緩刑
+  route_hint=single_legal_concept_or_ambiguous | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=147/2025 score=0.330258 chunk_id=147_2025_zh_c0009_ddbab538c767
+  [2] case=147/2025 score=0.287784 chunk_id=147_2025_zh_c0010_f300d8fcacfc
+  [3] case=721/2025 score=0.257027 chunk_id=721_2025_zh_c0009_3e30ce9bb01d
+  [4] case=998/2025 score=0.255562 chunk_id=998_2025_zh_c0000_670380337e16
+  [5] case=147/2025 score=0.243174 chunk_id=147_2025_zh_c0008_3b68b8cf38f0
+  [6] case=785/2025 score=0.240715 chunk_id=785_2025_zh_c0018_fa65ae5f8dde
+  [7] case=34/2026 score=0.236833 chunk_id=34_2026_zh_c0000_de36cad31850
+- day61_q06_multi_issue_fraud_sentencing | passed=True | query=詐騙 集團 量刑
+  route_hint=multi_issue_legal_query | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=757/2025 score=0.140655 chunk_id=757_2025_zh_c0007_90424d0e5389
+  [2] case=85/2026 score=0.138266 chunk_id=85_2026_zh_c0002_f4ab3af1d99d
+  [3] case=76/2026 score=0.128943 chunk_id=76_2026_zh_c0016_92e118b2f55a
+  [4] case=1073/2025 score=0.128700 chunk_id=1073_2025_zh_c0007_b313052be73f
+  [5] case=76/2026 score=0.126331 chunk_id=76_2026_zh_c0035_ee69fdf058ba
+  [6] case=34/2026 score=0.125710 chunk_id=34_2026_zh_c0010_cace3b2c2cd1
+  [7] case=757/2025 score=0.121187 chunk_id=757_2025_zh_c0000_6415798e445c
+- day61_q07_zh_concept_with_portuguese_signal | passed=False | query=葡文 判決 上訴 期間
+  route_hint=single_legal_concept_or_portuguese_mixed | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=164/2026 score=0.236148 chunk_id=164_2026_zh_c0001_03708a419682
+  [2] case=728/2025 score=0.234279 chunk_id=728_2025_zh_c0002_5fefa6ab57b0
+  [3] case=76/2026 score=0.224478 chunk_id=76_2026_zh_c0016_92e118b2f55a
+  [4] case=123/2026 score=0.222537 chunk_id=123_2026_zh_c0000_574efcf25448
+  [5] case=964/2025 score=0.219153 chunk_id=964_2025_zh_c0005_69696418d88e
+  [6] case=998/2025 score=0.217672 chunk_id=998_2025_zh_c0003_2b2f48245c30
+  [7] case=117/2026 score=0.217269 chunk_id=117_2026_zh_c0001_1779ea03cd41
+  failure_reason=Expected any of ['401/2025', '956/2025'] in top 5, got ['164/2026', '728/2025', '76/2026', '123/2026', '964/2025'].
+- day61_q08_portuguese_execution_suspension | passed=True | query=recurso suspensão da execução da pena
+  route_hint=portuguese_or_mixed | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=84/2025 score=0.466124 chunk_id=84_2025_pt_c0056_154b35819350
+  [2] case=84/2025 score=0.464424 chunk_id=84_2025_pt_c0048_4a79cb3be263
+  [3] case=1/2025 score=0.456811 chunk_id=1_2025_pt_c0067_6fdf6eeaec55
+  [4] case=187/2026 score=0.447593 chunk_id=187_2026_pt_c0005_cf3b57354cec
+  [5] case=124/2026 score=0.418173 chunk_id=124_2026_pt_c0018_a4140ac4fe42
+  [6] case=467/2025 score=0.404652 chunk_id=467_2025_pt_c0015_a5303dd70684
+  [7] case=1/2025 score=0.399215 chunk_id=1_2025_pt_c0060_3c845a51d9b6
+- day61_q09_mixed_portuguese_chinese_damage | passed=False | query=indemnização dano moral 澳門
+  route_hint=portuguese_or_mixed | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=871/2024 score=0.379223 chunk_id=871_2024_zh_c0017_c2a60249cc87
+  [2] case=871/2024 score=0.353008 chunk_id=871_2024_zh_c0030_c52ebcefcc73
+  [3] case=84/2025 score=0.322238 chunk_id=84_2025_pt_c0016_4005290d166c
+  [4] case=1035/2025 score=0.313562 chunk_id=1035_2025_pt_c0022_608a8be3c51e
+  [5] case=84/2025 score=0.304596 chunk_id=84_2025_pt_c0009_5be44ecbcb3c
+  [6] case=543/2025 score=0.303744 chunk_id=543_2025_pt_c0024_037ef9ec6fc3
+  [7] case=1035/2025 score=0.299782 chunk_id=1035_2025_pt_c0023_cbde84486467
+  failure_reason=Expected any of ['1006/2025', '124/2026', '187/2026'] in top 5, got ['871/2024', '871/2024', '84/2025', '1035/2025', '84/2025'].
+- day61_q10_harder_fact_legal_phrase | passed=True | query=無罪推定 證據不足
+  route_hint=mixed_fact_legal_or_ambiguous | retrieval_mode_used=dense_only|chargram_hash_v1
+  [1] case=871/2024 score=0.193061 chunk_id=871_2024_zh_c0046_f6d7c7662afc
+  [2] case=214/2025 score=0.192596 chunk_id=214_2025_zh_c0009_46fd394cffba
+  [3] case=686/2025 score=0.190068 chunk_id=686_2025_zh_c0016_ddbf1ffb1237
+  [4] case=871/2024 score=0.186902 chunk_id=871_2024_zh_c0044_19a8687502cd
+  [5] case=785/2025 score=0.184407 chunk_id=785_2025_zh_c0006_12b823e57e77
+  [6] case=871/2024 score=0.180917 chunk_id=871_2024_zh_c0039_9182b1aa454c
+  [7] case=1033/2025 score=0.180890 chunk_id=1033_2025_zh_c0011_f1c07c0fae89
+
+Failure reasons:
+- day61_q01_parole_core: Expected any of ['100/2026', '120/2026', '157/2026', '203/2026', '24/2026'] in top 5, got ['253/2026', '165/2026', '164/2026', '206/2026', '207/2026'].
+- day61_q03_exact_253_2026: Expected rank 1 case 253/2026, got 184/2026.
+- day61_q04_case_number_with_prefix: Expected case 187/2026 in top 3, got ['151/2026', '184/2026', '151/2026'].
+- day61_q07_zh_concept_with_portuguese_signal: Expected any of ['401/2025', '956/2025'] in top 5, got ['164/2026', '728/2025', '76/2026', '123/2026', '964/2025'].
+- day61_q09_mixed_portuguese_chinese_damage: Expected any of ['1006/2025', '124/2026', '187/2026'] in top 5, got ['871/2024', '871/2024', '84/2025', '1035/2025', '84/2025'].
