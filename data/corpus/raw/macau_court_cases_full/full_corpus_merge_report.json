@@ -15,22 +15,22 @@
       "candidates_with_sentence_id": 1634,
       "missing_sentence_id_skipped": 0,
       "duplicate_sentence_id_skipped": 0,
-      "rounds_run": 5,
-      "total_unique_sentence_id_discovered": 1686,
-      "new_corpus_records_added": 1634,
-      "convergence_stop_reason": "converged: 2 consecutive zero-new-sentence_id rounds"
+      "rounds_run": 0,
+      "total_unique_sentence_id_discovered": 0,
+      "new_corpus_records_added": 0,
+      "convergence_stop_reason": ""
     },
     {
       "court": "tsi",
       "manifest_path": "data/corpus/raw/per_court_runs/tsi/manifest.jsonl",
-      "raw_records": 1315,
-      "candidates_with_sentence_id": 1315,
+      "raw_records": 16584,
+      "candidates_with_sentence_id": 16584,
       "missing_sentence_id_skipped": 0,
       "duplicate_sentence_id_skipped": 0,
-      "rounds_run": 6,
-      "total_unique_sentence_id_discovered": 1319,
-      "new_corpus_records_added": 1315,
-      "convergence_stop_reason": "reached max_rounds=6"
+      "rounds_run": 0,
+      "total_unique_sentence_id_discovered": 0,
+      "new_corpus_records_added": 0,
+      "convergence_stop_reason": ""
     },
     {
       "court": "tjb",
@@ -39,10 +39,10 @@
       "candidates_with_sentence_id": 91,
       "missing_sentence_id_skipped": 0,
       "duplicate_sentence_id_skipped": 0,
-      "rounds_run": 3,
-      "total_unique_sentence_id_discovered": 104,
-      "new_corpus_records_added": 91,
-      "convergence_stop_reason": "converged: 2 consecutive zero-new-sentence_id rounds"
+      "rounds_run": 0,
+      "total_unique_sentence_id_discovered": 0,
+      "new_corpus_records_added": 0,
+      "convergence_stop_reason": ""
     },
     {
       "court": "ta",
@@ -51,10 +51,10 @@
       "candidates_with_sentence_id": 80,
       "missing_sentence_id_skipped": 0,
       "duplicate_sentence_id_skipped": 0,
-      "rounds_run": 4,
-      "total_unique_sentence_id_discovered": 80,
-      "new_corpus_records_added": 80,
-      "convergence_stop_reason": "converged: 2 consecutive zero-new-sentence_id rounds"
+      "rounds_run": 0,
+      "total_unique_sentence_id_discovered": 0,
+      "new_corpus_records_added": 0,
+      "convergence_stop_reason": ""
     }
   ],
   "merge_stats": {
@@ -66,8 +66,8 @@
         "duplicate_sentence_id_skipped": 0
       },
       "tsi": {
-        "raw_candidates": 1315,
-        "candidates_with_sentence_id": 1315,
+        "raw_candidates": 16584,
+        "candidates_with_sentence_id": 16584,
         "missing_sentence_id_skipped": 0,
         "duplicate_sentence_id_skipped": 0
       },
@@ -84,8 +84,8 @@
         "duplicate_sentence_id_skipped": 0
       }
     },
-    "merged_candidate_total": 3120,
-    "merged_after_dedupe_total": 3120,
+    "merged_candidate_total": 18389,
+    "merged_after_dedupe_total": 18389,
     "duplicates_total": 0,
     "duplicates_by_reason": {
       "duplicate_sentence_id": 0,
@@ -106,10 +106,10 @@
       "default_local_model_policy": "unchanged (qwen2.5:3b-instruct)"
     },
     "coverage_estimate_on_merged_manifest": {
-      "merged_cases": 3120,
+      "merged_cases": 18389,
       "model_preferred_cases": 24,
       "deterministic_fallback_cases": 53,
-      "unresolved_cases": 3043
+      "unresolved_cases": 18312
     }
   }
 }

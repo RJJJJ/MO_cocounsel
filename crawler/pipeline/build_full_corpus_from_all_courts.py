@@ -240,8 +240,22 @@ def _copy_record_to_authoritative_corpus(
     rel_metadata = metadata_path.relative_to(merged_root).as_posix()
     rel_full_text = full_text_path.relative_to(merged_root).as_posix()
 
+# 定義代號與實際法院名稱的映射
+    COURT_NAME_MAP = {
+        "tui": "終審法院",
+        "tsi": "中級法院",
+        "tjb": "初級法院",
+        "ta": "行政法院"
+    }
+    
+    # 從 record 提取 origin_court_mode (例如 'tui')
+    origin_court = record.get("provenance", {}).get("origin_court_mode")
+    
+    # 如果有對應的名稱就轉換，否則保留原本的 "澳門法院"
+    actual_court_name = COURT_NAME_MAP.get(origin_court) or _normalize_space(record.get("court"))
+
     metadata_payload = {
-        "court": _normalize_space(record.get("court")),
+        "court": actual_court_name,  # 改用映射後的具體法院名稱
         "source_list_case_number": authoritative_case_number,
         "source_list_decision_date": authoritative_decision_date,
         "source_list_case_type": _normalize_space(record.get("source_list_case_type")),

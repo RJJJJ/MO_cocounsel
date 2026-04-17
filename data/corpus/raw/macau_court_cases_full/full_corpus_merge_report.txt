@@ -3,13 +3,13 @@ Day 60 Full Corpus Assembly Report
 authoritative flow: per-court convergence crawl -> merge/dedupe -> retrieval -> metadata attach
 
 per-court raw counts:
-- tui: raw=1634, with_sentence_id=1634, missing_sentence_id_skipped=0, duplicate_sentence_id_skipped=0, rounds_run=5, total_unique_sentence_id_discovered=1686, new_corpus_records_added=1634, convergence_stop_reason=converged: 2 consecutive zero-new-sentence_id rounds (manifest: data/corpus/raw/per_court_runs/tui/manifest.jsonl)
-- tsi: raw=1315, with_sentence_id=1315, missing_sentence_id_skipped=0, duplicate_sentence_id_skipped=0, rounds_run=6, total_unique_sentence_id_discovered=1319, new_corpus_records_added=1315, convergence_stop_reason=reached max_rounds=6 (manifest: data/corpus/raw/per_court_runs/tsi/manifest.jsonl)
-- tjb: raw=91, with_sentence_id=91, missing_sentence_id_skipped=0, duplicate_sentence_id_skipped=0, rounds_run=3, total_unique_sentence_id_discovered=104, new_corpus_records_added=91, convergence_stop_reason=converged: 2 consecutive zero-new-sentence_id rounds (manifest: data/corpus/raw/per_court_runs/tjb/manifest.jsonl)
-- ta: raw=80, with_sentence_id=80, missing_sentence_id_skipped=0, duplicate_sentence_id_skipped=0, rounds_run=4, total_unique_sentence_id_discovered=80, new_corpus_records_added=80, convergence_stop_reason=converged: 2 consecutive zero-new-sentence_id rounds (manifest: data/corpus/raw/per_court_runs/ta/manifest.jsonl)
+- tui: raw=1634, with_sentence_id=1634, missing_sentence_id_skipped=0, duplicate_sentence_id_skipped=0, rounds_run=0, total_unique_sentence_id_discovered=0, new_corpus_records_added=0, convergence_stop_reason=n/a (manifest: data/corpus/raw/per_court_runs/tui/manifest.jsonl)
+- tsi: raw=16584, with_sentence_id=16584, missing_sentence_id_skipped=0, duplicate_sentence_id_skipped=0, rounds_run=0, total_unique_sentence_id_discovered=0, new_corpus_records_added=0, convergence_stop_reason=n/a (manifest: data/corpus/raw/per_court_runs/tsi/manifest.jsonl)
+- tjb: raw=91, with_sentence_id=91, missing_sentence_id_skipped=0, duplicate_sentence_id_skipped=0, rounds_run=0, total_unique_sentence_id_discovered=0, new_corpus_records_added=0, convergence_stop_reason=n/a (manifest: data/corpus/raw/per_court_runs/tjb/manifest.jsonl)
+- ta: raw=80, with_sentence_id=80, missing_sentence_id_skipped=0, duplicate_sentence_id_skipped=0, rounds_run=0, total_unique_sentence_id_discovered=0, new_corpus_records_added=0, convergence_stop_reason=n/a (manifest: data/corpus/raw/per_court_runs/ta/manifest.jsonl)
 
-merged candidate total: 3120
-merged after dedupe total: 3120
+merged candidate total: 18389
+merged after dedupe total: 18389
 duplicates total: 0
 duplicate reason breakdown:
 - duplicate_sentence_id: 0

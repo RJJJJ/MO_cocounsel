@@ -10,3 +10,5 @@
 /tests/__pycache__
 /data/corpus/raw/macau_court_cases_full/cases
 /data/corpus/raw/per_court_runs
+data/corpus/raw/macau_court_cases_full/manifest.jsonl
+data/corpus/raw/macau_court_cases_full/manifest.jsonl
