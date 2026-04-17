@@ -1,136 +1,599 @@
 # MO_cocounsel
 
-Macau Legal Copilot prototype (澳門版 CoCounsel), with a **retrieval-first, agent-later** strategy.
+**Macau Legal Copilot / 澳門版 CoCounsel（retrieval-first portfolio prototype）**
 
-## Project overview
+MO_cocounsel is a **Macau legal research system prototype** built on top of **public Macau court judgments**.  
+The project direction is explicit:
 
-MO_cocounsel is an engineering-focused legal research system built on Macau public judgments. The repository prioritizes corpus authority, retrieval quality, and reproducible evaluation before adding heavier agent workflows.
+> **Build the retrieval engine first. Add agent workflows later.**
 
-Core stance:
+This repository is no longer just a concept note. It already contains a working research pipeline surface, API-facing response envelope, endpoint tests, and a frontend demo integration layer.
 
-- retrieval engine first
-- agent orchestration later
-- authoritative corpus discipline over demo-only behavior
+---
 
-## Current architecture and source-of-truth policy
+## 1. Project Positioning
 
-### Source of truth (authoritative layer)
+MO_cocounsel is positioned as a:
 
-- **Authoritative full-case / merged corpus** is the source of truth.
-- Canonical location: `data/corpus/raw/macau_court_cases_full/` (manifest + merged reports).
-- Authoritative identity key: **`sentence_id`**.
+- **Macau Legal Copilot**
+- **Macau CoCounsel-style research prototype**
+- **retrieval-first legal AI portfolio project**
 
-### Retrieval consumption layer
+Current focus:
 
-- Retrieval does not consume raw crawling snapshots directly.
-- Retrieval consumes prepared chunk artifacts under `data/corpus/prepared/macau_court_cases/`.
-- `chunks.jsonl`, `bm25_chunks.jsonl`, and day63b dense-ready artifacts are the retrieval-facing layer.
+- legal research over Macau public judgments
+- metadata-aware case presentation
+- provenance-preserving research output
+- API/demo productization
 
-### Metadata policy
+Current non-focus:
 
-- Metadata attach happens **after authoritative merge**.
-- policy: **model-generated preferred, deterministic fallback retained**.
-- current fixed default metadata model: **`qwen2.5:3b-instruct`**.
+- premature multi-agent orchestration
+- broad drafting automation as the main delivery layer
+- “chatbot first” packaging without retrieval rigor
 
-## Authoritative flow
+---
 
-Authoritative flow used by this repo:
+## 2. What Is Already Built
 
-1. per-court convergence crawl
-2. merge + dedupe into authoritative corpus
-3. retrieval consumption from prepared corpus
-4. metadata attach post-merge
+### Crawling / Corpus
+Completed work includes:
 
-This flow is documented across `docs/crawling_strategy.md` and Day 59/60 acceptance docs.
+- court result-page probing
+- selector-driven result parsing
+- text detail extraction
+- raw corpus layout
+- pagination extension
+- all-court crawling mode
+- duplicate-strategy fixes
+- zh / pt / pdf / txt link handling
 
-## Current retrieval stack status
+### Retrieval / Research Pipeline
+Completed work includes:
 
-- BM25+ lexical retrieval path is the current stable default path.
-- Day 63 introduced a dense baseline (`chargram_hash_v1`) as a baseline-only milestone.
-- Day 63B introduces bge-m3 dense upgrade scaffolding + eval scripts.
-- Day 64 is planned for score fusion (BM25 guardrails + dense signal), not yet started as accepted implementation.
+- chunking prep
+- BM25 prep
+- local BM25 query prototype
+- issue decomposition layer
+- hybrid retrieval skeleton
+- citation binding layer
+- answer synthesis skeleton
+- structured research output schema
+- search router
+- exact case-number lookup refinement
+- Portuguese / mixed-query routing refinement
+- route-specific evaluation slices
 
-## Milestone snapshot (latest)
+### Metadata
+Completed work includes:
 
-- **Day 61**: retrieval regression pack accepted (10/10 pass).
-- **Day 62**: BM25+ strengthening accepted (still 10/10 pass).
-- **Day 63**: dense baseline established; dense-only pass rate remained 50% (baseline sense complete, not production default).
-- **Day 63B**: in progress; bge-m3 path/spec/scaffolding added, but runtime may be blocked by FlagEmbedding runtime dependency.
+- metadata target schema
+- deterministic metadata baseline
+- metadata field evaluation
+- model-generated metadata comparison harness
+- local metadata generation connection
+- Traditional Chinese normalization
+- latest valid artifact selection fix
+- metadata integration into the research pipeline
 
-## Current roadmap snapshot
+### Product / API / Demo
+Completed work includes:
 
-- Day 61: ✅ completed
-- Day 62: ✅ completed
-- Day 63: ✅ completed (baseline milestone)
-- Day 63B: 🚧 in progress
-- Day 64: ⏭ planned next (score fusion)
+- case-card / UI-ready output layer
+- API-ready response envelope
+- FastAPI integration surface
+- endpoint validation tests
+- frontend demo integration
+- filter / sort / compact case-card layout refinement
 
-## Repo structure overview
+---
 
-- `crawler/`: crawl/probe/parser/prep/pipeline/metadata/retrieval utilities and specs.
-- `retrieval/`: indexing and evaluation runners/specs for Day 61+ milestones.
-- `app/`: FastAPI integration surface and schema.
-- `frontend/`: local demo HTML integration.
-- `docs/`: acceptance docs and project governance documents.
-- `data/corpus/raw/`: raw and authoritative full-case artifacts.
-- `data/corpus/prepared/`: retrieval-consumable chunk corpus and BM25/dense artifacts.
-- `data/eval/`: evaluation outputs, milestone summaries, comparison artifacts.
+## 3. Target CoCounsel Capability Map
 
-For quick handoff navigation, start with:
+The repository is currently **retrieval-first**, but the product direction is broader than search alone.  
+The long-term capability map is intentionally organized into four CoCounsel-style capability groups.
 
-- `docs/index.md`
-- `docs/repo_navigation.md`
-- `docs/project_status_snapshot.md`
-- `docs/dependencies_and_runtime.md`
+### A. Legal Research
+Target capability set includes:
 
-## How to run key flows locally
+- natural-language legal question retrieval
+- Deep Research / multi-step legal research
+- issue decomposition
+- case-oriented research summaries
+- statute-oriented research summaries
+- research mode control:
+  - case-only
+  - statute-only
+  - hybrid analysis
+- court-specific / source-specific retrieval
+- timeline / legal evolution analysis
+- adverse-case / limiting-case retrieval
 
-> Python 3.11+ recommended.
+Representative target behavior:
 
-### 1) Install dependencies
+- user enters an ordinary legal question
+- system decomposes the legal issues
+- system retrieves relevant Macau judgments and, later, statutes/materials
+- system returns structured findings instead of a single paragraph
+- system distinguishes supportive authorities from adverse or limiting authorities
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+### B. Document Review / Analysis
+Target capability set includes:
+
+- upload-and-analyze legal documents
+- contract review
+- clause summarization
+- contract data extraction
+- document comparison
+- benchmark against standard document
+- batch review
+- case-material organization
+- legal sufficiency checks for notices / pleadings / contracts
+
+Representative target behavior:
+
+- upload PDF / DOCX / image / scanned material
+- extract clauses, facts, timeline, parties, risks, and possible legal issues
+- connect document contents back to Macau law and case authorities
+- compare document versions and surface legal-significance deltas
+
+### C. Drafting / Work Product
+Target capability set includes:
+
+- research memo generation
+- case brief generation
+- plain-language rewrite
+- client-style explanation draft
+- pre-litigation issue checklist
+- risk checklist generation
+- comparison tables
+- draft-first legal work product generation
+
+Representative target behavior:
+
+- transform research output into memo / brief / checklist / compare table / explanatory draft
+- keep outputs grounded in retrieved authorities rather than free-form LLM generation
+
+### D. Workflow / Agent Capabilities
+Target capability set includes:
+
+- Research Agent
+- Citation Agent
+- Document Analysis Agent
+- Comparison Agent
+- Memo Drafting Agent
+- Issue Spotting Agent
+- Evidence Gap Agent
+- Task Planner / Workflow Orchestrator
+
+Representative target behavior:
+
+- accept a task such as “analyze this dismissal notice”
+- decide whether to first extract facts, decompose issues, retrieve cases, locate statutes, compare versions, or generate risk output
+- preserve grounding between each conclusion and its supporting source material
+
+### Important scope note
+These are **target product capabilities**, not a claim that all of them are already implemented in this repository.
+
+Current repository status remains:
+
+- retrieval / metadata / pipeline / API / demo are the main delivered layers
+- document analysis, drafting, and agent workflows are roadmap-aligned next-stage capabilities
+
+---
+
+## 4. Data Source
+
+Primary source:
+
+- Macau Courts public judgment search page  
+  https://www.court.gov.mo/zh/subpage/researchjudgments
+
+Known source characteristics already accounted for in the project:
+
+- `court` parameters: `tui` / `tsi` / `tjb` / `ta` / `all`
+- page turning via `&page=`
+- `court=all` is useful for broad coverage and demo use, but not ideal as the final full-harvest strategy
+- a more complete long-term harvest strategy should be **per-court crawling + merge/dedupe**
+- sentence / TXT pages are important authoritative text sources
+- records may be zh-only, pt-only, or mixed-language
+
+---
+
+## 5. Core Technical Decisions
+
+### Metadata source preference
+For retrieved cases:
+
+- prefer **model-generated metadata** when available
+- otherwise fallback to **deterministic baseline**
+- always preserve `metadata_source`
+- keep provenance visible through pipeline, case cards, and API output
+
+### Deterministic baseline stays
+The deterministic baseline is **not** legacy dead code. It remains valuable as:
+
+- fallback
+- benchmark
+- regression guard
+
+### Current local metadata model
+Current default local model:
+
+- `qwen2.5:3b-instruct`
+
+This repo currently treats that as the fixed default, not something to casually swap on feel.
+
+### Artifact selection consistency
+Metadata-consuming components should share one latest-valid-artifact selection rule:
+
+- explicit override path first
+- otherwise auto-select latest valid output
+
+### Traditional Chinese normalization
+Model-generated Chinese metadata is normalized to Traditional Chinese, without breaking structured fields such as:
+
+- case numbers
+- URLs
+- source chunk ids
+
+---
+
+## 6. Current API Surface
+
+### `POST /api/research/query`
+
+The current minimal FastAPI integration surface is implemented in:
+
+- `app/api/research.py`
+
+It exposes the existing research pipeline through a response envelope built from the case-card layer.
+
+### Request shape
+
+```json
+{
+  "query": "假釋",
+  "top_k": 5
+}
 ```
 
-### 2) Run retrieval regression and milestone eval
+### Response envelope
+
+The response model includes:
+
+- `schema_version`
+- `query`
+- `top_k`
+- `result_count`
+- `diagnostics`
+- `results`
+
+Diagnostics include:
+
+- `retrieved_cases_count`
+- `case_cards_built`
+- `model_generated_metadata_used_count`
+- `deterministic_fallback_used_count`
+- `success_flag`
+- `selected_model_metadata_path`
+- `selected_model_metadata_case_count`
+
+This design makes the output inspectable and demo-friendly, instead of returning only a bare answer paragraph.
+
+---
+
+## 7. Frontend Demo
+
+The repository includes a browser demo file:
+
+- `frontend/demo_research_integration.html`
+
+The current demo supports:
+
+- query input
+- `top_k` input
+- result summary panel
+- diagnostics panel
+- compact case-card rendering
+- filtering by:
+  - `metadata_source`
+  - `language`
+- sorting by:
+  - `authoritative_decision_date`
+  - `authoritative_case_number`
+- progressive disclosure for long fields
+
+Suggested demo queries currently used in the project:
+
+- `假釋`
+- `量刑過重`
+- `253/2026`
+
+These cover:
+
+- legal-concept retrieval
+- issue/argument-style retrieval
+- exact case-number lookup
+
+---
+
+## 8. Validated Repository Files
+
+This README is aligned to repository files that already exist in the codebase, including:
+
+- `app/api/research.py`
+- `app/schemas/research.py`
+- `crawler/pipeline/build_api_ready_response_envelope.py`
+- `frontend/demo_research_integration.html`
+- `tests/test_research_endpoint.py`
+- `docs/day52_acceptance.md`
+- `docs/day54_acceptance.md`
+- `docs/day55_acceptance.md`
+- `docs/day56_acceptance.md`
+- `docs/day57_acceptance.md`
+- `docs/day58_acceptance.md`
+
+So the current repo state is best understood as:
+
+> **a working retrieval/product prototype with documented milestone delivery, not just a future architecture proposal.**
+
+---
+
+## 9. Minimal Local Usage
+
+### A. Build an API-ready research envelope from the pipeline
+
+Confirmed CLI entrypoint:
 
 ```bash
-# Day 61 baseline regression pack
-python retrieval/eval/run_day61_regression_pack.py
-
-# Day 63 dense baseline (chargram_hash_v1)
-python retrieval/indexing/build_day63_dense_index.py
-python retrieval/eval/run_day63_dense_regression.py --rebuild-index
-
-# Day 63B dense upgrade path (bge-m3, optional runtime)
-python crawler/prep/build_day63b_dense_ready_chunks.py
-python retrieval/indexing/build_day63b_bge_m3_dense_index.py
-python retrieval/eval/run_day63b_dense_regression.py --rebuild-index
-python retrieval/eval/build_day63b_dense_vs_baselines_comparison.py
+python crawler/pipeline/build_api_ready_response_envelope.py --query "假釋" --top_k 5 --json
 ```
 
-### 3) Run API locally
+This produces an API-ready response envelope over the existing UI-ready case-card layer.
+
+### B. Run endpoint tests
+
+Confirmed test file:
 
 ```bash
-uvicorn app.main:app --reload
+pytest tests/test_research_endpoint.py
 ```
 
-Open:
+The test coverage includes:
 
-- API root/demo: `http://127.0.0.1:8000/`
-- research endpoint: `POST /api/research/query`
+- happy-path request validation
+- missing query validation
+- invalid `top_k` validation
+- blank-query validation
 
-## Current status and pause point
+---
 
-The project is currently paused at **Day 63B runtime validation**:
+## 10. Research Output Shape
 
-- code/spec/eval scaffolding exists
-- output artifacts include runtime-error evidence when `FlagEmbedding` backend is unavailable
-- Day 63B should remain labeled in-progress until bge-m3 runtime is verified end-to-end in local execution
+At the current stage, the project is moving toward a structured legal research package rather than a flat list of search hits.
 
-## Recommended next step
+The response layer is already designed around:
 
-Resolve Day 63B runtime dependency path (FlagEmbedding + model runtime), rerun Day 63B regression/comparison, then start Day 64 score-fusion experiments with BM25 exact-match guardrails.
+- case cards
+- authoritative case number
+- decision date
+- court
+- language
+- case type
+- case summary
+- holding
+- legal basis
+- disputed issues
+- metadata source
+- source links
+- card title / subtitle / tags
+
+This is a better product foundation than a plain text answer because it preserves:
+
+- inspection
+- filtering
+- sorting
+- provenance
+- UI productization
+
+---
+
+## 11. Current Strengths
+
+What this repository already shows well:
+
+- retrieval-first product discipline
+- pipeline thinking instead of UI-first thinking
+- legal-source grounding awareness
+- metadata provenance design
+- explicit fallback logic
+- multilingual routing awareness
+- API surface design
+- frontend demo packaging
+- milestone-based delivery progression
+
+For portfolio purposes, this is materially stronger than a generic “LLM + chat UI” demo.
+
+---
+
+## 12. Current Limitations
+
+This prototype still has real limitations:
+
+1. **RAG quality is not fully hardened yet**  
+   Retrieval quality, citation quality, and synthesis quality still need tightening.
+
+2. **Model-generated metadata does not yet cover the full corpus**  
+   Coverage is still partial rather than complete.
+
+3. **Portuguese / mixed-query routing remains weaker than the strongest slices**  
+   This is a known improvement path, not an unknown failure.
+
+4. **`court=all` is useful but not the final corpus strategy**  
+   Long-term harvesting should move toward per-court crawl + merge/dedupe.
+
+5. **Agent workflows are intentionally not the main line yet**  
+   The project is still prioritizing a reliable research substrate.
+
+6. **Statute retrieval / broader document-analysis workflows are part of product direction, but not yet fully delivered in the current repository surface**  
+   The current delivered core is still judgment-centered retrieval plus metadata-aware presentation.
+
+---
+
+## 13. Why This Project Matters
+
+MO_cocounsel is valuable because it is trying to solve the hard part first:
+
+- source ingestion
+- retrieval structure
+- metadata quality strategy
+- evidence-linked presentation
+- API/demo integration
+
+That makes it a portfolio project about:
+
+- retrieval engineering
+- legal AI product design
+- metadata systems
+- pipeline hardening
+- backend integration
+- demo-oriented productization
+
+—not just about putting a language model behind a text box.
+
+---
+
+## 14. Near-Term Roadmap
+
+Current next-stage priorities are:
+
+- pipeline quality hardening
+- metadata coverage expansion
+- stronger integration consistency
+- demo/API/frontend polish for presentation
+
+Next major product-expansion directions are:
+
+- stronger statute retrieval integration
+- document analysis and document comparison workflows
+- grounded drafting / memo-style work products
+- agent-assisted research orchestration built on top of the retrieval substrate
+
+Not the current priority:
+
+- jumping early into large multi-agent orchestration
+- changing the default metadata model without benchmark-driven reason
+
+---
+
+## 15. Post-Day-66 Architecture Decision Memo: Domain Model Strategy
+
+This note is intentionally positioned **after Day 66**. It is a forward-looking architecture decision memo, not the current implementation priority.
+
+### Current decision
+
+MO_cocounsel remains **retrieval-first, agent later**.
+
+Before considering domain-model fine-tuning, the project must first complete and validate the retrieval stack hardening sequence:
+
+- Day 61: retrieval regression pack
+- Day 62: BM25+ strengthening
+- Day 63: dense retrieval baseline
+- Day 64: score fusion
+- Day 65: reranking baseline
+- Day 66: retrieval stack eval round 2
+
+Until that sequence is completed, **domain-model fine-tuning is not a priority workstream**.
+
+### Why this matters
+
+A dedicated Macau legal model may become a meaningful product moat, but it should **not** be treated as a universal “god model”.
+
+The project direction is to keep strong general-purpose models responsible for higher-level orchestration, while reserving domain-specialized capability for tasks where Macau-specific legal language matters most.
+
+### Expected high-value uses of a domain-specialized Macau legal model
+
+#### 1. Legal Research: query reformulation and issue decomposition
+A domain-specialized model could help translate user phrasing into Macau-law-aligned terminology and concepts.
+
+Example:
+- user wording: colloquial or cross-jurisdiction phrasing
+- model output: Macau-specific legal terminology, issue framing, and retrieval-oriented reformulation
+
+This is especially relevant because general models may produce **cross-jurisdiction drift** (for example, mapping a Macau issue into Mainland China or Taiwan legal terminology).
+
+Likely high-value functions:
+- query reformulation
+- issue decomposition
+- synonym/legal term normalization
+- Macau-specific concept mapping
+
+#### 2. Drafting / Work Product: local legal writing style adaptation
+This is a likely long-term high-impact area.
+
+A domain-specialized model may help generate outputs that better match Macau legal language, terminology, tone, and drafting conventions, especially for:
+- research memos
+- case briefs
+- plain-language explanations
+- legal risk summaries
+- client-facing summaries
+
+The main value here is not just legal correctness, but also **local legal writing style fidelity**.
+
+### Lower-priority uses
+
+#### Document Review / Analysis
+A domain-specialized model may help in tasks involving Macau-law-specific legal sufficiency checks, but this is not currently the first place to invest.
+
+Nearer-term gains are more likely to come from:
+- better retrieval
+- better metadata
+- better citation grounding
+- stronger comparison / review pipelines
+
+#### Workflow / Agent orchestration
+This is **not** the primary target for a specialized Macau legal model.
+
+Task planning, orchestration, and tool-use should continue to rely on stronger general-purpose models or orchestration logic, rather than a smaller domain-specialized model.
+
+### Strategic principle
+
+If a domain-specialized Macau legal model is pursued in the future, it should be treated as a **specialist component**, not the system’s single universal brain.
+
+Recommended future role split:
+
+- **Orchestrator / Planner**: strong general-purpose model
+- **Retrieval specialist**: Macau-law query reformulation / concept mapping
+- **Drafting specialist**: Macau-law writing style adaptation
+- **Core evidence layer**: authoritative corpus + retrieval + citation grounding
+
+### Preconditions before revisiting fine-tuning
+
+This topic should only be reopened after Day 66 and after the project can answer the following clearly:
+
+- Which regression queries still fail?
+- Are the failures caused by retrieval, routing, reranking, or legal-language mapping?
+- Is query reformulation a proven bottleneck?
+- Is drafting becoming the next real product priority?
+- Is metadata quality and coverage strong enough to support future supervised adaptation?
+
+### Working conclusion
+
+A dedicated Macau legal model is considered a **promising long-term differentiator**, especially for:
+
+- Legal Research query reformulation
+- issue decomposition
+- Drafting / Work Product style adaptation
+
+However, it is **not** the current implementation priority.
+
+The current priority remains:
+
+**stabilize retrieval, evaluate rigorously, then decide whether domain adaptation is justified by measured bottlenecks.**
+
+---
+
+## 16. One-Line Summary
+
+**MO_cocounsel is a retrieval-first Macau legal research prototype built on public court judgments, with a broader CoCounsel-style roadmap covering legal research, document review, drafting, and workflow agents; the currently delivered layers are metadata-aware case cards, an API-ready response envelope, endpoint tests, and a frontend demo integration layer.**
