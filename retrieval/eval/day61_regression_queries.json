@@ -1,0 +1,132 @@
+[
+  {
+    "query_id": "day61_q01_parole_core",
+    "query_text": "假釋",
+    "route_hint": "single_legal_concept_or_ambiguous",
+    "expected_behavior": "Should return parole-related criminal execution cases in top results even if router classifies as ambiguous.",
+    "expected_case_numbers": ["24/2026", "203/2026", "100/2026", "157/2026", "120/2026"],
+    "expected_match_notes": "At least one top hit should be a known parole-family case from the merged authoritative corpus.",
+    "pass_rule": {
+      "rule_type": "any_case_number_in_top_k",
+      "top_k": 5,
+      "case_numbers": ["24/2026", "203/2026", "100/2026", "157/2026", "120/2026"]
+    }
+  },
+  {
+    "query_id": "day61_q02_sentence_too_heavy",
+    "query_text": "量刑過重",
+    "route_hint": "single_legal_concept",
+    "expected_behavior": "Should retrieve sentencing-appeal outcomes where excessive sentence is discussed.",
+    "expected_case_numbers": ["757/2025", "728/2025", "721/2025", "34/2026"],
+    "expected_match_notes": "Top results should contain at least one sentencing-heavy appellate case.",
+    "pass_rule": {
+      "rule_type": "any_case_number_in_top_k",
+      "top_k": 5,
+      "case_numbers": ["757/2025", "728/2025", "721/2025", "34/2026"]
+    }
+  },
+  {
+    "query_id": "day61_q03_exact_253_2026",
+    "query_text": "253/2026",
+    "route_hint": "case_number_lookup",
+    "expected_behavior": "Exact case number lookup should strongly prioritize the same case number at rank 1.",
+    "expected_case_numbers": ["253/2026"],
+    "expected_match_notes": "Exact lookup stability baseline.",
+    "pass_rule": {
+      "rule_type": "case_number_at_rank",
+      "rank": 1,
+      "case_number": "253/2026"
+    }
+  },
+  {
+    "query_id": "day61_q04_case_number_with_prefix",
+    "query_text": "案件編號 187/2026",
+    "route_hint": "case_number_lookup",
+    "expected_behavior": "Case-number query with natural-language prefix should still hit the same case within top 3.",
+    "expected_case_numbers": ["187/2026"],
+    "expected_match_notes": "Checks exact lookup robustness with additional wording.",
+    "pass_rule": {
+      "rule_type": "case_number_in_top_k",
+      "top_k": 3,
+      "case_number": "187/2026"
+    }
+  },
+  {
+    "query_id": "day61_q05_probation_core",
+    "query_text": "緩刑",
+    "route_hint": "single_legal_concept_or_ambiguous",
+    "expected_behavior": "Should retrieve suspended-sentence decisions in criminal matters.",
+    "expected_case_numbers": ["998/2025", "147/2025", "721/2025"],
+    "expected_match_notes": "Top-k should include at least one known suspended-sentence case family member.",
+    "pass_rule": {
+      "rule_type": "any_case_number_in_top_k",
+      "top_k": 5,
+      "case_numbers": ["998/2025", "147/2025", "721/2025"]
+    }
+  },
+  {
+    "query_id": "day61_q06_multi_issue_fraud_sentencing",
+    "query_text": "詐騙 集團 量刑",
+    "route_hint": "multi_issue_legal_query",
+    "expected_behavior": "Router should allow decomposition and retrieve fraud + sentencing related appellate cases.",
+    "expected_case_numbers": ["757/2025", "76/2026", "36/2026"],
+    "expected_match_notes": "Top-k containment is acceptable; exact rank is not required because fan-out can alter ordering.",
+    "pass_rule": {
+      "rule_type": "any_case_number_in_top_k",
+      "top_k": 7,
+      "case_numbers": ["757/2025", "76/2026", "36/2026"]
+    }
+  },
+  {
+    "query_id": "day61_q07_zh_concept_with_portuguese_signal",
+    "query_text": "葡文 判決 上訴 期間",
+    "route_hint": "single_legal_concept_or_portuguese_mixed",
+    "expected_behavior": "Should retrieve appeal-timeframe decisions that include Portuguese content slices.",
+    "expected_case_numbers": ["956/2025", "401/2025"],
+    "expected_match_notes": "Targets known bilingual/Portuguese-heavy slices without requiring strict ranking.",
+    "pass_rule": {
+      "rule_type": "any_case_number_in_top_k",
+      "top_k": 5,
+      "case_numbers": ["956/2025", "401/2025"]
+    }
+  },
+  {
+    "query_id": "day61_q08_portuguese_execution_suspension",
+    "query_text": "recurso suspensão da execução da pena",
+    "route_hint": "portuguese_or_mixed",
+    "expected_behavior": "Portuguese query should route correctly and return criminal execution / suspension-related appellate decisions.",
+    "expected_case_numbers": ["187/2026", "124/2026", "388/2025"],
+    "expected_match_notes": "Portuguese weakness slice: at least one known Portuguese-result family case should appear in top-k.",
+    "pass_rule": {
+      "rule_type": "any_case_number_in_top_k",
+      "top_k": 5,
+      "case_numbers": ["187/2026", "124/2026", "388/2025"]
+    }
+  },
+  {
+    "query_id": "day61_q09_mixed_portuguese_chinese_damage",
+    "query_text": "indemnização dano moral 澳門",
+    "route_hint": "portuguese_or_mixed",
+    "expected_behavior": "Mixed Portuguese+Chinese compensation query should return civil damage decisions with Portuguese terminology.",
+    "expected_case_numbers": ["187/2026", "1006/2025", "124/2026"],
+    "expected_match_notes": "At least one known compensation-family case in top-k.",
+    "pass_rule": {
+      "rule_type": "any_case_number_in_top_k",
+      "top_k": 5,
+      "case_numbers": ["187/2026", "1006/2025", "124/2026"]
+    }
+  },
+  {
+    "query_id": "day61_q10_harder_fact_legal_phrase",
+    "query_text": "無罪推定 證據不足",
+    "route_hint": "mixed_fact_legal_or_ambiguous",
+    "expected_behavior": "Harder phrasing should still surface criminal proof/evidence reasoning decisions.",
+    "expected_case_numbers": ["214/2025", "871/2024", "1033/2025"],
+    "expected_match_notes": "Use top-k family containment instead of exact rank to avoid fragile regression failures.",
+    "pass_rule": {
+      "rule_type": "any_case_number_in_top_k",
+      "top_k": 7,
+      "case_numbers": ["214/2025", "871/2024", "1033/2025"]
+    }
+  }
+]
