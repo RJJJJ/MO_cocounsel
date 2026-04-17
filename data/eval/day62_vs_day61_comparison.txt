@@ -1,0 +1,22 @@
+Day 62 vs Day 61 Regression Comparison
+day61_baseline_run_started_at_utc: 2026-04-17T10:34:06.939391+00:00
+day62_run_started_at_utc: 2026-04-17T10:37:13.404763+00:00
+pass_rate_day61: 100.00%
+pass_rate_day62: 100.00%
+pass_rate_changed: no change
+
+queries_that_benefited_most:
+- day61_q05_probation_core: before_top3=['998/2025', '147/2025', '721/2025'] -> after_top3=['147/2025', '785/2025', '721/2025']; probation query now ranks known target cases (147/2025, 721/2025) in top-3.
+- day61_q10_harder_fact_legal_phrase: before_top3=['214/2025', '214/2025', '871/2024'] -> after_top3=['214/2025', '1033/2025', '214/2025']; evidence-focused case 1033/2025 moved up in top-3.
+
+notable_ranking_regressions:
+- day61_q01_parole_core: before_top3=['24/2026', '203/2026', '100/2026'] -> after_top3=['203/2026', '253/2026', '254/2026'] (still passed rule)
+- day61_q02_sentence_too_heavy: before_top3=['757/2025', '728/2025', '721/2025'] -> after_top3=['757/2025', '34/2026', '757/2025'] (still passed rule)
+- day61_q06_multi_issue_fraud_sentencing: before_top3=['757/2025', '757/2025', '76/2026'] -> after_top3=['757/2025', '757/2025', '36/2026'] (still passed rule)
+- day61_q08_portuguese_execution_suspension: before_top3=['187/2026', '388/2025', '124/2026'] -> after_top3=['187/2026', '124/2026', '84/2025'] (still passed rule)
+- day61_q09_mixed_portuguese_chinese_damage: before_top3=['187/2026', '187/2026', '1006/2025'] -> after_top3=['187/2026', '871/2024', '871/2024'] (still passed rule)
+
+known_limitations:
+- This comparison is based on Day 61 pack (10 queries) and does not cover full long-tail query distribution.
+- BM25 lexical improvements still depend on exact/near-exact term overlap; no dense semantic matching is introduced in Day 62.
+- Portuguese-heavy ranking remains sensitive to corpus lexical density in long chunk_text fields.
