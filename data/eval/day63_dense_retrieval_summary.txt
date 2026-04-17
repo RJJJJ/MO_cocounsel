@@ -1,7 +1,7 @@
 Day 63 Dense Retrieval Regression Summary
-run_started_at_utc: 2026-04-17T10:58:54.373794+00:00
-query_pack_path: retrieval/eval/day61_regression_queries.json
-artifact_path: data/corpus/prepared/macau_court_cases/dense_baseline/day63_dense_index.json
+run_started_at_utc: 2026-04-17T11:02:19.272941+00:00
+query_pack_path: retrieval\eval\day61_regression_queries.json
+artifact_path: data\corpus\prepared\macau_court_cases\dense_baseline\day63_dense_index.json
 model_key: chargram_hash_v1
 total queries: 10
 passed: 5
