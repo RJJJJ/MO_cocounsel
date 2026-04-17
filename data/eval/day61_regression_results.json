@@ -1,5 +1,5 @@
 {
-  "run_started_at_utc": "2026-04-17T10:28:15.691392+00:00",
+  "run_started_at_utc": "2026-04-17T10:37:13.404763+00:00",
   "query_pack_path": "retrieval/eval/day61_regression_queries.json",
   "top_k": 7,
   "total_queries": 10,
@@ -44,21 +44,8 @@
       "top_k_requested": 7,
       "top_hits": [
         {
-          "chunk_id": "24_2026_zh_c0007_3461805eb3f6",
-          "score": 53.482671,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "24/2026",
-          "authoritative_decision_date": "12/02/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "省且願意負責任地承擔犯罪行為之後果仍然存有疑慮。 基於此，法庭認為本案現階段尚未符合上述《刑法典》第56條第1款a)項的要件。 在一般預防方面，刑罰的目的除了是對犯罪者予以矯治外，亦為了防衛社會及確保社會成員對法律制度的信心。因此，就是否應該給予假釋，尚須考慮犯罪的惡性對社會安寧所產生的負面影響是否已經消除，以及提前釋放被判刑人會否影響法律誡命在公眾心目中的執行力及威懾力。 本案中，被判刑人非為本澳居民，在澳期間因實施了「強姦罪」而被判...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-198181ba100d00af.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42133"
-        },
-        {
           "chunk_id": "203_2026_zh_c0002_df4e79dae8bc",
-          "score": 51.562043,
+          "score": 104.869005,
           "retrieval_source": "bm25",
           "authoritative_case_number": "203/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -70,21 +57,34 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42369"
         },
         {
-          "chunk_id": "100_2026_zh_c0006_17f843fdeda8",
-          "score": 50.625471,
+          "chunk_id": "253_2026_zh_c0006_ad8d4b2f293e",
+          "score": 101.60041,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "100/2026",
-          "authoritative_decision_date": "26/02/2026",
+          "authoritative_case_number": "253/2026",
+          "authoritative_decision_date": "26/03/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "中販賣毒品行為時尚未成年，年僅十七歲，心智尚未十分成熟，但販賣毒品行為本身的惡性相當高，相關犯罪行為對本澳的社會安寧及公共健康帶來顯而易見之負面影響。眾所周知，毒品對人體健康的損害、完整家庭的破壞及對社會的危害性都非常嚴重，而且在澳門從事販毒活動的情況至今仍未見有效遏止。 除此之外，考慮到本特區日益嚴重及年輕化的毒品犯罪，以及年輕人受毒品禍害而對社會未來所造成的不良影響，毒品問題嚴重影響公共健康 及安全，治理毒品問題需整個社會共同努力，...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-5bb24337c3797b0e.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42279"
+          "chunk_text_preview": "出:“……假釋是一種附條件的提前釋放,目的係在監禁與自由之間設定一個過渡期,在此期間內被假釋者可找回其重返社會的生活導向,為其回歸社會和正常生活做好準備,藉着設定這樣一個可以令被假釋者能真正適應社會生活的預備階段 (同時也是一個考驗期),立法者期待被假釋者可以最终重返社會不再犯罪。” 57) 因此,只要被判刑者的人格在被判刑後有進行正面的轉變,給予假釋是為讓其提早重新接觸及重返社會,更符合刑法所追求的刑罰目的。 58) 如前所述,上訴人...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42357"
+        },
+        {
+          "chunk_id": "254_2026_zh_c0004_c53d4952f78c",
+          "score": 100.728758,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "254/2026",
+          "authoritative_decision_date": "19/03/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "以及對社會秩序產生一種衝擊等負面因素。因為在公眾心理上仍未能接受上訴人被提前釋放時便作出假釋決定將是對公眾的另一次傷害。 故此，上訴人仍未具備所有的假釋條件，尤其是《刑法典》第56條第1款a)及b)項所規定的條件，其上訴理由不能成立，而被上訴裁決應予以維持。 因此，上訴人提出的上訴理由明顯不成立。 四、決定 綜上所述，裁判書製作人裁定上訴人的上訴理由明顯不成立，予以駁回。 判處上訴人繳付3個計算單位之司法費以及上訴的訴訟費用。 根據《刑...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-df698a159d9ac599.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42375"
         },
         {
           "chunk_id": "157_2026_zh_c0004_9f42b6d55f7a",
-          "score": 50.063324,
+          "score": 100.033676,
           "retrieval_source": "bm25",
           "authoritative_case_number": "157/2026",
           "authoritative_decision_date": "26/02/2026",
@@ -96,21 +96,8 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42247"
         },
         {
-          "chunk_id": "120_2026_zh_c0007_5cf85b301992",
-          "score": 49.77204,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "120/2026",
-          "authoritative_decision_date": "26/02/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "人作出賠償，倘現時在被害人的損失仍未得到彌補的情況下提前釋放被判刑人，極有可能對潛在的不法分子釋出錯誤訊息，誤以為經濟性質的犯罪不屬嚴重犯罪以及犯罪的代價並不高，甚至會錯誤地選擇犧牲自由以換取金錢。 考慮到案件情節及本澳社會實際情況，倘若提早釋放被判刑人將引起相當程度的社會負面效果，對維護法律秩序方面所帶來相當的負面影響，將妨礙公眾對被觸犯的法律條文之效力所持有的期望，這樣無疑會削弱法律的威懾力，動搖社會成員對法律懲治犯罪功能的信心。 ...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-2583593f6cf11801.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42281"
-        },
-        {
           "chunk_id": "123_2026_zh_c0003_ab90b8acbea1",
-          "score": 49.560298,
+          "score": 98.949227,
           "retrieval_source": "bm25",
           "authoritative_case_number": "123/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -122,17 +109,30 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42319"
         },
         {
-          "chunk_id": "165_2026_zh_c0005_4b90807241b9",
-          "score": 49.407735,
+          "chunk_id": "254_2026_zh_c0002_36f7a78cf470",
+          "score": 98.28015,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "165/2026",
-          "authoritative_decision_date": "05/03/2026",
+          "authoritative_case_number": "254/2026",
+          "authoritative_decision_date": "19/03/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "般預防方面均符合假釋的要求，缺一不可。假釋的一般預防要求，是提前釋放被判刑者顯示不影響維護法律秩序及社會安寧。這是從整個社會的角度對假釋提出的一個前提要求，即使被判刑者符合了特別預防的要求，如果不能符合一般預防的要求，仍然不能給予假釋。 本案，在一般預防方面，上訴人犯罪行為的嚴重程度高，社會危害性大，對本澳法律和社會秩序造成的負面影響嚴重及廣泛，對該類犯罪的一般預防要求高。上訴人除了在修正自身方面有積極的努力，但是，卷宗未有資料顯示上訴...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-51e6b73281989706.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42189"
+          "chunk_text_preview": "後的兩年多時間內一直保持良好的行為表現，並積極參與職訓及不同活動，善用時間以更好地為重返社會作好準備。由此可見，被判刑人透過服刑，其以往偏差的價值觀得到有效的矯正，展現出正向的人格發展。而且，從卷宗資料可見，被判刑人有一定的家庭支援，即使被判刑人入獄後，亦不離不棄，有利於被判刑人重返社會。 基於此，法庭認為現階段尚可合理預期被判刑人日後能抵擋住不法行為所帶來之金錢誘惑，在獲釋後能以對社會負責任的方式生活及不再犯罪，本案尚算符合《刑法典》...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-df698a159d9ac599.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42375"
+        },
+        {
+          "chunk_id": "24_2026_zh_c0007_3461805eb3f6",
+          "score": 98.143404,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "24/2026",
+          "authoritative_decision_date": "12/02/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "省且願意負責任地承擔犯罪行為之後果仍然存有疑慮。 基於此，法庭認為本案現階段尚未符合上述《刑法典》第56條第1款a)項的要件。 在一般預防方面，刑罰的目的除了是對犯罪者予以矯治外，亦為了防衛社會及確保社會成員對法律制度的信心。因此，就是否應該給予假釋，尚須考慮犯罪的惡性對社會安寧所產生的負面影響是否已經消除，以及提前釋放被判刑人會否影響法律誡命在公眾心目中的執行力及威懾力。 本案中，被判刑人非為本澳居民，在澳期間因實施了「強姦罪」而被判...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-198181ba100d00af.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42133"
         }
       ],
       "passed": true,
@@ -173,47 +173,21 @@
       "top_k_requested": 7,
       "top_hits": [
         {
-          "chunk_id": "757_2025_zh_c0002_0b42b7eee509",
-          "score": 48.393581,
+          "chunk_id": "757_2025_zh_c0000_6415798e445c",
+          "score": 103.476418,
           "retrieval_source": "bm25",
           "authoritative_case_number": "757/2025",
           "authoritative_decision_date": "26/03/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；d) 第三嫌犯E以直接共同正犯及既遂方式觸犯了《刑法典》第211條第4款a項結合第1款及第196條b項所規定及處罰的一項詐騙罪（相當巨額），判處兩年九個月徒刑，暫緩執行該徒刑，為期三年（已吸收以直接共同正犯及既遂方式觸犯的《刑法典》第244 條第1款a項及C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；…” 19) 相對來說，以本案涉及之按揭貸款金額比較少及已填補及將可填補之部...",
+          "chunk_text_preview": "第757/2025號刑事上訴案 上訴人：A 日期：2026年3月26日 主要問題：加重詐騙罪、量刑過重、緩刑 摘要 在侵犯財產罪的事件中，行為人向被害人／被害實體償還涉案款項的情節具有重要性。 即使在2018年1月1日至2019年12月31日期間，上訴人僅向被害實體返還了434,806.90澳門元而不屬於《刑法典》第201條第1款所指全數賠償的情節，但不能否認的是，部分還款對於量刑而言仍然是有重要性的。 因此，對於上訴人已償還款項的部分...",
           "pdf_url": "https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf",
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42383"
         },
         {
-          "chunk_id": "728_2025_zh_c0010_d2c36fa77f6f",
-          "score": 40.907856,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "728/2025",
-          "authoritative_decision_date": "12/02/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "事實才得出之心證，而且上訴人亦沒有提出任何原審法院沒有考慮之事實、客觀性證據及/或依據來推翻原審法院所認定之事實及/或原審法院基於其所認定之事實而得出之心證，同時，被上訴人亦不認為原審法院得出之心證存在任何違反一般經驗法則之明顯錯誤，為此，被上訴人不認為被訴判決存在著不可補正或不可克服的矛盾； 12. 綜合上述，被上訴人認為被訴判決內並不存在上訴人在其上訴陳述內提及的被訴判決在事實判斷及說明理由方面出現不可補救之矛盾，沾有澳門《刑事訴訟...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-5f6919955a8094cf.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42163"
-        },
-        {
-          "chunk_id": "721_2025_zh_c0003_f11d8588f999",
-          "score": 40.589371,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "721/2025",
-          "authoritative_decision_date": "05/03/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "同時在第CR5-22-0063-PCC號卷宗所給予之緩刑期間內實施。因此，有充份理由相信，採用罰金刑無法達到處罰的目的。 5) 同時，過去所採用的暫緩執行徒刑，亦證明無法使上訴人糾正其行為，而一再犯罪。上訴人重復違反法律，從而顯示過去所給予的徒刑暫緩執行未能使上訴人知法守法，重新納入社會生活。上訴人以其實際行動排除了對其將來行為所抱有的任何期望。因此，考慮到本案的具體情況，尤其是上訴人過往的犯罪前科，本案對上訴人處以緩刑並不能適當及充分...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-77e596eefc61504f.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42345"
-        },
-        {
           "chunk_id": "34_2026_zh_c0000_de36cad31850",
-          "score": 38.855422,
+          "score": 102.484334,
           "retrieval_source": "bm25",
           "authoritative_case_number": "34/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -225,43 +199,69 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42275"
         },
         {
-          "chunk_id": "34_2026_zh_c0004_fcc08b9277bf",
-          "score": 38.51525,
+          "chunk_id": "757_2025_zh_c0006_ca82a296ef31",
+          "score": 94.409875,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "34/2026",
-          "authoritative_decision_date": "12/03/2026",
+          "authoritative_case_number": "757/2025",
+          "authoritative_decision_date": "26/03/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "即嫌犯）曾使用她的微信號及對丈夫的行為致歉。後來，警方亦在嫌犯的手機發現涉案的照片及存有涉案的微信帳號。由此可見，按照庭上各名被害人及證人的聲明，結合卷宗的書證，足以認定上述事實獲證明。 8) 根據《刑事訴訟法典》第114條規定，“評價證據係按經驗法則及有權限實體之自由心證為之，但法律另有規定者除外。”換言之，法官在對構成訴訟標的之事實作出認定時，除了法律對評價證據方面另有規定外，係依據經驗法則對證據材料進行分析判斷，從而在事實層面上作...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-e7d54797a9c6d897.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42275"
+          "chunk_text_preview": "的個人及家庭狀況如下： 嫌犯為自僱人士，月入約澳門幣15,000元。 需供養父母。 學歷為大學畢業。 * 經庭審未能查明的事實： 載於控訴書內與已證事實不符的其他事實，尤其： 2016年年末，A（嫌犯）急需資金與朋友合作開設商舖。 嫌犯透過L，與B領導（由與L、M、N、O、P、Q、R、S、T、U、V、W、X、J、Y等人組成）的團伙取得聯繫。 上述團伙的業務是協助不符合貸款條件的客人向銀行申請按揭貸款。B安排L、R、S、V、W、J及Y等人...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42383"
         },
         {
-          "chunk_id": "76_2026_zh_c0016_92e118b2f55a",
-          "score": 37.147998,
+          "chunk_id": "76_2026_zh_c0022_01f9e0d8ba19",
+          "score": 92.565487,
           "retrieval_source": "bm25",
           "authoritative_case_number": "76/2026",
           "authoritative_decision_date": "12/03/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "信自己所述為由，認為判決存在其指稱的瑕疵。 9) 在本案中，如上所述，原審法院已審查的證據充份及足夠，在事實層面，不存在應作無罪判決的合理懷疑，故被上訴裁判沒有違反上訴人所指的疑罪從無原則。 10) 上訴人提出認為觸犯的應為澳門《刑法典》第199條第1款及第4款b)項結合第196條b)項所規定及處罰之「信任之濫用罪（相當巨額）」。 11) 在本案中，經開庭審理，原審法院已清楚列出控訴書內的事實哪些獲得證實，從本案已獲證實之事實可見，輔助...",
+          "chunk_text_preview": ",050,001.00元（第2172至2175頁及第2245至2247頁）。 輔助人為參與訴訟而支出來澳的交通費用合共為共MOP20,611.19元（第2497至2506頁）。 根據刑事紀錄證明，三名嫌犯為初犯。 第一嫌犯的個人及經濟狀況如下： - 被羈押前從事投資基金經理，月入約20,000澳門元。 - 須供養父母、前妻及兩名子女。 - 碩士畢業。 第二嫌犯的個人及經濟狀況如下： - 被羈押前從事賭場介紹人，月入約$20,000港元。...",
           "pdf_url": "https://www.court.gov.mo/sentence/zh-f9142c3b08d55571.pdf",
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42317"
         },
         {
-          "chunk_id": "1073_2025_zh_c0007_b313052be73f",
-          "score": 37.092211,
+          "chunk_id": "757_2025_zh_c0002_0b42b7eee509",
+          "score": 90.207562,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "1073/2025",
+          "authoritative_case_number": "757/2025",
           "authoritative_decision_date": "26/03/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "定及處罰的『逃避責任罪』，當中沒有發現有違反一般經驗法則的內容，亦沒有明顯的錯誤。 14) 顯而易見的是，上訴人只是因為不認同有關事實版本，試圖通過提出質疑，但刑事訴訟程序奉行證據自由評價原則，我們不能妨礙原審法院法官 閣下綜合分析後，按照經驗法則，得出其所認定的事實版本。 15) 因此，本院認為上訴人這部分的上訴理由不成立。 16) 上訴人認為原審法院的判決量刑過重。 17) 本院並不認同有關觀點。 18) 在具體量刑方面，《刑法典》...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-0fd94a44268b1df0.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42367"
+          "chunk_text_preview": "C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；d) 第三嫌犯E以直接共同正犯及既遂方式觸犯了《刑法典》第211條第4款a項結合第1款及第196條b項所規定及處罰的一項詐騙罪（相當巨額），判處兩年九個月徒刑，暫緩執行該徒刑，為期三年（已吸收以直接共同正犯及既遂方式觸犯的《刑法典》第244 條第1款a項及C項所規定及處罰的一項偽造文件罪，後者不作獨立判處）；…” 19) 相對來說，以本案涉及之按揭貸款金額比較少及已填補及將可填補之部...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42383"
+        },
+        {
+          "chunk_id": "310_2025_zh_c0010_42ad07d9e3c6",
+          "score": 89.643458,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "310/2025",
+          "authoritative_decision_date": "26/02/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "da prova vinculada ou tarifada, ou quando se violam as regras da experiência ou as legis artis na apreciação da prova. E tem de ser um erro ostensivo, de tal modo evidente que não passe despercebido ao comum dos observad...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-f4cc5ea8b13b28c8.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42285"
+        },
+        {
+          "chunk_id": "85_2026_zh_c0000_8b96f127377f",
+          "score": 89.310929,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "85/2026",
+          "authoritative_decision_date": "19/03/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "第85/2026號刑事上訴案 上訴人：（嫌犯）A 日期：2026年3月19日 主要問題：量刑過重、違令罪 摘要 在被上訴的判決中，原審法院在考慮《刑法典》第64條的選擇準則時指出： “根據嫌犯的犯罪紀錄，嫌犯為初犯，但考慮到本案情節，法庭認為選科非剝奪自由的刑罰，即罰金，並不足以達到處罰的目的，因此，應選科剝奪自由的刑罰，即徒刑。” 原審法院考慮了上訴人屬初犯的情況，這是一項對上訴人有利的因素；然而，原審法院並沒有具體指明案中有哪些具體...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-8c796595e9ade7d2.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42339"
         }
       ],
       "passed": true,
@@ -295,7 +295,7 @@
       "top_hits": [
         {
           "chunk_id": "253_2026_zh_c0011_5fc202bb8d72",
-          "score": 22.86664,
+          "score": 98.589441,
           "retrieval_source": "bm25",
           "authoritative_case_number": "253/2026",
           "authoritative_decision_date": "26/03/2026",
@@ -308,7 +308,7 @@
         },
         {
           "chunk_id": "253_2026_zh_c0000_c92a90b81a77",
-          "score": 16.605796,
+          "score": 57.130406,
           "retrieval_source": "bm25",
           "authoritative_case_number": "253/2026",
           "authoritative_decision_date": "26/03/2026",
@@ -321,7 +321,7 @@
         },
         {
           "chunk_id": "253_2026_zh_c0007_2cd309deb464",
-          "score": 13.433257,
+          "score": 48.638349,
           "retrieval_source": "bm25",
           "authoritative_case_number": "253/2026",
           "authoritative_decision_date": "26/03/2026",
@@ -334,7 +334,7 @@
         },
         {
           "chunk_id": "253_2026_zh_c0002_36e57743f89f",
-          "score": 13.038596,
+          "score": 48.10033,
           "retrieval_source": "bm25",
           "authoritative_case_number": "253/2026",
           "authoritative_decision_date": "26/03/2026",
@@ -347,7 +347,7 @@
         },
         {
           "chunk_id": "253_2026_zh_c0006_ad8d4b2f293e",
-          "score": 12.814612,
+          "score": 46.984455,
           "retrieval_source": "bm25",
           "authoritative_case_number": "253/2026",
           "authoritative_decision_date": "26/03/2026",
@@ -360,7 +360,7 @@
         },
         {
           "chunk_id": "253_2026_zh_c0004_3809392baef4",
-          "score": 12.621202,
+          "score": 46.504325,
           "retrieval_source": "bm25",
           "authoritative_case_number": "253/2026",
           "authoritative_decision_date": "26/03/2026",
@@ -373,7 +373,7 @@
         },
         {
           "chunk_id": "253_2026_zh_c0001_3223beab4f20",
-          "score": 12.591436,
+          "score": 46.324676,
           "retrieval_source": "bm25",
           "authoritative_case_number": "253/2026",
           "authoritative_decision_date": "26/03/2026",
@@ -416,7 +416,7 @@
       "top_hits": [
         {
           "chunk_id": "187_2026_pt_c0011_612938d7128d",
-          "score": 22.340834,
+          "score": 94.763027,
           "retrieval_source": "bm25",
           "authoritative_case_number": "187/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -429,7 +429,7 @@
         },
         {
           "chunk_id": "187_2026_pt_c0000_228dbc59b9ca",
-          "score": 20.290546,
+          "score": 82.316689,
           "retrieval_source": "bm25",
           "authoritative_case_number": "187/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -441,21 +441,60 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
         },
         {
-          "chunk_id": "187_2026_pt_c0005_cf3b57354cec",
-          "score": 18.628373,
+          "chunk_id": "187_2026_pt_c0003_87e97c040263",
+          "score": 70.471473,
           "retrieval_source": "bm25",
           "authoritative_case_number": "187/2026",
           "authoritative_decision_date": "12/03/2026",
           "court": "澳門法院",
           "language": "pt",
           "case_type": "效力之中止",
-          "chunk_text_preview": "ão que o acto administrativo em causa provoca na situação jurídica do requerente, não vê razões que afastem tal susceptibilidade, pelo que são desnecessárias outras considerações a este propósito. Nos termos do disposto ...",
+          "chunk_text_preview": "quisito de procedência da pretensão cautelar do requerente que está verdadeiramente controvertido, estão provados, em termos de primeira aparência ou “prima facie” como pertence a estes autos de procedimento cautelar, os...",
+          "pdf_url": "https://www.court.gov.mo/sentence/pt-d56f1a444522ee43.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
+        },
+        {
+          "chunk_id": "187_2026_pt_c0002_5bf70662cf99",
+          "score": 70.217,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "187/2026",
+          "authoritative_decision_date": "12/03/2026",
+          "court": "澳門法院",
+          "language": "pt",
+          "case_type": "效力之中止",
+          "chunk_text_preview": "sso, concluiu pela improcedência da pretensão cautelar do requerente. O Digno Magistrado do Ministério Público emitiu douto parecer também no sentido da improcedência da pretensão do requerente, por entender que não se v...",
+          "pdf_url": "https://www.court.gov.mo/sentence/pt-d56f1a444522ee43.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
+        },
+        {
+          "chunk_id": "187_2026_pt_c0001_07232cd01a5b",
+          "score": 70.079016,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "187/2026",
+          "authoritative_decision_date": "12/03/2026",
+          "court": "澳門法院",
+          "language": "pt",
+          "case_type": "效力之中止",
+          "chunk_text_preview": "com fundamento na cessação dos pressupostos que fundamentaram a respectiva concessão, foi revogada, com efeitos a 1 de Abril de 2025, a autorização de residência que antes havia sido concedida. O requerente, visando que ...",
+          "pdf_url": "https://www.court.gov.mo/sentence/pt-d56f1a444522ee43.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
+        },
+        {
+          "chunk_id": "187_2026_pt_c0009_ab2ea69c4dfa",
+          "score": 70.079016,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "187/2026",
+          "authoritative_decision_date": "12/03/2026",
+          "court": "澳門法院",
+          "language": "pt",
+          "case_type": "效力之中止",
+          "chunk_text_preview": "a reparação in natura e é difícil de compensar adequadamente por via pecuniária porquanto esta via se apresenta como imperfeita ou “desajeitada” para tutelar o direito ou interesse ofendido1. Ora, no juízo de prognose de...",
           "pdf_url": "https://www.court.gov.mo/sentence/pt-d56f1a444522ee43.pdf",
           "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
         },
         {
           "chunk_id": "187_2026_pt_c0010_891c79a1fcad",
-          "score": 18.621725,
+          "score": 69.827533,
           "retrieval_source": "bm25",
           "authoritative_case_number": "187/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -465,45 +504,6 @@
           "chunk_text_preview": "volvimento e a aquisição de conhecimentos. Não é de considerar improvável nesta sede que a deslocação de Macau possa determinar que o presente ano lectivo seja de insucesso escolar para as filhas do requerente. Ora, “per...",
           "pdf_url": "https://www.court.gov.mo/sentence/pt-d56f1a444522ee43.pdf",
           "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
-        },
-        {
-          "chunk_id": "187_2026_pt_c0004_6494d74c5f01",
-          "score": 18.431205,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "187/2026",
-          "authoritative_decision_date": "12/03/2026",
-          "court": "澳門法院",
-          "language": "pt",
-          "case_type": "效力之中止",
-          "chunk_text_preview": "erente que, até ser decidido o recurso que pretende interpor para ver anulado o mencionado despacho do Sr. Secretário para a Segurança, não se produzam os efeitos inerentes à revogação que operou da autorização de residê...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-d56f1a444522ee43.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
-        },
-        {
-          "chunk_id": "187_2026_pt_c0008_4d3f6879e4a8",
-          "score": 18.418226,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "187/2026",
-          "authoritative_decision_date": "12/03/2026",
-          "court": "澳門法院",
-          "language": "pt",
-          "case_type": "效力之中止",
-          "chunk_text_preview": "nizatória e não foi alegado que até ao recebimento da indemnização a que haja lugar não tenha o recorrente meios de suprir a falta temporária de rendimentos do trabalho. Onde já não se acompanha o douto parecer do Minist...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-d56f1a444522ee43.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
-        },
-        {
-          "chunk_id": "956_2025_pt_c0033_efbc6e1c8e82",
-          "score": 17.388105,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "956/2025",
-          "authoritative_decision_date": "26/03/2026",
-          "court": "澳門法院",
-          "language": "pt",
-          "case_type": "民事及勞動訴訟程序的上訴",
-          "chunk_text_preview": "unto) Jerónimo Alberto G. Santos (2o Juiz-Adjunto) (Foi-me traduzido o acórdão para a língua portuguesa) 1 Disponível em https://www.dgsi.pt/jtrp.nsf/56a6e7121657f91e80257cda00381fdf/2663a6d52e10224880258aff005c3642?Open...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-16e663c96caf1707.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42363"
         }
       ],
       "passed": true,
@@ -542,60 +542,8 @@
       "top_k_requested": 7,
       "top_hits": [
         {
-          "chunk_id": "998_2025_zh_c0007_0c6ad039e3ea",
-          "score": 6.042365,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "998/2025",
-          "authoritative_decision_date": "26/02/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "號裁判中提到： “由於上訴人無滿足有關給予緩刑的條件而不被給予緩刑，原審法院作出被上訴的批示是依法必須作出的決定，是判決有效性的必然結果；就此結果，法律並無強制事先要聽取被判刑人的規定，因為這並不涉及辯論原則的違反或對被判刑人辯護權的削弱，而是一種期間完成與條件 未被滿足的必然後果。” 但在前述兩個裁判所針對的案件中，原審法院均曾在廢止緩刑之前採取了通知被判刑人解釋不履行緩刑“條件”的程序，只不過在透過法定的通知方式後，未能顯示成功通知...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-e09dfd895caf0c49.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42183"
-        },
-        {
-          "chunk_id": "147_2025_zh_c0009_ddbab538c767",
-          "score": 5.985232,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "147/2025",
-          "authoritative_decision_date": "12/03/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "》第49條規定如下： 一、暫緩執行徒刑時，得規定被判刑者履行某些旨在彌補犯罪惡害之義務，尤其係下列義務： ａ）在一定期間內向受害人支付全部須付之損害賠償或支付法院認為有可能支付之部分損害賠償，或透過提供適當之擔保以保證支付損害賠償； ｂ）給予受害人適當之精神上滿足； ｃ）捐款予社會互助機構或澳門特別行政區，或作同等價值之特定給付。 二、在任何情況下，所命令履行之義務不得屬要求被判刑者履行為不合理之義務。 三、如嗣後發生重要情節，或法院其...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-e646b54075142674.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42291"
-        },
-        {
-          "chunk_id": "721_2025_zh_c0010_ce127ab3341e",
-          "score": 5.960699,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "721/2025",
-          "authoritative_decision_date": "05/03/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "差的行為。 因此，考慮到上訴人在本案中所實施的事實其不法性相對輕微，也考慮到上訴人所解釋的犯案原因，本院相信是次僅屬個別事件，並相信仍然可以給予上訴人緩刑的機會，以監禁作威嚇來對上訴人的行為作出考驗。 基於此，本院認同上訴人這一部分的上訴理由，並決定暫緩2年執行對上訴人所判處的徒刑，但為更穩妥協助上訴人重返正途，本院認為應對上訴人在緩刑期間的行為規則作出監管。 因此，作為緩刑義務，上訴人於緩刑期間需接受考驗制度、接受社工的跟進。 ＊ 四...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-77e596eefc61504f.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42345"
-        },
-        {
-          "chunk_id": "998_2025_zh_c0000_670380337e16",
-          "score": 5.923237,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "998/2025",
-          "authoritative_decision_date": "26/02/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "第998/2025號刑事上訴案 上訴人：（嫌犯）A 日期：2026年2月26日 主要問題：附加刑的緩刑條件 摘要 在我們的制度中，並沒有規範兩種不同的緩刑制度（緩刑“條件”、緩刑“義務”），緩刑的制度只有一個，而且不論法庭所使用的用詞是緩刑“條件”還是緩刑“義務”，均需遵守《刑法典》及《刑事訴訟法典》當中所規定的緩刑制度，尤其需遵守辯論原則。 基於此，由於原審法院在作出被上訴的決定前，並未有聽取上訴人的聲明，在此情況下，正如中級法院在其...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-e09dfd895caf0c49.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42183"
-        },
-        {
           "chunk_id": "147_2025_zh_c0010_f300d8fcacfc",
-          "score": 5.895127,
+          "score": 84.50813,
           "retrieval_source": "bm25",
           "authoritative_case_number": "147/2025",
           "authoritative_decision_date": "12/03/2026",
@@ -607,28 +555,80 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42291"
         },
         {
-          "chunk_id": "147_2025_zh_c0013_4a471d1c6604",
-          "score": 5.867308,
+          "chunk_id": "785_2025_zh_c0018_fa65ae5f8dde",
+          "score": 81.014038,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "147/2025",
-          "authoritative_decision_date": "12/03/2026",
+          "authoritative_case_number": "785/2025",
+          "authoritative_decision_date": "05/03/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "在法律前的人格、任何人的私生活、家庭、住宅或通信不得加以任意或非法干涉，他的榮譽和名譽不得加以非法攻擊、人人有權享受思想、良心和宗教自由、自由發表意見的權利等等3。 具體到本案情況，被上訴法庭在對被害人提出的民事賠償請求作出裁判的同時，判處上訴人於判決確定後兩個月內向被害人支付10萬澳門元慰問金作為緩刑義務。 本上訴法院認為，原審裁決所適用的法律，除了有法律依據、有案例支持，亦有理據佐證它的設置合情、合法及合理性，詳見如下: 其一，從法...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-e646b54075142674.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42291"
+          "chunk_text_preview": "審法院裁定上訴人觸犯一項第2/2016號法律第18條第2款及第3款第3項結合《刑法典》第129條第2款b)項規定及處罰的『加重家庭暴力罪』，判處三年三個月的徒刑，量刑略為過重，本院認為判處兩年九個月徒刑的量刑已符合犯罪的一般及特別預防的要求。 根據《刑法典》第48條之規定，經考慮行為人之人格、生活狀況、犯罪前後之行為及犯罪情節後，認定僅對事實作譴責並以監禁作威嚇可適當及足以實現處罰之目的，法院得將所科處不超逾三年之徒刑暫緩執行。 換言之...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-a41117a9a957ebd5.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42249"
         },
         {
-          "chunk_id": "998_2025_zh_c0006_b5bf73a3ea6c",
-          "score": 5.846446,
+          "chunk_id": "721_2025_zh_c0005_bbf5eb60af59",
+          "score": 80.577471,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "721/2025",
+          "authoritative_decision_date": "05/03/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "人名譽及人格尊嚴。 嫌犯清楚知道其上述行為是違法的，並會受到法律制裁。 嫌犯因於2015年觸犯澳門《刑法典》第211條第1款所規定及處罰的兩項詐騙罪，於2017年5月19日被第CR3-16-0101-PCC號卷宗判處每項犯罪7個月的徒刑，兩罪並罰，合共判處嫌犯9個月徒刑的單一刑罰，緩期2年執行，判決於2017年6月26 日轉為確定；由於嫌犯於該案緩刑期間再次犯罪且被判刑，經聽取嫌犯聲明後，透過2021年1月28日所作出的批示，決定延長嫌...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-77e596eefc61504f.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42345"
+        },
+        {
+          "chunk_id": "757_2025_zh_c0008_95761a12a9c5",
+          "score": 77.960678,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "757/2025",
+          "authoritative_decision_date": "26/03/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "罰目的作出決定。然而，法律賦予法院在刑法規定的刑幅間有選擇合適刑罰的自由，只有當原審法院明顯違反法律或罪刑相適應原則時，上級法院才有介入的空間。” 由於原審法院已明顯違反法律及罪刑相適應原則，因此，本上訴法院存在介入量刑的空間。 另一方面，根據上訴人在上訴階段所提交的資料（卷宗第511頁至第517頁），上訴人在上訴期間已變賣了物業並償還了案中大部分的貸款，並於2026年3月13日向第CV1-21-0125-CEO號卷宗存放了1,448,...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-9ef4c0231903c90e.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42383"
+        },
+        {
+          "chunk_id": "721_2025_zh_c0009_3e30ce9bb01d",
+          "score": 77.538418,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "721/2025",
+          "authoritative_decision_date": "05/03/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "年、2020年及2024年橫跨約十年，另外本次是在第三次犯案的緩刑期間，又是服刑期間的最後階段犯案，可見嫌犯尚未被改造成功，本院實在難以相信，該事實作出讉責及監禁的威嚇已足以及適當地達致懲罰的目的，因此，本法庭決定不予暫緩。” 從中可見，原審法院關注到的是上訴人有多次的犯案記錄，並在前科案件 的緩刑期間觸犯本案，而本案更是在上訴人服刑期間所實施。 中級法院曾在第868/2023號裁判中提到： “《刑法典》第 48 條（前提及期間）規定：...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-77e596eefc61504f.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42345"
+        },
+        {
+          "chunk_id": "998_2025_zh_c0003_2b2f48245c30",
+          "score": 76.850772,
           "retrieval_source": "bm25",
           "authoritative_case_number": "998/2025",
           "authoritative_decision_date": "26/02/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "），若不繳付上述罰金或不以工作代替，須監禁40天；及觸犯《道路交通法》第94條第2款規定，科處禁止駕駛為期4個月，暫緩執行有關處罰，為期1年，條件是10日內提供工作證明。支付受害人（B）支付澳門幣5,000元（澳門幣伍仟元正）之損害賠償。 案件著令向上訴人發出通知拘留命令狀，並於2025年5月16日成功執行（參見卷宗第166頁），當時將命令狀的內容通知了上訴人，包括附加刑的緩刑條件為10日內提供工作證明（參見卷宗第169頁的命令狀內容）...",
+          "chunk_text_preview": "在判決所指定的期間內向法庭作出解釋，並提供上述文件。因此，上訴人所提出的解釋，並不能合理化其沒有滿足附加刑的緩刑條件。 9) 綜上所述，上訴人在指定期間內可提交而不提交，而在禁止駕駛附加刑的緩刑被廢止後才提交工作證明，且解釋並不合理。由於在判決所指定的期間內上訴人沒有提交工作證明，緩刑的條件並未獲滿足，故此，其被科處的禁止駕駛附加刑應實際執行。 10) 被上訴批示廢止禁止駕駛附加刑的緩刑，完全正確。 11) 基此，上訴人在被上訴批示作出...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-e09dfd895caf0c49.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42183"
+        },
+        {
+          "chunk_id": "998_2025_zh_c0000_670380337e16",
+          "score": 75.426084,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "998/2025",
+          "authoritative_decision_date": "26/02/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "第998/2025號刑事上訴案 上訴人：（嫌犯）A 日期：2026年2月26日 主要問題：附加刑的緩刑條件 摘要 在我們的制度中，並沒有規範兩種不同的緩刑制度（緩刑“條件”、緩刑“義務”），緩刑的制度只有一個，而且不論法庭所使用的用詞是緩刑“條件”還是緩刑“義務”，均需遵守《刑法典》及《刑事訴訟法典》當中所規定的緩刑制度，尤其需遵守辯論原則。 基於此，由於原審法院在作出被上訴的決定前，並未有聽取上訴人的聲明，在此情況下，正如中級法院在其...",
           "pdf_url": "https://www.court.gov.mo/sentence/zh-e09dfd895caf0c49.pdf",
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42183"
         }
@@ -670,7 +670,7 @@
       "top_hits": [
         {
           "chunk_id": "757_2025_zh_c0000_6415798e445c",
-          "score": 11.177626,
+          "score": 83.426307,
           "retrieval_source": "bm25",
           "authoritative_case_number": "757/2025",
           "authoritative_decision_date": "26/03/2026",
@@ -683,7 +683,7 @@
         },
         {
           "chunk_id": "757_2025_zh_c0007_90424d0e5389",
-          "score": 10.931714,
+          "score": 81.742213,
           "retrieval_source": "bm25",
           "authoritative_case_number": "757/2025",
           "authoritative_decision_date": "26/03/2026",
@@ -695,21 +695,8 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42383"
         },
         {
-          "chunk_id": "76_2026_zh_c0011_7eb97bab2560",
-          "score": 10.878662,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "76/2026",
-          "authoritative_decision_date": "12/03/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "有說過資金用途有此限制，客觀事實為輔助人在4人群組當中對疊碼仔這種灰色產業有明確的肯定態度。 22) 相反，從上訴人的角度，資金是肯定可用作叠碼等賭場灰色產業，這是無法否認的客觀事實。 23) 疊碼仔最大的風險是客人「走數」（賴賬），導致血本無歸。本案中上訴人資金的去向正是如此。 24) 總結來說，疊碼仔的業務範圍是以「兌換泥碼」為核心，並擴展到客源開發、信貸擔保、跨境結算、債務追討和奢華服務的一整套複雜體系。 25) 從輔助人發出的指...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-f9142c3b08d55571.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42317"
-        },
-        {
           "chunk_id": "36_2026_zh_c0013_793e2f1e1c1f",
-          "score": 10.795833,
+          "score": 80.803183,
           "retrieval_source": "bm25",
           "authoritative_case_number": "36/2026",
           "authoritative_decision_date": "26/03/2026",
@@ -722,7 +709,7 @@
         },
         {
           "chunk_id": "76_2026_zh_c0016_92e118b2f55a",
-          "score": 10.321289,
+          "score": 77.474788,
           "retrieval_source": "bm25",
           "authoritative_case_number": "76/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -735,7 +722,7 @@
         },
         {
           "chunk_id": "76_2026_zh_c0006_b37f487c27a9",
-          "score": 10.260451,
+          "score": 76.799087,
           "retrieval_source": "bm25",
           "authoritative_case_number": "76/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -748,7 +735,7 @@
         },
         {
           "chunk_id": "76_2026_zh_c0035_ee69fdf058ba",
-          "score": 9.893609,
+          "score": 74.249188,
           "retrieval_source": "bm25",
           "authoritative_case_number": "76/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -756,6 +743,19 @@
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
           "chunk_text_preview": "詐騙罪」，其抽象刑幅為2年至10年的徒刑，儘管被害人已收回部分賠償，但其在案中被騙取的款項及損失仍超逾1,000萬港元。 面對著第一上訴人毫無悔意的態度，除了初犯及其報稱的家庭背景之外，第一上訴人已未有再指出其還有哪些對減輕其刑罰明顯有利的情節，而且第一上訴人利用被害人對其相識的信任來騙取被害人金錢，過程當中還伙同他人多次透過不同的謊言及所編造的故事令被害人更容易上當，涉案金額逾千萬港元，本院認為，原審法院對第一上訴人所定出的具體刑罰僅...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-f9142c3b08d55571.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42317"
+        },
+        {
+          "chunk_id": "76_2026_zh_c0037_bc5268cf061b",
+          "score": 73.238516,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "76/2026",
+          "authoritative_decision_date": "12/03/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "相當巨額的信任之濫用罪的上訴理由： 關於「信任之濫用罪」，《刑法典》第199條第1款結合第4款b項規定： “一、將以不移轉所有權之方式交付予自己之動產，不正當據為己有者，處最高三年徒刑或科罰金。 …… 四、如第一款所指之物： …… b) 屬相當巨額者，行為人處一年至八年徒刑。” 而針對「詐騙罪」，《刑法典》第211條第1款結合第4款a項規定： “一、意圖為自己或第三人不正當得利，以詭計使人在某些事實方面產生錯誤或受欺騙，而令該人作出造成...",
           "pdf_url": "https://www.court.gov.mo/sentence/zh-f9142c3b08d55571.pdf",
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42317"
         }
@@ -795,7 +795,7 @@
       "top_hits": [
         {
           "chunk_id": "956_2025_pt_c0001_c693a4f1af9f",
-          "score": 14.759721,
+          "score": 75.970442,
           "retrieval_source": "bm25",
           "authoritative_case_number": "956/2025",
           "authoritative_decision_date": "26/03/2026",
@@ -808,7 +808,7 @@
         },
         {
           "chunk_id": "401_2025_zh_c0000_ef1919bdc306",
-          "score": 13.710339,
+          "score": 55.930191,
           "retrieval_source": "bm25",
           "authoritative_case_number": "401/2025",
           "authoritative_decision_date": "12/02/2026",
@@ -821,7 +821,7 @@
         },
         {
           "chunk_id": "401_2025_zh_c0001_0ca720bc79c2",
-          "score": 12.499951,
+          "score": 49.664777,
           "retrieval_source": "bm25",
           "authoritative_case_number": "401/2025",
           "authoritative_decision_date": "12/02/2026",
@@ -833,34 +833,21 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42233"
         },
         {
-          "chunk_id": "401_2025_zh_c0013_a27a43115dc8",
-          "score": 12.436617,
+          "chunk_id": "998_2025_zh_c0004_8fb06b6a56b9",
+          "score": 46.774063,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "401/2025",
-          "authoritative_decision_date": "12/02/2026",
+          "authoritative_case_number": "998/2025",
+          "authoritative_decision_date": "26/02/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "訴訟標的作重新審判。 ＊ 基於上述決定，助理檢察長閣下所指的量刑超出法定上限規定的問題便無需再作考慮。 ＊ 四、決定 綜上所述，本院裁定上訴人(A)的上訴理由成立。 將卷宗發回初級法院，以便按照《刑事訴訟法典》第418條的規定，由原審法院法官沒有參與的合議庭對整個訴訟標的作重新審判。 針對上訴程序，上訴人無須支付訴訟費。 依法作出通知及採取必要措施。 ＊ ＊ ＊ ＊ ＊ 2026年2月12日於澳門特別行政區 ______________...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-fd989d48b6ccd297.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42233"
-        },
-        {
-          "chunk_id": "956_2025_pt_c0002_09a7112c77f6",
-          "score": 11.515407,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "956/2025",
-          "authoritative_decision_date": "26/03/2026",
-          "court": "澳門法院",
-          "language": "pt",
-          "case_type": "民事及勞動訴訟程序的上訴",
-          "chunk_text_preview": "中葡文版本出現差異時，應以葡文為準，才能準確理解條文的意思。 8. 申言之，是否適用《商法典》第569條第2款之規定，應視乎債權本身是否具備商業性質，而毋須理會債務的性質。只有是商業性質的債權被拖欠時，方能適用商業利率來計算因遲延而產生的損害賠償。 9. 原審法庭在此基礎上，借用葡萄牙最高法院第1665/06.5TBOVR.P2.S1號案件的合議庭裁決，指出： 判定能否收取商業利息的關鍵標準是債權人是否具備商業企業主的身份...... ...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-16e663c96caf1707.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42363"
+          "chunk_text_preview": "025年8月14日，在其提出上訴時方提交其的士駕駛證副本和證明其駕駛的士載客的相關文件，為此，上訴人在獲原審判決通知之後的三個月期間才提交判決要求的工作證明文件，由日常生活經驗的常識判斷，其延遲提交工作證明的行為確實無法視為對其存在不可歸責的合理事由。 7) 為此，上訴人所謂其逾期提交工作證明文件具合理障礙的上訴理由並不成立。 8) 在其上訴理由陳述中，上訴人指根據《民事訴訟法典》第616條第2款結合《刑事訴訟法典》第4條規定，其可嗣後...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-e09dfd895caf0c49.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42183"
         },
         {
           "chunk_id": "136_2025_zh_c0010_92a05774eab5",
-          "score": 10.41488,
+          "score": 45.294219,
           "retrieval_source": "bm25",
           "authoritative_case_number": "136/2025",
           "authoritative_decision_date": "26/02/2026",
@@ -872,17 +859,30 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42191"
         },
         {
-          "chunk_id": "998_2025_zh_c0003_2b2f48245c30",
-          "score": 8.557588,
+          "chunk_id": "253_2026_zh_c0007_2cd309deb464",
+          "score": 42.992758,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "998/2025",
-          "authoritative_decision_date": "26/02/2026",
+          "authoritative_case_number": "253/2026",
+          "authoritative_decision_date": "26/03/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "在判決所指定的期間內向法庭作出解釋，並提供上述文件。因此，上訴人所提出的解釋，並不能合理化其沒有滿足附加刑的緩刑條件。 9) 綜上所述，上訴人在指定期間內可提交而不提交，而在禁止駕駛附加刑的緩刑被廢止後才提交工作證明，且解釋並不合理。由於在判決所指定的期間內上訴人沒有提交工作證明，緩刑的條件並未獲滿足，故此，其被科處的禁止駕駛附加刑應實際執行。 10) 被上訴批示廢止禁止駕駛附加刑的緩刑，完全正確。 11) 基此，上訴人在被上訴批示作出...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-e09dfd895caf0c49.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42183"
+          "chunk_text_preview": "14號法律、第10/2016號法律、第10/2019號法律及第22/2020號法律修改的第17/2009號法律第8條第1款所規定及處罰的「不法販賣麻醉藥品及精神藥物罪」，根據“不利益禁止”原則，或稱“上訴不加刑”原則，維持所判處的3年3個月徒刑（見徒刑執行卷宗第25頁至第62頁背頁）。 3. 上訴人不服判決，向終審法院提起上訴，終審法院於2023年3月22日裁定上訴人部分上訴理由成立，發回中級法院，在作出必要措施以保障上訴人的辯護權利後...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-ade871242c4ee469.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42357"
+        },
+        {
+          "chunk_id": "165_2026_zh_c0002_f52fb0c7ab33",
+          "score": 42.830724,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "165/2026",
+          "authoritative_decision_date": "05/03/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "特別預防要求，但是，不符合假釋的一般預防要求，應裁定上訴人之上訴理由不成立。（詳見卷宗第276頁至第277頁） * 本院接受了上訴人提起的上訴，組成合議庭，對上訴進行審理，兩名助審法官相繼檢閱了卷宗，並作出評議及表決。 *** 二、 事實方面 本院透過審查案卷內的文件資料，認定對審理本上訴具重要性之事實如下： 1. 於2020年2月28日，在第一刑事法庭合議庭普通刑事案第CR1-18-0468-PCC號卷宗內，上訴人因以直接共犯及既遂方...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-51e6b73281989706.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42189"
         }
       ],
       "passed": true,
@@ -915,14 +915,14 @@
         "routing_strategy": "language_aware_bm25_path",
         "decomposition_recommended": false,
         "retrieval_mode": "bm25_language_aware_pt_or_mixed",
-        "language_signal_summary": "pt_lexicon_hits=1[recurso]; latin_words=6; cjk_chars=0; case_number=False; pt_case_style=True; mixed_language=False; multi_issue_hint=False"
+        "language_signal_summary": "pt_lexicon_hits=2[suspensão da execução da pena, recurso]; latin_words=6; cjk_chars=0; case_number=False; pt_case_style=True; mixed_language=False; multi_issue_hint=False"
       },
       "retrieval_mode_used": "bm25_language_aware_pt_or_mixed|direct",
       "top_k_requested": 7,
       "top_hits": [
         {
           "chunk_id": "187_2026_pt_c0005_cf3b57354cec",
-          "score": 19.530192,
+          "score": 73.007184,
           "retrieval_source": "bm25",
           "authoritative_case_number": "187/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -934,21 +934,8 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
         },
         {
-          "chunk_id": "388_2025_pt_c0013_f791e49c1963",
-          "score": 18.755051,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "388/2025",
-          "authoritative_decision_date": "26/03/2026",
-          "court": "澳門法院",
-          "language": "pt",
-          "case_type": "民事及勞動訴訟程序的上訴",
-          "chunk_text_preview": "e pagamento de dívidas diversas da dívida exequenda, o tribunal recorrido atribuiu-lhe o ónus da prova que teria na acção onde essas outras dívidas estivessem em discussão, mas que não tem em sede de embargos de executad...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-2e4790aed3a6c0cc.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42379"
-        },
-        {
           "chunk_id": "124_2026_pt_c0018_a4140ac4fe42",
-          "score": 18.235899,
+          "score": 64.046124,
           "retrieval_source": "bm25",
           "authoritative_case_number": "124/2026",
           "authoritative_decision_date": "05/03/2026",
@@ -960,21 +947,21 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42209"
         },
         {
-          "chunk_id": "124_2026_pt_c0035_40a9ddc097b8",
-          "score": 17.794228,
+          "chunk_id": "84_2025_pt_c0048_4a79cb3be263",
+          "score": 63.202766,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "124/2026",
+          "authoritative_case_number": "84/2025",
           "authoritative_decision_date": "05/03/2026",
           "court": "澳門法院",
           "language": "pt",
-          "case_type": "效力之中止",
-          "chunk_text_preview": "o é que os esclarecimentos complementares não são bastantes para convencer o Tribunal que a execução imediata da decisão possa causar ao Requerente prejuízos de difícil reparação (cfr. parecer complementar do MP de fls. ...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-33dfbc4e1cbedaaf.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42209"
+          "case_type": "司法上訴(中級法院作為第一審法院的行政訴訟案件)",
+          "chunk_text_preview": "strução em curso de forma a adequar-se às novas exigências, o que determinou um atraso de 35 dias na execução da obra. É certo que, de acordo com o disposto no artigo 168.º do Decreto-Lei n.º 74/99/M, sempre que ocorra s...",
+          "pdf_url": "https://www.court.gov.mo/sentence/pt-df943072fe79ee36.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42225"
         },
         {
           "chunk_id": "124_2026_pt_c0016_bcd949943ffa",
-          "score": 17.731238,
+          "score": 62.892904,
           "retrieval_source": "bm25",
           "authoritative_case_number": "124/2026",
           "authoritative_decision_date": "05/03/2026",
@@ -986,8 +973,21 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42209"
         },
         {
+          "chunk_id": "124_2026_pt_c0035_40a9ddc097b8",
+          "score": 61.956258,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "124/2026",
+          "authoritative_decision_date": "05/03/2026",
+          "court": "澳門法院",
+          "language": "pt",
+          "case_type": "效力之中止",
+          "chunk_text_preview": "o é que os esclarecimentos complementares não são bastantes para convencer o Tribunal que a execução imediata da decisão possa causar ao Requerente prejuízos de difícil reparação (cfr. parecer complementar do MP de fls. ...",
+          "pdf_url": "https://www.court.gov.mo/sentence/pt-33dfbc4e1cbedaaf.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42209"
+        },
+        {
           "chunk_id": "124_2026_pt_c0028_f40edd7120a4",
-          "score": 17.566166,
+          "score": 61.346829,
           "retrieval_source": "bm25",
           "authoritative_case_number": "124/2026",
           "authoritative_decision_date": "05/03/2026",
@@ -1000,7 +1000,7 @@
         },
         {
           "chunk_id": "187_2026_pt_c0001_07232cd01a5b",
-          "score": 17.342049,
+          "score": 59.813201,
           "retrieval_source": "bm25",
           "authoritative_case_number": "187/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -1042,14 +1042,14 @@
         "routing_strategy": "language_aware_bm25_path",
         "decomposition_recommended": false,
         "retrieval_mode": "bm25_language_aware_pt_or_mixed",
-        "language_signal_summary": "pt_lexicon_hits=1[dano moral]; latin_words=3; cjk_chars=2; case_number=False; pt_case_style=False; mixed_language=True; multi_issue_hint=False"
+        "language_signal_summary": "pt_lexicon_hits=2[indemnização, dano moral]; latin_words=3; cjk_chars=2; case_number=False; pt_case_style=False; mixed_language=True; multi_issue_hint=False"
       },
       "retrieval_mode_used": "bm25_language_aware_pt_or_mixed|direct",
       "top_k_requested": 7,
       "top_hits": [
         {
           "chunk_id": "187_2026_pt_c0008_4d3f6879e4a8",
-          "score": 18.525626,
+          "score": 50.747652,
           "retrieval_source": "bm25",
           "authoritative_case_number": "187/2026",
           "authoritative_decision_date": "12/03/2026",
@@ -1061,60 +1061,34 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
         },
         {
-          "chunk_id": "187_2026_pt_c0007_0b152c08c76e",
-          "score": 11.739813,
+          "chunk_id": "871_2024_zh_c0017_c2a60249cc87",
+          "score": 43.385909,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "187/2026",
-          "authoritative_decision_date": "12/03/2026",
+          "authoritative_case_number": "871/2024",
+          "authoritative_decision_date": "26/02/2026",
           "court": "澳門法院",
-          "language": "pt",
-          "case_type": "效力之中止",
-          "chunk_text_preview": "os respectivos rendimentos (1), a extinção do contrato de arrendamento (2), o sobressalto no percurso escolar das suas filhas (3) e dos alunos da esposa do requerente (4). Acompanha-se integralmente a lúcida posição do p...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-d56f1a444522ee43.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42263"
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "normativo apenas remete para o art. 477º, do Código Civil, tratando-se de regulação da indemnização de perdas e danos emergentes do crime. 34. Sendo que a indemnização civil que interessa ao direito penal e ao processo p...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-b8fa7f7f652a7809.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42311"
         },
         {
-          "chunk_id": "1006_2025_pt_c0048_1ae85b25a2d8",
-          "score": 11.127302,
+          "chunk_id": "871_2024_zh_c0016_43a8a82b7346",
+          "score": 40.880619,
           "retrieval_source": "bm25",
-          "authoritative_case_number": "1006/2025",
-          "authoritative_decision_date": "12/03/2026",
+          "authoritative_case_number": "871/2024",
+          "authoritative_decision_date": "26/02/2026",
           "court": "澳門法院",
-          "language": "pt",
-          "case_type": "民事及勞動訴訟程序的上訴",
-          "chunk_text_preview": "ao que lhes for perguntado, submetendo-se às inspecções necessárias, facultando o que for requisitado e praticando os actos que forem determinados. 2. Aqueles que não prestem a colaboração devida são condenados em multa,...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-2a57de5ac981a168.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42323"
-        },
-        {
-          "chunk_id": "1006_2025_pt_c0039_ecfd4f139970",
-          "score": 11.087689,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "1006/2025",
-          "authoritative_decision_date": "12/03/2026",
-          "court": "澳門法院",
-          "language": "pt",
-          "case_type": "民事及勞動訴訟程序的上訴",
-          "chunk_text_preview": "CPC que estipula: Artigo 456.º (Não apresentação do documento pela parte contrária) Se o notificado não apresentar o documento, é-lhe aplicável o disposto no n.º 2 do artigo 442.º Depois, o artigo 442º do CPC manda: (Dev...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-2a57de5ac981a168.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42323"
-        },
-        {
-          "chunk_id": "124_2026_pt_c0012_2a596fd565b6",
-          "score": 10.021321,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "124/2026",
-          "authoritative_decision_date": "05/03/2026",
-          "court": "澳門法院",
-          "language": "pt",
-          "case_type": "效力之中止",
-          "chunk_text_preview": "o venha a ser julgado procedente ) não poderia restaurar plenamente a estabilidade e dignidade perdidas durante o período de execução, verificando-se, assim, o requisito do periculum in mora previsto na alínea a) do n.º ...",
-          "pdf_url": "https://www.court.gov.mo/sentence/pt-33dfbc4e1cbedaaf.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42209"
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "ca, I Série A, nº 179, de 03AGO99], face à redacção do art. 71º, do CPP de Portugal, ao qual se faz referência a titulo de direito comparado uma vez que a referida disposição legal tem semelhante redacção ao nosso art. 6...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-b8fa7f7f652a7809.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42311"
         },
         {
           "chunk_id": "956_2025_pt_c0006_1a0100b603b9",
-          "score": 9.404547,
+          "score": 38.13357,
           "retrieval_source": "bm25",
           "authoritative_case_number": "956/2025",
           "authoritative_decision_date": "26/03/2026",
@@ -1126,17 +1100,43 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42363"
         },
         {
-          "chunk_id": "871_2024_zh_c0017_c2a60249cc87",
-          "score": 9.110227,
+          "chunk_id": "871_2024_zh_c0018_5a93d9386ac3",
+          "score": 34.058678,
           "retrieval_source": "bm25",
           "authoritative_case_number": "871/2024",
           "authoritative_decision_date": "26/02/2026",
           "court": "澳門法院",
           "language": "zh",
           "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "normativo apenas remete para o art. 477º, do Código Civil, tratando-se de regulação da indemnização de perdas e danos emergentes do crime. 34. Sendo que a indemnização civil que interessa ao direito penal e ao processo p...",
+          "chunk_text_preview": "de MOP155,000.00, a título de danos não patrimoniais e patrimoniais, por si alegadamente sofridos, pelos factos vertidos na acusação particular por ela apresentada conforme resulta do pedido de indemnização civil cujo te...",
           "pdf_url": "https://www.court.gov.mo/sentence/zh-b8fa7f7f652a7809.pdf",
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42311"
+        },
+        {
+          "chunk_id": "871_2024_zh_c0030_c52ebcefcc73",
+          "score": 33.999963,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "871/2024",
+          "authoritative_decision_date": "26/02/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "-Part) a partir de 2:13:54 até 2:16:10 e (F): 28.05.2024(PM)-0:28:04 até 0:29:54 (4DTM5J0101020121_join-Part). 77. Renovação de prova essa que, ao abrigo do disposto no artigo 402.º, n.º 3, do CPP, deverá incidir na anál...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-b8fa7f7f652a7809.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42311"
+        },
+        {
+          "chunk_id": "384_2025_pt_c0003_61ce6c6a9cfc",
+          "score": 33.999963,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "384/2025",
+          "authoritative_decision_date": "12/02/2026",
+          "court": "澳門法院",
+          "language": "pt",
+          "case_type": "民事及勞動訴訟程序的上訴",
+          "chunk_text_preview": "a negativa aos pontos 19º a 22º da base instrutória e não foi julgado provado que: - o recorrente acordou pagar RMB300.000,00 por estar convencido que o imóvel havia sido pago com a quantia de indemnização também pertenc...",
+          "pdf_url": "https://www.court.gov.mo/sentence/pt-23e5b2f3bca59ed3.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/pt/42135"
         }
       ],
       "passed": true,
@@ -1176,7 +1176,7 @@
       "top_hits": [
         {
           "chunk_id": "214_2025_zh_c0009_46fd394cffba",
-          "score": 27.669909,
+          "score": 49.981382,
           "retrieval_source": "bm25",
           "authoritative_case_number": "214/2025",
           "authoritative_decision_date": "05/03/2026",
@@ -1188,8 +1188,21 @@
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42253"
         },
         {
+          "chunk_id": "1033_2025_zh_c0013_b8b078db82c3",
+          "score": 33.225599,
+          "retrieval_source": "bm25",
+          "authoritative_case_number": "1033/2025",
+          "authoritative_decision_date": "12/03/2026",
+          "court": "澳門法院",
+          "language": "zh",
+          "case_type": "刑事訴訟程序的上訴",
+          "chunk_text_preview": "心此次司法介入父親會回來報復。第一被害人被精神科診斷為：持續性憂鬱症、焦慮症、酒精使用障礙症、邊緣人格障礙。總結：第一被害人生長在一個破碎的家庭，從小受到父親暴力對待，缺乏愛和安全感，與父親一直關係惡劣，在此事件中因醉酒與父親發生衝突繼而打鬥。此事件後第一被害人沒有明顯精神狀態改變，也沒有明顯表現創傷壓力症候症狀。(見卷宗第293至296頁背頁) 卷宗尚載有第一被害人及第二被害人之臨床法醫學鑑定書，當中鑑定了二名被害人的傷勢狀況。 根據...",
+          "pdf_url": "https://www.court.gov.mo/sentence/zh-0dd8fc95d98feda0.pdf",
+          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42325"
+        },
+        {
           "chunk_id": "214_2025_zh_c0010_5a623e137f85",
-          "score": 19.333583,
+          "score": 32.747888,
           "retrieval_source": "bm25",
           "authoritative_case_number": "214/2025",
           "authoritative_decision_date": "05/03/2026",
@@ -1202,7 +1215,7 @@
         },
         {
           "chunk_id": "871_2024_zh_c0046_f6d7c7662afc",
-          "score": 13.17986,
+          "score": 24.549375,
           "retrieval_source": "bm25",
           "authoritative_case_number": "871/2024",
           "authoritative_decision_date": "26/02/2026",
@@ -1215,7 +1228,7 @@
         },
         {
           "chunk_id": "1033_2025_zh_c0003_60273d24df13",
-          "score": 12.940373,
+          "score": 24.308784,
           "retrieval_source": "bm25",
           "authoritative_case_number": "1033/2025",
           "authoritative_decision_date": "12/03/2026",
@@ -1228,7 +1241,7 @@
         },
         {
           "chunk_id": "871_2024_zh_c0038_b4c646cf8ceb",
-          "score": 12.611879,
+          "score": 23.686407,
           "retrieval_source": "bm25",
           "authoritative_case_number": "871/2024",
           "authoritative_decision_date": "26/02/2026",
@@ -1241,7 +1254,7 @@
         },
         {
           "chunk_id": "1033_2025_zh_c0002_72d1cc1af6f0",
-          "score": 12.56555,
+          "score": 23.253041,
           "retrieval_source": "bm25",
           "authoritative_case_number": "1033/2025",
           "authoritative_decision_date": "12/03/2026",
@@ -1251,19 +1264,6 @@
           "chunk_text_preview": "力行為「強制壓制和控制」第一被害人的家庭地位，反而側面反映出上訴人是支持第一被害人的學業及前途。 17. 另外，構成「家庭暴力罪」的其中一個構成要件是行為人存在長期、連續性的虐待，但本案並沒有確實的證據顯示上訴人長期對第一被害人虐待。 18. 正如上述，上訴人認為第一被害人的證言並不可信，被上訴法庭只採信第一被害人的證言作出心證，對發現事實真相並不穩妥。 19. 此外，第一被害人的證言中提及的發生於其年幼時期的所謂打罵事件，不僅時間久遠...",
           "pdf_url": "https://www.court.gov.mo/sentence/zh-0dd8fc95d98feda0.pdf",
           "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42325"
-        },
-        {
-          "chunk_id": "214_2025_zh_c0011_2be25c6a6789",
-          "score": 12.465846,
-          "retrieval_source": "bm25",
-          "authoritative_case_number": "214/2025",
-          "authoritative_decision_date": "05/03/2026",
-          "court": "澳門法院",
-          "language": "zh",
-          "case_type": "刑事訴訟程序的上訴",
-          "chunk_text_preview": "我們不能認同被上訴判決的審查及認定，正如上述我們已指出，原審合議庭以遍概全方式的描述，且完全沒有考慮過證人E及上訴人曾提交過卷宗第127頁及128頁有關第二嫌犯的疾病證明。 83. 因為第一名證人E的證言(指出“…第二嫌犯當時表示腰部受傷(剛上班不久便受傷)，所以需要請假，第二嫌犯沒有上班便沒有支付薪金…”及載於卷宗第127頁及128頁有關第二嫌犯C的疾病便可以解釋到為何其在2002年9月24日離境後長時間不在本澳原因(參見卷宗第127...",
-          "pdf_url": "https://www.court.gov.mo/sentence/zh-dea4106141d17e08.pdf",
-          "text_url_or_action": "https://www.court.gov.mo/sentence/zh/42253"
         }
       ],
       "passed": true,
