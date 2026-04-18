@@ -229,19 +229,13 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-def load_existing_metadata_index(path: Path) -> dict[str, dict[str, Any]]:
-    index: dict[str, dict[str, Any]] = {}
+def load_existing_metadata_index(path: Path) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+    by_case_number: dict[str, dict[str, Any]] = {}
+    by_sentence_id: dict[str, dict[str, Any]] = {}
     for payload in load_jsonl(path):
         core = payload.get("core_case_metadata") or {}
         generated = payload.get("generated_digest_metadata") or payload.get("case_metadata_v1") or {}
-        case_number = normalize_space(
-            core.get("authoritative_case_number")
-            or payload.get("authoritative_case_number")
-            or payload.get("case_number")
-        )
-        if not case_number:
-            continue
-        index[case_number] = {
+        normalized = {
             "case_summary": normalize_space(generated.get("case_summary")),
             "holding": normalize_space(generated.get("holding")),
             "disputed_issues": normalize_list_field(generated.get("disputed_issues"), limit=10),
@@ -249,7 +243,19 @@ def load_existing_metadata_index(path: Path) -> dict[str, dict[str, Any]]:
             "reasoning_summary": normalize_space(generated.get("reasoning_summary")),
             "doctrinal_point": normalize_space(generated.get("doctrinal_point")),
         }
-    return index
+
+        sentence_id = normalize_space(payload.get("sentence_id") or core.get("sentence_id"))
+        if sentence_id:
+            by_sentence_id[sentence_id] = normalized
+
+        case_number = normalize_space(
+            core.get("authoritative_case_number")
+            or payload.get("authoritative_case_number")
+            or payload.get("case_number")
+        )
+        if case_number:
+            by_case_number[case_number] = normalized
+    return by_case_number, by_sentence_id
 
 
 def read_merged_cases(merged_root: Path, manifest_path: Path, limit: int) -> list[MergeCaseRow]:
@@ -331,15 +337,17 @@ def build_case_metadata_v1(
     *,
     cases: list[MergeCaseRow],
     model_index: dict[str, dict[str, Any]],
+    model_sentence_index: dict[str, dict[str, Any]],
     baseline_index: dict[str, dict[str, Any]],
+    baseline_sentence_index: dict[str, dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     field_non_empty = {name: 0 for name in FIXED_FIELDS}
     full_6_non_empty = 0
 
     for case in cases:
-        model_row = model_index.get(case.authoritative_case_number, {})
-        baseline_row = baseline_index.get(case.authoritative_case_number, {})
+        model_row = model_sentence_index.get(case.sentence_id) or model_index.get(case.authoritative_case_number, {})
+        baseline_row = baseline_sentence_index.get(case.sentence_id) or baseline_index.get(case.authoritative_case_number, {})
 
         deterministic_values = {
             "case_summary": deterministic_case_summary(case),
@@ -401,10 +409,16 @@ def main() -> None:
     manifest_path = args.manifest_path or (merged_root / "manifest.jsonl")
 
     cases = read_merged_cases(merged_root=merged_root, manifest_path=manifest_path, limit=max(args.limit, 0))
-    model_index = load_existing_metadata_index(args.model_metadata)
-    baseline_index = load_existing_metadata_index(args.baseline_metadata)
+    model_index, model_sentence_index = load_existing_metadata_index(args.model_metadata)
+    baseline_index, baseline_sentence_index = load_existing_metadata_index(args.baseline_metadata)
 
-    rows, summary = build_case_metadata_v1(cases=cases, model_index=model_index, baseline_index=baseline_index)
+    rows, summary = build_case_metadata_v1(
+        cases=cases,
+        model_index=model_index,
+        model_sentence_index=model_sentence_index,
+        baseline_index=baseline_index,
+        baseline_sentence_index=baseline_sentence_index,
+    )
 
     args.output_path.parent.mkdir(parents=True, exist_ok=True)
     with args.output_path.open("w", encoding="utf-8") as fh:
