@@ -1,0 +1,20 @@
+請根據下列案件內容，抽取固定 6 欄 case metadata。
+
+[案件識別]
+- sentence_id: {sentence_id}
+- authoritative_case_number: {authoritative_case_number}
+- language: {language}
+- route: {route}
+
+[抽取片段]
+{case_text}
+
+請輸出 JSON（僅 JSON，勿加註解），格式必須為：
+{{
+  "case_summary": "...",
+  "holding": "...",
+  "disputed_issues": ["...", "..."],
+  "legal_basis": ["...", "..."],
+  "reasoning_summary": "...",
+  "doctrinal_point": "..."
+}}
