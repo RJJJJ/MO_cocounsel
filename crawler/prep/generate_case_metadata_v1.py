@@ -19,6 +19,7 @@ DEFAULT_MERGED_ROOT = Path("data/corpus/raw/macau_court_cases_full")
 DEFAULT_OUTPUT = Path("data/eval/model_generated_metadata_output.jsonl")
 DEFAULT_SYSTEM_PROMPT = Path("prompts/case_metadata_v1_system.txt")
 DEFAULT_USER_PROMPT = Path("prompts/case_metadata_v1_user.txt")
+DEBUG_RAW_OUTPUT = Path("data/eval/debug_case_metadata_raw_outputs.jsonl")
 
 FIXED_FIELDS = (
     "case_summary",
@@ -84,6 +85,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-retries", type=int, default=2)
 
     parser.add_argument("--print-every", type=int, default=50)
+
+    parser.add_argument("--language-filter", default="", help="optional language filter, e.g. zh or pt")
+
     return parser.parse_args()
 
 
@@ -110,7 +114,15 @@ def load_done_ids(path: Path) -> set[str]:
     return done
 
 
-def read_cases(merged_root: Path, manifest_path: Path, start: int, end: int, limit: int) -> list[CaseInput]:
+def read_cases(
+    merged_root: Path,
+    manifest_path: Path,
+    start: int,
+    end: int,
+    limit: int,
+    language_filter: str,
+) -> list[CaseInput]:
+
     rows: list[CaseInput] = []
     with manifest_path.open("r", encoding="utf-8") as fh:
         for idx, line in enumerate(fh):
@@ -124,6 +136,10 @@ def read_cases(merged_root: Path, manifest_path: Path, start: int, end: int, lim
             payload = json.loads(raw)
             sentence_id = normalize_space(payload.get("sentence_id"))
             if not sentence_id:
+                continue
+
+            language = normalize_space(payload.get("language"))
+            if language_filter and language.lower() != language_filter.lower():
                 continue
 
             metadata_rel = normalize_space(payload.get("metadata_path"))
@@ -250,15 +266,28 @@ def prepare_case_text(case: CaseInput, route: str, args: argparse.Namespace) -> 
 def safe_json_extract(raw: str) -> dict[str, Any] | None:
     if not raw:
         return None
-    start = raw.find("{")
-    end = raw.rfind("}")
+
+    text = raw.strip()
+
+    # strip common markdown fences
+    if text.startswith("```"):
+        text = re.sub(r"^```(?:json)?\s*", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"\s*```$", "", text)
+
+    start = text.find("{")
+    end = text.rfind("}")
     if start < 0 or end <= start:
         return None
+
+    candidate = text[start : end + 1]
+
     try:
-        obj = json.loads(raw[start : end + 1])
+        obj = json.loads(candidate)
     except json.JSONDecodeError:
         return None
+
     return obj if isinstance(obj, dict) else None
+
 
 
 def normalize_model_output(payload: dict[str, Any] | None) -> dict[str, Any]:
@@ -294,6 +323,32 @@ def normalize_model_output(payload: dict[str, Any] | None) -> dict[str, Any]:
         else:
             result[field] = normalize_space(value)
     return result
+
+def append_debug_raw_output(
+    *,
+    sentence_id: str,
+    authoritative_case_number: str,
+    route: str,
+    raw_output: str,
+    user_prompt: str,
+    fallback: bool,
+) -> None:
+    DEBUG_RAW_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    with DEBUG_RAW_OUTPUT.open("a", encoding="utf-8") as fh:
+        fh.write(
+            json.dumps(
+                {
+                    "sentence_id": sentence_id,
+                    "authoritative_case_number": authoritative_case_number,
+                    "route": route,
+                    "fallback": fallback,
+                    "raw_output": raw_output,
+                    "user_prompt_preview": user_prompt[:3000],
+                },
+                ensure_ascii=False,
+            )
+            + "\n"
+        )
 
 
 def has_missing_fields(output: dict[str, Any]) -> bool:
@@ -348,7 +403,8 @@ class TransformersClient(GenerationClient):
 
         self.model = AutoModelForCausalLM.from_pretrained(model_name, **model_kwargs)
 
-    def generate(self, system_prompt: str, user_prompt: str, args: argparse.Namespace, *, fallback: bool = False) -> str:
+    def generate(self, system_prompt: str, user_prompt: str, args: argparse.Namespace, *,
+                 fallback: bool = False) -> str:
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
@@ -358,18 +414,22 @@ class TransformersClient(GenerationClient):
 
         gen_kwargs: dict[str, Any] = {
             "max_new_tokens": args.max_new_tokens,
-            "temperature": args.temperature,
-            "top_p": args.top_p,
             "repetition_penalty": args.repetition_penalty,
             "do_sample": bool(args.do_sample),
             "pad_token_id": self.tokenizer.eos_token_id,
         }
-        if not gen_kwargs["do_sample"]:
-            gen_kwargs.pop("top_p", None)
+
+        if gen_kwargs["do_sample"]:
+            gen_kwargs["temperature"] = args.temperature
+            gen_kwargs["top_p"] = args.top_p
 
         with self.torch.no_grad():
             output = self.model.generate(**inputs, **gen_kwargs)
-        decoded = self.tokenizer.decode(output[0][inputs["input_ids"].shape[1] :], skip_special_tokens=True)
+
+        decoded = self.tokenizer.decode(
+            output[0][inputs["input_ids"].shape[1]:],
+            skip_special_tokens=True,
+        )
         return decoded
 
 
@@ -392,6 +452,9 @@ def render_user_prompt(template: str, case: CaseInput, route: str, case_text: st
 def generate_with_retries(
     client: GenerationClient,
     *,
+    sentence_id: str,
+    authoritative_case_number: str,
+    route: str,
     system_prompt: str,
     user_prompt: str,
     args: argparse.Namespace,
@@ -401,9 +464,22 @@ def generate_with_retries(
         raw = client.generate(system_prompt, user_prompt, args, fallback=fallback)
         parsed = safe_json_extract(raw)
         normalized = normalize_model_output(parsed)
+
         if parsed is not None:
             return normalized, True
+
+        append_debug_raw_output(
+            sentence_id=sentence_id,
+            authoritative_case_number=authoritative_case_number,
+            route=route,
+            raw_output=raw,
+            user_prompt=user_prompt,
+            fallback=fallback,
+        )
+
     return normalize_model_output(None), False
+
+
 
 
 def main() -> None:
@@ -435,6 +511,7 @@ def main() -> None:
         start=args.start,
         end=args.end,
         limit=args.limit,
+        language_filter=args.language_filter,
     )
 
     done_ids = load_done_ids(args.output_path) if args.resume else set()
@@ -454,6 +531,9 @@ def main() -> None:
 
             result, json_ok = generate_with_retries(
                 primary_client,
+                sentence_id=case.sentence_id,
+                authoritative_case_number=case.authoritative_case_number,
+                route=route,
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
                 args=args,
@@ -470,11 +550,15 @@ def main() -> None:
             if needs_fallback:
                 result_fb, json_ok_fb = generate_with_retries(
                     fallback_client,
+                    sentence_id=case.sentence_id,
+                    authoritative_case_number=case.authoritative_case_number,
+                    route=route,
                     system_prompt=system_prompt,
                     user_prompt=user_prompt,
                     args=args,
                     fallback=True,
                 )
+
                 if json_ok_fb and (not has_missing_fields(result_fb) or not json_ok):
                     result = result_fb
                     json_ok = json_ok_fb
