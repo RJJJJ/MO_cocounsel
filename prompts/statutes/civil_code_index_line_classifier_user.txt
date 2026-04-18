@@ -1,0 +1,8 @@
+Classify this single index line.
+
+line_no={{line_no}}
+line_text={{line_text}}
+
+Remember:
+- node_type must be one of: part/chapter/section/article/heading/noise
+- If the line is not needed for hierarchy reconstruction, return noise.
