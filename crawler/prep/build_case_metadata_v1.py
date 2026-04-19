@@ -52,6 +52,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-path", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--report-path", type=Path, default=DEFAULT_REPORT_PATH)
     parser.add_argument("--limit", type=int, default=0, help="optional max rows")
+    parser.add_argument("--language-filter", default="", help="optional language filter, e.g. zh or pt")
     return parser.parse_args()
 
 
@@ -258,7 +259,13 @@ def load_existing_metadata_index(path: Path) -> tuple[dict[str, dict[str, Any]],
     return by_case_number, by_sentence_id
 
 
-def read_merged_cases(merged_root: Path, manifest_path: Path, limit: int) -> list[MergeCaseRow]:
+def read_merged_cases(
+    merged_root: Path,
+    manifest_path: Path,
+    limit: int,
+    language_filter: str,
+) -> list[MergeCaseRow]:
+
     rows: list[MergeCaseRow] = []
     with manifest_path.open("r", encoding="utf-8") as fh:
         for line in fh:
@@ -268,6 +275,11 @@ def read_merged_cases(merged_root: Path, manifest_path: Path, limit: int) -> lis
             payload = json.loads(raw)
             sentence_id = normalize_space(payload.get("sentence_id"))
             if not sentence_id:
+                continue
+
+            language = normalize_space(payload.get("language"))
+
+            if language_filter and language.lower() != language_filter.lower():
                 continue
 
             metadata_rel = normalize_space(payload.get("metadata_path"))
@@ -408,7 +420,13 @@ def main() -> None:
     merged_root = args.merged_root
     manifest_path = args.manifest_path or (merged_root / "manifest.jsonl")
 
-    cases = read_merged_cases(merged_root=merged_root, manifest_path=manifest_path, limit=max(args.limit, 0))
+    cases = read_merged_cases(
+        merged_root=merged_root,
+        manifest_path=manifest_path,
+        limit=max(args.limit, 0),
+        language_filter=args.language_filter,
+    )
+
     model_index, model_sentence_index = load_existing_metadata_index(args.model_metadata)
     baseline_index, baseline_sentence_index = load_existing_metadata_index(args.baseline_metadata)
 

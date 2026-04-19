@@ -1,0 +1,102 @@
+{
+  "generated_at": "2026-04-19T13:22:41.789Z",
+  "statutes_total": 15,
+  "article_records_total": 7399,
+  "annotation_only_articles": 13,
+  "repealed_articles": 25,
+  "exact_lookup_ambiguous_keys": 0,
+  "exact_lookup_missing_fields": 0,
+  "exact_statute_lookup_ready": true,
+  "statutes": [
+    {
+      "statute_id": "macau_administrative_contentious_procedure_code",
+      "code_slug": "macau_administrative_contentious_procedure_code",
+      "code_label": "行政訴訟法典",
+      "article_records": 187
+    },
+    {
+      "statute_id": "macau_administrative_procedure_code",
+      "code_slug": "macau_administrative_procedure_code",
+      "code_label": "行政程序法典",
+      "article_records": 176
+    },
+    {
+      "statute_id": "macau_basic_law",
+      "code_slug": "macau_basic_law",
+      "code_label": "中華人民共和國澳門特別行政區基本法",
+      "article_records": 148
+    },
+    {
+      "statute_id": "macau_civil_code",
+      "code_slug": "macau_civil_code",
+      "code_label": "民法典",
+      "article_records": 2119
+    },
+    {
+      "statute_id": "macau_civil_procedure_code",
+      "code_slug": "macau_civil_procedure_code",
+      "code_label": "民事訴訟法典",
+      "article_records": 1314
+    },
+    {
+      "statute_id": "macau_civil_registry_code",
+      "code_slug": "macau_civil_registry_code",
+      "code_label": "民事登記法典",
+      "article_records": 255
+    },
+    {
+      "statute_id": "macau_commercial_code",
+      "code_slug": "macau_commercial_code",
+      "code_label": "商法典",
+      "article_records": 1271
+    },
+    {
+      "statute_id": "macau_commercial_registry_code",
+      "code_slug": "macau_commercial_registry_code",
+      "code_label": "商業登記法典",
+      "article_records": 126
+    },
+    {
+      "statute_id": "macau_criminal_procedure_code",
+      "code_slug": "macau_criminal_procedure_code",
+      "code_label": "刑事訴訟法典",
+      "article_records": 503
+    },
+    {
+      "statute_id": "macau_industrial_property_legal_regime",
+      "code_slug": "macau_industrial_property_legal_regime",
+      "code_label": "工業產權法律制度",
+      "article_records": 314
+    },
+    {
+      "statute_id": "macau_judicial_costs_regime",
+      "code_slug": "macau_judicial_costs_regime",
+      "code_label": "法院訴訟費用制度",
+      "article_records": 137
+    },
+    {
+      "statute_id": "macau_labor_litigation_code",
+      "code_slug": "macau_labor_litigation_code",
+      "code_label": "勞 動 訴 訟 法 典",
+      "article_records": 115
+    },
+    {
+      "statute_id": "macau_notarial_code",
+      "code_slug": "macau_notarial_code",
+      "code_label": "公證法典",
+      "article_records": 221
+    },
+    {
+      "statute_id": "macau_penal_code",
+      "code_slug": "macau_penal_code",
+      "code_label": "刑法典",
+      "article_records": 354
+    },
+    {
+      "statute_id": "macau_property_registry_code",
+      "code_slug": "macau_property_registry_code",
+      "code_label": "物業登記法典",
+      "article_records": 159
+    }
+  ]
+}
