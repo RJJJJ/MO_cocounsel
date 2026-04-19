@@ -487,6 +487,25 @@ Not the current priority:
 
 ---
 
+
+## Statute Authoritative Corpus (Exact Lookup Only)
+
+For statute exact lookup / citation grounding, place these authoritative files under:
+
+- `data/corpus/raw/statutes/articles.jsonl`
+- `data/corpus/raw/statutes/statute_summary.json`
+- `data/corpus/raw/statutes/statute_exact_lookup.json`
+
+This round only supports **exact statute lookup**. It does **not** include dense retrieval, hybrid retrieval, or reranker behavior for statutes.
+
+Run local lookup tests:
+
+```bash
+python scripts/test_statute_exact_lookup.py --statute-id "<STATUTE_ID>"
+python scripts/test_statute_exact_lookup.py --code-slug "<CODE_SLUG>" --article-no "<ARTICLE_NO>"
+python scripts/test_statute_exact_lookup.py --code-label "<CODE_LABEL>" --article-no "<ARTICLE_NO>"
+```
+
 ## 15. Post-Day-66 Architecture Decision Memo: Domain Model Strategy
 
 This note is intentionally positioned **after Day 66**. It is a forward-looking architecture decision memo, not the current implementation priority.
