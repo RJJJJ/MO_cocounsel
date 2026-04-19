@@ -160,10 +160,29 @@ class StatuteExactLookupService:
 
         return None
 
-    def _normalize_result(self, raw: Any) -> dict[str, Any]:
+    def _resolve_record(self, raw: Any) -> Any:
         record = raw[0] if isinstance(raw, list) and raw else raw
+
+        if isinstance(record, str):
+            by_id = self._find_index("by_statute_id", "statute_id", "statute_id_index", "id_to_article")
+            if isinstance(by_id, dict):
+                resolved = by_id.get(record)
+                if resolved is not None:
+                    return resolved
+
+            for article in self.articles:
+                if str(article.get("statute_id", "")).strip() == record:
+                    return article
+
+            return None
+
+        return record
+
+
+    def _normalize_result(self, raw: Any) -> dict[str, Any]:
+        record = self._resolve_record(raw)
         if not isinstance(record, dict):
-            return {field: None for field in REQUIRED_OUTPUT_FIELDS}
+            return {field: {} if field == "flags" else None for field in REQUIRED_OUTPUT_FIELDS}
 
         normalized: dict[str, Any] = {}
         for field in REQUIRED_OUTPUT_FIELDS:
